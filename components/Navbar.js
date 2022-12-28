@@ -24,12 +24,13 @@ const Navbar = () => {
           <Link href="/#features" className="text-gray-300 mr-8">
             Features
           </Link>
-          <Link href="/demo" className="text-gray-300 mr-8">
+          <Link href="/demo" className="text-gray-300 mr-8" target={"_blank"}>
             Tutorial
           </Link>
           <Link
             href="/demo"
             className="bg-transparent border border-gray-400 text-gray-300 font-bold py-2 px-4 rounded-lg"
+            target={"_blank"}
           >
             Sign Up
           </Link>
@@ -71,19 +72,22 @@ const Navbar = () => {
               <Link
                 href="/#features"
                 className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
+                scroll={false}
               >
                 Features
               </Link>
               <Link
-                href="/#about"
+                href="/demo"
                 className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 scroll={false}
+                target={"_blank"}
               >
-                Learn
+                Tutorial
               </Link>
               <Link
                 href="/demo"
-                className="bg-transparent border-gray-300 text-white font-bold py-2 px-4 rounded-full mb-4 lg:mb-0 md:mb-0"
+                className="bg-transparent border border-gray-400 text-gray-300 font-bold py-2 px-4 rounded-lg"
+                target={"_blank"}
               >
                 Sign Up
               </Link>

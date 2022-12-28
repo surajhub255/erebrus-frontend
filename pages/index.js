@@ -30,6 +30,7 @@ export default function Home() {
           </p>
           <Link
             href="/demo"
+            target={"_blank"}
             className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg "
           >
             Get started
