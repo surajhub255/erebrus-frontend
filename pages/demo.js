@@ -82,39 +82,47 @@ export default function FormResultPage() {
       <AnimatePresence>
         <AnimateSharedLayout>
           {!showResult && (
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Name"
-                  onChange={handleName}
-                  required
-                  className="mb-8"
-                />
-                <input
-                  type="text"
-                  name="email"
-                  placeholder="Email"
-                  onChange={handleEmail}
-                  required
-                  className="mb-4"
-                />
-                <div className="mt-4 ml-10">
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg"
-                  >
-                    Submit
-                  </button>
-                </div>
-                {error && <p className="text-red-500">{error}</p>}
+            <div className="flex justify-center">
+              <h2 className="font-bold text-4xl lg:text-6xl mb-2 text-gray-200 w-[50%]">
+                Create a VPN Subscription
+              </h2>
+              <div>
+                <form onSubmit={handleSubmit}>
+                  <div className="flex flex-col items-center">
+                    <input
+                      type="text"
+                      name="name"
+                      placeholder="Name"
+                      onChange={handleName}
+                      required
+                      className="mb-8"
+                    />
+                    <input
+                      type="text"
+                      name="email"
+                      placeholder="Email"
+                      onChange={handleEmail}
+                      required
+                      className="mb-4"
+                    />
+                    <div className="mt-4">
+                      <button
+                        type="submit"
+                        disabled={loading}
+                        className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                    {error && <p className="text-red-500">{error}</p>}
+                  </div>
+                </form>
               </div>
-            </form>
+            </div>
           )}
           {showResult && (
             <div>
+              <div className="flex justify-center"></div>
               <svg
                 className="absolute top-0 left-0 text-white"
                 width="48"
@@ -131,18 +139,24 @@ export default function FormResultPage() {
               </svg>
               {error && <p className="text-red-500">{error}</p>}
               {qrCodeData && (
-                <div className="text-white">
-                  <QRCode value={qrCodeData} />
-                  <div className="mt-8 -ml-8">
-                    <a
-                      href={`data:application/octet-stream,${encodeURIComponent(
-                        qrCodeData
-                      )}`}
-                      download="vpn.conf"
-                      className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-                    >
-                      Download config file
-                    </a>
+                <div className="flex justify-center">
+                  <h2 className="font-bold text-2xl lg:text-5xl mb-2 text-gray-200 lg:w-[30%] w-[40%]">
+                    Scan QR using the WireGuard® app and activate tunnel or
+                    download .conf file to start using VPN 🎉
+                  </h2>
+                  <div className="text-white ml-16 mr-2 lg:ml-0 lg:mr-0">
+                    <QRCode value={qrCodeData} />
+                    <div className="mt-8 -ml-8">
+                      <a
+                        href={`data:application/octet-stream,${encodeURIComponent(
+                          qrCodeData
+                        )}`}
+                        download="vpn.conf"
+                        className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                      >
+                        Download config file
+                      </a>
+                    </div>
                   </div>
                 </div>
               )}
