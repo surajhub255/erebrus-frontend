@@ -104,7 +104,7 @@ export default function FormResultPage() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="text-white bg-blue-500 font-bold py-2 px-4 rounded-full"
+                    className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg"
                   >
                     Submit
                   </button>
@@ -139,7 +139,7 @@ export default function FormResultPage() {
                         qrCodeData
                       )}`}
                       download="vpn.conf"
-                      className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full"
+                      className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
                     >
                       Download config file
                     </a>

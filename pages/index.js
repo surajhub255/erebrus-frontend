@@ -8,27 +8,28 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Decentralized VPN Service</title>
+        <title>Erebrus</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <div className="container mx-auto px-6 py-10">
-        <div className="flex flex-col items-center justify-center h-screen -mt-16">
+      <div className="container mx-auto px-6 py-10 -mt-12">
+        <div className="flex flex-col items-center justify-center h-screen -mt-16 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4">
           <motion.h1
             initial={{ y: -100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="text-5xl font-bold text-gray-800 mb-6"
+            className="text-4xl lg:text-5xl  font-bold text-gray-300 mb-6 lg:w-[35%] lg:text-center md:text-center "
           >
-            Anonymous VPN
-          </motion.h1>
-          <p className="text-xl text-gray-600 mb-8">
             Protect your online privacy and security with our decentralized VPN
-            service.
+            solution.
+          </motion.h1>
+          <p className="text-xl text-gray-600 mb-8 lg:w-[35%] lg:text-center md:text-center">
+            Anonymous Virtual Private Network for accessing internet in stealth
+            mode bypassing filewalls and filters
           </p>
           <Link
             href="/demo"
-            className="bg-blue-500 text-white font-bold py-4 px-6 rounded-full"
+            className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg "
           >
             Get started
           </Link>
