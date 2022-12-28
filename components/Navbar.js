@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 
-function Navbar() {
+const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -18,13 +18,13 @@ function Navbar() {
           {/* <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1> */}
         </div>
         <div className="hidden lg:flex items-center">
-          <Link href="/#about" scroll={false} className="text-gray-300 mr-4">
+          <Link href="/#about" scroll={false} className="text-gray-300 mr-8">
             About
           </Link>
-          <Link href="/demo" className="text-gray-300 mr-4">
+          <Link href="/#features" className="text-gray-300 mr-8">
             Features
           </Link>
-          <Link href="/demo" className="text-gray-300 mr-4">
+          <Link href="/demo" className="text-gray-300 mr-8">
             Tutorial
           </Link>
           <Link
@@ -69,7 +69,7 @@ function Navbar() {
                 About
               </Link>
               <Link
-                href="/demo"
+                href="/#features"
                 className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
               >
                 Features
@@ -93,6 +93,6 @@ function Navbar() {
       )}
     </nav>
   );
-}
+};
 
 export default Navbar;

@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import About from "../components/About";
+import Features from "../components/Features";
 
 export default function Home() {
   return (
@@ -35,7 +36,9 @@ export default function Home() {
           </Link>
         </div>
       </div>
+
       <About />
+      <Features />
     </div>
   );
 }
