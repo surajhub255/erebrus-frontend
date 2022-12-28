@@ -15,20 +15,23 @@ function Navbar() {
           <div className="block -mb-8 -mt-8">
             <img src="/logo.svg" alt="Logo" className="w-20" />
           </div>
-          <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1>
+          {/* <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1> */}
         </div>
         <div className="hidden lg:flex items-center">
           <Link href="/#about" scroll={false} className="text-gray-300 mr-4">
             About
           </Link>
           <Link href="/demo" className="text-gray-300 mr-4">
-            Demo
+            Features
+          </Link>
+          <Link href="/demo" className="text-gray-300 mr-4">
+            Tutorial
           </Link>
           <Link
             href="/demo"
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full"
+            className="bg-transparent border border-gray-400 text-gray-300 font-bold py-2 px-4 rounded-lg"
           >
-            Get started
+            Sign Up
           </Link>
         </div>
         <div className="block lg:hidden">
@@ -60,22 +63,29 @@ function Navbar() {
             <div className="flex flex-col lg:flex-row items-center">
               <Link
                 href="/#about"
-                className="text-white font-bold block lg:inline-block mr-4 mb-4 lg:mr-0 lg:mb-0"
+                className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 scroll={false}
               >
                 About
               </Link>
               <Link
                 href="/demo"
-                className="text-white font-bold block lg:inline-block mr-4 lg:mr-0 mb-4 lg:mb-0 md:mb-0"
+                className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
               >
-                Demo
+                Features
               </Link>
               <Link
-                href="/signup"
-                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-full mb-4 lg:mb-0 md:mb-0"
+                href="/#about"
+                className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
+                scroll={false}
               >
-                Get started
+                Learn
+              </Link>
+              <Link
+                href="/demo"
+                className="bg-transparent border-gray-300 text-white font-bold py-2 px-4 rounded-full mb-4 lg:mb-0 md:mb-0"
+              >
+                Sign Up
               </Link>
             </div>
           </div>
