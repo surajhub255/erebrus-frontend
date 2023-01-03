@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getClients = async (req, res) => {
+const getClientConfig = async (req, res) => {
   const { query } = req;
   console.log(query);
   const UUID = query.UUID;
@@ -16,4 +16,4 @@ const getClients = async (req, res) => {
   return res.status(200).json(response.data);
 };
 
-export default getClients;
+export default getClientConfig;
