@@ -28,13 +28,13 @@ const Clients = () => {
   }, []);
 
   return (
-    <div className="container flex flex-wrap w-100 justify-center items-center mx-auto px-4 bg-black text-white lg:h-screen">
+    <div className="container flex flex-wrap w-100 justify-center items-center mx-auto px-4 bg-black text-white lg:h-screen pt-8 pb-8">
       {isLoading ? (
-        <div>Loading...</div>
+        <div className="bg-black h-screen">Loading...</div>
       ) : (
         apiData1 &&
         apiData1.map((item1, index) => (
-          <div className="mb-4 " key={item1.UUID}>
+          <div className="mb-12 " key={item1.UUID}>
             <div className="flex flex-col">
               <div className="card-header">
                 <h2 className="text-xl font-bold leading-tight">
