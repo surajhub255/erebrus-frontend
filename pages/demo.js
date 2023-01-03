@@ -82,8 +82,8 @@ export default function FormResultPage() {
       <AnimatePresence>
         <AnimateSharedLayout>
           {!showResult && (
-            <div className="flex justify-center">
-              <h2 className="font-bold text-4xl lg:text-6xl mb-2 text-gray-200 w-[50%]">
+            <div className="flex lg:flex-row flex-col justify-center items-center ">
+              <h2 className="font-bold text-4xl lg:text-6xl mb-8 text-gray-200 lg:w-[50%] w-[75%] lg:mb-2 lg:text-left text-center">
                 Create a VPN Subscription
               </h2>
               <div>
@@ -139,8 +139,8 @@ export default function FormResultPage() {
               </svg>
               {error && <p className="text-red-500">{error}</p>}
               {qrCodeData && (
-                <div className="flex justify-center">
-                  <h2 className="font-bold text-2xl lg:text-5xl mb-2 text-gray-200 lg:w-[30%] w-[40%]">
+                <div className="flex lg:flex-row flex-col justify-center items-center">
+                  <h2 className="font-bold text-2xl lg:text-5xl lg:mb-2 text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6">
                     Scan QR using the WireGuard® app and activate tunnel or
                     download .conf file to start using VPN 🎉
                   </h2>
