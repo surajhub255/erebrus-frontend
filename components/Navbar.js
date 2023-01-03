@@ -21,10 +21,15 @@ const Navbar = () => {
           <Link href="/#about" scroll={false} className="text-gray-300 mr-8">
             About
           </Link>
-          <Link href="/#features" className="text-gray-300 mr-8">
+          <Link href="/#features" className="text-gray-300 mr-8" scroll={false}>
             Features
           </Link>
-          <Link href="/demo" className="text-gray-300 mr-8" target={"_blank"}>
+          <Link
+            href="/demo"
+            className="text-gray-300 mr-8"
+            target={"_blank"}
+            scroll={false}
+          >
             Tutorial
           </Link>
           <Link
