@@ -25,12 +25,12 @@ const Navbar = () => {
             Features
           </Link>
           <Link
-            href="/demo"
+            href="/clients"
             className="text-gray-300 mr-8"
             target={"_blank"}
             scroll={false}
           >
-            Tutorial
+            Clients
           </Link>
           <Link
             href="/demo"
@@ -82,12 +82,12 @@ const Navbar = () => {
                 Features
               </Link>
               <Link
-                href="/demo"
+                href="/clients"
                 className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 scroll={false}
                 target={"_blank"}
               >
-                Tutorial
+                Clients
               </Link>
               <Link
                 href="/demo"
