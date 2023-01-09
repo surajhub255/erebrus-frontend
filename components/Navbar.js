@@ -1,8 +1,20 @@
 import Link from "next/link";
 import { useState } from "react";
+import {
+  useNetworkMismatch,
+  useNetwork,
+  useAddress,
+  ChainId,
+  ConnectWallet,
+} from "@thirdweb-dev/react";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const address = useAddress();
+
+  const [, switchNetwork] = useNetwork();
+  const isMismatched = useNetworkMismatch();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -21,24 +33,26 @@ const Navbar = () => {
           <Link href="/#about" scroll={false} className="text-gray-300 mr-8">
             About
           </Link>
+          <Link href="/demo" className="text-gray-300 mr-8">
+            Demo
+          </Link>
           <Link href="/#features" className="text-gray-300 mr-8" scroll={false}>
             Features
           </Link>
-          <Link
-            href="/clients"
-            className="text-gray-300 mr-8"
-            target={"_blank"}
-            scroll={false}
-          >
+          <Link href="/clients" className="text-gray-300 mr-8">
             Clients
           </Link>
-          <Link
-            href="/demo"
-            className="bg-transparent border border-gray-400 text-gray-300 font-bold py-2 px-4 rounded-lg"
-            target={"_blank"}
-          >
-            Sign Up
-          </Link>
+          {isMismatched && (
+            <button
+              className="text-purple-400 mr-12"
+              onClick={() => switchNetwork(ChainId.Polygon)}
+            >
+              Switch To Polygon
+            </button>
+          )}
+          <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl bg-white">
+            <ConnectWallet />
+          </div>
         </div>
         <div className="block lg:hidden">
           <button
@@ -75,6 +89,13 @@ const Navbar = () => {
                 About
               </Link>
               <Link
+                href="/demo"
+                className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
+                scroll={false}
+              >
+                Demo
+              </Link>
+              <Link
                 href="/#features"
                 className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
                 scroll={false}
@@ -84,18 +105,20 @@ const Navbar = () => {
               <Link
                 href="/clients"
                 className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
-                scroll={false}
-                target={"_blank"}
               >
                 Clients
               </Link>
-              <Link
-                href="/demo"
-                className="bg-transparent border border-gray-400 text-gray-300 font-bold py-2 px-4 rounded-lg"
-                target={"_blank"}
-              >
-                Sign Up
-              </Link>
+              {isMismatched && (
+                <button
+                  className="text-purple-400 mr-12"
+                  onClick={() => switchNetwork(ChainId.Polygon)}
+                >
+                  Switch To Polygon
+                </button>
+              )}
+              <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
+                <ConnectWallet />
+              </div>
             </div>
           </div>
         </div>
