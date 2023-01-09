@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 import { AnimatePresence, AnimateSharedLayout } from "framer-motion";
 import axios from "axios";
 import QRCode from "qrcode.react";
+import { useAddress } from "@thirdweb-dev/react";
+import Navbar from "../components/Navbar";
 
 export default function FormResultPage() {
+  const address = useAddress();
   const [formData, setFormData] = useState({
     name: "",
     tags: ["mobile"],
@@ -77,93 +80,108 @@ export default function FormResultPage() {
     }
   };
 
+  if (!address) {
+    return (
+      <>
+        <Navbar />
+        <div className="flex justify-center mt-48 text-white bg-black h-screen">
+          Please connect your wallet to create a VPN client
+        </div>
+      </>
+    );
+  }
+
   return (
-    <div className="h-screen flex mx-auto items-center justify-center">
-      <AnimatePresence>
-        <AnimateSharedLayout>
-          {!showResult && (
-            <div className="flex lg:flex-row flex-col justify-center items-center ">
-              <h2 className="font-bold text-4xl lg:text-6xl mb-8 text-gray-200 lg:w-[50%] w-[75%] lg:mb-2 lg:text-left text-center">
-                Create a VPN Subscription
-              </h2>
-              <div>
-                <form onSubmit={handleSubmit}>
-                  <div className="flex flex-col items-center">
-                    <input
-                      type="text"
-                      name="name"
-                      placeholder="Name"
-                      onChange={handleName}
-                      required
-                      className="mb-8"
-                    />
-                    <input
-                      type="text"
-                      name="email"
-                      placeholder="Email"
-                      onChange={handleEmail}
-                      required
-                      className="mb-4"
-                    />
-                    <div className="mt-4">
-                      <button
-                        type="submit"
-                        disabled={loading}
-                        className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg"
-                      >
-                        Submit
-                      </button>
+    <>
+      <Navbar />
+      <div className="h-screen flex mx-auto items-center justify-center">
+        <AnimatePresence>
+          <AnimateSharedLayout>
+            {!showResult && (
+              <div className="flex lg:flex-row flex-col justify-center items-center mb-24">
+                <h2 className="font-bold text-4xl lg:text-6xl mb-8 text-gray-200 lg:w-[50%] w-[75%] lg:mb-2 lg:text-left text-center">
+                  Create a VPN Subscription
+                </h2>
+                <div>
+                  <form onSubmit={handleSubmit}>
+                    <div className="flex flex-col items-center">
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        onChange={handleName}
+                        required
+                        className="mb-8"
+                      />
+                      <input
+                        type="text"
+                        name="email"
+                        placeholder="Email"
+                        onChange={handleEmail}
+                        required
+                        className="mb-4"
+                      />
+                      <p className="text-gray-500">Region: US-East</p>
+                      <div className="mt-4">
+                        <button
+                          type="submit"
+                          disabled={loading}
+                          className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg"
+                        >
+                          Submit
+                        </button>
+                      </div>
+                      {error && <p className="text-red-500">{error}</p>}
                     </div>
-                    {error && <p className="text-red-500">{error}</p>}
-                  </div>
-                </form>
-              </div>
-            </div>
-          )}
-          {showResult && (
-            <div>
-              <div className="flex justify-center"></div>
-              <svg
-                className="absolute top-0 left-0 text-white"
-                width="48"
-                height="48"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                onClick={() => setShowResult(false)}
-              >
-                <path
-                  d="M20 11H7.8L13.6 5.2L12 4L4 12L12 20L13.6 18.8L7.8 13H20V11Z"
-                  fill="currentColor"
-                />
-              </svg>
-              {error && <p className="text-red-500">{error}</p>}
-              {qrCodeData && (
-                <div className="flex lg:flex-row flex-col justify-center items-center">
-                  <h2 className="font-bold text-2xl lg:text-5xl lg:mb-2 text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6">
-                    Scan QR using the WireGuard® app and activate tunnel or
-                    download .conf file to start using VPN 🎉
-                  </h2>
-                  <div className="text-white ml-16 mr-2 lg:ml-0 lg:mr-0">
-                    <QRCode value={qrCodeData} />
-                    <div className="mt-8 -ml-8">
-                      <a
-                        href={`data:application/octet-stream,${encodeURIComponent(
-                          qrCodeData
-                        )}`}
-                        download="vpn.conf"
-                        className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-                      >
-                        Download config file
-                      </a>
-                    </div>
-                  </div>
+                  </form>
                 </div>
-              )}
-            </div>
-          )}
-        </AnimateSharedLayout>
-      </AnimatePresence>
-    </div>
+              </div>
+            )}
+            {showResult && (
+              <div>
+                <div className="flex justify-center"></div>
+                <svg
+                  className="absolute top-0 left-0 text-white"
+                  width="48"
+                  height="48"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  onClick={() => setShowResult(false)}
+                >
+                  <path
+                    d="M20 11H7.8L13.6 5.2L12 4L4 12L12 20L13.6 18.8L7.8 13H20V11Z"
+                    fill="currentColor"
+                  />
+                </svg>
+                {error && <p className="text-red-500">{error}</p>}
+                {qrCodeData && (
+                  <div className="flex lg:flex-row flex-col justify-center items-center">
+                    <h2 className="font-bold text-2xl lg:text-5xl lg:mb-2 text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6">
+                      Scan QR using the WireGuard® app and activate tunnel or
+                      download .conf file to start using VPN 🎉
+                    </h2>
+                    <div className="text-white ml-16 mr-2 lg:ml-0 lg:mr-0">
+                      <QRCode value={qrCodeData} />
+                      <div className="mt-8 -ml-8">
+                        <a
+                          href={`data:application/octet-stream,${encodeURIComponent(
+                            qrCodeData
+                          )}`}
+                          download="vpn.conf"
+                          className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                        >
+                          Download config file
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </AnimateSharedLayout>
+        </AnimatePresence>
+      </div>
+    </>
   );
 }
