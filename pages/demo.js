@@ -6,6 +6,7 @@ import { useAddress } from "@thirdweb-dev/react";
 import Navbar from "../components/Navbar";
 import { ethers } from "ethers";
 import erebrusABI from "../utils/erebrusABI.json";
+import Head from "next/head";
 
 export default function FormResultPage() {
   const provider = new ethers.providers.InfuraProvider(
@@ -121,6 +122,9 @@ export default function FormResultPage() {
   if (!address) {
     return (
       <>
+        <Head>
+          <title>Erebrus | Demo</title>
+        </Head>
         <Navbar />
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please connect your wallet to create a VPN client
@@ -131,6 +135,9 @@ export default function FormResultPage() {
 
   return (
     <>
+      <Head>
+        <title>Erebrus | Demo</title>
+      </Head>
       <Navbar />
       {isOwned ? (
         <div className="h-screen flex mx-auto items-center justify-center">

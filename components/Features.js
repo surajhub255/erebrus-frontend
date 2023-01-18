@@ -39,9 +39,6 @@ const Features = () => {
 
   return (
     <div id="features" className="scroll-mt-40">
-      <Head>
-        <title>Erebrus | Features</title>
-      </Head>
       <main>
         <h1 className="text-4xl lg:text-6xl font-bold text-center mb-20 mt-14 text-white font-figtree">
           Product Features

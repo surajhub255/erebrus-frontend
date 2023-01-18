@@ -10,7 +10,7 @@ export default function Home() {
     <div>
       <Head>
         <title>Erebrus</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/logo.svg" />
       </Head>
       <Navbar />
       <div className="container mx-auto px-6 py-10 -mt-12">

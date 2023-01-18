@@ -4,6 +4,7 @@ import { useAddress } from "@thirdweb-dev/react";
 import Navbar from "../components/Navbar";
 import { ethers } from "ethers";
 import erebrusABI from "../utils/erebrusABI.json";
+import Head from "next/head";
 
 const Clients = () => {
   const provider = new ethers.providers.InfuraProvider(
@@ -68,6 +69,9 @@ const Clients = () => {
   if (!address) {
     return (
       <>
+        <Head>
+          <title>Erebrus | Clients</title>
+        </Head>
         <Navbar />
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please connect your wallet to view your VPN clients
@@ -78,6 +82,9 @@ const Clients = () => {
 
   return (
     <>
+      <Head>
+        <title>Erebrus | Clients</title>
+      </Head>
       <Navbar />
       {isOwned ? (
         <div className="container flex flex-wrap w-100 justify-center items-center mx-auto px-4 bg-black text-white lg:h-screen pt-8 pb-8">
