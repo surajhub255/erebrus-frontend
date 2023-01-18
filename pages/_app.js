@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import { ThirdwebProvider } from "@thirdweb-dev/react";
 import { ChainId } from "@thirdweb-dev/sdk";
 
-const activeChainId = ChainId.Polygon;
+const activeChainId = ChainId.Mumbai;
 
 export default function App({ Component, pageProps }) {
   return (

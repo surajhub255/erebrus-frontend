@@ -45,9 +45,9 @@ const Navbar = () => {
           {isMismatched && (
             <button
               className="text-purple-400 mr-12"
-              onClick={() => switchNetwork(ChainId.Polygon)}
+              onClick={() => switchNetwork(ChainId.Mumbai)}
             >
-              Switch To Polygon
+              Switch To Mumbai
             </button>
           )}
           <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl bg-white">
@@ -113,7 +113,7 @@ const Navbar = () => {
                   className="text-purple-400 mr-12"
                   onClick={() => switchNetwork(ChainId.Polygon)}
                 >
-                  Switch To Polygon
+                  Switch To Mumbai
                 </button>
               )}
               <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
