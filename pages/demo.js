@@ -45,6 +45,21 @@ export default function FormResultPage() {
     }
   }, [address]);
 
+  const mint = async () => {
+    const providerMeta = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = providerMeta.getSigner();
+
+    const contract = new ethers.Contract(
+      "0x3091EFF0b0a8E176D962456fc26110414704B01a",
+      erebrusABI,
+      signer
+    );
+
+    contract.mintNFT({
+      value: ethers.utils.parseEther("0.1"),
+    });
+  };
+
   const handleEmail = (e) => {
     setFormData({
       ...formData,
@@ -210,7 +225,7 @@ export default function FormResultPage() {
         <div className="flex justify-center items-center h-screen">
           <button
             className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-            onClick={mintNFT}
+            onClick={mint}
           >
             Mint Erebrus NFT
           </button>
