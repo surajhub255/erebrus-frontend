@@ -36,8 +36,8 @@ const Navbar = () => {
           <Link href="/demo" className="text-gray-300 mr-8">
             Demo
           </Link>
-          <Link href="/#features" className="text-gray-300 mr-8" scroll={false}>
-            Features
+          <Link href="/mint" className="text-gray-300 mr-8" scroll={false}>
+            Mint
           </Link>
           <Link href="/clients" className="text-gray-300 mr-8">
             Clients
@@ -96,11 +96,11 @@ const Navbar = () => {
                 Demo
               </Link>
               <Link
-                href="/#features"
+                href="/mint"
                 className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
                 scroll={false}
               >
-                Features
+                Mint
               </Link>
               <Link
                 href="/clients"

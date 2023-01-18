@@ -51,21 +51,6 @@ const Clients = () => {
     }
   }, [address]);
 
-  const mint = async () => {
-    const providerMeta = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = providerMeta.getSigner();
-
-    const contract = new ethers.Contract(
-      "0x3091EFF0b0a8E176D962456fc26110414704B01a",
-      erebrusABI,
-      signer
-    );
-
-    contract.mintNFT({
-      value: ethers.utils.parseEther("0.1"),
-    });
-  };
-
   if (!address) {
     return (
       <>
@@ -125,13 +110,8 @@ const Clients = () => {
           )}
         </div>
       ) : (
-        <div className="flex justify-center items-center h-screen">
-          <button
-            className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-            onClick={mint}
-          >
-            Mint Erebrus NFT
-          </button>
+        <div className="flex justify-center mt-48 text-white bg-black h-screen">
+          Please mint an Erebrus NFT to view your VPN client
         </div>
       )}
     </>
