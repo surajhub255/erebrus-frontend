@@ -29,7 +29,7 @@ const Navbar = ({ isHome }) => {
     <nav className="bg-transparent py-4">
       <div
         className={`container mx-auto px-6 flex items-center justify-between lg:mb-0 ${
-          isHome && !isOpen ? "mb-36" : ""
+          isHome && !isOpen ? "mb-24" : ""
         }`}
       >
         <div className="flex items-center">
@@ -125,8 +125,8 @@ const Navbar = ({ isHome }) => {
                 </Link>
                 {isMismatched && (
                   <button
-                    className="text-purple-400 mr-12"
-                    onClick={() => switchNetwork(ChainId.Polygon)}
+                    className="text-purple-400"
+                    onClick={() => switchNetwork(ChainId.Mumbai)}
                   >
                     Switch To Mumbai
                   </button>
