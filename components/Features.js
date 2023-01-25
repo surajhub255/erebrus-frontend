@@ -51,7 +51,7 @@ const Features = () => {
             Previous
           </button>
 
-          <section className="mb-80">
+          <section className="lg:mb-64 mb-36">
             <AnimatePresence>
               <motion.div
                 initial={{ x: 100 }}

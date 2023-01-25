@@ -7,8 +7,13 @@ import {
   ChainId,
   ConnectWallet,
 } from "@thirdweb-dev/react";
+import { motion } from "framer-motion";
+const variants = {
+  open: { opacity: 1, x: 0, y: 0 },
+  closed: { opacity: 0, y: 0 },
+};
 
-const Navbar = () => {
+const Navbar = ({ isHome }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const address = useAddress();
@@ -22,12 +27,20 @@ const Navbar = () => {
 
   return (
     <nav className="bg-transparent py-4">
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      <div
+        className={`container mx-auto px-6 flex items-center justify-between lg:mb-0 ${
+          isHome && !isOpen ? "mb-36" : ""
+        }`}
+      >
         <div className="flex items-center">
-          <div className="block -mb-8 -mt-8">
-            <img src="/logo.svg" alt="Logo" className="w-20" />
-          </div>
-          {/* <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1> */}
+          <Link href="/" scroll={false}>
+            <div className="block -mb-8 -mt-8">
+              <img src="/logo.svg" alt="Logo" className="w-20" />
+            </div>
+          </Link>
+          <Link href="/" scroll={false}>
+            <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1>
+          </Link>
         </div>
         <div className="hidden lg:flex items-center">
           <Link href="/#about" scroll={false} className="text-gray-300 mr-8">
@@ -77,52 +90,55 @@ const Navbar = () => {
           </button>
         </div>
       </div>
-      {isOpen && (
-        <div className="bg-transparent py-4">
-          <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:justify-between">
-            <div className="flex flex-col lg:flex-row items-center">
-              <Link
-                href="/#about"
-                className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
-                scroll={false}
-              >
-                About
-              </Link>
-              <Link
-                href="/demo"
-                className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
-                scroll={false}
-              >
-                Demo
-              </Link>
-              <Link
-                href="/mint"
-                className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
-                scroll={false}
-              >
-                Mint
-              </Link>
-              <Link
-                href="/clients"
-                className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
-              >
-                Clients
-              </Link>
-              {isMismatched && (
-                <button
-                  className="text-purple-400 mr-12"
-                  onClick={() => switchNetwork(ChainId.Polygon)}
+
+      <motion.nav animate={isOpen ? "open" : "closed"} variants={variants}>
+        {isOpen && (
+          <div className="bg-transparent py-4">
+            <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:justify-between">
+              <div className="flex flex-col lg:flex-row items-center">
+                <Link
+                  href="/#about"
+                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
+                  scroll={false}
                 >
-                  Switch To Mumbai
-                </button>
-              )}
-              <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-                <ConnectWallet />
+                  About
+                </Link>
+                <Link
+                  href="/demo"
+                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
+                  scroll={false}
+                >
+                  Demo
+                </Link>
+                <Link
+                  href="/mint"
+                  className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
+                  scroll={false}
+                >
+                  Mint
+                </Link>
+                <Link
+                  href="/clients"
+                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
+                >
+                  Clients
+                </Link>
+                {isMismatched && (
+                  <button
+                    className="text-purple-400 mr-12"
+                    onClick={() => switchNetwork(ChainId.Polygon)}
+                  >
+                    Switch To Mumbai
+                  </button>
+                )}
+                <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
+                  <ConnectWallet />
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </motion.nav>
     </nav>
   );
 };
