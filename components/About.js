@@ -57,7 +57,7 @@ const About = () => {
               opacity: 0,
             },
           }}
-          className="text-2xl lg:text-2xl font-figtree font-bold opacity-50 text-gray-400 lg:mb-60 mb-36"
+          className="text-2xl lg:text-2xl font-figtree font-bold opacity-50 text-gray-400 lg:mb-24 mb-36"
         >
           Erebrus VPN uses WireGuard® P2P VPN Solution for bypassing IP
           Fingerprinting to provide secure & private access to geo-restricted
