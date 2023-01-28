@@ -23,12 +23,13 @@ export default function FormResultPage() {
   const address = useAddress();
   const [formData, setFormData] = useState({
     name: "",
-    tags: ["mobile"],
-    email: "",
+    tags: [],
+    walletAddress: address,
+    publicKey: "",
     enable: true,
     allowedIPs: ["0.0.0.0/0", "::/0"],
     address: ["10.0.0.1/24"],
-    createdBy: "",
+    createdBy: address,
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -38,6 +39,7 @@ export default function FormResultPage() {
 
   useEffect(() => {
     if (address) {
+      setError("");
       setIsOwned(false);
       const contract = new ethers.Contract(
         "0x3091EFF0b0a8E176D962456fc26110414704B01a",
@@ -52,11 +54,10 @@ export default function FormResultPage() {
     }
   }, [address]);
 
-  const handleEmail = (e) => {
+  const handleTags = (e) => {
     setFormData({
       ...formData,
-      email: e.target.value,
-      createdBy: e.target.value,
+      tags: [e.target.value],
     });
   };
 
@@ -73,7 +74,7 @@ export default function FormResultPage() {
     setLoading(true);
     try {
       // Make a POST request to your server
-      await fetch("/api/createClient", {
+      await fetch("/api/registerClient", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -87,43 +88,43 @@ export default function FormResultPage() {
 
       let keyResponse;
 
-      // await fetch("/api/generateKeys", {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     keyResponse = data;
-      //   });
-
-      // const configFile = `[Interface]
-      //   Address = 10.0.0.10/32
-      //   PrivateKey = ${keyResponse.privateKey}
-      //   DNS = 1.1.1.1
-
-      //   [Peer]
-      //   PublicKey = W58Yn5vJn+6Y+w8P1d9NmWgpYB3RD9E7w/+jetcEKCY=
-      //   PresharedKey = ${keyResponse.presharedKey}
-      //   AllowedIPs = 0.0.0.0/0, ::/0
-      //   Endpoint = us01.erebrus.lz1.in:51820
-      //   PersistentKeepalive = 16
-      //   uaz7meJGQtDOeBEfCEsJGHjHxPNNiGPpCEkCBnFXuTs=`;
-
-      // QR code data
-      await fetch(`/api/getClientConfig?UUID=${UUID}`, {
+      await fetch("/api/generateKeys", {
         method: "GET",
         headers: {
-          "Content-Type": "application/config",
+          "Content-Type": "application/json",
         },
       })
         .then((response) => response.json())
         .then((data) => {
-          setQrCodeData(data);
+          keyResponse = data;
         });
 
-      //setQrCodeData(configFile);
+      const configFile = `[Interface]
+        Address = 10.0.0.10/32
+        PrivateKey = ${keyResponse.privateKey}
+        DNS = 1.1.1.1
+
+        [Peer]
+        PublicKey = ${keyResponse.publicKey}
+        PresharedKey = ${keyResponse.presharedKey}
+        AllowedIPs = 0.0.0.0/0, ::/0
+        Endpoint = us01.erebrus.lz1.in:51820
+        PersistentKeepalive = 16
+        uaz7meJGQtDOeBEfCEsJGHjHxPNNiGPpCEkCBnFXuTs=`;
+
+      // // QR code data
+      // await fetch(`/api/getClientConfig?UUID=${UUID}`, {
+      //   method: "GET",
+      //   headers: {
+      //     "Content-Type": "application/config",
+      //   },
+      // })
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     setQrCodeData(data);
+      //   });
+
+      setQrCodeData(configFile);
 
       // // Make another GET request to your server to get the data for the config file
       // const configResponse = await axios.get("/api/get-config-data");
@@ -159,7 +160,7 @@ export default function FormResultPage() {
       </Head>
       <Navbar />
       {isOwned ? (
-        <div className="h-screen flex mx-auto items-center justify-center">
+        <div className="h-screen flex mx-auto items-start justify-center lg:items-center mt-8 lg:mt-0">
           {!showResult && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -184,9 +185,9 @@ export default function FormResultPage() {
                       />
                       <input
                         type="text"
-                        name="email"
-                        placeholder="Email"
-                        onChange={handleEmail}
+                        name="tags"
+                        placeholder="Tags: eg. mobile, tablet"
+                        onChange={handleTags}
                         required
                         className="mb-4"
                       />
@@ -217,30 +218,38 @@ export default function FormResultPage() {
             >
               <div>
                 <div className="flex justify-center"></div>
-                <svg
-                  className="absolute top-0 left-0 text-white"
-                  width="48"
-                  height="48"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  onClick={() => setShowResult(false)}
-                >
-                  <path
-                    d="M20 11H7.8L13.6 5.2L12 4L4 12L12 20L13.6 18.8L7.8 13H20V11Z"
-                    fill="currentColor"
-                  />
-                </svg>
+
                 {error && <p className="text-red-500">{error}</p>}
                 {qrCodeData && (
                   <div className="flex lg:flex-row flex-col justify-center items-center">
-                    <h2 className="font-bold text-2xl lg:text-5xl lg:mb-2 text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6">
+                    <button className="bg-blue-500 rounded-full lg:mr-24 mb-8">
+                      <svg
+                        className="text-white"
+                        width="36"
+                        height="36"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        onClick={() => setShowResult(false)}
+                      >
+                        <path
+                          d="M20 11H7.8L13.6 5.2L12 4L4 12L12 20L13.6 18.8L7.8 13H20V11Z"
+                          fill="currentColor"
+                        />
+                      </svg>
+                    </button>
+                    <h2 className="font-bold text-2xl lg:text-5xl lg:mb-2 text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6 lg:ml-16">
                       Scan QR using the WireGuard® app and activate tunnel or
                       download .conf file to start using VPN 🎉
+                      <p className="text-orange-400 lg:text-lg text-sm lg:w-[75%] mt-2">
+                        * this qr code and .conf file contains your private key;
+                        save it in a secure place.
+                      </p>
                     </h2>
-                    <div className="text-white ml-16 mr-2 lg:ml-0 lg:mr-0">
+
+                    <div className="flex flex-col items-center justify-center text-white lg:ml-0 lg:mr-0">
                       <QRCode value={qrCodeData} />
-                      <div className="mt-8 -ml-8">
+                      <div className="mt-8">
                         <a
                           href={`data:application/octet-stream,${encodeURIComponent(
                             qrCodeData

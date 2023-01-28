@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const createClient = async (req, res) => {
+const registerClient = async (req, res) => {
   let response;
   try {
     console.log(req.body);
@@ -15,4 +15,4 @@ const createClient = async (req, res) => {
   return res.status(200).json(response.data);
 };
 
-export default createClient;
+export default registerClient;
