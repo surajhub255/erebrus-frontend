@@ -5,6 +5,7 @@ import Link from "next/link";
 import About from "../components/About";
 import Features from "../components/Features";
 import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 //import Howitworks from "../components/Howitworks";
 
 export default function Home() {
@@ -37,7 +38,7 @@ export default function Home() {
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg "
+            className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg lg:mb-16"
           >
             <Link href="/demo">Get started</Link>
           </motion.div>
@@ -48,6 +49,7 @@ export default function Home() {
       {/* <Howitworks /> */}
       <Features />
       <Contact />
+      <Footer />
     </div>
   );
 }
