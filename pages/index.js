@@ -15,7 +15,7 @@ export default function Home() {
         <link rel="icon" href="/logo.svg" />
       </Head>
       <Navbar isHome={true} />
-      <div className="container mx-auto px-6 py-10 lg:-mt-24">
+      <div className="container mx-auto px-6 py-10">
         <div className="flex flex-col items-center justify-start lg:justify-center lg:h-screen lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
