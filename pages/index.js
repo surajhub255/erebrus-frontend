@@ -5,7 +5,7 @@ import Link from "next/link";
 import About from "../components/About";
 import Features from "../components/Features";
 import Contact from "../components/Contact";
-import Howitworks from "../components/Howitworks";
+//import Howitworks from "../components/Howitworks";
 
 export default function Home() {
   return (
@@ -20,14 +20,14 @@ export default function Home() {
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-4xl lg:text-5xl  font-bold text-gray-300 mb-6 lg:w-[35%] lg:text-center md:text-center "
+            className="text-4xl lg:text-5xl  font-bold text-gray-300 mb-6 lg:w-[35%] lg:text-center md:text-center md:w-[60%]"
           >
             Where decentralization meets VPN for ultimate internet security
           </motion.h1>
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-xl text-gray-600 mb-8 lg:w-[35%] lg:text-center md:text-center"
+            className="text-xl text-gray-600 mb-8 lg:w-[35%] lg:text-center md:text-center md:w-[60%]"
           >
             <p>
               Anonymous Virtual Private Network for accessing internet in
