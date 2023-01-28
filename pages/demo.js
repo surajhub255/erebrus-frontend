@@ -24,12 +24,12 @@ export default function FormResultPage() {
   const [formData, setFormData] = useState({
     name: "",
     tags: [],
-    walletAddress: address,
+    walletAddress: useAddress(),
     publicKey: "",
     enable: true,
     allowedIPs: ["0.0.0.0/0", "::/0"],
     address: ["10.0.0.1/24"],
-    createdBy: address,
+    createdBy: useAddress(),
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -42,7 +42,7 @@ export default function FormResultPage() {
       setError("");
       setIsOwned(false);
       const contract = new ethers.Contract(
-        "0x3091EFF0b0a8E176D962456fc26110414704B01a",
+        "0xA40166F872CC568b34410672eF3667cbc1865340",
         erebrusABI,
         provider
       );
@@ -70,24 +70,16 @@ export default function FormResultPage() {
 
   const handleSubmit = async (e) => {
     let UUID;
+    let presharedKey;
+    let DNS = "1.1.1.1";
+    let persistentKeepalive = "16";
+    let address;
     e.preventDefault();
     setLoading(true);
     try {
-      // Make a POST request to your server
-      await fetch("/api/registerClient", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          UUID = data.client.UUID;
-        });
-
+      // generate private key client-side
       let keyResponse;
-
+      let formData2 = formData;
       await fetch("/api/generateKeys", {
         method: "GET",
         headers: {
@@ -97,20 +89,42 @@ export default function FormResultPage() {
         .then((response) => response.json())
         .then((data) => {
           keyResponse = data;
+          formData2.publicKey = data.publicKey;
+        });
+
+      // register new client
+      await fetch("/api/registerClient", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData2),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          UUID = data.client.UUID;
+          presharedKey = data.client.PresharedKey;
+          address = data.client.Address;
         });
 
       const configFile = `[Interface]
-        Address = 10.0.0.10/32
-        PrivateKey = ${keyResponse.privateKey}
-        DNS = 1.1.1.1
+          Address = ${address}
+          PrivateKey = ${keyResponse.privateKey}
+          DNS = ${DNS}
 
-        [Peer]
-        PublicKey = ${keyResponse.publicKey}
-        PresharedKey = ${keyResponse.presharedKey}
-        AllowedIPs = 0.0.0.0/0, ::/0
-        Endpoint = us01.erebrus.lz1.in:51820
-        PersistentKeepalive = 16
-        uaz7meJGQtDOeBEfCEsJGHjHxPNNiGPpCEkCBnFXuTs=`;
+          [Peer]
+          PublicKey = fBPFyjWdHPPjvpMHjkFQfOgwrWAgHJE5xytdrRTMgWU=
+          PresharedKey = ${presharedKey}
+          AllowedIPs = 0.0.0.0/0, ::/0
+          Endpoint = us01.erebrus.lz1.in:51820
+          PersistentKeepalive = ${persistentKeepalive}`;
+
+      console.log(keyResponse);
+      console.log("private", keyResponse.privateKey);
+      console.log("public", keyResponse.publicKey);
+      console.log("preshared", presharedKey);
+
+      console.log(configFile);
 
       // // QR code data
       // await fetch(`/api/getClientConfig?UUID=${UUID}`, {
@@ -145,7 +159,7 @@ export default function FormResultPage() {
         <Head>
           <title>Erebrus | Demo</title>
         </Head>
-        <Navbar />
+        <Navbar isHome={true} />
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please connect your wallet to create a VPN client
         </div>
