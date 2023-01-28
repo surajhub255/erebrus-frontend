@@ -23,7 +23,7 @@ const Clients = () => {
     if (address) {
       setIsOwned(false);
       const contract = new ethers.Contract(
-        "0x3091EFF0b0a8E176D962456fc26110414704B01a",
+        "0xA40166F872CC568b34410672eF3667cbc1865340",
         erebrusABI,
         provider
       );
@@ -41,6 +41,12 @@ const Clients = () => {
         console.log(address);
         console.log(data1);
         setApiData1(data1);
+
+        const response2 = await fetch("/api/getServerInfo");
+        let data2 = await response2.json();
+        console.log(data2);
+        data2 = data2.server;
+        setApiData2(data2);
 
         // const apiCalls = data1.clients.map((item) =>
         //   fetch(`/api/getClientConfig?UUID=${item.UUID}`)
@@ -77,10 +83,10 @@ const Clients = () => {
       </Head>
       <Navbar />
       {isOwned ? (
-        <div className="container flex flex-wrap w-100 justify-center lg:items-center items-start mx-auto px-4 bg-black text-white h-screen pt-8 pb-8 mt-8 lg:-mt-8">
+        <div className="container flex flex-col lg:flex-wrap lg:flex-row w-100 lg:justify-center justify-start items-center mx-auto px-4 bg-black text-white h-screen pt-8 pb-8 mt-8 lg:-mt-8">
           {isLoading1 ? (
             <div className="bg-black h-screen">Loading...</div>
-          ) : apiData1 ? (
+          ) : apiData1 && apiData2 ? (
             apiData1.map((item1, index) => (
               <div className="mb-12 " key={item1.UUID}>
                 <div className="flex flex-col">
@@ -90,7 +96,15 @@ const Clients = () => {
                     </h2>
                   </div>
                   <div className="card-body">
-                    <p className="mt-2 text-gray-700 w-40 mb-4">{item1.UUID}</p>
+                    <p className="mt-2 text-gray-700 w-40 mb-4">
+                      UUID: {item1.UUID}
+                    </p>
+                    <p className="mt-2 text-gray-700 w-40 mb-4">
+                      Tags: {item1.Tags}
+                    </p>
+                    <p className="mt-2 text-gray-700 w-40 mb-4">
+                      Address: {apiData2.Address}
+                    </p>
                   </div>
                 </div>
               </div>
