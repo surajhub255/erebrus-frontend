@@ -27,7 +27,7 @@ const Mint = () => {
   useEffect(() => {
     if (address) {
       const contract = new ethers.Contract(
-        "0x3091EFF0b0a8E176D962456fc26110414704B01a",
+        "0xA40166F872CC568b34410672eF3667cbc1865340",
         erebrusABI,
         provider
       );
@@ -45,7 +45,7 @@ const Mint = () => {
     const signer = provider.getSigner();
 
     const contract = new ethers.Contract(
-      "0x3091EFF0b0a8E176D962456fc26110414704B01a",
+      "0xA40166F872CC568b34410672eF3667cbc1865340",
       erebrusABI,
       signer
     );
@@ -58,13 +58,16 @@ const Mint = () => {
       clearError();
       setLoadingTx(true);
       const tx = await contract.mintNFT({
-        value: ethers.utils.parseEther("0.1"),
+        value: ethers.utils.parseEther("0.05"),
       });
       tx.wait().then((transaction) => {
         if (transaction.status === 1) {
           console.log("Transaction mined and confirmed");
           setLoadingTx(false);
           setMinted(true);
+          if (!isOwned) {
+            setIsOwned(true);
+          }
         } else {
           console.log("Transaction failed or rejected by the user");
           setLoadingTx(false);
@@ -105,7 +108,7 @@ const Mint = () => {
           exit={{ opacity: 0 }}
           transition={transition}
         >
-          <div className="h-screen text-white flex flex-col justify-center items-center">
+          <div className="h-screen text-white flex flex-col lg:justify-center justify-start items-center mt-8 lg:mt-0">
             {`Number of NFTs owned: ${balance}`}
             <img
               src="./image1.jpeg"

@@ -3,17 +3,17 @@
         "inputs": [
             {
                 "internalType": "string",
-                "name": "name",
+                "name": "_name",
                 "type": "string"
             },
             {
                 "internalType": "string",
-                "name": "symbol",
+                "name": "_symbol",
                 "type": "string"
             },
             {
                 "internalType": "string",
-                "name": "_baseURI",
+                "name": "_initialURI",
                 "type": "string"
             },
             {
@@ -127,6 +127,44 @@
         "anonymous": false,
         "inputs": [
             {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "ownerOrApproved",
+                "type": "address"
+            }
+        ],
+        "name": "NFTBurnt",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "tokenId",
+                "type": "uint256"
+            },
+            {
+                "indexed": true,
+                "internalType": "address",
+                "name": "owner",
+                "type": "address"
+            }
+        ],
+        "name": "NFTMinted",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
                 "indexed": true,
                 "internalType": "bytes32",
                 "name": "role",
@@ -196,37 +234,6 @@
             }
         ],
         "name": "RoleRevoked",
-        "type": "event"
-    },
-    {
-        "anonymous": false,
-        "inputs": [
-            {
-                "indexed": false,
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            },
-            {
-                "components": [
-                    {
-                        "internalType": "address payable",
-                        "name": "account",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint96",
-                        "name": "value",
-                        "type": "uint96"
-                    }
-                ],
-                "indexed": false,
-                "internalType": "struct LibPart.Part[]",
-                "name": "royalties",
-                "type": "tuple[]"
-            }
-        ],
-        "name": "RoyaltiesSet",
         "type": "event"
     },
     {
@@ -307,6 +314,19 @@
     },
     {
         "inputs": [],
+        "name": "EREBRUS_ALLOWLISTED_ROLE",
+        "outputs": [
+            {
+                "internalType": "bytes32",
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
         "name": "EREBRUS_OPERATOR_ROLE",
         "outputs": [
             {
@@ -320,44 +340,7 @@
     },
     {
         "inputs": [],
-        "name": "EREBRUS_WHITELISTED_ROLE",
-        "outputs": [
-            {
-                "internalType": "bytes32",
-                "name": "",
-                "type": "bytes32"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "_user",
-                "type": "address"
-            },
-            {
-                "internalType": "bool",
-                "name": "_flag",
-                "type": "bool"
-            }
-        ],
-        "name": "UpdateAllowList",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "address",
-                "name": "",
-                "type": "address"
-            }
-        ],
-        "name": "allowList",
+        "name": "allowListMintOpen",
         "outputs": [
             {
                 "internalType": "bool",
@@ -432,19 +415,6 @@
         "type": "function"
     },
     {
-        "inputs": [],
-        "name": "batchId",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
         "inputs": [
             {
                 "internalType": "uint256",
@@ -452,7 +422,7 @@
                 "type": "uint256"
             }
         ],
-        "name": "burn",
+        "name": "burnNFT",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -477,26 +447,16 @@
         "type": "function"
     },
     {
-        "inputs": [
+        "inputs": [],
+        "name": "collectionRevealed",
+        "outputs": [
             {
-                "internalType": "uint256",
-                "name": "tokenId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_rateAmount",
-                "type": "uint256"
-            },
-            {
-                "internalType": "uint256",
-                "name": "_renewalFee",
-                "type": "uint256"
+                "internalType": "bool",
+                "name": "",
+                "type": "bool"
             }
         ],
-        "name": "createSubscription",
-        "outputs": [],
-        "stateMutability": "nonpayable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -515,49 +475,6 @@
     {
         "inputs": [
             {
-                "internalType": "bytes",
-                "name": "data",
-                "type": "bytes"
-            },
-            {
-                "internalType": "bytes",
-                "name": "key",
-                "type": "bytes"
-            }
-        ],
-        "name": "encryptDecrypt",
-        "outputs": [
-            {
-                "internalType": "bytes",
-                "name": "result",
-                "type": "bytes"
-            }
-        ],
-        "stateMutability": "pure",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "name": "encryptedData",
-        "outputs": [
-            {
-                "internalType": "bytes",
-                "name": "",
-                "type": "bytes"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "uint256",
                 "name": "tokenId",
                 "type": "uint256"
@@ -569,61 +486,6 @@
                 "internalType": "address",
                 "name": "",
                 "type": "address"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "id",
-                "type": "uint256"
-            }
-        ],
-        "name": "getRaribleV2Royalties",
-        "outputs": [
-            {
-                "components": [
-                    {
-                        "internalType": "address payable",
-                        "name": "account",
-                        "type": "address"
-                    },
-                    {
-                        "internalType": "uint96",
-                        "name": "value",
-                        "type": "uint96"
-                    }
-                ],
-                "internalType": "struct LibPart.Part[]",
-                "name": "",
-                "type": "tuple[]"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_batchId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bytes",
-                "name": "_key",
-                "type": "bytes"
-            }
-        ],
-        "name": "getRevealURI",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "revealedURI",
-                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -759,19 +621,6 @@
     },
     {
         "inputs": [],
-        "name": "maxInterval",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
         "name": "maxSupply",
         "outputs": [
             {
@@ -785,28 +634,22 @@
     },
     {
         "inputs": [],
-        "name": "minInterval",
-        "outputs": [
-            {
-                "internalType": "uint256",
-                "name": "",
-                "type": "uint256"
-            }
-        ],
-        "stateMutability": "view",
+        "name": "mintNFT",
+        "outputs": [],
+        "stateMutability": "payable",
         "type": "function"
     },
     {
         "inputs": [],
-        "name": "mintNFT",
+        "name": "mintPaused",
         "outputs": [
             {
-                "internalType": "uint256",
+                "internalType": "bool",
                 "name": "",
-                "type": "uint256"
+                "type": "bool"
             }
         ],
-        "stateMutability": "payable",
+        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -817,6 +660,25 @@
                 "internalType": "string",
                 "name": "",
                 "type": "string"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address",
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "name": "nftMints",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
             }
         ],
         "stateMutability": "view",
@@ -869,7 +731,7 @@
                 "type": "uint256"
             }
         ],
-        "name": "readClientconfig",
+        "name": "readClientConfig",
         "outputs": [
             {
                 "internalType": "string",
@@ -878,19 +740,6 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_tokenID",
-                "type": "uint256"
-            }
-        ],
-        "name": "renew",
-        "outputs": [],
-        "stateMutability": "payable",
         "type": "function"
     },
     {
@@ -914,53 +763,14 @@
     {
         "inputs": [
             {
-                "internalType": "bytes",
-                "name": "_key",
-                "type": "bytes"
-            }
-        ],
-        "name": "reveal",
-        "outputs": [
-            {
                 "internalType": "string",
-                "name": "revealedURI",
+                "name": "_revealURI",
                 "type": "string"
             }
         ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
         "name": "revealCollection",
         "outputs": [],
         "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "revealStatus",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [],
-        "name": "revealed",
-        "outputs": [
-            {
-                "internalType": "bool",
-                "name": "",
-                "type": "bool"
-            }
-        ],
-        "stateMutability": "view",
         "type": "function"
     },
     {
@@ -985,7 +795,7 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "id",
+                "name": "_tokenId",
                 "type": "uint256"
             },
             {
@@ -998,12 +808,12 @@
         "outputs": [
             {
                 "internalType": "address",
-                "name": "receiver",
+                "name": "",
                 "type": "address"
             },
             {
                 "internalType": "uint256",
-                "name": "royaltyAmount",
+                "name": "",
                 "type": "uint256"
             }
         ],
@@ -1064,19 +874,6 @@
     {
         "inputs": [
             {
-                "internalType": "address[]",
-                "name": "addresses",
-                "type": "address[]"
-            }
-        ],
-        "name": "setAllowList",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "address",
                 "name": "operator",
                 "type": "address"
@@ -1095,25 +892,6 @@
     {
         "inputs": [
             {
-                "internalType": "string",
-                "name": "_pass",
-                "type": "string"
-            }
-        ],
-        "name": "setPassword",
-        "outputs": [
-            {
-                "internalType": "string",
-                "name": "",
-                "type": "string"
-            }
-        ],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
                 "internalType": "uint256",
                 "name": "_publicSalePrice",
                 "type": "uint256"
@@ -1125,47 +903,6 @@
             }
         ],
         "name": "setPrice",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "string",
-                "name": "_revealURI",
-                "type": "string"
-            },
-            {
-                "internalType": "string",
-                "name": "_revealKey",
-                "type": "string"
-            }
-        ],
-        "name": "setReveal",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_tokenId",
-                "type": "uint256"
-            },
-            {
-                "internalType": "address payable",
-                "name": "_royaltiesReceipientAddress",
-                "type": "address"
-            },
-            {
-                "internalType": "uint96",
-                "name": "_percentageBasisPoints",
-                "type": "uint96"
-            }
-        ],
-        "name": "setRoyalties",
         "outputs": [],
         "stateMutability": "nonpayable",
         "type": "function"
@@ -1229,24 +966,6 @@
         "inputs": [
             {
                 "internalType": "uint256",
-                "name": "_tokenID",
-                "type": "uint256"
-            },
-            {
-                "internalType": "bool",
-                "name": "_status",
-                "type": "bool"
-            }
-        ],
-        "name": "toActive",
-        "outputs": [],
-        "stateMutability": "nonpayable",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
                 "name": "index",
                 "type": "uint256"
             }
@@ -1303,19 +1022,6 @@
             }
         ],
         "stateMutability": "view",
-        "type": "function"
-    },
-    {
-        "inputs": [
-            {
-                "internalType": "uint256",
-                "name": "_tokenID",
-                "type": "uint256"
-            }
-        ],
-        "name": "topUp",
-        "outputs": [],
-        "stateMutability": "payable",
         "type": "function"
     },
     {
