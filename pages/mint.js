@@ -4,6 +4,13 @@ import Navbar from "../components/Navbar";
 import { ethers } from "ethers";
 import erebrusABI from "../utils/erebrusABI.json";
 import Head from "next/head";
+import { motion } from "framer-motion";
+
+const transition = {
+  type: "tween",
+  ease: "easeInOut",
+  duration: 0.5,
+};
 
 const Mint = () => {
   const provider = new ethers.providers.InfuraProvider(
@@ -92,43 +99,57 @@ const Mint = () => {
       </Head>
       <Navbar />
       {isOwned ? (
-        <div className="h-screen text-white flex flex-col justify-center items-center -mt-16">
-          {`Number of NFTs owned: ${balance}`}
-          <img
-            src="./image1.jpeg"
-            alt="Mint Successful"
-            className="w-64 h-64 mt-8 mb-8"
-          ></img>
-          {isLoadingTx ? (
-            <div className="animate-spin text-white text-7xl">⛏</div>
-          ) : (
-            <>
-              <button
-                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-                onClick={mint}
-              >
-                Mint Erebrus NFT
-              </button>
-              {error && <div className="text-red-500 mt-4">{error}</div>}
-            </>
-          )}
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={transition}
+        >
+          <div className="h-screen text-white flex flex-col justify-center items-center">
+            {`Number of NFTs owned: ${balance}`}
+            <img
+              src="./image1.jpeg"
+              alt="Mint Successful"
+              className="w-64 h-64 mt-8 mb-8"
+            ></img>
+            {isLoadingTx ? (
+              <div className="animate-spin text-white text-7xl">⛏</div>
+            ) : (
+              <>
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={mint}
+                >
+                  Mint Erebrus NFT
+                </button>
+                {error && <div className="text-red-500 mt-4">{error}</div>}
+              </>
+            )}
+          </div>
+        </motion.div>
       ) : (
-        <div className="h-screen text-white flex flex-col justify-center items-center">
-          {isLoadingTx ? (
-            <div className="animate-spin text-white text-7xl">⛏</div>
-          ) : (
-            <>
-              <button
-                className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-                onClick={mint}
-              >
-                Mint Erebrus NFT
-              </button>
-              {error && <div className="text-red-500 mt-4">{error}</div>}
-            </>
-          )}
-        </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={transition}
+        >
+          <div className="h-screen text-white flex flex-col justify-center items-center">
+            {isLoadingTx ? (
+              <div className="animate-spin text-white text-7xl">⛏</div>
+            ) : (
+              <>
+                <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                  onClick={mint}
+                >
+                  Mint Erebrus NFT
+                </button>
+                {error && <div className="text-red-500 mt-4">{error}</div>}
+              </>
+            )}
+          </div>
+        </motion.div>
       )}
     </>
   );
