@@ -1,4 +1,7 @@
 import React from "react";
+import Link from "next/link";
+import { FaExternalLinkAlt, FaExternalLinkSquareAlt } from "react-icons/fa";
+import { GoLinkExternal } from "react-icons/go";
 
 const Howto = () => {
   return (
@@ -12,9 +15,19 @@ const Howto = () => {
         </h1>
         <div className="flex lg:flex-row flex-col items-center justify-center">
           <div className="flex flex-col items-center lg:mr-16 lg:mb-0 mb-12">
-            <img src="/erebrus_nft.png" className="mb-4 w-40 h-40" />
+            <Link
+              href="https://testnets.opensea.io/collection/erebrus-v4"
+              target={"_blank"}
+            >
+              <img src="/erebrus_nft.png" className="mb-4 w-40 h-40" />
+            </Link>
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
-              Get the Erebrus NFT.
+              <div className="flex items-center">
+                Get the Erebrus NFT{" "}
+                <Link href={"https://erebrus.io/vpn/mint"} target="_blank">
+                  <GoLinkExternal />
+                </Link>
+              </div>
             </h2>
             <p className="text-gray-600 lg:w-100 w-80">
               The team at Erebrus have created an innovative and easy way to
