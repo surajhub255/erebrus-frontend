@@ -39,9 +39,9 @@ const Howto = () => {
               Scan QR code or .conf
             </h2>
             <p className="text-gray-600 lg:w-100 w-80">
-              Once you've generated your config file for your VPN client, scan
-              the QR code or add the .conf file with the WireGuard® app to start
-              using your VPN!
+              Once you&apos;ve generated your config file for your VPN client,
+              scan the QR code or add the .conf file with the WireGuard® app to
+              start using your VPN!
             </p>
           </div>
         </div>
