@@ -3,8 +3,10 @@ import Navbar from "../components/Navbar";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Features from "../components/Features";
-import Contact from "../components/Contact";
+
 import Footer from "../components/Footer";
+import Howto from "../components/Howto";
+import Pricing from "../components/Pricing";
 //import Howitworks from "../components/Howitworks";
 
 export default function Home() {
@@ -45,8 +47,9 @@ export default function Home() {
       </div>
 
       <Features />
-      {/* <Howitworks /> */}
-      <Contact />
+      <Howto />
+      <Pricing />
+
       <Footer />
     </div>
   );

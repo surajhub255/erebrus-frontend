@@ -34,7 +34,7 @@ const Features = () => {
     <div
       id="features"
       ref={setAboutRef}
-      className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0"
+      className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mb-36 lg:mb-12"
     >
       <div className="mb-2 font-figtree lg:w-[40%] md:w-[60%] w-[85%] text-center">
         <motion.h2

@@ -32,7 +32,7 @@ const Navbar = ({ isHome }) => {
           <Link href="/#features" scroll={false} className="text-gray-300 mr-8">
             Features
           </Link>
-          <Link href="/#howto" className="text-gray-300 mr-8">
+          <Link href="/#howto" scroll={false} className="text-gray-300 mr-8">
             How To
           </Link>
           <Link href="/#pricing" className="text-gray-300 mr-8" scroll={false}>
@@ -90,7 +90,7 @@ const Navbar = ({ isHome }) => {
                   How To
                 </Link>
                 <Link
-                  href="/pricing"
+                  href="/#pricing"
                   className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
                   scroll={false}
                 >

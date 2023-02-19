@@ -1,74 +1,83 @@
-import React from "react";
+import { FaFacebook, FaYoutube, FaGithub, FaDiscord } from "react-icons/fa";
 import Link from "next/link";
-import Image from "next/image";
 
 const Footer = () => {
   return (
-    <div className="font-figtree">
-      <footer className="p-4 bg-gray-700 sm:p-6 dark:bg-primary-600">
-        <div className="md:flex md:justify-between">
-          <div className="mb-6 md:mb-0">
-            <Link href="/" className="flex items-center ">
-              <span className="self-center italic cursor-pointer text-4xl ml-10 font-semibold whitespace-nowrap dark:text-white">
-                <div className="-mt-16 -mb-32 -ml-16 lg:-mt-12 md:-mt-20">
-                  <Image
-                    src="/logo.svg"
-                    alt="erebrus-logo"
-                    width={100}
-                    height={100}
-                  />
-                </div>
-              </span>
-            </Link>
+    <footer className="bg-[#1A202C]">
+      <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+        <div className="mt-4 flex justify-between">
+          <div>
+            <h3 className="text-xl font-semibold tracking-wide text-gray-200">
+              Follow Us
+            </h3>
+            <ul className="mt-4 flex mr-4">
+              <li className="mr-4">
+                <Link
+                  href="https://www.facebook.com/Lazarus.Network?mibextid=LQQJ4d"
+                  target={"_blank"}
+                  className="text-2xl hover:text-[#4267B2]"
+                >
+                  <FaFacebook />
+                </Link>
+              </li>
+              <li className="mr-4">
+                <Link
+                  href="https://youtube.com/shorts/gBy4j5ZvKZE?feature=share"
+                  className="text-2xl hover:text-[#FF0000]"
+                  target={"_blank"}
+                >
+                  <FaYoutube />
+                </Link>
+              </li>
+              <li className="mr-4">
+                <Link
+                  href="https://github.com/orgs/TheLazarusNetwork/repositories?q=erebrus&type=all&language=&sort="
+                  className="text-2xl hover:text-[#f5f5f5]"
+                  target={"_blank"}
+                >
+                  <FaGithub />
+                </Link>
+              </li>
+            </ul>
           </div>
-          <div className="grid grid-cols-2 gap-6 mr-10 sm:gap-6 sm:grid-cols-2">
-            {/* <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Resources
-              </h2>
-              <ul className="text-black dark:text-gray-400">
-                <li className="mb-4">
-                  <Link href="https://flowbite.com/" className="hover:underline">
-                    Flowbite
-                  </Link>
-                </li>
-                <li>
-                  <Link href="https://tailwindcss.com/" className="hover:underline">
-                    Tailwind CSS
-                  </Link>
-                </li>
-              </ul>
-            </div> */}
-            <div>
-              <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase dark:text-white">
-                Follow us
-              </h2>
-              <ul className="text-black dark:text-gray-400">
-                <li>
-                  <Link
-                    href="https://discord.gg/vd2j5Kyt"
-                    className="hover:underline"
-                    target={"_blank"}
-                  >
-                    Discord
-                  </Link>
-                </li>
-              </ul>
-            </div>
+          <div>
+            <h3 className="text-xl font-semibold tracking-wide text-gray-200">
+              Subscribe for updates
+            </h3>
+            <form className="mt-4 flex">
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className="px-4 py-2 rounded-l-md focus:outline-none"
+                placeholder="Email"
+              />
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 rounded-r-md"
+              >
+                Subscribe
+              </button>
+            </form>
           </div>
         </div>
-
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">
-            © 2023{" "}
-            <Link href="/" className="hover:underline">
-              Erebrus
+        <div className="mt-8 text-sm text-gray-500 flex flex-col justify-between items-center sm:flex-row">
+          <p className="order-2 sm:order-1">
+            Erebrus 2023 &copy; All rights reserved.
+          </p>
+          <div className="flex items-center order-1 sm:order-2 text-gray-600">
+            <p>Contact us on</p>
+            <Link
+              href="https://discord.gg/cj2Xt2u5Pj"
+              className="text-2xl ml-2 hover:text-[#738ADB]"
+              target="_blank"
+            >
+              <FaDiscord />
             </Link>
-            . All Rights Reserved.
-          </span>
+          </div>
         </div>
-      </footer>
-    </div>
+      </div>
+    </footer>
   );
 };
 
