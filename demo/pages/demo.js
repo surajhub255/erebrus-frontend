@@ -80,31 +80,30 @@ export default function FormResultPage() {
       // generate private key client-side
       let keyResponse;
       let formData2 = formData;
-      await fetch("/api/generateKeys", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          keyResponse = data;
-          formData2.publicKey = data.publicKey;
-        });
+      await axios.get("/api/generateKeys").then((response) => {
+        keyResponse = response.data;
+        formData2.publicKey = keyResponse.publicKey;
+      });
+
+      // get token from session storage
+      const token = sessionStorage.getItem("token");
 
       // register new client
-      await fetch("/api/registerClient", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData2),
-      })
-        .then((response) => response.json())
+      await axios
+        .post("/api/registerClient", formData2, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          params: { token },
+        })
+        .then((response) => response.data)
         .then((data) => {
           UUID = data.client.UUID;
           presharedKey = data.client.PresharedKey;
           address = data.client.Address;
+        })
+        .catch((error) => {
+          setError(error.message);
         });
 
       const configFile = `[Interface]
@@ -125,18 +124,6 @@ export default function FormResultPage() {
       console.log("preshared", presharedKey);
 
       console.log(configFile);
-
-      // // QR code data
-      // await fetch(`/api/getClientConfig?UUID=${UUID}`, {
-      //   method: "GET",
-      //   headers: {
-      //     "Content-Type": "application/config",
-      //   },
-      // })
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     setQrCodeData(data);
-      //   });
 
       setQrCodeData(configFile);
 
@@ -159,7 +146,6 @@ export default function FormResultPage() {
         <Head>
           <title>Erebrus | Demo</title>
         </Head>
-        <Navbar isHome={true} />
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please connect your wallet to create a VPN client
         </div>
@@ -172,7 +158,6 @@ export default function FormResultPage() {
       <Head>
         <title>Erebrus | Demo</title>
       </Head>
-      <Navbar />
       {isOwned ? (
         <div className="h-screen flex mx-auto items-start justify-center lg:items-center mt-8 lg:mt-0">
           {!showResult && (

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 import QRCode from "qrcode.react";
 import { useAddress } from "@thirdweb-dev/react";
 import Navbar from "../components/Navbar";
@@ -34,30 +35,28 @@ const Clients = () => {
       });
       const fetchData = async () => {
         setIsLoading1(true);
-        const response1 = await fetch("/api/getClients");
-        let data1 = await response1.json();
-        console.log(data1);
-        data1 = data1.clients.filter((obj) => obj.WalletAddress === address);
-        console.log(address);
-        console.log(data1);
-        setApiData1(data1);
+        try {
+          // Get token from session storage
+          const token = sessionStorage.getItem("token");
 
-        const response2 = await fetch("/api/getServerInfo");
-        let data2 = await response2.json();
-        console.log(data2);
-        data2 = data2.server;
-        setApiData2(data2);
+          const response1 = await axios.get("/api/getClients", {
+            params: { token },
+          });
+          const data1 = response1.data.clients.filter(
+            (obj) => obj.WalletAddress === address
+          );
+          setApiData1(data1);
 
-        // const apiCalls = data1.clients.map((item) =>
-        //   fetch(`/api/getClientConfig?UUID=${item.UUID}`)
-        // );
-        // const responses = await Promise.all(apiCalls);
-        // const data2 = await Promise.all(responses.map((res) => res.json()));
-        // setApiData2(data2);
-        // console.log(data2);
+          const response2 = await axios.get("/api/getServerInfo", {
+            params: { token },
+          });
+          const data2 = response2.data.server;
+          setApiData2(data2);
+        } catch (error) {
+          console.error(error);
+        }
         setIsLoading1(false);
       };
-
       fetchData();
     }
   }, [address]);
@@ -68,7 +67,6 @@ const Clients = () => {
         <Head>
           <title>Erebrus | Clients</title>
         </Head>
-        <Navbar />
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please connect your wallet to view your VPN clients
         </div>
@@ -81,9 +79,8 @@ const Clients = () => {
       <Head>
         <title>Erebrus | Clients</title>
       </Head>
-      <Navbar />
       {isOwned ? (
-        <div className="container flex flex-col lg:flex-wrap lg:flex-row w-100 lg:justify-center justify-start items-center mx-auto px-4 bg-black text-white h-screen pt-8 pb-8 mt-8 lg:-mt-8">
+        <div className="container flex flex-col lg:flex-wrap lg:flex-row w-100 lg:justify-center justify-start items-center mx-auto px-4 bg-black text-white lg:h-screen h-full pt-8 pb-8 mt-8 lg:-mt-8">
           {isLoading1 ? (
             <div className="bg-black h-screen">Loading...</div>
           ) : apiData1 && apiData2 ? (
