@@ -24,7 +24,7 @@ const Howto = () => {
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
               <div className="flex items-center">
                 Get the Erebrus NFT{" "}
-                <Link href={"https://erebrus.io/vpn/mint"} target="_blank">
+                <Link href={"https://app.erebrus.io/mint"} target="_blank">
                   <GoLinkExternal />
                 </Link>
               </div>
