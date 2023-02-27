@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useNetworkMismatch,
   useNetwork,
   useAddress,
   ChainId,
   ConnectWallet,
+  useSDK,
 } from "@thirdweb-dev/react";
+import axios from "axios";
 import { motion } from "framer-motion";
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
@@ -15,6 +17,11 @@ const variants = {
 
 const Navbar = ({ isHome }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [signature, setSignature] = useState("");
+  const [challengeId, setChallengeId] = useState("");
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const sdk = useSDK();
 
   const address = useAddress();
 
@@ -23,6 +30,69 @@ const Navbar = ({ isHome }) => {
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  useEffect(() => {
+    const getSignMessage = async () => {
+      if (!address || address !== sessionStorage.getItem("address")) {
+        signOut();
+      }
+      if (address && !isSignedIn) {
+        sessionStorage.setItem("address", address);
+        // make a get request with query params as wallet address
+        try {
+          const response = await axios.get("api/getChallengeId", {
+            params: { walletAddress: address },
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          setMessage(response.data.eula + response.data.challangeId);
+          setChallengeId(response.data.challangeId);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    };
+    getSignMessage();
+  }, [address, isSignedIn]);
+
+  const signMessage = async () => {
+    setIsSignedIn(false);
+    console.log("signing message");
+    const signature = await sdk?.wallet.sign(message);
+    setSignature(signature);
+    try {
+      //make a post request to the erebrus server with the signature and challengeId
+      const response = await axios.post(
+        "api/getToken",
+        {
+          signature,
+          challengeId,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.data.status === 200) {
+        //store the token in the session storage
+        sessionStorage.setItem("token", response.data.token);
+      }
+      setIsSignedIn(true);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const signOut = () => {
+    sessionStorage.removeItem("token");
+    setMessage("");
+    setSignature("");
+    setChallengeId("");
+    setIsSignedIn(false);
   };
 
   return (
@@ -43,9 +113,6 @@ const Navbar = ({ isHome }) => {
           </Link>
         </div>
         <div className="hidden lg:flex items-center">
-          <Link href="/#about" scroll={false} className="text-gray-300 mr-8">
-            About
-          </Link>
           <Link href="/demo" className="text-gray-300 mr-8">
             Demo
           </Link>
@@ -63,9 +130,24 @@ const Navbar = ({ isHome }) => {
               Switch To Mumbai
             </button>
           )}
-          <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl bg-white">
-            <ConnectWallet />
-          </div>
+          {address && !isSignedIn && (
+            <button
+              className="bg-blue-500 text-white lg:mr-20 font-bold py-2 px-4 rounded-lg"
+              onClick={signMessage}
+            >
+              Sign In
+            </button>
+          )}
+          {address && isSignedIn && (
+            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
+              <ConnectWallet />
+            </div>
+          )}
+          {!address && (
+            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
+              <ConnectWallet />
+            </div>
+          )}
         </div>
         <div className="block lg:hidden">
           <button
@@ -97,13 +179,6 @@ const Navbar = ({ isHome }) => {
             <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:justify-between">
               <div className="flex flex-col lg:flex-row items-center">
                 <Link
-                  href="/#about"
-                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
-                  scroll={false}
-                >
-                  About
-                </Link>
-                <Link
                   href="/demo"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                   scroll={false}
@@ -131,9 +206,25 @@ const Navbar = ({ isHome }) => {
                     Switch To Mumbai
                   </button>
                 )}
-                <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-                  <ConnectWallet />
-                </div>
+
+                {address && !isSignedIn && (
+                  <button
+                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                    onClick={signMessage}
+                  >
+                    Sign In
+                  </button>
+                )}
+                {address && isSignedIn && (
+                  <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
+                    <ConnectWallet />
+                  </div>
+                )}
+                {!address && (
+                  <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
+                    <ConnectWallet />
+                  </div>
+                )}
               </div>
             </div>
           </div>
