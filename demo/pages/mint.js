@@ -87,7 +87,6 @@ const Mint = () => {
         <Head>
           <title>Erebrus | Clients</title>
         </Head>
-        <Navbar />
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please connect your wallet to view your NFT
         </div>
@@ -100,7 +99,6 @@ const Mint = () => {
       <Head>
         <title>Erebrus | Clients</title>
       </Head>
-      <Navbar />
       {isOwned ? (
         <motion.div
           initial={{ opacity: 0 }}
