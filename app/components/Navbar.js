@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   useNetworkMismatch,
   useNetwork,
@@ -10,6 +10,8 @@ import {
 } from "@thirdweb-dev/react";
 import axios from "axios";
 import { motion } from "framer-motion";
+import { AuthContext } from "../AuthContext";
+
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
   closed: { opacity: 0, y: 0 },
@@ -20,7 +22,7 @@ const Navbar = ({ isHome }) => {
   const [message, setMessage] = useState("");
   const [signature, setSignature] = useState("");
   const [challengeId, setChallengeId] = useState("");
-  const [isSignedIn, setIsSignedIn] = useState(false);
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const sdk = useSDK();
 
   const address = useAddress();
@@ -33,28 +35,46 @@ const Navbar = ({ isHome }) => {
   };
 
   useEffect(() => {
+    const storedToken = localStorage.getItem("token");
+    if (storedToken) {
+      setIsSignedIn(true);
+    }
+
+    let timeoutId = null;
+
     const getSignMessage = async () => {
       if (!address || address !== sessionStorage.getItem("address")) {
-        signOut();
-      }
-      if (address && !isSignedIn) {
-        sessionStorage.setItem("address", address);
-        // make a get request with query params as wallet address
-        try {
-          const response = await axios.get("api/getChallengeId", {
-            params: { walletAddress: address },
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          setMessage(response.data.eula + response.data.challangeId);
-          setChallengeId(response.data.challangeId);
-        } catch (error) {
-          console.error(error);
+        if (timeoutId !== null) {
+          clearTimeout(timeoutId);
         }
+
+        timeoutId = setTimeout(() => {
+          signOut();
+        }, 500);
+      } else {
+        if (timeoutId !== null) {
+          clearTimeout(timeoutId);
+        }
+
+        const response = await axios.get("api/getChallengeId", {
+          params: { walletAddress: address },
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        setMessage(response.data.eula + response.data.challangeId);
+        setChallengeId(response.data.challangeId);
       }
     };
+
     getSignMessage();
+
+    return () => {
+      if (timeoutId !== null) {
+        clearTimeout(timeoutId);
+      }
+    };
   }, [address, isSignedIn]);
 
   const signMessage = async () => {
@@ -79,6 +99,7 @@ const Navbar = ({ isHome }) => {
       if (response.data.status === 200) {
         //store the token in the session storage
         sessionStorage.setItem("token", response.data.token);
+        localStorage.setItem("token", response.data.token);
       }
       setIsSignedIn(true);
       console.log(response.data);
@@ -89,6 +110,7 @@ const Navbar = ({ isHome }) => {
 
   const signOut = () => {
     sessionStorage.removeItem("token");
+    localStorage.removeItem("token");
     setMessage("");
     setSignature("");
     setChallengeId("");

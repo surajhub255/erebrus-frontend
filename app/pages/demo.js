@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
 import QRCode from "qrcode.react";
@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import { ethers } from "ethers";
 import erebrusABI from "../utils/erebrusABI.json";
 import Head from "next/head";
+import { AuthContext } from "../AuthContext";
 
 const transition = {
   type: "tween",
@@ -36,6 +37,7 @@ export default function FormResultPage() {
   const [qrCodeData, setQrCodeData] = useState(null);
   const [configData, setConfigData] = useState(null);
   const [showResult, setShowResult] = useState(false);
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (address) {
@@ -140,14 +142,14 @@ export default function FormResultPage() {
     }
   };
 
-  if (!address) {
+  if (!isSignedIn) {
     return (
       <>
         <Head>
           <title>Erebrus | Demo</title>
         </Head>
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
-          Please connect your wallet to create a VPN client
+          Please sign in to Erebrus to create a VPN client
         </div>
       </>
     );
@@ -167,8 +169,8 @@ export default function FormResultPage() {
               exit={{ opacity: 0 }}
               transition={transition}
             >
-              <div className="flex lg:flex-row flex-col justify-center items-center mb-24">
-                <h2 className="font-bold text-4xl lg:text-6xl mb-8 text-gray-200 lg:w-[50%] w-[75%] lg:mb-2 lg:text-left text-center">
+              <div className="flex lg:flex-row flex-col justify-center items-center">
+                <h2 className="font-bold text-4xl lg:text-6xl mb-8 text-gray-200 lg:w-[50%] w-[75%] lg:text-left text-center lg:mb-48">
                   Create a VPN Subscription
                 </h2>
                 <div>
@@ -195,7 +197,7 @@ export default function FormResultPage() {
                         <button
                           type="submit"
                           disabled={loading}
-                          className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg"
+                          className="text-white bg-blue-500 font-bold py-2 px-4 rounded-lg lg:mb-48"
                         >
                           Submit
                         </button>
@@ -221,7 +223,7 @@ export default function FormResultPage() {
                 {error && <p className="text-red-500">{error}</p>}
                 {qrCodeData && (
                   <div className="flex lg:flex-row flex-col justify-center items-center">
-                    <button className="bg-blue-500 rounded-full lg:mr-24 mb-8">
+                    <button className="bg-blue-500 rounded-full lg:mr-24 mb-8 lg:mb-48">
                       <svg
                         className="text-white"
                         width="36"
@@ -237,7 +239,7 @@ export default function FormResultPage() {
                         />
                       </svg>
                     </button>
-                    <h2 className="font-bold text-2xl lg:text-5xl lg:mb-2 text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6 lg:ml-16">
+                    <h2 className="font-bold text-2xl lg:text-5xl text-gray-200 lg:w-[30%] w-[75%] text-center lg:text-left mb-6 lg:ml-16 lg:mb-48">
                       Scan QR using the WireGuard® app and activate tunnel or
                       download .conf file to start using VPN 🎉
                       <p className="text-orange-400 lg:text-lg text-sm lg:w-[75%] mt-2">
@@ -248,7 +250,7 @@ export default function FormResultPage() {
 
                     <div className="flex flex-col items-center justify-center text-white lg:ml-0 lg:mr-0">
                       <QRCode value={qrCodeData} />
-                      <div className="mt-8">
+                      <div className="mt-8 lg:mb-48">
                         <a
                           href={`data:application/octet-stream,${encodeURIComponent(
                             qrCodeData

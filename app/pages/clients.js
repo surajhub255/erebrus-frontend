@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import QRCode from "qrcode.react";
 import { useAddress } from "@thirdweb-dev/react";
@@ -8,6 +8,7 @@ import erebrusABI from "../utils/erebrusABI.json";
 import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { AuthContext } from "../AuthContext";
 
 const Clients = () => {
   const provider = new ethers.providers.InfuraProvider(
@@ -19,6 +20,7 @@ const Clients = () => {
   const [apiData1, setApiData1] = useState(null);
   const [apiData2, setApiData2] = useState(null);
   const [isLoading1, setIsLoading1] = useState(false);
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (address) {
@@ -61,14 +63,14 @@ const Clients = () => {
     }
   }, [address]);
 
-  if (!address) {
+  if (!isSignedIn) {
     return (
       <>
         <Head>
           <title>Erebrus | Clients</title>
         </Head>
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
-          Please connect your wallet to view your VPN clients
+          Please sign in to Erebrus to view your VPN clients
         </div>
       </>
     );

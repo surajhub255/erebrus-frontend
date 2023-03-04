@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useAddress } from "@thirdweb-dev/react";
 import Navbar from "../components/Navbar";
 import { ethers } from "ethers";
 import erebrusABI from "../utils/erebrusABI.json";
 import Head from "next/head";
 import { motion } from "framer-motion";
+import { AuthContext } from "../AuthContext";
 
 const transition = {
   type: "tween",
@@ -23,9 +24,11 @@ const Mint = () => {
   const [isLoadingTx, setLoadingTx] = useState(false);
   const [error, setError] = useState(null);
   const [isMinted, setMinted] = useState(false);
+  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
 
   useEffect(() => {
     if (address) {
+      setIsOwned(false);
       const contract = new ethers.Contract(
         "0xA40166F872CC568b34410672eF3667cbc1865340",
         erebrusABI,
@@ -81,14 +84,14 @@ const Mint = () => {
     }
   };
 
-  if (!address) {
+  if (!isSignedIn) {
     return (
       <>
         <Head>
           <title>Erebrus | Clients</title>
         </Head>
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
-          Please connect your wallet to view your NFT
+          Please sign in to Erebrus to view your NFT
         </div>
       </>
     );
@@ -118,7 +121,7 @@ const Mint = () => {
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
@@ -141,7 +144,7 @@ const Mint = () => {
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
