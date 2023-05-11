@@ -29,7 +29,6 @@ const Pricing = () => {
         <a
           href="https://app.erebrus.io/"
           className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-full"
-          target={"_blank"}
         >
           Get Now
         </a>

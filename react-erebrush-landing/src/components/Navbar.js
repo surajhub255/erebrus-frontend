@@ -20,7 +20,7 @@ const Navbar = ({ isHome }) => {
         <div className="flex items-center">
           <a href="/" scroll={false}>
             <div className="block -mb-8 -mt-8">
-              <img src="/logo.svg" alt="Logo" className="w-20" />
+              <img src="../src/assets/logo.svg" alt="Logo" className="w-20" />
             </div>
           </a>
           <a href="/" scroll={false}>
@@ -98,7 +98,6 @@ const Navbar = ({ isHome }) => {
                 <a
                   href="https://app.erebrus.io/"
                   className="bg-blue-500 text-white font-bold py-2 px-6 rounded-lg lg:mr-0 lg:mb-0"
-                  target={"_blank"}
                 >
                   Sign Up
                 </a>

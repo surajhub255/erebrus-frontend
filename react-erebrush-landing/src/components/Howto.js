@@ -1,7 +1,7 @@
 import React from "react";
-import { FaExternalLinkAlt, FaExternalLinkSquareAlt } from "react-icons/fa";
 import { GoLinkExternal } from "react-icons/go";
-
+import erebrush from '../assets/erebrus_nft.png';
+import qr from '../assets/sample_qr.png';
 const Howto = () => {
   return (
     <div
@@ -16,14 +16,13 @@ const Howto = () => {
           <div className="flex flex-col items-center lg:mr-16 lg:mb-0 mb-12">
             <a
               href="https://testnets.opensea.io/collection/erebrus-v4"
-              target={"_blank"}
             >
-              <img src="/erebrus_nft.png" className="mb-4 w-40 h-40" />
+              <img src={erebrush} alt="erebrus-nft" className="mb-4 w-40 h-40" />
             </a>
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
               <div className="flex items-center">
                 Get the Erebrus NFT{" "}
-                <a href={"https://app.erebrus.io/mint"} target="_blank">
+                <a href={"https://app.erebrus.io/mint"}>
                   <GoLinkExternal />
                 </a>
               </div>
@@ -35,7 +34,7 @@ const Howto = () => {
             </p>
           </div>
           <div className="flex flex-col items-center lg:mr-16 lg:mb-0 mb-12">
-            <img src="/sample_qr.png " className="mb-4 w-40 h-40" />
+            <img src={qr} alt="sample" className="mb-4 w-40 h-40" />
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
               Generate client config file
             </h2>

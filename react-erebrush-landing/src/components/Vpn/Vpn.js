@@ -31,7 +31,7 @@ const Vpn=()=> {
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
             className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg "
           >
-            <a href="https://app.erebrus.io/" target={"_blank"}>
+            <a href="https://app.erebrus.io/">
               Get started
             </a>
           </motion.div>

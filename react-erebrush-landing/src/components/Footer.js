@@ -18,7 +18,6 @@ const Footer = () => {
               <li className="mr-4">
                 <a
                   href="https://www.facebook.com/Lazarus.Network?mibextid=LQQJ4d"
-                  target={"_blank"}
                   className="text-2xl hover:text-[#4267B2]"
                 >
                   <FaFacebook />
@@ -27,7 +26,6 @@ const Footer = () => {
               <li className="mr-4">
                 <a
                   href="https://twitter.com/LazarusNetwork"
-                  target={"_blank"}
                   className="text-2xl hover:text-[#1DA1F2]"
                 >
                   <FaTwitter />
@@ -37,7 +35,6 @@ const Footer = () => {
                 <a
                   href="https://youtube.com/shorts/gBy4j5ZvKZE?feature=share"
                   className="text-2xl hover:text-[#FF0000]"
-                  target={"_blank"}
                 >
                   <FaYoutube />
                 </a>
@@ -46,7 +43,6 @@ const Footer = () => {
                 <a
                   href="https://github.com/orgs/TheLazarusNetwork/repositories?q=erebrus&type=all&language=&sort="
                   className="text-2xl hover:text-[#f5f5f5]"
-                  target={"_blank"}
                 >
                   <FaGithub />
                 </a>
@@ -83,7 +79,6 @@ const Footer = () => {
             <a
               href="https://discord.gg/cj2Xt2u5Pj"
               className="text-2xl ml-2 hover:text-[#738ADB]"
-              target="_blank"
             >
               <FaDiscord />
             </a>
