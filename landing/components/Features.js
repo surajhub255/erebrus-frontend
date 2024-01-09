@@ -49,7 +49,7 @@ const Features = () => {
           animate={animation}
           initial="hidden"
           variants={itemVariants}
-          className="text-xl lg:text-xl font-figtree opacity-50 text-gray-600 text-center lg:mb-24 mb-12"
+          className="text-xl lg:text-xl font-figtree opacity-50 text-white text-center lg:mb-24 mb-12"
         >
           Be a part of it.
         </motion.h1>
@@ -67,7 +67,7 @@ const Features = () => {
               <motion.h1 className="text-white font-bold text-xl">
                 Power of Decentralization
               </motion.h1>
-              <motion.p className="text-gray-600 lg:w-[80%]">
+              <motion.p className="text-gray-400 lg:w-[80%]">
                 Equipped with Blockchain based Security and verified Hosting
                 Providers, you get to experience the true power of
                 decentralization.
@@ -80,7 +80,7 @@ const Features = () => {
               <motion.h1 className="text-white font-bold text-xl">
                 Fast Speed & Unlimited Bandwidth.
               </motion.h1>
-              <motion.p className="text-gray-600 lg:w-[80%]">
+              <motion.p className="text-gray-400 lg:w-[80%]">
                 We offer speeds that match popular providers out there, allowing
                 for a fast browsing experience.
               </motion.p>
@@ -100,7 +100,7 @@ const Features = () => {
               <motion.h1 className="text-white font-bold text-xl">
                 IP Address Protection
               </motion.h1>
-              <motion.p className="text-gray-600 lg:w-[80%]">
+              <motion.p className="text-gray-400 lg:w-[80%]">
                 Hide your IP address and location from websites and applications
                 to keep your search history and downloads private.
               </motion.p>
@@ -112,7 +112,7 @@ const Features = () => {
               <motion.h1 className="text-white font-bold text-xl">
                 Multiple Devices
               </motion.h1>
-              <motion.p className="text-gray-600 lg:w-[80%]">
+              <motion.p className="text-gray-400 lg:w-[80%]">
                 Now you can access a fast and secure internet connection on
                 multiple devices! Connect to up to 2 devices starting on our
                 starter plan.
@@ -132,7 +132,7 @@ const Features = () => {
               <motion.h1 className="text-white font-bold text-xl">
                 NFT Subscriptions
               </motion.h1>
-              <motion.p className="text-gray-600 lg:w-[80%]">
+              <motion.p className="text-gray-400 lg:w-[80%]">
                 Pay using cryptocurrencies and surf the internet securely -
                 Anonymous Browsing without sacrificing speed or bandwidth had
                 never been this easy.

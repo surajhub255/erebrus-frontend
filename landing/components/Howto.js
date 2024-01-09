@@ -29,7 +29,7 @@ const Howto = () => {
                 </Link>
               </div>
             </h2>
-            <p className="text-gray-600 lg:w-100 w-80">
+            <p className="text-gray-400 lg:w-100 w-80">
               The team at Erebrus have created an innovative and easy way to
               purchase a VPN subscription. All you need is a wallet address with
               some MATIC!
@@ -40,7 +40,7 @@ const Howto = () => {
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
               Generate client config file
             </h2>
-            <p className="text-gray-600 lg:w-100 w-80">
+            <p className="text-gray-400 lg:w-100 w-80">
               Once you have the Erebrus NFT, it will allow you to create VPN
               clients based on a name, region and device - this step will
               generate your VPN client config
@@ -51,7 +51,7 @@ const Howto = () => {
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold -mt-6">
               Scan QR code or .conf
             </h2>
-            <p className="text-gray-600 lg:w-100 w-80">
+            <p className="text-gray-400 lg:w-100 w-80">
               Once you&apos;ve generated your config file for your VPN client,
               scan the QR code or add the .conf file with the WireGuard® app to
               start using your VPN!

@@ -16,7 +16,7 @@ const Footer = () => {
             <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
               Follow Us
             </h3>
-            <ul className="mt-4 flex mr-4">
+            <ul className="mt-4 flex mr-4 text-gray-400">
               <li className="mr-4">
                 <Link
                   href="https://www.facebook.com/Lazarus.Network?mibextid=LQQJ4d"
@@ -76,11 +76,11 @@ const Footer = () => {
             </form>
           </div>
         </div>
-        <div className="mt-8 text-sm text-gray-500 flex flex-col justify-between items-center sm:flex-row">
+        <div className="mt-8 text-sm text-gray-400 flex flex-col justify-between items-center sm:flex-row">
           <p className="order-2 sm:order-1">
             Erebrus 2023 &copy; All rights reserved.
           </p>
-          <div className="flex items-center order-1 sm:order-2 text-gray-600 lg:mr-48 md:mr-48">
+          <div className="flex items-center order-1 sm:order-2 text-gray-400 lg:mr-48 md:mr-48">
             <p>Contact us on</p>
             <Link
               href="https://discord.gg/cj2Xt2u5Pj"

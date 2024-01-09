@@ -29,7 +29,7 @@ export default function Home() {
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-xl text-gray-600 mb-8 lg:w-[35%] lg:text-center md:text-center md:w-[60%]"
+            className="text-xl text-gray-400 mb-8 lg:w-[35%] lg:text-center md:text-center md:w-[60%]"
           >
             <p>
               Anonymous Virtual Private Network for accessing internet in
