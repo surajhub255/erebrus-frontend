@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }) {
           <Navbar />
           <Component {...pageProps} />
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </AuthProvider>
     </ThirdwebProvider>
   );

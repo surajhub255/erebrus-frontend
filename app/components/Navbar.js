@@ -9,6 +9,7 @@ import {
   useSDK,
 } from "@thirdweb-dev/react";
 import axios from "axios";
+import Cookies from 'js-cookie';
 import { motion } from "framer-motion";
 import { AuthContext } from "../AuthContext";
 
@@ -25,7 +26,9 @@ const Navbar = ({ isHome }) => {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const sdk = useSDK();
 
-  const address = useAddress();
+  // const address = useAddress();
+
+  const address = Cookies.get("platform_wallet");
 
   const [, switchNetwork] = useNetwork();
   const isMismatched = useNetworkMismatch();
@@ -117,6 +120,80 @@ const Navbar = ({ isHome }) => {
     setIsSignedIn(false);
   };
 
+  const getAptosWallet = () => {
+    if ('aptos' in window) {
+      return (window).aptos;
+    } else {
+      window.open('https://petra.app/', '_blank');
+    }
+  }
+
+  const connectWallet = async () => {
+
+    const wallet = getAptosWallet();
+    try {
+      const response = await wallet.connect();
+
+      const account = await wallet.account();
+      console.log("account",account)
+
+      const { data } = await axios.get(`https://gateway.netsepio.com/api/v1.0/flowid?walletAddress=${account.address}`);
+      console.log(data);
+
+      const message = data.payload.eula;
+      const nonce = data.payload.flowId;
+      const publicKey = account.publicKey;
+
+      const { signature, fullMessage } = await wallet.signMessage({
+        message,
+        nonce
+      });
+      console.log("sign", signature, "full message", fullMessage);
+
+      const authenticationData = {
+        "flowId": nonce,
+        "signature": `0x${signature}`,
+        "pubKey": publicKey,
+      };
+
+      const authenticateApiUrl = `https://gateway.netsepio.com/api/v1.0/authenticate`;
+
+      const config = {
+        url: authenticateApiUrl,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: authenticationData,
+      };
+
+      try {
+        const response = await axios(config);
+        console.log("auth data", response.data);
+        const token = await response?.data?.payload?.token;
+        const userId = await response?.data?.payload?.userId;
+            // localStorage.setItem("platform_token", token);
+            Cookies.set("platform_token", token, { expires: 7 });
+            Cookies.set("platform_wallet", account.address, { expires: 7 });
+            Cookies.set("platform_userid", userId, { expires: 7 });
+
+            // setUserWallet(account.address);
+            window.location.reload();
+      } catch (error) {
+        console.error(error);
+      }
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  const handleDeleteCookie = () => {
+    Cookies.remove('platform_wallet');
+    Cookies.remove('platform_token');
+    window.location.href = '/';
+  };
+
   return (
     <nav className="bg-transparent py-4">
       <div
@@ -152,22 +229,28 @@ const Navbar = ({ isHome }) => {
               Switch To Mumbai
             </button>
           )}
-          {address && !isSignedIn && (
+          {/* {address && !isSignedIn && (
             <button
               className="bg-blue-500 text-white lg:mr-20 font-bold py-2 px-4 rounded-lg"
               onClick={signMessage}
             >
               Sign In
             </button>
-          )}
-          {address && isSignedIn && (
+          )} */}
+          {/* {address && isSignedIn && (
             <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-              <ConnectWallet />
+              <button onClick={connectWallet}>Connect</button>
+            </div>
+          )} */}
+          {!address && (
+            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
+              <button onClick={connectWallet}>Connect</button>
             </div>
           )}
-          {!address && (
-            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-              <ConnectWallet />
+          {address && (
+            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
+              <div>{address.slice(0, 4)}...{address.slice(-4)}</div>
+              <button onClick={handleDeleteCookie}>Logout</button>
             </div>
           )}
         </div>

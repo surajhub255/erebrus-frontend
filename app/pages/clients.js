@@ -8,6 +8,7 @@ import erebrusABI from "../utils/erebrusABI.json";
 import Head from "next/head";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Cookies from 'js-cookie';
 import { AuthContext } from "../AuthContext";
 
 const Clients = () => {
@@ -20,7 +21,7 @@ const Clients = () => {
   const [apiData1, setApiData1] = useState(null);
   const [apiData2, setApiData2] = useState(null);
   const [isLoading1, setIsLoading1] = useState(false);
-  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const isSignedIn = Cookies.get("platform_wallet");
 
   useEffect(() => {
     if (address) {

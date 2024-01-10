@@ -5,6 +5,7 @@ import { ethers } from "ethers";
 import erebrusABI from "../utils/erebrusABI.json";
 import Head from "next/head";
 import { motion } from "framer-motion";
+import Cookies from 'js-cookie';
 import { AuthContext } from "../AuthContext";
 
 const transition = {
@@ -24,7 +25,7 @@ const Mint = () => {
   const [isLoadingTx, setLoadingTx] = useState(false);
   const [error, setError] = useState(null);
   const [isMinted, setMinted] = useState(false);
-  const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const isSignedIn = Cookies.get("platform_wallet");
 
   useEffect(() => {
     if (address) {
@@ -44,45 +45,31 @@ const Mint = () => {
   }, [address, isOwned]);
 
   const mint = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-
-    const contract = new ethers.Contract(
-      "0xA40166F872CC568b34410672eF3667cbc1865340",
-      erebrusABI,
-      signer
-    );
-
-    function clearError() {
-      setError(null);
-    }
-
     try {
-      clearError();
-      setLoadingTx(true);
-      const tx = await contract.mintNFT({
-        value: ethers.utils.parseEther("0.05"),
+      const minterAddress = "0x75bcfe882d1a4d032ead2b47f377e4c95221594d"; // Replace with the actual minter's address
+      const nftUri = "https://example.com/nfts/12345"; // Replace with the actual NFT URI
+      const contractAddress = "0x75bcfe882d1a4d032ead2b47f377e4c95221594d66ab2bd09a61aded4c9d64f9"; // Replace with the actual contract address
+  
+      const response = await fetch('/api/mintnft', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Add any other headers or authentication tokens as needed
+        },
+        body: JSON.stringify({ minter: minterAddress, nft_uri: nftUri, contract_address: contractAddress }),
       });
-      tx.wait().then((transaction) => {
-        if (transaction.status === 1) {
-          console.log("Transaction mined and confirmed");
-          setLoadingTx(false);
-          setMinted(true);
-          if (!isOwned) {
-            setIsOwned(true);
-          }
-        } else {
-          console.log("Transaction failed or rejected by the user");
-          setLoadingTx(false);
-          setError("Transaction failed or rejected by the user");
-        }
-      });
+  
+      if (!response.ok) {
+        throw new Error(`Failed to mint NFT: ${response.statusText}`);
+      }
+  
+      const result = await response.json();
+      console.log('NFT minted successfully:', result);
     } catch (error) {
-      console.log(error);
-      setLoadingTx(false);
-      setError("Transaction failed or rejected by the user");
+      console.error('Error minting NFT:', error);
     }
   };
+  
 
   if (!isSignedIn) {
     return (
@@ -93,6 +80,12 @@ const Mint = () => {
         <div className="flex justify-center mt-48 text-white bg-black h-screen">
           Please sign in to Erebrus to view your NFT
         </div>
+        {/* <button
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
+                  onClick={mint}
+                >
+                  Mint Erebrus NFT
+                </button> */}
       </>
     );
   }
