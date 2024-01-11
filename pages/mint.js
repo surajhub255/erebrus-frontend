@@ -1,8 +1,14 @@
+import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
-import { useAddress } from "@thirdweb-dev/react";
-import Navbar from "../components/Navbar";
-import { ethers } from "ethers";
-import erebrusABI from "../utils/erebrusABI.json";
+import {
+  useNetworkMismatch,
+  useNetwork,
+  useAddress,
+  ChainId,
+  ConnectWallet,
+  useSDK,
+} from "@thirdweb-dev/react";
+import axios from "axios";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Cookies from 'js-cookie';
@@ -15,56 +21,28 @@ const transition = {
 };
 
 const Mint = () => {
-  const provider = new ethers.providers.InfuraProvider(
-    "maticmum",
-    "bfa8e872ea014d979d17e288e0aea3e9"
-  );
-  const address = useAddress();
+  
   const [isOwned, setIsOwned] = useState(false);
   const [balance, setBalance] = useState(false);
   const [isLoadingTx, setLoadingTx] = useState(false);
   const [error, setError] = useState(null);
   const [isMinted, setMinted] = useState(false);
   const isSignedIn = Cookies.get("platform_wallet");
+  const [address, setAddress] = useState("");
 
-  useEffect(() => {
-    if (address) {
-      setIsOwned(false);
-      const contract = new ethers.Contract(
-        "0xA40166F872CC568b34410672eF3667cbc1865340",
-        erebrusABI,
-        provider
-      );
-      contract.balanceOf(address).then((balance) => {
-        if (Number(balance) > 0) {
-          setBalance(Number(balance));
-          setIsOwned(true);
-        }
-      });
-    }
-  }, [address, isOwned]);
+  const transaction = {
+    arguments: [],
+    function:
+      "0x75bcfe882d1a4d032ead2b47f377e4c95221594d66ab2bd09a61aded4c9d64f9::vpn3::user_mint_NFT",
+    type: "entry_function_payload",
+    type_arguments: [],
+  };
 
   const mint = async () => {
     try {
-      const minterAddress = "0x75bcfe882d1a4d032ead2b47f377e4c95221594d"; // Replace with the actual minter's address
-      const nftUri = "https://example.com/nfts/12345"; // Replace with the actual NFT URI
-      const contractAddress = "0x75bcfe882d1a4d032ead2b47f377e4c95221594d66ab2bd09a61aded4c9d64f9"; // Replace with the actual contract address
-  
-      const response = await fetch('/api/mintnft', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Add any other headers or authentication tokens as needed
-        },
-        body: JSON.stringify({ minter: minterAddress, nft_uri: nftUri, contract_address: contractAddress }),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Failed to mint NFT: ${response.statusText}`);
-      }
-  
-      const result = await response.json();
-      console.log('NFT minted successfully:', result);
+      const pendingTransaction = await aptos.signAndSubmitTransaction(
+        transaction
+      );
     } catch (error) {
       console.error('Error minting NFT:', error);
     }
