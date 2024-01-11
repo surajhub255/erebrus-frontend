@@ -73,10 +73,12 @@ const Mint = () => {
       <Head>
         <title>Erebrus | Clients</title>
       </Head>
-      <div class="flex">
+      <div class="flex h-screen">
       <div className="w-1/2">
-      <div className="text-white text-4xl ml-20 mt-20">Step into the Future of Internet 
+      <div className="text-white text-4xl ml-20 mt-20 mx-auto">Step into the Future of Internet 
 Safety with 111 NFT VPN</div>
+<div className="text-white text-xl ml-20 mt-10 mx-auto">Erebrus: 3-Month Coverage, 2 Clients, Starting at Only 1.11 APT. 
+Exceptional Value for Unmatched Security</div>
       {isOwned ? (
         <motion.div
           initial={{ opacity: 0 }}
@@ -84,7 +86,7 @@ Safety with 111 NFT VPN</div>
           exit={{ opacity: 0 }}
           transition={transition}
         >
-          <div className="h-screen text-white flex flex-col lg:justify-center justify-start items-center mt-8 lg:mt-0">
+          <div className="mt-20 text-white flex flex-col justify-start items-center">
             {`Number of NFTs owned: ${balance}`}
             <img
               src="./image1.jpeg"
@@ -96,7 +98,7 @@ Safety with 111 NFT VPN</div>
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mt-20"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
@@ -113,13 +115,13 @@ Safety with 111 NFT VPN</div>
           exit={{ opacity: 0 }}
           transition={transition}
         >
-          <div className="h-screen text-white flex flex-col justify-center items-center">
+          <div className="mt-20 text-white flex flex-col justify-center items-center">
             {isLoadingTx ? (
               <div className="animate-spin text-white text-7xl">⛏</div>
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
+                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mt-20"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
