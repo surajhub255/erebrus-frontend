@@ -98,7 +98,7 @@ Exceptional Value for Unmatched Security</div>
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mt-20"
+                  className="bg-blue-500 text-white font-bold py-2 px-10 rounded-lg mt-20"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
@@ -121,7 +121,7 @@ Exceptional Value for Unmatched Security</div>
             ) : (
               <>
                 <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg mt-20"
+                  className="bg-blue-500 text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
