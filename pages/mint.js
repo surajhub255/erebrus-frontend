@@ -77,7 +77,10 @@ const Mint = () => {
       <div className="w-1/2">
       <div className="text-white text-4xl ml-20 mt-20 mx-auto">Step into the Future of Internet 
 Safety with 111 NFT VPN</div>
-<div className="text-white text-xl ml-20 mt-10 mx-auto">Erebrus: 3-Month Coverage, 2 Clients, Starting at Only 1.11 APT. 
+<div className="text-white text-xl ml-20 mt-10 mx-auto">3-Month Coverage</div>
+<div className="text-white text-xl ml-20 mt-4 mx-auto">2 Reconfigurable Clients</div>
+<div className="text-white text-xl ml-20 mt-4 mx-auto">Only at 1.11 APT</div>
+<div className="text-white text-xl ml-20 mt-4 mx-auto">
 Exceptional Value for Unmatched Security</div>
       {isOwned ? (
         <motion.div
