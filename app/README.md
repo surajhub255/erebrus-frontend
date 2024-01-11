@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+  <img src="https://cloudflare-ipfs.com/ipfs/bafkreihotizw4hpmeqrtxbhqaq4xlen6eo7o33c4u2j55fpqegojmiqfti" width="80%" />
+</p>
 
-## Getting Started
+# Introduction
 
-First, run the development server:
+[Erebrus](https://netsepio.com/) is where decentralization meets VPN for ultimate internet security.
+Anonymous Virtual Private Network for accessing internet in stealth mode bypassing filewalls and filters.
+The Future of the Internet is Decentralized. Be a part of it.
 
-```bash
+# Features
+
+- Power of Decentralization
+- Fast Speed & Unlimited Bandwidth.
+- IP Address Protection
+- Multiple Devices
+- NFT Subscriptions
+
+## Getting started
+
+To get started, clone the repository and install the dependencies:
+
+git clone [github](https://github.com/NetSepio/erebrus-frontend.git)
+
+cd app
+
+npm install
+
+## Running the app
+
+To run the app locally, use the following command:
+
+```
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+This will start a development server at `http://localhost:3000`.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Building the app
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+To build the app for production, use the following command:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This will generate a production build in the `build` directory.
 
-## Learn More
+## License
 
-To learn more about Next.js, take a look at the following resources:
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Acknowledgments
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+This project was built using [Next](https://nextjs.org/). Special thanks to the creators and maintainers of these tools.
 
-## Deploy on Vercel
+## Our Team
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<div>
+    <img src="https://avatars.githubusercontent.com/u/5115199" width="50px" style="border-radius:50%" />
+    <a href="https://github.com/Shachindra">Shachindra</a>
+</div>
+<br/>
+<div>
+    <img src="https://avatars.githubusercontent.com/u/74105169" width="50px" style="border-radius:50%" />
+    <a href="https://github.com/emily876">Devsi</a>
+</div>
+<br/>
+<div>
+    <img src="https://avatars.githubusercontent.com/u/51229945" width="50px" style="border-radius:50%" />
+    <a href="https://github.com/thisisommore">Om More</a>
+</div>
