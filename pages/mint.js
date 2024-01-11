@@ -73,6 +73,10 @@ const Mint = () => {
       <Head>
         <title>Erebrus | Clients</title>
       </Head>
+      <div class="flex">
+      <div className="w-1/2">
+      <div className="text-white text-4xl ml-20 mt-20">Step into the Future of Internet 
+Safety with 111 NFT VPN</div>
       {isOwned ? (
         <motion.div
           initial={{ opacity: 0 }}
@@ -126,6 +130,10 @@ const Mint = () => {
           </div>
         </motion.div>
       )}
+      </div>
+
+<div className="text-white w-1/4 ml-auto mr-40 mt-10"><img src="/111nft_gif.gif"/></div>
+</div>
     </>
   );
 };
