@@ -32,7 +32,7 @@ const Howto = () => {
             <p className="text-gray-400 lg:w-100 w-80">
               The team at Erebrus have created an innovative and easy way to
               purchase a VPN subscription. All you need is a wallet address with
-              some MATIC!
+              some APT!
             </p>
           </div>
           <div className="flex flex-col items-center lg:mr-16 lg:mb-0 mb-12">
