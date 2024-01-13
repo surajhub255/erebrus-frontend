@@ -9,9 +9,10 @@ import {
   useSDK,
 } from "@thirdweb-dev/react";
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { AuthContext } from "../AuthContext";
+const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
@@ -121,21 +122,20 @@ const Navbar = ({ isHome }) => {
   };
 
   const getAptosWallet = () => {
-    if ('aptos' in window) {
-      return (window).aptos;
+    if ("aptos" in window) {
+      return window.aptos;
     } else {
-      window.open('https://petra.app/', '_blank');
+      window.open("https://petra.app/", "_blank");
     }
-  }
+  };
 
   const connectWallet = async () => {
-
     const wallet = getAptosWallet();
     try {
       const response = await wallet.connect();
 
       const account = await wallet.account();
-      console.log("account",account)
+      console.log("account", account);
 
       // Get the current network after connecting (optional)
       const networkwallet = await window.aptos.network();
@@ -143,7 +143,7 @@ const Navbar = ({ isHome }) => {
       // Check if the connected network is Mainnet
       if (networkwallet === 'Mainnet') {
 
-      const { data } = await axios.get(`https://gateway.netsepio.com/api/v1.0/flowid?walletAddress=${account.address}`);
+      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
       console.log(data);
 
       const message = data.payload.eula;
@@ -152,17 +152,17 @@ const Navbar = ({ isHome }) => {
 
       const { signature, fullMessage } = await wallet.signMessage({
         message,
-        nonce
+        nonce,
       });
       console.log("sign", signature, "full message", fullMessage);
 
       const authenticationData = {
-        "flowId": nonce,
-        "signature": `0x${signature}`,
-        "pubKey": publicKey,
+        flowId: nonce,
+        signature: `0x${signature}`,
+        pubKey: publicKey,
       };
 
-      const authenticateApiUrl = `https://gateway.netsepio.com/api/v1.0/authenticate`;
+      const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
 
       const config = {
         url: authenticateApiUrl,
@@ -178,13 +178,13 @@ const Navbar = ({ isHome }) => {
         console.log("auth data", response.data);
         const token = await response?.data?.payload?.token;
         const userId = await response?.data?.payload?.userId;
-            // localStorage.setItem("platform_token", token);
-            Cookies.set("platform_token", token, { expires: 7 });
-            Cookies.set("platform_wallet", account.address, { expires: 7 });
-            Cookies.set("platform_userid", userId, { expires: 7 });
+        // localStorage.setItem("platform_token", token);
+        Cookies.set("platform_token", token, { expires: 7 });
+        Cookies.set("platform_wallet", account.address, { expires: 7 });
+        Cookies.set("platform_userid", userId, { expires: 7 });
 
-            // setUserWallet(account.address);
-            window.location.reload();
+        // setUserWallet(account.address);
+        window.location.reload();
       } catch (error) {
         console.error(error);
       }
@@ -196,12 +196,12 @@ const Navbar = ({ isHome }) => {
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   const handleDeleteCookie = () => {
-    Cookies.remove('platform_wallet');
-    Cookies.remove('platform_token');
-    window.location.href = '/';
+    Cookies.remove("platform_wallet");
+    Cookies.remove("platform_token");
+    window.location.href = "/";
   };
 
   return (
@@ -222,14 +222,21 @@ const Navbar = ({ isHome }) => {
           </Link> */}
         </div>
         <div className="hidden lg:flex items-center">
-          <Link href="/demo" className="text-gray-300 mr-8">
-            Demo
-          </Link>
           <Link href="/mint" className="text-gray-300 mr-8" scroll={false}>
-            Mint
+            Mint NFT
+          </Link>
+          {/* <Link href="/demo" className="text-gray-300 mr-8">
+            Demo
           </Link>
           <Link href="/clients" className="text-gray-300 mr-8">
             Clients
+          </Link> */}
+          <Link
+            href="/subscription"
+            className="text-gray-300 mr-8"
+            scroll={false}
+          >
+            Subscription
           </Link>
           {isMismatched && (
             <button
@@ -259,7 +266,9 @@ const Navbar = ({ isHome }) => {
           )}
           {address && (
             <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
-              <div>{address.slice(0, 4)}...{address.slice(-4)}</div>
+              <div>
+                {address.slice(0, 4)}...{address.slice(-4)}
+              </div>
               <button onClick={handleDeleteCookie}>Logout</button>
             </div>
           )}
