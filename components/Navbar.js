@@ -137,9 +137,13 @@ const Navbar = ({ isHome }) => {
       const account = await wallet.account();
       console.log("account", account);
 
-      const { data } = await axios.get(
-        `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`
-      );
+      // Get the current network after connecting (optional)
+      const networkwallet = await window.aptos.network();
+
+      // Check if the connected network is Mainnet
+      if (networkwallet === 'Mainnet') {
+
+      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
       console.log(data);
 
       const message = data.payload.eula;
@@ -184,6 +188,11 @@ const Navbar = ({ isHome }) => {
       } catch (error) {
         console.error(error);
       }
+      }
+    else{
+      alert("Switch to mainnet in your wallet")
+    }
+
     } catch (err) {
       console.log(err);
     }
@@ -204,13 +213,13 @@ const Navbar = ({ isHome }) => {
       >
         <div className="flex items-center">
           <Link href="/" scroll={false}>
-            <div className="block -mb-8 -mt-8">
-              <img src="/logo.svg" alt="Logo" className="w-20" />
+            <div className="block">
+              <img src="/Erebrus_logo_wordmark.png" alt="Logo" className="w-48" />
             </div>
           </Link>
-          <Link href="/" scroll={false}>
+          {/* <Link href="/" scroll={false}>
             <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1>
-          </Link>
+          </Link> */}
         </div>
         <div className="hidden lg:flex items-center">
           <Link href="/mint" className="text-gray-300 mr-8" scroll={false}>

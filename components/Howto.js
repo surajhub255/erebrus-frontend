@@ -19,7 +19,7 @@ const Howto = () => {
               href="https://testnets.opensea.io/collection/erebrus-v4"
               target={"_blank"}
             >
-              <img src="/erebrus_nft.png" className="mb-4 w-40 h-40" />
+              <img src="/howto1.png" className="mb-4 w-40 h-40" />
             </Link>
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
               <div className="flex items-center">
@@ -32,11 +32,11 @@ const Howto = () => {
             <p className="text-gray-400 lg:w-100 w-80">
               The team at Erebrus have created an innovative and easy way to
               purchase a VPN subscription. All you need is a wallet address with
-              some MATIC!
+              some APT!
             </p>
           </div>
           <div className="flex flex-col items-center lg:mr-16 lg:mb-0 mb-12">
-            <img src="/sample_qr.png " className="mb-4 w-40 h-40" />
+            <img src="/howto2.png " className="mb-4 w-40 h-40" />
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold">
               Generate client config file
             </h2>
@@ -47,7 +47,7 @@ const Howto = () => {
             </p>
           </div>
           <div className="flex flex-col items-center lg:mr-16 lg:mb-0 mb-12">
-            <span className="text-[165px] -mt-12 mr-12 lg:mr-0">📲</span>
+          <img src="/howto3.png " className="mt-8 mb-14 w-28 h-28" />
             <h2 className="text-gray-200 lg:text-2xl text-xl font-bold -mt-6">
               Scan QR code or .conf
             </h2>

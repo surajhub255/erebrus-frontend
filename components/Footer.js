@@ -10,13 +10,14 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-[#1A202C]">
-      <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden">
         <div className=" flex justify-between">
-          <div>
+          
+          <div className="w-1/4">
             <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
               Follow Us
             </h3>
-            <ul className="mt-4 flex mr-4">
+            <ul className="mt-4 flex mr-4 text-gray-500">
               <li className="mr-4">
                 <Link
                   href="https://www.facebook.com/Lazarus.Network?mibextid=LQQJ4d"
@@ -55,6 +56,20 @@ const Footer = () => {
               </li>
             </ul>
           </div>
+
+          {/* <div className="text-white w-full">
+            <img />
+            <div className="w-1/3">Decentralized VPN Service based on the 
+WireGuard VPN Protocol, Designed to 
+enhance users privacy, anonymity, and 
+security when using Public VPNs.</div>
+          </div> */}
+
+          <div className="text-gray-300">
+          <div>Links</div>
+          <a href="https://netsepio.com" target="_blank" className="underline text-blue-500">netsepio.com</a><br></br>
+          <a href="https://app.netsepio.com" target="_blank" className="underline text-blue-500">app.netsepio.com</a>
+          </div>
           <div>
             <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
               Subscribe for updates
@@ -76,11 +91,11 @@ const Footer = () => {
             </form>
           </div>
         </div>
-        <div className="mt-8 text-sm text-gray-500 flex flex-col justify-between items-center sm:flex-row">
+        <div className="mt-8 text-sm text-white flex flex-col justify-between items-center sm:flex-row">
           <p className="order-2 sm:order-1">
             Erebrus 2023 &copy; All rights reserved.
           </p>
-          <div className="flex items-center order-1 sm:order-2 text-gray-600 lg:mr-48 md:mr-48">
+          <div className="flex items-center order-1 sm:order-2 text-white lg:mr-48 md:mr-48">
             <p>Contact us on</p>
             <Link
               href="https://discord.gg/cj2Xt2u5Pj"
