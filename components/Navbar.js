@@ -12,6 +12,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { AuthContext } from "../AuthContext";
+const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
@@ -137,7 +138,7 @@ const Navbar = ({ isHome }) => {
       console.log("account", account);
 
       const { data } = await axios.get(
-        `https://gateway.netsepio.com/api/v1.0/flowid?walletAddress=${account.address}`
+        `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`
       );
       console.log(data);
 
@@ -157,7 +158,7 @@ const Navbar = ({ isHome }) => {
         pubKey: publicKey,
       };
 
-      const authenticateApiUrl = `https://gateway.netsepio.com/api/v1.0/authenticate`;
+      const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
 
       const config = {
         url: authenticateApiUrl,

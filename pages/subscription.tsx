@@ -14,7 +14,7 @@ import vpn4 from "../public/vpn4.png";
 import vpn5 from "../public/vpn5.png";
 import vpn6 from "../public/vpn6.png";
 import vpn7 from "../public/vpn7.png";
-import Image from 'next/image'
+import Image from "next/image";
 // import erebrus from "../../../public/erebrus.png";
 // import sotreus from "../../../public/sotreus.png";
 // import Image from "next/image";
@@ -43,7 +43,6 @@ const transition = {
 };
 
 const Subscription = () => {
-
   const [loading, setLoading] = useState<boolean>(false);
   const [profileset, setprofileset] = useState<boolean>(true);
   const [buttonset, setbuttonset] = useState<boolean>(false);
@@ -53,13 +52,15 @@ const Subscription = () => {
   const [msg, setMsg] = useState<string>("");
   const [successmsg, setsuccessMsg] = useState<string>("");
   const [errormsg, seterrorMsg] = useState<string>("");
-  const [region, setregion] = useState<string>("us-east-2");
+  const [region, setregion] = useState<string>("");
   const [verify, setverify] = useState<boolean>(false);
   const [endpoint, setEndpoint] = useState<string>("");
   const [vpntype, setvpntype] = useState<string>("decentralized");
   const [subscription, setSubscription] = useState<string>("option");
   const [about, setabout] = useState<boolean>(false);
-
+  const [collectionsPage, setcollectionsPage] = useState<boolean>(true);
+  const [collectionId, setcollectionId] = useState<string>();
+  const [vpnPage, setvpnPage] = useState<boolean>(false);
   //const txtvalue = localStorage.getItem("txtvalue");
   const bg2 = {
     backgroundColor: "white",
@@ -117,8 +118,6 @@ const Subscription = () => {
   };
 
   const handleSubmit = async (e: FormEvent) => {
-
-    
     e.preventDefault();
 
     setLoading(true);
@@ -129,6 +128,7 @@ const Subscription = () => {
       const formDataObj = new FormData();
       formDataObj.append("name", formData.name);
       formDataObj.append("region", formData.region);
+      formDataObj.append("collectionId", collectionId);
 
       // Convert FormData to JavaScript Object
       const formDataObject: { [key: string]: string | File | null } = {};
@@ -158,29 +158,29 @@ const Subscription = () => {
       //   } else {
       //     setMsg("error");
       //   }
-      // } else 
+      // } else
       // if (formData.type === "decentralized") {
-        const response = await fetch(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/client/${formData.region}`,
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth}`,
-            },
-            body: jsonData,
-          }
-        );
-
-        if (response.status === 200) {
-          const responseData = await response.json();
-          setFormData(initialFormData);
-          console.log("vpn data", responseData);
-          setverify(true);
-        } else {
-          setMsg("error");
+      const response = await fetch(
+        `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/client/${formData.region}`,
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth}`,
+          },
+          body: jsonData,
         }
+      );
+
+      if (response.status === 200) {
+        const responseData = await response.json();
+        setFormData(initialFormData);
+        console.log("vpn data", responseData);
+        setverify(true);
+      } else {
+        setMsg("error");
+      }
       // }
     } catch (error) {
       console.error("Error:", error);
@@ -197,7 +197,7 @@ const Subscription = () => {
         const auth = Cookies.get("platform_token");
 
         const response = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/client/${region}`,
+          `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/clients`,
           {
             headers: {
               Accept: "application/json, text/plain, */*",
@@ -225,9 +225,6 @@ const Subscription = () => {
         setLoading(false);
       }
     };
-  })
-
-  useEffect(() => {
     const vpnnft = async () => {
       setLoading(true);
       try {
@@ -287,13 +284,10 @@ const Subscription = () => {
             }
           `,
           variables: {
-            address: "0x4d8c8a45703037be0dd3b6ff78379ff5c429a59a70145885e49b709a903c562d",
+            address: `${wallet}`,
             limit: 12,
             offset: 0,
-            where: [
-              { current_token_data: { current_collection: { collection_id: { _eq: "0xf85e432e4bc0d52dec50b53ae3f8528eba3d7c92d1ea7a4aefd20d8d2005f2d7" } } } },
-              // Add other conditions to the where array if needed
-            ],
+            where: [],
           },
           operationName: "getAccountCurrentTokens",
         };
@@ -318,9 +312,13 @@ const Subscription = () => {
         setLoading(false);
       }
     };
-
-    vpnnft();
-  }, []);
+    if (vpnPage === true) {
+      fetchProjectsData();
+    }
+    if (collectionsPage === true) {
+      vpnnft();
+    }
+  }, [collectionsPage, collectionId]);
 
   const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     // Update the selected region when the dropdown value changes
@@ -330,20 +328,26 @@ const Subscription = () => {
   const loggedin = Cookies.get("platform_token");
   const wallet = Cookies.get("platform_wallet");
 
+  const handleCollectionClick = (collection) => {
+    setcollectionId(collection);
+    setvpnPage(true);
+    setcollectionsPage(false);
+  };
+
   return (
     <div className="py-0">
       <section className="">
-        <div className="px-10 mx-auto">
+        <div className="px-10 mx-auto h-screen">
           <div className="w-full mx-auto text-left md:text-center">
+            {collectionsPage === true && (
+              <NftdataContainer
+                metaDataArray={nftdata}
+                MyReviews={false}
+                selectCollection={handleCollectionClick}
+              />
+            )}
 
-{subscription !== "nftdata" && (
-  <NftdataContainer
-  metaDataArray={nftdata}
-  MyReviews={false}
-/>
-)}
-
-            {subscription !== "done" && (
+            {vpnPage === true && (
               <>
                 <h1 className="mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                   <span className="text-white">My Clients</span>
@@ -377,7 +381,7 @@ const Subscription = () => {
                         <div className="w-full mx-auto text-left py-24">
                           <h1 className="text-4xl font-bold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
                             <span className="text-white text-center">
-                            Create your client
+                              Create your client
                             </span>
                           </h1>
 
@@ -387,50 +391,49 @@ const Subscription = () => {
                             onSubmit={handleSubmit}
                           >
                             <div className="mb-10">
-
                               <div className="flex gap-4">
-                              <div className="mb-4 w-1/2">
-                                <input
-                                  type="text"
-                                  id="name"
-                                  style={border}
-                                  className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                  placeholder="Name"
-                                  value={formData.name}
-                                  onChange={handleInputChange}
-                                  required
-                                />
-                              </div>
+                                <div className="mb-4 w-1/2">
+                                  <input
+                                    type="text"
+                                    id="name"
+                                    style={border}
+                                    className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    placeholder="Name"
+                                    value={formData.name}
+                                    onChange={handleInputChange}
+                                    required
+                                  />
+                                </div>
 
-                              <div className="mb-4 w-1/2">
-                                <select
-                                  id="region"
-                                  style={border}
-                                  className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                  value={formData.region}
-                                  onChange={handleInputChange}
-                                  required
-                                >
-                                  <option
-                                    className="bg-white text-black"
-                                    value=""
+                                <div className="mb-4 w-1/2">
+                                  <select
+                                    id="region"
+                                    style={border}
+                                    className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                    value={formData.region}
+                                    onChange={handleInputChange}
+                                    required
                                   >
-                                    Select Region
-                                  </option>
-                                  <option
-                                    className="bg-white text-black"
-                                    value="us"
-                                  >
-                                    US
-                                  </option>
-                                  <option
-                                    className="bg-white text-black"
-                                    value="sg"
-                                  >
-                                    Singapore
-                                  </option> 
-                                  {/* {(formData.type === "decentralized") && <> */}
-                                      <option
+                                    <option
+                                      className="bg-white text-black"
+                                      value=""
+                                    >
+                                      Select Region
+                                    </option>
+                                    <option
+                                      className="bg-white text-black"
+                                      value="us"
+                                    >
+                                      US
+                                    </option>
+                                    <option
+                                      className="bg-white text-black"
+                                      value="sg"
+                                    >
+                                      Singapore
+                                    </option>
+                                    {/* {(formData.type === "decentralized") && <> */}
+                                    <option
                                       className="bg-white text-black"
                                       value="eu"
                                     >
@@ -448,14 +451,13 @@ const Subscription = () => {
                                     >
                                       Japan
                                     </option>
-                                  {/* </>} */}
-                                  
-                                </select>
-                              </div>
+                                    {/* </>} */}
+                                  </select>
+                                </div>
                               </div>
 
                               <div className="flex-col gap-4 mr-4">
-                              {/* <div className="mb-6 w-1/2">
+                                {/* <div className="mb-6 w-1/2">
                                 <select
                                   id="type"
                                   style={border}
@@ -484,35 +486,33 @@ const Subscription = () => {
                                   </option>
                                 </select>
                               </div> */}
-                            
-                              <div className="text-center w-1/2 mt-10">
-                              <div className="mb-4 space-x-0 md:space-x-2 md:mb-8">
-                                <button
-                                  style={button}
-                                  type="submit"
-                                  value="submit"
-                                  className="px-14 py-3 mb-2 text-lg text-black font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                                >
-                                  Create
-                                </button>
-                              </div>
-                            </div>
-                            </div>
 
-                            
+                                <div className="text-center w-1/2 mt-10">
+                                  <div className="mb-4 space-x-0 md:space-x-2 md:mb-8">
+                                    <button
+                                      style={button}
+                                      type="submit"
+                                      value="submit"
+                                      className="px-14 py-3 mb-2 text-lg text-black font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                                    >
+                                      Create
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </form>
 
                           {verify && (
                             <div
-                              style={{backgroundColor:'#222944E5'}}
+                              style={{ backgroundColor: "#222944E5" }}
                               className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                               id="popupmodal"
                             >
                               <div className="relative p-4 w-full max-w-2xl max-h-full">
                                 <div
                                   className="relative rounded-lg shadow dark:bg-gray-700"
-                                  style={{backgroundColor:'#37406D'}}
+                                  style={{ backgroundColor: "#37406D" }}
                                 >
                                   <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                                     <button
@@ -543,14 +543,14 @@ const Subscription = () => {
 
                                   <div className="p-4 md:p-5 space-y-4">
                                     <p className="text-3xl text-center font-bold text-white">
-                                    Successfully created!
+                                      Successfully created!
                                     </p>
                                     <p
                                       className="text-md text-center w-1/2 mx-auto"
                                       style={text}
                                     >
-                                      Your Client Creation is deployed successfully.
-Check your Client listing
+                                      Your Client Creation is deployed
+                                      successfully. Check your Client listing
                                     </p>
                                   </div>
 
@@ -621,67 +621,63 @@ Check your Client listing
                       {loading ? (
                         // <Loader />
                         <div className="min-h-screen"></div>
-                      ) : (!projectsData || projectsData?.length == 0) &&
-                        (!dedicatedVpnData || dedicatedVpnData?.length == 0) && (
-                        <div className="mx-6">
-                          <div className="flex gap-4">
-
-                            <div className="ml-auto text-white">
-                              <button
-                                style={{ border: "1px solid #11D9C5" }}
-                                onClick={() => setbuttonset(true)}
-                                className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full sm:mb-0"
-                              >
-                                Add More Clients
-                              </button>
+                      ) : (
+                        (!projectsData || projectsData?.length == 0) &&
+                        (!dedicatedVpnData ||
+                          dedicatedVpnData?.length == 0) && (
+                          <div className="mx-6">
+                            <div className="flex gap-4">
+                              <div className="ml-auto text-white">
+                                <button
+                                  style={{ border: "1px solid #11D9C5" }}
+                                  onClick={() => setbuttonset(true)}
+                                  className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full sm:mb-0"
+                                >
+                                  Add More Clients
+                                </button>
+                              </div>
                             </div>
-                          </div>
 
-                          {/* {vpntype === "decentralized" && (
+                            {/* {vpntype === "decentralized" && (
                             <> */}
-                              <div
-                                className="w-full h-full rounded-xl mt-4 pb-2"
-                                style={bg}
-                              >
-                                <div className="w-full flex justify-between px-14 p-4">
-                                  <h3 className="text-lg leading-12 w-1/4 text-left">
-                                    <div style={text}>
-                                      Id
-                                    </div>
-                                  </h3>
+                            <div
+                              className="w-full h-full rounded-xl mt-4 pb-2"
+                              style={bg}
+                            >
+                              <div className="w-full flex justify-between px-14 p-4">
+                                <h3 className="text-lg leading-12 w-1/4 text-left">
+                                  <div style={text}>Id</div>
+                                </h3>
 
-                                  <div className="text-start w-1/4">
-                                    <div>
-                                      <div
-                                        className="text-lg "
-                                        style={text}
-                                      >
-                                        Name
-                                      </div>
+                                <div className="text-start w-1/4">
+                                  <div>
+                                    <div className="text-lg " style={text}>
+                                      Name
                                     </div>
                                   </div>
-
-                                  <div
-                                    className="text-lg text-center w-1/4"
-                                    style={text}
-                                  >
-                                    Region
-                                  </div>
-
-                                  <div
-                                    className="text-lg flex w-1/4 justify-end"
-                                    style={text}
-                                  >
-                                    <p>Actions</p>
-                                  </div>
-
                                 </div>
-                                <MyVpnContainer
+
+                                <div
+                                  className="text-lg text-center w-1/4"
+                                  style={text}
+                                >
+                                  Region
+                                </div>
+
+                                <div
+                                  className="text-lg flex w-1/4 justify-end"
+                                  style={text}
+                                >
+                                  <p>Actions</p>
+                                </div>
+                              </div>
+                              <MyVpnContainer
                                 metaDataArray={projectsData}
                                 MyReviews={false}
                               />
-                              </div>
-                        </div>
+                            </div>
+                          </div>
+                        )
                       )}
 
                       {loading && (
@@ -725,7 +721,6 @@ Check your Client listing
       </section>
     </div>
   );
-
 };
 
 export default Subscription;

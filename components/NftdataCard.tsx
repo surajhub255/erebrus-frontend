@@ -1,7 +1,7 @@
 import Link from "next/link";
 // import { removePrefix } from "../utils/ipfsUtil";
 import React from "react";
-import eye2 from '../public/eye2.png';
+import eye2 from "../public/eye2.png";
 import Image from "next/image";
 
 interface ReviewCardProps {
@@ -46,10 +46,13 @@ const backgroundbutton = {
   backgroundColor: "#11D9C5",
 };
 
-const truncateDescription = (description: string, maxLength: number): string => {
-  const words = description.split(' ');
+const truncateDescription = (
+  description: string,
+  maxLength: number
+): string => {
+  const words = description.split(" ");
   const truncatedWords = words.slice(0, maxLength);
-  return truncatedWords.join(' ') + (words.length > maxLength ? '...' : '');
+  return truncatedWords.join(" ") + (words.length > maxLength ? "..." : "");
 };
 
 const NftdataCard: React.FC<ReviewCardProps> = ({
@@ -57,57 +60,51 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
   MyReviews = false,
   onReviewDeleted,
 }) => {
-
-    const [imageSrc, setImageSrc] = React.useState<string | null>(null);
+  const [imageSrc, setImageSrc] = React.useState<string | null>(null);
 
   React.useEffect(() => {
-    if (metaData && metaData.current_token_data && metaData.current_token_data.token_uri) {
+    if (
+      metaData &&
+      metaData.current_token_data &&
+      metaData.current_token_data.token_uri
+    ) {
+      console.log(metaData.current_token_data.token_data_id);
       fetch(metaData.current_token_data.token_uri)
-        .then(response => response.json())
+        .then((response) => response.json())
         .then((jsonData: any) => {
           // Assuming there's an "image" property in the JSON containing the image URL
           const imageUrl = jsonData.image;
           setImageSrc(imageUrl);
         })
-        .catch(error => {
-          console.error(`Error fetching token URI (${metaData.current_token_data.token_uri}): ${error}`);
+        .catch((error) => {
+          console.error(
+            `Error fetching token URI (${metaData.current_token_data.token_uri}): ${error}`
+          );
         });
     }
   }, [metaData]);
 
-
   if (!metaData) {
     return (
-      <div
-        className="flex flex-col items-center justify-center w-full max-w-sm mx-auto"
-      >
+      <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
         <div
           className="w-full h-72 p-5 bg-center bg-cover"
           style={{ display: "flex", alignItems: "center" }}
         >
-          <div
-            className="animate-spin rounded-full h-32 w-32 mx-auto border-t-2 border-b-2 border-green-200"
-           
-          ></div>
+          <div className="animate-spin rounded-full h-32 w-32 mx-auto border-t-2 border-b-2 border-green-200"></div>
         </div>
       </div>
     );
   }
 
   return (
-    <div
-      className="w-full"
-      
-    >
-       {/* <Link href={`/reviews/${metaData.domainName.replace(/^https:\/\//, '')}`}> */}
-      <div
-        className="w-full h-full rounded-lg border border-gray-500 p-2"
-        
-      >
-            <div>
-                <div className="lg:flex m:flex justify-start gap-4">
-                <div className="">
-                    {/* <img
+    <div className="w-full">
+      {/* <Link href={`/reviews/${metaData.domainName.replace(/^https:\/\//, '')}`}> */}
+      <div className="w-full h-full rounded-lg border border-gray-500 p-2">
+        <div>
+          <div className="lg:flex m:flex justify-start gap-4">
+            <div className="">
+              {/* <img
                       alt="alt"
                       src={`${
                         "https://cloudflare-ipfs.com/ipfs"
@@ -116,38 +113,36 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
                       width="80"
                       height="80"
                     /> */}
-                    {imageSrc ? (
-                <Image src={imageSrc} alt={metaData?.current_token_data.token_name} width={80} height={80} />
+              {imageSrc ? (
+                <Image
+                  src={imageSrc}
+                  alt={metaData?.current_token_data.token_name}
+                  width={80}
+                  height={80}
+                />
               ) : (
                 <div className="w-80 h-80 bg-gray-300"></div>
               )}
+            </div>
+            <div className="w-full">
+              <h3 className="leading-12 mb-2 text-white">
+                <div className="lg:flex md:flex justify-between">
+                  <div className="text-xl font-bold">
+                    {metaData.current_token_data.token_name}
+                  </div>
                 </div>
-                <div className="w-full">
-                  <h3
-                    className="leading-12 mb-2 text-white"
-                    
-                  >
-                    <div className="lg:flex md:flex justify-between">
-                      <div className="text-xl font-bold">{metaData.current_token_data.token_name}</div>
-
-                    </div>
-                  </h3>
-
-              
+              </h3>
 
               <div className="rounded-xl">
-
-                  <div className="text-sm text-white text-start flex mt-2">
+                <div className="text-sm text-white text-start flex mt-2">
                   <div className="">
-                  
-                      {metaData.current_token_data.description}
+                    {metaData.current_token_data.description}
                   </div>
-                  </div>
-                  </div>
-
                 </div>
-                </div>
+              </div>
             </div>
+          </div>
+        </div>
       </div>
       {/* </Link> */}
     </div>
