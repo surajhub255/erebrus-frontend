@@ -21,7 +21,8 @@ const Footer = () => {
               <li className="mr-4">
                 <Link
                   href="https://www.facebook.com/Lazarus.Network?mibextid=LQQJ4d"
-                  target={"_blank"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-2xl hover:text-[#4267B2]"
                 >
                   <FaFacebook />
@@ -30,7 +31,8 @@ const Footer = () => {
               <li className="mr-4">
                 <Link
                   href="https://twitter.com/LazarusNetwork"
-                  target={"_blank"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-2xl hover:text-[#1DA1F2]"
                 >
                   <FaTwitter />
@@ -40,7 +42,8 @@ const Footer = () => {
                 <Link
                   href="https://youtube.com/shorts/gBy4j5ZvKZE?feature=share"
                   className="text-2xl hover:text-[#FF0000]"
-                  target={"_blank"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <FaYoutube />
                 </Link>
@@ -49,7 +52,8 @@ const Footer = () => {
                 <Link
                   href="https://github.com/orgs/TheLazarusNetwork/repositories?q=erebrus&type=all&language=&sort="
                   className="text-2xl hover:text-[#f5f5f5]"
-                  target={"_blank"}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <FaGithub />
                 </Link>
@@ -67,8 +71,8 @@ security when using Public VPNs.</div>
 
           <div className="text-gray-300">
           <div>Links</div>
-          <a href="https://netsepio.com" target="_blank" className="underline text-blue-500">netsepio.com</a><br></br>
-          <a href="https://app.netsepio.com" target="_blank" className="underline text-blue-500">app.netsepio.com</a>
+          <a href="https://netsepio.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-500">netsepio.com</a><br></br>
+          <a href="https://app.netsepio.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-500">app.netsepio.com</a>
           </div>
           <div>
             <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
@@ -101,6 +105,7 @@ security when using Public VPNs.</div>
               href="https://discord.gg/cj2Xt2u5Pj"
               className="text-2xl ml-2 hover:text-[#738ADB]"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <FaDiscord />
             </Link>

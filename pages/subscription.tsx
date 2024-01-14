@@ -337,7 +337,7 @@ const Subscription = () => {
   return (
     <div className="py-0">
       <section className="">
-        <div className="px-10 mx-auto h-screen">
+        <div className="px-10 mx-auto">
           <div className="w-full mx-auto text-left md:text-center">
             {collectionsPage === true && (
               <NftdataContainer

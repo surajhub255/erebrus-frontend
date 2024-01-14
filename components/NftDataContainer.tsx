@@ -1,7 +1,8 @@
 // ReviewContainer.tsx
+"use client"
 import React from "react";
 import NftdataCard from "./NftdataCard";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 interface MyReviewContainerProps {
   metaDataArray: any[];
@@ -18,14 +19,14 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
     window.location.reload();
   };
 
-  useEffect(() => {
-    const call = () => {
-      console.log("metaDataArray", metaDataArray);
-    };
-    call();
-  }, []);
+  // useEffect(() => {
+  //   const call = () => {
+  //     console.log("metaDataArray", metaDataArray);
+  //   };
+  //   call();
+  // }, []);
 
-  const handleClick = (collection_id) => {
+  const handleClick = (collection_id: string) => {
     // Call the function passed as prop to change parent state
     selectCollection(collection_id);
   };
@@ -40,8 +41,8 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
   return (
     <>
       <div
-        className="container mx-auto px-4"
-        style={{ overflowY: "auto", maxHeight: "500px" }}
+        className="mx-auto px-4"
+        // style={{ overflowY: "auto", maxHeight: "500px" }}
       >
         {metaDataArray?.length === 0 ? (
           renderNoReviewsFound()
@@ -51,15 +52,6 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
               display: "grid",
               gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
               gap: "2rem",
-              // '@media (min-width: 768px)': {
-              //   gridTemplateColumns: 'repeat(2, minmax(0, 1fr))',
-              // },
-              // '@media (min-width: 1024px)': {
-              //   gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-              // },
-              // '@media (min-width: 1280px)': {
-              //   gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-              // },
             }}
           >
             {metaDataArray?.map((metaData, index) => (
