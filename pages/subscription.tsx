@@ -334,6 +334,16 @@ const Subscription = () => {
     setcollectionsPage(false);
   };
 
+   if (!wallet) {
+    return (
+      <>
+        <div className="flex justify-center mt-48 text-white bg-black h-screen">
+          Please sign in to Erebrus to view your NFT
+        </div>
+      </>
+    );
+  }
+
   return (
     <div className="py-0">
       <section className="">

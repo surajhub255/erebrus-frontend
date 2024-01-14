@@ -33,7 +33,7 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
   const renderNoReviewsFound = () => (
     <div className="w-full text-center py-10">
       <h2 className="text-4xl font-semibold text-gray-700">
-        No Verified Projects
+        No NFTs
       </h2>
     </div>
   );

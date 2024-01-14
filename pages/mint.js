@@ -49,24 +49,24 @@ const Mint = () => {
   };
   
 
-  if (!isSignedIn) {
-    return (
-      <>
-        <Head>
-          <title>Erebrus | Clients</title>
-        </Head>
-        <div className="flex justify-center mt-48 text-white bg-black h-screen">
-          Please sign in to Erebrus to view your NFT
-        </div>
-        {/* <button
-                  className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
-                  onClick={mint}
-                >
-                  Mint Erebrus NFT
-                </button> */}
-      </>
-    );
-  }
+  // if (!isSignedIn) {
+  //   return (
+  //     <>
+  //       <Head>
+  //         <title>Erebrus | Clients</title>
+  //       </Head>
+  //       <div className="flex justify-center mt-48 text-white bg-black h-screen">
+  //         Please sign in to Erebrus to view your NFT
+  //       </div>
+  //       {/* <button
+  //                 className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
+  //                 onClick={mint}
+  //               >
+  //                 Mint Erebrus NFT
+  //               </button> */}
+  //     </>
+  //   );
+  // }
 
   return (
     <>
