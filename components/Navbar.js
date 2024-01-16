@@ -29,7 +29,7 @@ const Navbar = ({ isHome }) => {
 
   // const address = useAddress();
 
-  const address = Cookies.get("platform_wallet");
+  const address = Cookies.get("erebrus_wallet");
 
   const [, switchNetwork] = useNetwork();
   const isMismatched = useNetworkMismatch();
@@ -179,9 +179,9 @@ const Navbar = ({ isHome }) => {
         const token = await response?.data?.payload?.token;
         const userId = await response?.data?.payload?.userId;
         // localStorage.setItem("platform_token", token);
-        Cookies.set("platform_token", token, { expires: 7 });
-        Cookies.set("platform_wallet", account.address, { expires: 7 });
-        Cookies.set("platform_userid", userId, { expires: 7 });
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", account.address, { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
 
         // setUserWallet(account.address);
         window.location.reload();

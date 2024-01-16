@@ -122,7 +122,7 @@ const Subscription = () => {
 
     setLoading(true);
 
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
 
     try {
       const formDataObj = new FormData();
@@ -194,7 +194,7 @@ const Subscription = () => {
     const fetchProjectsData = async () => {
       setLoading(true);
       try {
-        const auth = Cookies.get("platform_token");
+        const auth = Cookies.get("erebrus_token");
 
         const response = await axios.get(
           `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/clients`,
@@ -211,7 +211,7 @@ const Subscription = () => {
 
         if (response.status === 200) {
           // Filter the data based on the domain ID
-          const wallet = Cookies.get("platform_wallet");
+          const wallet = Cookies.get("erebrus_wallet");
           const payload: any[] = response.data.payload;
           const filteredData = payload.filter(
             (item) => item?.walletAddress === wallet
@@ -228,7 +228,7 @@ const Subscription = () => {
     const vpnnft = async () => {
       setLoading(true);
       try {
-        const auth = Cookies.get("platform_token");
+        const auth = Cookies.get("erebrus_token");
 
         const graphqlbody = {
           query: `
@@ -325,8 +325,8 @@ const Subscription = () => {
     setregion(e.target.value);
   };
 
-  const loggedin = Cookies.get("platform_token");
-  const wallet = Cookies.get("platform_wallet");
+  const loggedin = Cookies.get("erebrus_token");
+  const wallet = Cookies.get("erebrus_wallet");
 
   const handleCollectionClick = (collection) => {
     setcollectionId(collection);

@@ -46,7 +46,7 @@ const backgroundbutton = {
 
 const handleDownload = async (clientId: string, name: string, region: string) => {
   try {
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
 
     const response = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/config/${region}/${clientId}`, {
       headers: {
@@ -109,7 +109,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
   const deletevpn = async (id: string) => {
     setLoading(true);
   
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
   
     const jsonData = {
       "vpnId":id
