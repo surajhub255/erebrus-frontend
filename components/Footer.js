@@ -13,8 +13,25 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto py-12 px-4 overflow-hidden">
         <div className=" flex justify-between">
           
-          <div className="w-1/4">
-            <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
+          <div className="w-1/3">
+          <div className="text-white">
+            <img src="/Erebrus_logo_wordmark.png" alt="Logo" className="w-48" />
+            <div className="mt-4 text-sm text-gray-400">Decentralized VPN Service based on the 
+WireGuard VPN Protocol, Designed to 
+enhance users privacy, anonymity, and 
+security when using Public VPNs.</div>
+          </div>
+          </div>
+
+          {/* <div className="text-gray-300">
+          <div>Links</div>
+          <a href="https://netsepio.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-500">netsepio.com</a><br></br>
+          <a href="https://app.netsepio.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-500">app.netsepio.com</a>
+          </div> */}
+          <div>
+            
+
+          <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
               Follow Us
             </h3>
             <ul className="mt-4 flex mr-4 text-gray-500">
@@ -59,23 +76,7 @@ const Footer = () => {
                 </Link>
               </li>
             </ul>
-          </div>
-
-          {/* <div className="text-white w-full">
-            <img />
-            <div className="w-1/3">Decentralized VPN Service based on the 
-WireGuard VPN Protocol, Designed to 
-enhance users privacy, anonymity, and 
-security when using Public VPNs.</div>
-          </div> */}
-
-          {/* <div className="text-gray-300">
-          <div>Links</div>
-          <a href="https://netsepio.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-500">netsepio.com</a><br></br>
-          <a href="https://app.netsepio.com" target="_blank" rel="noopener noreferrer" className="underline text-blue-500">app.netsepio.com</a>
-          </div> */}
-          <div>
-            <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
+            {/* <h3 className="lg:text-xl text-md font-semibold tracking-wide text-gray-200">
               Subscribe for updates
             </h3>
             <form className="mt-4 flex">
@@ -92,14 +93,14 @@ security when using Public VPNs.</div>
               >
                 Subscribe
               </button>
-            </form>
+            </form> */}
           </div>
         </div>
         <div className="mt-8 text-sm text-white flex flex-col justify-between items-center sm:flex-row">
           <p className="order-2 sm:order-1">
-            Erebrus 2023 &copy; All rights reserved.
+            Erebrus 2024 &copy; All rights reserved.
           </p>
-          <div className="flex items-center order-1 sm:order-2 text-white lg:mr-48 md:mr-48">
+          <div className="flex items-center order-1 sm:order-2 text-white lg:mr-14 md:mr-14">
             <p>Contact us on</p>
             <Link
               href="https://discord.gg/cj2Xt2u5Pj"
