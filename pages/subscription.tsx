@@ -5,7 +5,7 @@ import Link from "next/link";
 import MyVpnContainer from "../components/Myvpncontainer";
 import NftdataContainer from "../components/NftDataContainer";
 // import emoji from "../../../public/EmojiMessage.png";
-// import connectWallet from "../../../modules/connectwallet";
+// import connectWallet from "../components/connectwallet";
 import novpn from "../public/novpn2.png";
 import vpn1 from "../public/vpn1.png";
 import vpn2 from "../public/vpn2.png";
@@ -21,6 +21,8 @@ import Image from "next/image";
 // import Link from "next/link";
 // import VpnContainerDedicated from "../../../components/VpnContainerDedicated";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
+
 export interface FlowIdResponse {
   eula: string;
   flowId: string;
@@ -328,6 +330,84 @@ const Subscription = () => {
   const loggedin = Cookies.get("erebrus_token");
   const wallet = Cookies.get("erebrus_wallet");
 
+
+  const getAptosWallet = () => {
+    if ("aptos" in window) {
+      return (window as any).aptos;
+    } else {
+      window.open("https://petra.app/", "_blank");
+    }
+  };
+
+  const connectWallet = async () => {
+    const wallet = getAptosWallet();
+    try {
+      const response = await wallet.connect();
+
+      const account = await wallet.account();
+      console.log("account", account);
+
+      // Get the current network after connecting (optional)
+      const networkwallet = await (window as any).aptos.network();
+
+      // Check if the connected network is Mainnet
+      if (networkwallet === mynetwork) {
+
+      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
+      console.log(data);
+
+      const message = data.payload.eula;
+      const nonce = data.payload.flowId;
+      const publicKey = account.publicKey;
+
+      const { signature, fullMessage } = await wallet.signMessage({
+        message,
+        nonce,
+      });
+      console.log("sign", signature, "full message", fullMessage);
+
+      const authenticationData = {
+        flowId: nonce,
+        signature: `0x${signature}`,
+        pubKey: publicKey,
+      };
+
+      const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
+
+      const config = {
+        url: authenticateApiUrl,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: authenticationData,
+      };
+
+      try {
+        const response = await axios(config);
+        console.log("auth data", response.data);
+        const token = await response?.data?.payload?.token;
+        const userId = await response?.data?.payload?.userId;
+
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", account.address, { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+        window.location.reload();
+
+      } catch (error) {
+        console.error(error);
+      }
+      }
+    else{
+      alert(`Switch to ${mynetwork} in your wallet`)
+    }
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const handleCollectionClick = (collection) => {
     setcollectionId(collection);
     setvpnPage(true);
@@ -337,8 +417,18 @@ const Subscription = () => {
    if (!wallet) {
     return (
       <>
-        <div className="flex justify-center mt-48 text-white bg-black h-screen">
-          Please sign in to Erebrus to view your NFT
+      <div className="min-h-screen">
+      <img src="/Brazuca_Sitting.png" className="mx-auto p-10"/>
+        <div className="flex justify-center text-white bg-black font-bold text-3xl text-center">
+        Subscribe and Unlock Full Access, <br></br>
+Log In to Get Started
+        </div>
+        <button
+                  className="bg-blue-500 text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center mt-10"
+                  onClick={connectWallet}
+                >
+                  Login now
+                </button>
         </div>
       </>
     );
