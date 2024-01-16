@@ -13,6 +13,7 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import Cookies from 'js-cookie';
 import { AuthContext } from "../AuthContext";
+const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 const transition = {
   type: "tween",
@@ -27,8 +28,93 @@ const Mint = () => {
   const [isLoadingTx, setLoadingTx] = useState(false);
   const [error, setError] = useState(null);
   const [isMinted, setMinted] = useState(false);
-  const isSignedIn = Cookies.get("platform_wallet");
+  const isSignedIn = Cookies.get("erebrus_wallet");
   const [address, setAddress] = useState("");
+  const [token, settoken] = useState("");
+  const [wallet, setwallet] = useState("");
+  const [userid, setuserid] = useState("");
+
+
+  const getAptosWallet = () => {
+    if ("aptos" in window) {
+      return window.aptos;
+    } else {
+      window.open("https://petra.app/", "_blank");
+    }
+  };
+
+  const connectWallet = async () => {
+    const wallet = getAptosWallet();
+    try {
+      const response = await wallet.connect();
+
+      const account = await wallet.account();
+      console.log("account", account);
+
+      // Get the current network after connecting (optional)
+      const networkwallet = await window.aptos.network();
+
+      // Check if the connected network is Mainnet
+      if (networkwallet === 'Mainnet') {
+
+      const { data } = await axios.get(`${GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
+      console.log(data);
+
+      const message = data.payload.eula;
+      const nonce = data.payload.flowId;
+      const publicKey = account.publicKey;
+
+      const { signature, fullMessage } = await wallet.signMessage({
+        message,
+        nonce,
+      });
+      console.log("sign", signature, "full message", fullMessage);
+
+      const authenticationData = {
+        flowId: nonce,
+        signature: `0x${signature}`,
+        pubKey: publicKey,
+      };
+
+      const authenticateApiUrl = `${GATEWAY_URL}api/v1.0/authenticate`;
+
+      const config = {
+        url: authenticateApiUrl,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: authenticationData,
+      };
+
+      try {
+        const response = await axios(config);
+        console.log("auth data", response.data);
+        const token = await response?.data?.payload?.token;
+        const userId = await response?.data?.payload?.userId;
+
+        settoken(token),
+        setwallet(account.address),
+        setuserid(userId)
+
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", account.address, { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+        // await mint();
+
+      } catch (error) {
+        console.error(error);
+      }
+      }
+    else{
+      alert("Switch to mainnet in your wallet")
+    }
+
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const transaction = {
     arguments: [],
@@ -39,12 +125,15 @@ const Mint = () => {
   };
 
   const mint = async () => {
+    if (!token || !wallet) {
+      await connectWallet();
+    }
     try {
       const pendingTransaction = await aptos.signAndSubmitTransaction(
         transaction
       );
     } catch (error) {
-      console.error('Error minting NFT:', error);
+      console.error('Error connecting wallet or minting NFT:', error);
     }
   };
   

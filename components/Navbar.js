@@ -199,8 +199,8 @@ const Navbar = ({ isHome }) => {
   };
 
   const handleDeleteCookie = () => {
-    Cookies.remove("platform_wallet");
-    Cookies.remove("platform_token");
+    Cookies.remove("erebrus_wallet");
+    Cookies.remove("erebrus_token");
     window.location.href = "/";
   };
 
