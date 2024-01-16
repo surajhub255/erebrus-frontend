@@ -13,6 +13,7 @@ import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { AuthContext } from "../AuthContext";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
@@ -141,7 +142,7 @@ const Navbar = ({ isHome }) => {
       const networkwallet = await window.aptos.network();
 
       // Check if the connected network is Mainnet
-      if (networkwallet === 'Mainnet') {
+      if (networkwallet === mynetwork) {
 
       const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
       console.log(data);
@@ -190,7 +191,7 @@ const Navbar = ({ isHome }) => {
       }
       }
     else{
-      alert("Switch to mainnet in your wallet")
+      alert(`Switch to ${mynetwork} in your wallet`)
     }
 
     } catch (err) {

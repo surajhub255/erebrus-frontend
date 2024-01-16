@@ -14,6 +14,7 @@ import { motion } from "framer-motion";
 import Cookies from 'js-cookie';
 import { AuthContext } from "../AuthContext";
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 
 const transition = {
   type: "tween",
@@ -55,7 +56,7 @@ const Mint = () => {
       const networkwallet = await window.aptos.network();
 
       // Check if the connected network is Mainnet
-      if (networkwallet === 'Mainnet') {
+      if (networkwallet === mynetwork) {
 
       const { data } = await axios.get(`${GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
       console.log(data);
@@ -108,7 +109,7 @@ const Mint = () => {
       }
       }
     else{
-      alert("Switch to mainnet in your wallet")
+      alert(`Switch to ${mynetwork} in your wallet`)
     }
 
     } catch (err) {
@@ -125,7 +126,7 @@ const Mint = () => {
   };
 
   const mint = async () => {
-    if (!token || !wallet) {
+    if (!isSignedIn) {
       await connectWallet();
     }
     try {
