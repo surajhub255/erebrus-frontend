@@ -37,7 +37,7 @@ security when using Public VPNs.</div>
             <ul className="mt-4 flex mr-4 text-gray-500">
               <li className="mr-4">
                 <Link
-                  href="https://www.facebook.com/Lazarus.Network?mibextid=LQQJ4d"
+                  href="https://www.facebook.com/NetSepio/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-2xl hover:text-[#4267B2]"
@@ -47,7 +47,7 @@ security when using Public VPNs.</div>
               </li>
               <li className="mr-4">
                 <Link
-                  href="https://twitter.com/LazarusNetwork"
+                  href="https://twitter.com/NetSepio"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-2xl hover:text-[#1DA1F2]"
@@ -55,7 +55,7 @@ security when using Public VPNs.</div>
                   <FaTwitter />
                 </Link>
               </li>
-              <li className="mr-4">
+              {/* <li className="mr-4">
                 <Link
                   href="https://youtube.com/shorts/gBy4j5ZvKZE?feature=share"
                   className="text-2xl hover:text-[#FF0000]"
@@ -64,10 +64,10 @@ security when using Public VPNs.</div>
                 >
                   <FaYoutube />
                 </Link>
-              </li>
+              </li> */}
               <li className="mr-4">
                 <Link
-                  href="https://github.com/orgs/TheLazarusNetwork/repositories?q=erebrus&type=all&language=&sort="
+                  href="https://github.com/NetSepio"
                   className="text-2xl hover:text-[#f5f5f5]"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -103,7 +103,7 @@ security when using Public VPNs.</div>
           <div className="flex items-center order-1 sm:order-2 text-white lg:mr-14 md:mr-14">
             <p>Contact us on</p>
             <Link
-              href="https://discord.gg/cj2Xt2u5Pj"
+              href="https://discord.com/invite/5uaFhNpRF6"
               className="text-2xl ml-2 hover:text-[#738ADB]"
               target="_blank"
               rel="noopener noreferrer"
