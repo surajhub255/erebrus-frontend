@@ -20,10 +20,10 @@ jobs:
           password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Build and Push Docker Image
-        # env:
-        #   PROD_ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
+        env:
+          PROD_ENV_FILE: ${{ secrets.PROD_ENV_FILE }}
         run: |
-          # echo "$PROD_ENV_FILE" | base64 -d > .env
+          echo "$PROD_ENV_FILE" | base64 -d > .env
           export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
           export TAG=$([[ $CURRENT_BRANCH == $(basename ${{ github.ref }}) ]] && echo $CURRENT_BRANCH || echo "latest")
           echo $TAG
@@ -35,7 +35,7 @@ jobs:
           echo "Pushing Image to GitHub Container Registry"
           docker push $GITHUB_REF_IMAGE
           docker push $GITHUB_BRANCH_IMAGE
-          # rm -rf .env
+          rm -rf .env
 
   deploy_dev:
     needs: build_push
