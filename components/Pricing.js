@@ -22,7 +22,7 @@ const Pricing = () => {
         </div>
         <div className="flex mr-16 mb-4">
           <ul className="text-gray-400">
-            <li>2 Reconfigurable VPN Clients</li>
+            <li>Unlimited Devices</li>
             <li>5 Regions</li>
             <li>Each Subscription is rentable</li>
             <l1>100% Decentralized</l1>
