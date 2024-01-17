@@ -129,7 +129,7 @@ const Subscription = () => {
     try {
       const formDataObj = new FormData();
       formDataObj.append("name", formData.name);
-      formDataObj.append("region", formData.region);
+      // formDataObj.append("region", formData.region);
       formDataObj.append("collectionId", collectionId);
 
       // Convert FormData to JavaScript Object
@@ -199,7 +199,7 @@ const Subscription = () => {
         const auth = Cookies.get("erebrus_token");
 
         const response = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/clients`,
+          `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/clients?region=${region}&collection_id=${collectionId}`,
           {
             headers: {
               Accept: "application/json, text/plain, */*",
@@ -320,7 +320,7 @@ const Subscription = () => {
     if (collectionsPage === true) {
       vpnnft();
     }
-  }, [collectionsPage, collectionId]);
+  }, [collectionsPage, collectionId, region]);
 
   const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     // Update the selected region when the dropdown value changes
@@ -452,6 +452,51 @@ Log In to Get Started
                 <h1 className="mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                   <span className="text-white">My Clients</span>
                 </h1>
+
+                <select
+                              id="region"
+                              style={border}
+                              className="shadow border flex appearance-none rounded lg:w-1/5 md:w-1/3 py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                              value={region}
+                              onChange={handleRegionChange}
+                              required
+                            >
+                              <option className="bg-white text-black" value="">
+                                Select Region
+                              </option>
+                              <option
+                                    className="bg-white text-black"
+                                    value="us"
+                                  >
+                                    US
+                                  </option>
+                                  <option
+                                    className="bg-white text-black"
+                                    value="sg"
+                                  >
+                                    Singapore
+                                  </option>
+                                      <option
+                                      className="bg-white text-black"
+                                      value="eu"
+                                    >
+                                      Europe
+                                    </option>
+                                    <option
+                                      className="bg-white text-black"
+                                      value="ca"
+                                    >
+                                      Canada
+                                    </option>
+                                    <option
+                                      className="bg-white text-black"
+                                      value="jp"
+                                    >
+                                      Japan
+                                    </option>
+                                  </select>
+
+
                 {buttonset && (
                   <>
                     <div className="flex text-xs mb-4">
@@ -722,9 +767,9 @@ Log In to Get Started
                         // <Loader />
                         <div className="min-h-screen"></div>
                       ) : (
-                        (!projectsData || projectsData?.length == 0) &&
-                        (!dedicatedVpnData ||
-                          dedicatedVpnData?.length == 0) && (
+                        // (!projectsData || projectsData?.length == 0) &&
+                        // (!dedicatedVpnData ||
+                        //   dedicatedVpnData?.length == 0) && (
                           <div className="mx-6">
                             <div className="flex gap-4">
                               <div className="ml-auto text-white">
@@ -778,7 +823,8 @@ Log In to Get Started
                             </div>
                           </div>
                         )
-                      )}
+                      // )
+                      }
 
                       {loading && (
                         <div

@@ -98,7 +98,7 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
   }
 
   return (
-    <div className="w-full">
+    <div className="w-full cursor-pointer">
       {/* <Link href={`/reviews/${metaData.domainName.replace(/^https:\/\//, '')}`}> */}
       <div className="w-full h-full rounded-lg border border-gray-500 p-2">
         <div>
