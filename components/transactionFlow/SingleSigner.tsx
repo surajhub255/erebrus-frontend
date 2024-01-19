@@ -4,7 +4,7 @@ import {
   InputTransactionData,
 } from "@aptos-labs/wallet-adapter-react";
 import Cookies from 'js-cookie';
-import { aptosClient } from "../../utils";
+import { aptosClient } from "../../module";
 import { useAlert } from "../AlertProvider";
 import Button from "../Button";
 import Col from "../Col";
@@ -83,9 +83,11 @@ export default function SingleSignerTransaction({
       const token = await response?.data?.payload?.token;
       const userId = await response?.data?.payload?.userId;
           // localStorage.setItem("platform_token", token);
-          Cookies.set("platform_token", token, { expires: 7 });
-          Cookies.set("platform_wallet", account?.address ?? '', { expires: 7 });
-          Cookies.set("platform_userid", userId, { expires: 7 });
+          Cookies.set("erebrus_token", token, { expires: 7 });
+          Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+          Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+          window.location.reload();
 
     } catch (error) {
       console.error(error);
@@ -170,7 +172,7 @@ export default function SingleSignerTransaction({
   };
 
   return (
-      <div className="border w-1/2 mx-auto mt-4 rounded-lg">
+      <div className="w-full mx-auto rounded-lg">
         {/* <Button
           color={"blue"}
           onClick={onSignAndSubmitTransaction}

@@ -12,12 +12,35 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { AuthContext } from "../AuthContext";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+// import { WalletConnector } from "@aptos-labs/wallet-adapter-mui-design";
+import dynamic from "next/dynamic";
+import { Network } from "@aptos-labs/ts-sdk";
+import Button from "../components/Button";
+import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
   closed: { opacity: 0, y: 0 },
+};
+
+const WalletSelectorAntDesign = dynamic(
+  () => import("../components/WalletSelectorAntDesign"),
+  {
+    suspense: false,
+    ssr: false,
+  }
+);
+
+const isSendableNetwork = (connected, network) => {
+  return (
+    connected &&
+    ( network?.toLowerCase() === Network.DEVNET.toLowerCase() ||
+      network?.toLowerCase() === Network.TESTNET.toLowerCase() || 
+      network?.toLowerCase() === Network.MAINNET.toLowerCase())
+  );
 };
 
 const Navbar = ({ isHome }) => {
@@ -28,7 +51,11 @@ const Navbar = ({ isHome }) => {
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const sdk = useSDK();
 
-  // const address = useAddress();
+  const { account, connected, network, wallet , signMessage} = useWallet();
+
+  let sendable = isSendableNetwork(connected, network?.name);
+
+  console.log("account details", account);
 
   const address = Cookies.get("erebrus_wallet");
 
@@ -82,36 +109,36 @@ const Navbar = ({ isHome }) => {
     };
   }, [address, isSignedIn]);
 
-  const signMessage = async () => {
-    setIsSignedIn(false);
-    console.log("signing message");
-    const signature = await sdk?.wallet.sign(message);
-    setSignature(signature);
-    try {
-      //make a post request to the erebrus server with the signature and challengeId
-      const response = await axios.post(
-        "api/getToken",
-        {
-          signature,
-          challengeId,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (response.data.status === 200) {
-        //store the token in the session storage
-        sessionStorage.setItem("token", response.data.token);
-        localStorage.setItem("token", response.data.token);
-      }
-      setIsSignedIn(true);
-      console.log(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  // const signMessage = async () => {
+  //   setIsSignedIn(false);
+  //   console.log("signing message");
+  //   const signature = await sdk?.wallet.sign(message);
+  //   setSignature(signature);
+  //   try {
+  //     //make a post request to the erebrus server with the signature and challengeId
+  //     const response = await axios.post(
+  //       "api/getToken",
+  //       {
+  //         signature,
+  //         challengeId,
+  //       },
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       }
+  //     );
+  //     if (response.data.status === 200) {
+  //       //store the token in the session storage
+  //       sessionStorage.setItem("token", response.data.token);
+  //       localStorage.setItem("token", response.data.token);
+  //     }
+  //     setIsSignedIn(true);
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const signOut = () => {
     sessionStorage.removeItem("token");
@@ -260,11 +287,35 @@ const Navbar = ({ isHome }) => {
               <button onClick={connectWallet}>Connect</button>
             </div>
           )} */}
-          {!address && (
-            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
-              <button onClick={connectWallet}>Connect</button>
+
+{account?.address && (
+            <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl text-white">
+              <div>
+                {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
+              </div>
+              {
+                address && (
+                  <button onClick={handleDeleteCookie}>Logout</button>
+                )
+              }  
             </div>
           )}
+          
+          {!address && (
+            <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
+             
+             {!connected && ( <button 
+              // onClick={connectWallet}
+              >
+              <WalletSelectorAntDesign/>
+              </button>
+             )}
+              {connected && (
+            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+          )} 
+            </div>
+          )}
+
           {address && (
             <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
               <div>
