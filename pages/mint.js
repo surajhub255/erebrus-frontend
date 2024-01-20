@@ -37,9 +37,7 @@ const WalletSelectorAntDesign = dynamic(
 const isSendableNetwork = (connected, network) => {
   return (
     connected &&
-    ( network?.toLowerCase() === Network.DEVNET.toLowerCase() ||
-      network?.toLowerCase() === Network.TESTNET.toLowerCase() || 
-      network?.toLowerCase() === Network.MAINNET.toLowerCase())
+    ( network?.toLowerCase() === mynetwork.toLowerCase())
   );
 };
 
