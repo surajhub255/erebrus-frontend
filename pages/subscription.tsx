@@ -15,11 +15,10 @@ import vpn5 from "../public/vpn5.png";
 import vpn6 from "../public/vpn6.png";
 import vpn7 from "../public/vpn7.png";
 import Image from "next/image";
-// import erebrus from "../../../public/erebrus.png";
-// import sotreus from "../../../public/sotreus.png";
-// import Image from "next/image";
-// import Link from "next/link";
-// import VpnContainerDedicated from "../../../components/VpnContainerDedicated";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import dynamic from "next/dynamic";
+import { Network } from "@aptos-labs/ts-sdk";
+import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 
@@ -44,6 +43,21 @@ const transition = {
   duration: 0.5,
 };
 
+const WalletSelectorAntDesign = dynamic(
+  () => import("../components/WalletSelectorAntDesign"),
+  {
+    suspense: false,
+    ssr: false,
+  }
+);
+
+const isSendableNetwork = (connected, network) => {
+  return (
+    connected &&
+    ( network?.toLowerCase() === mynetwork.toLowerCase())
+  );
+};
+
 const Subscription = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [profileset, setprofileset] = useState<boolean>(true);
@@ -64,6 +78,9 @@ const Subscription = () => {
   const [collectionId, setcollectionId] = useState<string>();
   const [vpnPage, setvpnPage] = useState<boolean>(false);
   //const txtvalue = localStorage.getItem("txtvalue");
+
+  const { account, connected, network, signMessage} = useWallet();
+
   const bg2 = {
     backgroundColor: "white",
   };
@@ -423,12 +440,24 @@ const Subscription = () => {
         Subscribe and Unlock Full Access, <br></br>
 Log In to Get Started
         </div>
-        <button
+        {/* <button
                   className="bg-blue-500 text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center mt-10"
                   onClick={connectWallet}
                 >
                   Login now
-                </button>
+                </button> */}
+                <div className="text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center mt-10">
+                {!connected && ( 
+             <button className="">
+              <WalletSelectorAntDesign/>
+              </button>
+             )}
+              {connected && (
+                <div className="text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center">
+            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+            </div>
+          )} 
+                </div>
         </div>
       </>
     );
