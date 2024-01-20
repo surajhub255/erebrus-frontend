@@ -13,6 +13,10 @@ import Head from "next/head";
 import { motion } from "framer-motion";
 import Cookies from 'js-cookie';
 import { AuthContext } from "../AuthContext";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import dynamic from "next/dynamic";
+import { Network } from "@aptos-labs/ts-sdk";
+import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 
@@ -20,6 +24,23 @@ const transition = {
   type: "tween",
   ease: "easeInOut",
   duration: 0.5,
+};
+
+const WalletSelectorAntDesign = dynamic(
+  () => import("../components/WalletSelectorAntDesign"),
+  {
+    suspense: false,
+    ssr: false,
+  }
+);
+
+const isSendableNetwork = (connected, network) => {
+  return (
+    connected &&
+    ( network?.toLowerCase() === Network.DEVNET.toLowerCase() ||
+      network?.toLowerCase() === Network.TESTNET.toLowerCase() || 
+      network?.toLowerCase() === Network.MAINNET.toLowerCase())
+  );
 };
 
 const Mint = () => {
@@ -34,6 +55,8 @@ const Mint = () => {
   const [token, settoken] = useState("");
   const [wallet, setwallet] = useState("");
   const [userid, setuserid] = useState("");
+
+  const { account, connected, network, signMessage} = useWallet();
 
 
   const getAptosWallet = () => {
@@ -126,9 +149,9 @@ const Mint = () => {
   };
 
   const mint = async () => {
-    if (!isSignedIn) {
-      await connectWallet();
-    }
+    // if (!isSignedIn) {
+    //   await connectWallet();
+    // }
     try {
       const pendingTransaction = await aptos.signAndSubmitTransaction(
         transaction
@@ -213,12 +236,27 @@ Exceptional Value for Unmatched Security</div>
               <div className="animate-spin text-white text-7xl">⛏</div>
             ) : (
               <>
+              {!isSignedIn ? (
+            <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
+             
+             {!connected && ( 
+             <button className="">
+              <WalletSelectorAntDesign/>
+              </button>
+             )}
+              {connected && (
+            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+          )} 
+            </div>
+          ): (
                 <button
                   className="bg-blue-500 text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20"
                   onClick={mint}
                 >
                   Mint Erebrus NFT
                 </button>
+          )}
+                
                 {error && <div className="text-red-500 mt-4">{error}</div>}
               </>
             )}
