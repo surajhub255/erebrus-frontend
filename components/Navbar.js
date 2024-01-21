@@ -352,36 +352,74 @@ const Navbar = ({ isHome }) => {
           <div className="bg-transparent py-4">
             <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:justify-between">
               <div className="flex flex-col lg:flex-row items-center">
-                <Link
+                {/* <Link
                   href="/demo"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                   scroll={false}
                 >
                   Demo
-                </Link>
+                </Link> */}
                 <Link
                   href="/mint"
                   className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
                   scroll={false}
                 >
-                  Mint
+                  Mint NFT
                 </Link>
                 <Link
-                  href="/clients"
+                  href="/subscription"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 >
-                  Clients
+                  Subscription
                 </Link>
-                {isMismatched && (
+
+                {account?.address && (
+            <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl text-white">
+              <div>
+                {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
+              </div>
+              {
+                address && (
+                  <button onClick={handleDeleteCookie}>Logout</button>
+                )
+              }  
+            </div>
+          )}
+          
+          {!address && (
+            <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
+             
+             {!connected && ( <button 
+              // onClick={connectWallet}
+              >
+              <WalletSelectorAntDesign/>
+              </button>
+             )}
+              {connected && (
+            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+          )} 
+            </div>
+          )}
+
+{address && (
+            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
+              <div>
+                {address.slice(0, 4)}...{address.slice(-4)}
+              </div>
+              <button onClick={handleDeleteCookie}>Logout</button>
+            </div>
+          )}
+
+                {/* {isMismatched && (
                   <button
                     className="text-purple-400"
                     onClick={() => switchNetwork(ChainId.Mumbai)}
                   >
                     Switch To Mumbai
                   </button>
-                )}
+                )} */}
 
-                {address && !isSignedIn && (
+                {/* {address && !isSignedIn && (
                   <button
                     className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
                     onClick={signMessage}
@@ -398,7 +436,7 @@ const Navbar = ({ isHome }) => {
                   <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
                     <ConnectWallet />
                   </div>
-                )}
+                )} */}
               </div>
             </div>
           </div>

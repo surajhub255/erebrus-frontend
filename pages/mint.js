@@ -141,7 +141,7 @@ const Mint = () => {
   const transaction = {
     arguments: [],
     function:
-      "0x75bcfe882d1a4d032ead2b47f377e4c95221594d66ab2bd09a61aded4c9d64f9::vpn3::user_mint_NFT",
+      "0x75bcfe882d1a4d032ead2b47f377e4c95221594d66ab2bd09a61aded4c9d64f9::erebrus::user_mint",
     type: "entry_function_payload",
     type_arguments: [],
   };
