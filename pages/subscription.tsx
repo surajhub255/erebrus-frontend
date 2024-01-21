@@ -478,11 +478,12 @@ Log In to Get Started
 
             {vpnPage === true && (
               <>
+              <div className="min-h-screen">
                 <h1 className="mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                   <span className="text-white">My Clients</span>
                 </h1>
 
-                <select
+                {/* <select
                               id="region"
                               style={border}
                               className="shadow border flex appearance-none rounded lg:w-1/5 md:w-1/3 py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
@@ -523,7 +524,7 @@ Log In to Get Started
                                     >
                                       Japan
                                     </option>
-                                  </select>
+                                  </select> */}
 
 
                 {buttonset && (
@@ -889,6 +890,7 @@ Log In to Get Started
                     </section>
                   </>
                 )}
+                </div>
               </>
             )}
           </div>
