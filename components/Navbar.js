@@ -307,14 +307,22 @@ const Navbar = ({ isHome }) => {
             Subscription
           </Link>
           )}
-          {isMismatched && (
+
+          <Link href="https://docs.netsepio.com/erebrus/" target="_blank" className="text-gray-300 mr-8"
+            onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+            >
+          Setup your VPN
+          </Link>
+
+          {/* {isMismatched && (
             <button
               className="text-purple-400 mr-12"
               onClick={() => switchNetwork(ChainId.Mumbai)}
             >
               Switch To Mumbai
             </button>
-          )}
+          )} */}
           {/* {address && !isSignedIn && (
             <button
               className="bg-blue-500 text-white lg:mr-20 font-bold py-2 px-4 rounded-lg"
