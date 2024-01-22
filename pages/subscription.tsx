@@ -228,12 +228,12 @@ const Subscription = () => {
 
         const configFile = `
         [Interface]
-        Address = ${responseData.payload.Address}
+        Address = ${responseData.payload.client.Address}
         PrivateKey = ${keys.privKey}
         DNS = 1.1.1.1
 
         [Peer]
-        PublicKey = fBPFyjWdHPPjvpMHjkFQfOgwrWAgHJE5xytdrRTMgWU=
+        PublicKey = ${responseData.payload.serverPublicKey}
         PresharedKey = ${keys.preSharedKey}
         AllowedIPs = 0.0.0.0/0, ::/0
         Endpoint = us.erebrus.netsepio.com:51820
@@ -540,8 +540,8 @@ const Subscription = () => {
                   <h1 className="gap-4 mb-8 ml-6 mt-10 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                     <span className="text-white">My VPN Clients</span>
                     <div className="text-left text-white mt-4 flex gap-4">
-                      <img src={collectionImage} className="w-14"/>
-                    <div className="mt-2">{collectionName}</div>
+                      <img src={collectionImage} className="w-14" />
+                      <div className="mt-2">{collectionName}</div>
                       {/* (collection: {collectionId.slice(0, 4)}...
                       {collectionId.slice(-4)}) */}
                     </div>
@@ -801,41 +801,67 @@ const Subscription = () => {
 
                                       <p
                                         className="text-md text-center mx-auto"
-                                        style={{color:'orange'}}
+                                        style={{ color: "orange" }}
                                       >
-                                        Back up your WireGuard VPN client config immediately by downloading it or scanning its QR code. If lost and not scanned, you'll have to set up a new client to connect to Erebrus VPN.
+                                        Back up your WireGuard VPN client config
+                                        immediately by downloading it or
+                                        scanning its QR code. If lost and not
+                                        scanned, you'll have to set up a new
+                                        client to connect to Erebrus VPN.
                                       </p>
                                       <div className="flex w-full flex-col items-center justify-center ">
                                         <QRCode value={ConfigFile} />
 
-                                      <div className="flex gap-4">
-                                        <button
-                                          className="text-lg rounded-lg text-white flex btn bg-blue-gray-700"
-                                          onClick={() => {
-                                            const blob = new Blob(
-                                              [ConfigFile],
-                                              {
-                                                type: "text/plain;charset=utf-8",
-                                              }
-                                            );
-                                            saveAs(blob, `${VpnName}.conf`);
-                                          }}
-                                        >
-                                          <div className="flex cursor-pointer p-2 rounded-lg mt-4 gap-2" style={{border:'1px solid #11D9C5'}}>
-                                            <div style={{color:'white'}}>Download</div>
-                                            <FaDownload
+                                        <div className="flex gap-4">
+                                          <button
+                                            className="text-lg rounded-lg text-white flex btn bg-blue-gray-700"
+                                            onClick={() => {
+                                              const blob = new Blob(
+                                                [ConfigFile],
+                                                {
+                                                  type: "text/plain;charset=utf-8",
+                                                }
+                                              );
+                                              saveAs(blob, `${VpnName}.conf`);
+                                            }}
+                                          >
+                                            <div
+                                              className="flex cursor-pointer p-2 rounded-lg mt-4 gap-2"
                                               style={{
-                                                color: "#11D9C5",
+                                                border: "1px solid #11D9C5",
                                               }}
-                                              className="mt-2"
-                                            />
-                                          </div>
-                                        </button>
+                                            >
+                                              <div style={{ color: "white" }}>
+                                                Download
+                                              </div>
+                                              <FaDownload
+                                                style={{
+                                                  color: "#11D9C5",
+                                                }}
+                                                className="mt-2"
+                                              />
+                                            </div>
+                                          </button>
 
-                                        <Link href="https://www.wireguard.com/" target="_blank" className="mt-4 border p-2 rounded-lg" style={{color:'#11D9C5'}}>Wiregaurd</Link>
+                                          <Link
+                                            href="https://www.wireguard.com/"
+                                            target="_blank"
+                                            className="mt-4 border p-2 rounded-lg"
+                                            style={{ color: "#11D9C5" }}
+                                          >
+                                            Wiregaurd
+                                          </Link>
                                         </div>
 
-                                        <div className="text-center text-white text-xs w-2/3 mt-2">On your mobile, open the WireGuard app, and use the option to add a new connection by scanning a QR code. After scanning, the app will import the configuration. You can then connect to Erebrus VPN through the WireGuard app.</div>
+                                        <div className="text-center text-white text-xs w-2/3 mt-2">
+                                          On your mobile, open the WireGuard
+                                          app, and use the option to add a new
+                                          connection by scanning a QR code.
+                                          After scanning, the app will import
+                                          the configuration. You can then
+                                          connect to Erebrus VPN through the
+                                          WireGuard app.
+                                        </div>
                                       </div>
                                     </div>
                                     <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
