@@ -17,6 +17,7 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
+import { useRouter } from 'next/router';
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
@@ -46,12 +47,16 @@ const Navbar = ({ isHome }) => {
   const [message, setMessage] = useState("");
   const [signature, setSignature] = useState("");
   const [challengeId, setChallengeId] = useState("");
+  const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const sdk = useSDK();
 
   const { account, connected, network, wallet , signMessage} = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
+
+  const router = useRouter();
+  console.log("router", router);
 
   console.log("account details", account);
 
@@ -248,22 +253,60 @@ const Navbar = ({ isHome }) => {
           </Link> */}
         </div>
         <div className="hidden lg:flex items-center">
-          <Link href="/mint" className="text-gray-300 mr-8" scroll={false}>
+        { link !== "mint" ?(
+          <Link
+            href="/mint"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            onClick={()=> {setlink("mint")}}
+            style={{ textDecoration: "none", position: "relative",
+            borderBottom: router.pathname.includes('mint') ? '2px solid white' : '', }}
+  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+          >
+            Mint NFT
+          </Link>):
+          (
+<Link
+            href="/mint"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            style={{ textDecoration: "none", position: "relative",
+            borderBottom:'2px solid white'}}
+          >
             Mint NFT
           </Link>
+          )}
           {/* <Link href="/demo" className="text-gray-300 mr-8">
             Demo
           </Link>
           <Link href="/clients" className="text-gray-300 mr-8">
             Clients
           </Link> */}
+          { link !== "subscription" ?(
           <Link
             href="/subscription"
             className="text-gray-300 mr-8"
             scroll={false}
+            onClick={()=> {setlink("subscription")}}
+            style={{ textDecoration: "none", position: "relative",
+            borderBottom: router.pathname.includes('subscription') ? '2px solid white' : '', }}
+  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+          >
+            Subscription
+          </Link>):
+          (
+<Link
+            href="/subscription"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            style={{ textDecoration: "none", position: "relative",
+            borderBottom:'2px solid white'}}
           >
             Subscription
           </Link>
+          )}
           {isMismatched && (
             <button
               className="text-purple-400 mr-12"
