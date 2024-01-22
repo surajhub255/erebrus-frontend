@@ -481,9 +481,25 @@ Log In to Get Started
             {vpnPage === true && (
               <>
               <div className="min-h-screen">
-                <h1 className="mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
+                <h1 className="flex gap-4 mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                   <span className="text-white">My Clients</span>
+                  <div className="text-left text-white">(collectionId: {collectionId.slice(0, 4)}...{collectionId.slice(-4)})</div>
                 </h1>
+
+                <div className="flex gap-4">
+                              <div className="mr-auto text-white">
+                                <button
+                                  style={{ border: "1px solid #11D9C5" }}
+                                  onClick={() => {
+                                    setcollectionsPage(true);
+                                    setvpnPage(false);
+                                  }}
+                                  className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full ml-6"
+                                >
+                                  See collections
+                                </button>
+                              </div>
+                            </div>
 
                 {/* <select
                               id="region"
