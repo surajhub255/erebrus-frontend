@@ -819,8 +819,8 @@ const Subscription = () => {
                                         scanned, you&#39;ll have to set up a new
                                         client to connect to Erebrus VPN.
                                       </p>
-                                      <div className="flex w-full flex-col items-center justify-center ">
-                                        <QRCode value={ConfigFile} />
+                                      <div className="flex w-full flex-col items-center justify-center">
+                                        <QRCode value={ConfigFile} size={300}/>
 
                                         <div className="flex gap-4">
                                           <button
