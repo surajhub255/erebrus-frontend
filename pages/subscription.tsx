@@ -853,19 +853,20 @@ const Subscription = () => {
                                             </div>
                                           </button>
 
-                                          <Link
+                                          {/* <Link
                                             href="https://www.wireguard.com/"
                                             target="_blank"
                                             className="mt-4 border p-2 rounded-lg"
                                             style={{ color: "#11D9C5" }}
                                           >
                                             Wiregaurd
-                                          </Link>
+                                          </Link> */}
                                         </div>
 
-                                        <div className="text-center text-white text-xs w-2/3 mt-2">
-                                          On your mobile, open the WireGuard
-                                          app, and use the option to add a new
+                                        <div className="text-center text-white text-sm w-2/3 mt-2">
+                                          On your mobile, open the <Link
+                                            href="https://www.wireguard.com/"
+                                            target="_blank" style={{ color: "#11D9C5" }}>WireGaurd</Link>&nbsp;app, and use the option to add a new
                                           connection by scanning a QR code.
                                           After scanning, the app will import
                                           the configuration. You can then

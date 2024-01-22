@@ -320,7 +320,7 @@ Exceptional Value for Unmatched Security</div>
                                       className="text-md text-center w-1/2 mx-auto"
                                     
                                     >
-                                      You minted 111 VPN NFT ! To set clients, click button to go to subscription page.
+                                      You've minted an Erebrus NFT ! To set clients, click button to go to subscription page.
                                     </p>
                                   </div>
 
