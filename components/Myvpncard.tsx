@@ -176,7 +176,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
           </div>
 
           <div className="flex gap-4 w-1/4 justify-end">
-            <button
+            {/* <button
               className="text-lg rounded-lg text-white flex btn bg-blue-gray-700"
               onClick={() =>
                 handleDownload(metaData.UUID, metaData.name, metaData.region)
@@ -192,7 +192,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
               }}
             >
               <FaQrcode style={color2} className="mt-1" />
-            </button>
+            </button> */}
             <button
               className="text-lg rounded-lg"
               onClick={() => setdelvpn(true)}
