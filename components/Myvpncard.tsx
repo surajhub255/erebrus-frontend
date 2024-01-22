@@ -20,6 +20,7 @@ interface ReviewCardProps {
   MyReviews?: boolean;
   // review?: ReviewCreated;
   onReviewDeleted?: () => void;
+  onChildValue: (value: string) => void;
 }
 
 const background = {
@@ -71,6 +72,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
   metaData,
   MyReviews = false,
   onReviewDeleted,
+  onChildValue
 }) => {
   const [showDescription, setShowDescription] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -128,7 +130,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
       if (response.status === 200) {
         console.log("success");
         setdelvpn(false);
-        // window.location.reload();
+        onChildValue("refreshdataafterdelete");
       } else {
       }
     } catch (error) {

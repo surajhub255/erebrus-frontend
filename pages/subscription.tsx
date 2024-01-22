@@ -82,6 +82,7 @@ const Subscription = () => {
   const [collectionName, setcollectionName] = useState<string>();
   const [collectionImage, setcollectionImage] = useState<string>();
   const [vpnPage, setvpnPage] = useState<boolean>(false);
+  const [valueFromChild2, setValueFromChild2] = useState<string>("");
   //const txtvalue = localStorage.getItem("txtvalue");
 
   const { account, connected, network, signMessage } = useWallet();
@@ -287,6 +288,8 @@ const Subscription = () => {
         setLoading(false);
       }
     };
+
+    
     const vpnnft = async () => {
       setLoading(true);
       try {
@@ -390,7 +393,7 @@ const Subscription = () => {
     if (collectionsPage === true) {
       vpnnft();
     }
-  }, [collectionsPage, collectionId, region]);
+  }, [collectionsPage, collectionId, region, valueFromChild2]);
 
   const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
     // Update the selected region when the dropdown value changes
@@ -473,6 +476,12 @@ const Subscription = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleChildValue = (value: string) => {
+    // Callback function to update the state in the parent component
+    setValueFromChild2(value);
+    console.log("valueFromChild2", value);
   };
 
   const handleCollectionClick = (
@@ -988,6 +997,7 @@ const Subscription = () => {
                                 <MyVpnContainer
                                   metaDataArray={projectsData}
                                   MyReviews={false}
+                                  onChildValue={handleChildValue}
                                 />
                               </div>
                             </div>
