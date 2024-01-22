@@ -79,6 +79,8 @@ const Subscription = () => {
   const [about, setabout] = useState<boolean>(false);
   const [collectionsPage, setcollectionsPage] = useState<boolean>(true);
   const [collectionId, setcollectionId] = useState<string>();
+  const [collectionName, setcollectionName] = useState<string>();
+  const [collectionImage, setcollectionImage] = useState<string>();
   const [vpnPage, setvpnPage] = useState<boolean>(false);
   //const txtvalue = localStorage.getItem("txtvalue");
 
@@ -470,8 +472,14 @@ const Subscription = () => {
     }
   };
 
-  const handleCollectionClick = (collection) => {
+  const handleCollectionClick = (
+    collection,
+    collectionName,
+    collectionImage
+  ) => {
     setcollectionId(collection);
+    setcollectionName(collectionName);
+    setcollectionImage(collectionImage);
     setvpnPage(true);
     setcollectionsPage(false);
   };

@@ -7,6 +7,7 @@ import Cookies from "js-cookie";
 import QrCode from "./qrCode";
 import dlt from "../public/dlt.png";
 import Image from "next/image";
+import Link from "next/link";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
 interface ReviewCardProps {
@@ -155,9 +156,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
           <div className="lg:flex md:flex justify-between w-1/4">
             <div>
               <button className="text-lg rounded-lg pr-1 text-white">
-                <a target="_blank" style={color2}>
-                  {metaData.name}
-                </a>
+                <div style={color2}>{metaData.name}</div>
               </button>
             </div>
           </div>
@@ -268,8 +267,20 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
                 name={metaData.name}
                 region={metaData.region}
               />
-              <div className="text-gray-300 mb-4">On your mobile, open the WireGuard app, and use the option to add a new connection by scanning a QR code. After scanning, the app will import the configuration. You can then connect to Erebrus VPN through the WireGuard app.</div>
-            <a href="https://www.wireguard.com/" target="_blank" className="text-green-500 font-bold px-4 rounded-lg pb-2 pt-1" style={{border:"1px solid white"}}>Wireguard</a>
+              <div className="text-gray-300 mb-4">
+                On your mobile, open the WireGuard app, and use the option to
+                add a new connection by scanning a QR code. After scanning, the
+                app will import the configuration. You can then connect to
+                Erebrus VPN through the WireGuard app.
+              </div>
+              <Link
+                href="https://www.wireguard.com/"
+                target="_blank"
+                className="text-green-500 font-bold px-4 rounded-lg pb-2 pt-1"
+                style={{ border: "1px solid white" }}
+              >
+                Wireguard
+              </Link>
             </div>
           </div>
         </div>

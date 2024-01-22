@@ -1,8 +1,8 @@
 // ReviewContainer.tsx
-"use client"
+"use client";
 import React from "react";
 import NftdataCard from "./NftdataCard";
-import Link from 'next/link';
+import Link from "next/link";
 // import { useEffect, useState } from "react";
 
 interface MyReviewContainerProps {
@@ -27,22 +27,20 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
   //   call();
   // }, []);
 
-  const handleClick = (collection_id: string) => {
+  const handleClick = (
+    collection_id: string,
+    token_name: string,
+    cdn_image_uri: string
+  ) => {
     // Call the function passed as prop to change parent state
-    selectCollection(collection_id);
+    selectCollection(collection_id, token_name, cdn_image_uri);
   };
   const renderNoReviewsFound = () => (
     <div className="w-full text-center py-20">
-      <h2 className="text-4xl font-bold text-white">
-        No NFTs
-      </h2>
-      <div
-            className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-1/5 mx-auto my-20"
-          >
-            <Link href="/mint">
-              Mint Now
-            </Link>
-          </div>
+      <h2 className="text-4xl font-bold text-white">No NFTs</h2>
+      <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-1/5 mx-auto my-20">
+        <Link href="/mint">Mint Now</Link>
+      </div>
     </div>
   );
 
@@ -67,7 +65,11 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
                 key={index}
                 className="py-2 flex"
                 onClick={() =>
-                  handleClick(metaData.current_token_data.token_data_id)
+                  handleClick(
+                    metaData.current_token_data.token_data_id,
+                    metaData.current_token_data.token_name,
+                    metaData.current_token_data.cdn_asset_uris.cdn_image_uri
+                  )
                 }
               >
                 <NftdataCard
