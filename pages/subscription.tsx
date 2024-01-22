@@ -820,9 +820,9 @@ Log In to Get Started
                         //   dedicatedVpnData?.length == 0) && (
                           <div className="mx-6">
                             <div className="flex gap-4">
-                              <div className="ml-auto text-white">
+                              <div className="ml-auto text-black">
                                 <button
-                                  style={{ border: "1px solid #11D9C5" }}
+                                  style={{ border: "1px solid #11D9C5", backgroundColor:'#11D9C5'}}
                                   onClick={() => setbuttonset(true)}
                                   className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full sm:mb-0"
                                 >
