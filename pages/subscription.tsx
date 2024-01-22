@@ -537,11 +537,13 @@ const Subscription = () => {
             {vpnPage === true && (
               <>
                 <div className="min-h-screen">
-                  <h1 className="flex gap-4 mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
+                  <h1 className="gap-4 mb-8 ml-6 mt-10 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                     <span className="text-white">My VPN Clients</span>
-                    <div className="text-left text-white">
-                      (collection: {collectionId.slice(0, 4)}...
-                      {collectionId.slice(-4)})
+                    <div className="text-left text-white mt-4 flex gap-4">
+                      <img src={collectionImage} className="w-14"/>
+                    <div className="mt-2">{collectionName}</div>
+                      {/* (collection: {collectionId.slice(0, 4)}...
+                      {collectionId.slice(-4)}) */}
                     </div>
                   </h1>
 
