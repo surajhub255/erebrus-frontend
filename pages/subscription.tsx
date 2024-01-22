@@ -238,7 +238,7 @@ const Subscription = () => {
         PublicKey = ${responseData.payload.serverPublicKey}
         PresharedKey = ${responseData.payload.client.PresharedKey} 
         AllowedIPs = 0.0.0.0/0, ::/0
-        Endpoint = ${responseData.payload.endpoint}
+        Endpoint = ${responseData.payload.endpoint}:51820
         PersistentKeepalive = 16`;
         setConfigFile(configFile);
         setverify(true);
