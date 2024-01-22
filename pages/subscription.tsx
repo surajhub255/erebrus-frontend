@@ -237,7 +237,7 @@ const Subscription = () => {
         PublicKey = ${responseData.payload.serverPublicKey}
         PresharedKey = ${responseData.payload.client.PresharedKey} 
         AllowedIPs = 0.0.0.0/0, ::/0
-        Endpoint = us.erebrus.netsepio.com:51820
+        Endpoint = ${responseData.payload.endpoint}
         PersistentKeepalive = 16`;
         setConfigFile(configFile);
         setverify(true);
