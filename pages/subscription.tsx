@@ -222,7 +222,7 @@ const Subscription = () => {
 
       if (response.status === 200) {
         const responseData = await response.json();
-        setVpnName(responseData.payload.Name);
+        setVpnName(responseData.payload.client.Name);
         setFormData(initialFormData);
         console.log("vpn data", responseData);
 
