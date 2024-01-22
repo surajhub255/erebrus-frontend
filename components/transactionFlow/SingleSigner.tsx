@@ -202,7 +202,7 @@ export default function SingleSignerTransaction({
           color={"blue"}
           onClick={onSignMessage}
           disabled={!sendable}
-          message={"Sign message"}
+          message={"Authenticate"}
         />
         {/* <Button
           color={"blue"}
