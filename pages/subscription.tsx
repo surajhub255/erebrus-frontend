@@ -235,13 +235,13 @@ const Subscription = () => {
 
         [Peer]
         PublicKey = ${responseData.payload.serverPublicKey}
-        PresharedKey = ${keys.preSharedKey}
+        PresharedKey = ${responseData.payload.client.PresharedKey} 
         AllowedIPs = 0.0.0.0/0, ::/0
         Endpoint = us.erebrus.netsepio.com:51820
         PersistentKeepalive = 16`;
         setConfigFile(configFile);
         setverify(true);
-        setValueFromChild2("refreshafterclientcreate")
+        setValueFromChild2("refreshafterclientcreate");
       } else {
         setMsg("error");
       }
@@ -290,7 +290,6 @@ const Subscription = () => {
       }
     };
 
-    
     const vpnnft = async () => {
       setLoading(true);
       try {
@@ -820,7 +819,7 @@ const Subscription = () => {
                                         client to connect to Erebrus VPN.
                                       </p>
                                       <div className="flex w-full flex-col items-center justify-center">
-                                        <QRCode value={ConfigFile} size={300}/>
+                                        <QRCode value={ConfigFile} size={300} />
 
                                         <div className="flex gap-4">
                                           <button
