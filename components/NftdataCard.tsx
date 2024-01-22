@@ -8,7 +8,9 @@ interface ReviewCardProps {
   metaData: {
     amount: number;
     current_token_data: {
-      cdn_asset_uris: string[] | null;
+      cdn_asset_uris: {
+        cdn_image_uri: string;
+      };
       current_collection: {
         uri: string;
         max_supply: number;
@@ -104,11 +106,16 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
         <div>
           <div className="flex flex-col">
             <div className="">
-              <img
+              {/* <img
                       alt="alt"
                       src={`${
                         "https://cloudflare-ipfs.com/ipfs"
-                      }/${metaData?.current_token_data.current_collection.uri?.substring(7)}`}
+                      }/${metaData?.current_token_data.cdn_asset_uris.cdn_image_uri?.substring(7)}`}
+                      className=""
+                    /> */}
+                    <img
+                      alt="alt"
+                      src={`${metaData?.current_token_data.cdn_asset_uris.cdn_image_uri}`}
                       className=""
                     />
               {/* {imageSrc ? (
