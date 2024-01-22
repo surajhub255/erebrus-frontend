@@ -217,6 +217,18 @@ const Subscription = () => {
         const responseData = await response.json();
         setFormData(initialFormData);
         console.log("vpn data", responseData);
+
+        const configFile = `[Interface]
+        Address = ${responseData.payload.address}
+        PrivateKey = ${keys.privKey}
+        DNS = 1.1.1.1
+
+        [Peer]
+        PublicKey = fBPFyjWdHPPjvpMHjkFQfOgwrWAgHJE5xytdrRTMgWU=
+        PresharedKey = ${keys.preSharedKey}
+        AllowedIPs = 0.0.0.0/0, ::/0
+        Endpoint = us.erebrus.netsepio.com:51820
+        PersistentKeepalive = 16`;
         setverify(true);
       } else {
         setMsg("error");
