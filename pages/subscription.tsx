@@ -307,7 +307,7 @@ const Subscription = () => {
             limit: 12,
             offset: 0,
             where: [
-              { current_token_data: { current_collection: { collection_id: { _eq: "0xf85e432e4bc0d52dec50b53ae3f8528eba3d7c92d1ea7a4aefd20d8d2005f2d7" } } } },
+              { current_token_data: { current_collection: { collection_id: { _eq: "0xf3c6757f1cff73dbee78addcc204861b295a649f35115539f84865afea5fff9e" } } } },
             ],
           },
           operationName: "getAccountCurrentTokens",
