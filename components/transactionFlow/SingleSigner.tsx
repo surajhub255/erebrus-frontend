@@ -10,6 +10,7 @@ import Button from "../Button";
 import Col from "../Col";
 import Row from "../Row";
 import axios from "axios";
+const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
 type SingleSignerTransactionProps = {
   isSendableNetwork: (connected: boolean, network?: string) => boolean;
@@ -43,6 +44,9 @@ export default function SingleSignerTransaction({
   };
 
   const onSignMessage = async () => {
+
+    if(sendable)
+    {
 
       const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
     
@@ -92,6 +96,10 @@ export default function SingleSignerTransaction({
     } catch (error) {
       console.error(error);
     }
+  }else
+  {
+    alert(`Switch to ${mynetwork} in your wallet`)
+  }
   };
 
   const onSignAndSubmitTransaction = async () => {
@@ -201,7 +209,7 @@ export default function SingleSignerTransaction({
         <Button
           color={"blue"}
           onClick={onSignMessage}
-          disabled={!sendable}
+          disabled={false}
           message={"Authenticate"}
         />
         {/* <Button
