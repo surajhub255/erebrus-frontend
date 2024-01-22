@@ -235,7 +235,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
         >
           <div className="relative lg:w-1/3 w-full max-w-2xl max-h-full">
             <div
-              className="relative rounded-lg shadow dark:bg-gray-700 p-16"
+              className="relative rounded-lg shadow dark:bg-gray-700 p-6"
               style={{ backgroundColor: "#445088" }}
             >
               <div className="p-4 md:p-5 flex">
@@ -268,6 +268,8 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
                 name={metaData.name}
                 region={metaData.region}
               />
+              <div className="text-gray-300 mb-4">On your mobile, open the WireGuard app, and use the option to add a new connection by scanning a QR code. After scanning, the app will import the configuration. You can then connect to Erebrus VPN through the WireGuard app.</div>
+            <a href="https://www.wireguard.com/" target="_blank" className="text-green-500 font-bold px-4 rounded-lg pb-2 pt-1" style={{border:"1px solid white"}}>Wireguard</a>
             </div>
           </div>
         </div>

@@ -482,8 +482,8 @@ Log In to Get Started
               <>
               <div className="min-h-screen">
                 <h1 className="flex gap-4 mb-8 ml-6 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
-                  <span className="text-white">My Clients</span>
-                  <div className="text-left text-white">(collectionId: {collectionId.slice(0, 4)}...{collectionId.slice(-4)})</div>
+                  <span className="text-white">My VPN Clients</span>
+                  <div className="text-left text-white">(collection: {collectionId.slice(0, 4)}...{collectionId.slice(-4)})</div>
                 </h1>
 
                 <div className="flex gap-4">
@@ -496,7 +496,7 @@ Log In to Get Started
                                   }}
                                   className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full ml-6"
                                 >
-                                  See collections
+                                   View Subscriptions
                                 </button>
                               </div>
                             </div>
@@ -754,7 +754,7 @@ Log In to Get Started
                                       type="button"
                                       className="w-full text-black font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                     >
-                                      My Cients
+                                      My VPN Clients
                                     </button>
                                   </div>
                                 </div>
