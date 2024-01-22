@@ -806,7 +806,7 @@ const Subscription = () => {
                                         Back up your WireGuard VPN client config
                                         immediately by downloading it or
                                         scanning its QR code. If lost and not
-                                        scanned, you'll have to set up a new
+                                        scanned, you&#39;ll have to set up a new
                                         client to connect to Erebrus VPN.
                                       </p>
                                       <div className="flex w-full flex-col items-center justify-center ">
