@@ -54,6 +54,7 @@ const Mint = () => {
   const [wallet, setwallet] = useState("");
   const [userid, setuserid] = useState("");
   const [buttonblur, setbuttonblur] = useState(false);
+  const [successpop, setsuccesspop] = useState(false);
 
   const { account, connected, network, signMessage} = useWallet();
 
@@ -156,7 +157,7 @@ const Mint = () => {
       const pendingTransaction = await aptos.signAndSubmitTransaction(
         transaction
       );
-      
+      setsuccesspop(true);
     } catch (error) {
       console.error('Error connecting wallet or minting NFT:', error);
       setbuttonblur(false);
@@ -271,6 +272,71 @@ Exceptional Value for Unmatched Security</div>
                 
 
           )}
+
+{successpop && (
+                            <div
+                              style={{ backgroundColor: "#222944E5" }}
+                              className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                              id="popupmodal"
+                            >
+                              <div className="relative p-4 w-full max-w-2xl max-h-full">
+                                <div
+                                  className="relative rounded-lg shadow dark:bg-gray-700"
+                                  style={{ backgroundColor: "#37406D" }}
+                                >
+                                  <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                                    <button
+                                      onClick={() => setsuccesspop(false)}
+                                      type="button"
+                                      className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                      <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
+                                      >
+                                        <path
+                                          stroke="currentColor"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
+                                      </svg>
+                                      <span className="sr-only">
+                                        Close modal
+                                      </span>
+                                    </button>
+                                  </div>
+
+                                  <div className="p-4 md:p-5 space-y-4">
+                                    <p className="text-3xl text-center font-bold text-white">
+                                      Successfully Minted!
+                                    </p>
+                                    <p
+                                      className="text-md text-center w-1/2 mx-auto"
+                                    
+                                    >
+                                      You minted 111 VPN NFT ! To set clients, click button to go to subscription page.
+                                    </p>
+                                  </div>
+
+                                  <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                                    <Link href="/subscription"
+                                     style={{border:'1px solid white'}}
+                                     
+                                      type="button"
+                                      className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                    >
+                                      Subscriptions
+                                    </Link>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          )}
                 
                 {error && <div className="text-red-500 mt-4">{error}</div>}
               </>
