@@ -24,6 +24,9 @@ import { Network } from "@aptos-labs/ts-sdk";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
+import QRCode from "qrcode.react";
+import { FaDownload, FaQrcode } from "react-icons/fa";
+import { saveAs } from "file-saver";
 
 export interface FlowIdResponse {
   eula: string;
@@ -125,6 +128,7 @@ const Subscription = () => {
     // domain: '',
   };
   const [formData, setFormData] = useState<FormData>(initialFormData);
+  const [ConfigFile, setConfigFile] = useState<string>("");
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -229,6 +233,7 @@ const Subscription = () => {
         AllowedIPs = 0.0.0.0/0, ::/0
         Endpoint = us.erebrus.netsepio.com:51820
         PersistentKeepalive = 16`;
+        setConfigFile(configFile);
         setverify(true);
       } else {
         setMsg("error");
@@ -780,6 +785,7 @@ const Subscription = () => {
                                       <p className="text-3xl text-center font-bold text-white">
                                         Successfully created!
                                       </p>
+
                                       <p
                                         className="text-md text-center w-1/2 mx-auto"
                                         style={text}
@@ -787,8 +793,35 @@ const Subscription = () => {
                                         Your Client Creation is deployed
                                         successfully. Check your Client listing
                                       </p>
-                                    </div>
+                                      <div className="flex w-full flex-col items-center justify-center ">
+                                        <QRCode value={ConfigFile} />
 
+                                        <button
+                                          className="text-lg rounded-lg text-white flex btn bg-blue-gray-700"
+                                          onClick={() => {
+                                            const blob = new Blob(
+                                              [ConfigFile],
+                                              {
+                                                type: "text/plain;charset=utf-8",
+                                              }
+                                            );
+                                            saveAs(
+                                              blob,
+                                              `${formData.name}.conf`
+                                            );
+                                          }}
+                                        >
+                                          <div className="flex cursor-pointer">
+                                            <FaDownload
+                                              style={{
+                                                color: "#11D9C5",
+                                              }}
+                                              className="mt-2"
+                                            />
+                                          </div>
+                                        </button>
+                                      </div>
+                                    </div>
                                     <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
                                       <button
                                         style={button}
