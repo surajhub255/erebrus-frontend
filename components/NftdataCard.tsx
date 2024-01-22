@@ -104,15 +104,13 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
         <div>
           <div className="flex flex-col">
             <div className="">
-              {/* <img
+              <img
                       alt="alt"
                       src={`${
                         "https://cloudflare-ipfs.com/ipfs"
-                      }/${removePrefix(metaData?.logoHash)}`}
+                      }/${metaData?.current_token_data.current_collection.uri?.substring(7)}`}
                       className=""
-                      width="80"
-                      height="80"
-                    /> */}
+                    />
               {/* {imageSrc ? (
                 <Image
                   src={imageSrc}
@@ -121,7 +119,7 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
                   height={80}
                 />
               ) : ( */}
-                <div className="w-full h-80 bg-gray-300"></div>
+                {/* <div className="w-full h-80 bg-gray-300"></div> */}
               {/* )} */}
             </div>
             <div className="w-full">
