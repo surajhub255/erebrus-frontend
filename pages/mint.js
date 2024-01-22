@@ -19,6 +19,7 @@ import { Network } from "@aptos-labs/ts-sdk";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
+const envmintfucn = process.env.NEXT_PUBLIC_MINTFUNCTION;
 
 const transition = {
   type: "tween",
@@ -143,7 +144,7 @@ const Mint = () => {
   const transaction = {
     arguments: [],
     function:
-      "0x75bcfe882d1a4d032ead2b47f377e4c95221594d66ab2bd09a61aded4c9d64f9::erebrus01::user_mint",
+      `${envmintfucn}`,
     type: "entry_function_payload",
     type_arguments: [],
   };

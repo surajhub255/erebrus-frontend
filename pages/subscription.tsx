@@ -27,6 +27,7 @@ const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 import QRCode from "qrcode.react";
 import { FaDownload, FaQrcode } from "react-icons/fa";
 import { saveAs } from "file-saver";
+const envcollectionid = process.env.NEXT_PUBLIC_COLLECTIONID;
 
 export interface FlowIdResponse {
   eula: string;
@@ -357,7 +358,7 @@ const Subscription = () => {
                 current_token_data: {
                   current_collection: {
                     collection_id: {
-                      _eq: "0xf3c6757f1cff73dbee78addcc204861b295a649f35115539f84865afea5fff9e",
+                      _eq: `${envcollectionid}`,
                     },
                   },
                 },
