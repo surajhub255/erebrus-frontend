@@ -53,6 +53,7 @@ const Mint = () => {
   const [token, settoken] = useState("");
   const [wallet, setwallet] = useState("");
   const [userid, setuserid] = useState("");
+  const [buttonblur, setbuttonblur] = useState(false);
 
   const { account, connected, network, signMessage} = useWallet();
 
@@ -150,12 +151,15 @@ const Mint = () => {
     // if (!isSignedIn) {
     //   await connectWallet();
     // }
+    setbuttonblur(true);
     try {
       const pendingTransaction = await aptos.signAndSubmitTransaction(
         transaction
       );
+      
     } catch (error) {
       console.error('Error connecting wallet or minting NFT:', error);
+      setbuttonblur(false);
     }
   };
   
@@ -247,12 +251,25 @@ Exceptional Value for Unmatched Security</div>
           )} 
             </div>
           ): (
-                <button
-                  className="bg-blue-500 text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20"
+            <div className="mr-auto">
+              { buttonblur ? (
+                <div
+                  className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-300`}
+                >
+                  Mint Erebrus NFT
+                </div>
+              ):
+              (
+<button
+                  className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-500`}
                   onClick={mint}
                 >
                   Mint Erebrus NFT
                 </button>
+              )}  
+            </div>
+                
+
           )}
                 
                 {error && <div className="text-red-500 mt-4">{error}</div>}
