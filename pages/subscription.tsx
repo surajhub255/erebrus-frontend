@@ -241,6 +241,7 @@ const Subscription = () => {
         PersistentKeepalive = 16`;
         setConfigFile(configFile);
         setverify(true);
+        setValueFromChild2("refreshafterclientcreate")
       } else {
         setMsg("error");
       }
