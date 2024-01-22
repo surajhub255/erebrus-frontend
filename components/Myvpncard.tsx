@@ -111,7 +111,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
 
     try {
       const response = await fetch(
-        `${REACT_APP_GATEWAY_URL}api/erebrus/client/${id}/${region}`,
+        `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/client/${region}/${id}`,
         {
           method: "DELETE",
           headers: {
