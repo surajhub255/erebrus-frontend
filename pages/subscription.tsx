@@ -18,7 +18,7 @@ import Image from "next/image";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import crypto from "crypto";
-import { cryptojs } from "crypto-js";
+import { lib, enc } from "crypto-js";
 import { generateKeyPair } from "curve25519-js";
 import { Network } from "@aptos-labs/ts-sdk";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
@@ -131,6 +131,7 @@ const Subscription = () => {
   };
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [ConfigFile, setConfigFile] = useState<string>("");
+  const [VpnName, setVpnName] = useState<string>("");
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -143,10 +144,10 @@ const Subscription = () => {
   };
 
   const genKeys = () => {
-    const preSharedKey = cryptojs.lib.WordArray.random(32);
+    const preSharedKey = lib.WordArray.random(32);
     // Encode the keys in base64
 
-    const preSharedKeyB64 = preSharedKey.toString(cryptojs.enc.Base64);
+    const preSharedKeyB64 = preSharedKey.toString(enc.Base64);
 
     const keyPair = generateKeyPair(crypto.randomBytes(32));
     const privKey = Buffer.from(keyPair.private).toString("base64");
@@ -166,7 +167,7 @@ const Subscription = () => {
     setLoading(true);
 
     const auth = Cookies.get("erebrus_token");
-
+    console.log("clicked");
     try {
       const keys = genKeys();
       const formDataObj = new FormData();
@@ -221,11 +222,13 @@ const Subscription = () => {
 
       if (response.status === 200) {
         const responseData = await response.json();
+        setVpnName(responseData.payload.Name);
         setFormData(initialFormData);
         console.log("vpn data", responseData);
 
-        const configFile = `[Interface]
-        Address = ${responseData.payload.address}
+        const configFile = `
+        [Interface]
+        Address = ${responseData.payload.Address}
         PrivateKey = ${keys.privKey}
         DNS = 1.1.1.1
 
@@ -813,10 +816,7 @@ const Subscription = () => {
                                                 type: "text/plain;charset=utf-8",
                                               }
                                             );
-                                            saveAs(
-                                              blob,
-                                              `${formData.name}.conf`
-                                            );
+                                            saveAs(blob, `${VpnName}.conf`);
                                           }}
                                         >
                                           <div className="flex cursor-pointer">
