@@ -58,8 +58,7 @@ const Mint = () => {
   const [successpop, setsuccesspop] = useState(false);
 
   const { account, connected, network, signMessage} = useWallet();
-
-
+  
   const getAptosWallet = () => {
     if ("aptos" in window) {
       return window.aptos;
@@ -240,7 +239,7 @@ Exceptional Value for Unmatched Security</div>
               <div className="animate-spin text-white text-7xl">⛏</div>
             ) : (
               <>
-              {!connected ? (
+              {!isSignedIn ? (
             <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
              
              {!connected && ( 
@@ -248,9 +247,9 @@ Exceptional Value for Unmatched Security</div>
               <WalletSelectorAntDesign/>
               </button>
              )}
-              {/* {connected && (
+              {connected && (
             <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
-          )}  */}
+          )} 
             </div>
           ): (
             <div className="mr-auto">
