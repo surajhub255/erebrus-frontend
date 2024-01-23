@@ -61,6 +61,15 @@ const Navbar = ({ isHome }) => {
   console.log("account details", account);
 
   const address = Cookies.get("erebrus_wallet");
+  const token = Cookies.get("erebrus_token");
+
+  useEffect(() => {
+    if (account && account.address) {
+      // Update the cookie with the new address
+      Cookies.set("erebrus_wallet", account.address);
+    }
+  }, [account?.address]);
+
 
   const [, switchNetwork] = useNetwork();
   const isMismatched = useNetworkMismatch();
@@ -343,7 +352,7 @@ const Navbar = ({ isHome }) => {
                 {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
               </div>
               {
-                address && (
+                token && (
                   <button onClick={handleDeleteCookie} 
                   onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
             onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
@@ -352,7 +361,7 @@ const Navbar = ({ isHome }) => {
             </div>
           )}
           
-          {!address && (
+          {!token && (
             <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
              
              {!connected && ( <button 
@@ -367,7 +376,7 @@ const Navbar = ({ isHome }) => {
             </div>
           )}
 
-          {address && (
+          {token && (
             <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
               <div>
                 {address.slice(0, 4)}...{address.slice(-4)}
