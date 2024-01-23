@@ -41,7 +41,7 @@ jobs:
     needs: build_push
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy on DEV server
+      - name: Deploy on PROD server
         if: github.ref == 'refs/heads/prod'
         uses: appleboy/ssh-action@v0.1.7
         with:
