@@ -28,6 +28,7 @@ import QRCode from "qrcode.react";
 import { FaDownload, FaQrcode } from "react-icons/fa";
 import { saveAs } from "file-saver";
 const envcollectionid = process.env.NEXT_PUBLIC_COLLECTIONID;
+const graphqlaptos = process.env.NEXT_PUBLIC_GRAPHQL_APTOS;
 
 export interface FlowIdResponse {
   eula: string;
@@ -369,7 +370,7 @@ const Subscription = () => {
         };
 
         const response = await axios.post(
-          "https://indexer-testnet.staging.gcp.aptosdev.com/v1/graphql", // Remove the `$` before `https`
+          `${graphqlaptos}`,
           graphqlbody,
           {
             headers: {
