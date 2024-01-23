@@ -240,7 +240,7 @@ Exceptional Value for Unmatched Security</div>
               <div className="animate-spin text-white text-7xl">⛏</div>
             ) : (
               <>
-              {!isSignedIn ? (
+              {!connected ? (
             <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
              
              {!connected && ( 
@@ -248,9 +248,9 @@ Exceptional Value for Unmatched Security</div>
               <WalletSelectorAntDesign/>
               </button>
              )}
-              {connected && (
+              {/* {connected && (
             <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
-          )} 
+          )}  */}
             </div>
           ): (
             <div className="mr-auto">
