@@ -253,6 +253,7 @@ Exceptional Value for Unmatched Security</div>
             </div>
           ): (
             <div className="mr-auto">
+              <div className="text-orange-300 ml-20 text-sm mb-2">(one wallet address can only mint one)</div>
               { buttonblur ? (
                 <div
                   className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-300`}
