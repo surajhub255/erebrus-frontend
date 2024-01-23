@@ -3,7 +3,7 @@ name: "Build and Push to GHCR"
 on:
   push:
     branches:
-      - main
+      - prod
 
 jobs:
   build_push:
@@ -41,8 +41,8 @@ jobs:
     needs: build_push
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy on DEV server
-        if: github.ref == 'refs/heads/main'
+      - name: Deploy on PROD server
+        if: github.ref == 'refs/heads/prod'
         uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.PROD_REMOTE_SERVER_ADDRESS }}
@@ -51,7 +51,7 @@ jobs:
           port: ${{ secrets.PROD_SSH_PORT }}
           script: |
             pwd
-            docker stop erebrus-frontend || true && docker image rm ghcr.io/netsepio/erebrus-frontend:main
+            docker stop erebrus-frontend || true && docker image rm ghcr.io/netsepio/erebrus-frontend:prod
             echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ secrets.GHCR_USERNAME }} --password-stdin
-            docker pull ghcr.io/netsepio/erebrus-frontend:main
+            docker pull ghcr.io/netsepio/erebrus-frontend:prod
             docker run --name="erebrus-frontend" --rm -p 4040:8080 --net=bridge -d ghcr.io/netsepio/erebrus-frontend:main
