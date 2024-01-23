@@ -344,7 +344,9 @@ const Navbar = ({ isHome }) => {
               </div>
               {
                 address && (
-                  <button onClick={handleDeleteCookie}>Logout</button>
+                  <button onClick={handleDeleteCookie} 
+                  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
                 )
               }  
             </div>
@@ -370,7 +372,9 @@ const Navbar = ({ isHome }) => {
               <div>
                 {address.slice(0, 4)}...{address.slice(-4)}
               </div>
-              <button onClick={handleDeleteCookie}>Logout</button>
+              <button onClick={handleDeleteCookie} 
+              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
             </div>
           )}
         </div>
@@ -431,7 +435,9 @@ const Navbar = ({ isHome }) => {
               </div>
               {
                 address && (
-                  <button onClick={handleDeleteCookie}>Logout</button>
+                  <button onClick={handleDeleteCookie} 
+                  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+                  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
                 )
               }  
             </div>
@@ -457,7 +463,9 @@ const Navbar = ({ isHome }) => {
               <div>
                 {address.slice(0, 4)}...{address.slice(-4)}
               </div>
-              <button onClick={handleDeleteCookie}>Logout</button>
+              <button onClick={handleDeleteCookie}
+              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
             </div>
           )}
 
