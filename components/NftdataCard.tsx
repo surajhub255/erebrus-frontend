@@ -1,6 +1,7 @@
 import Link from "next/link";
 // import { removePrefix } from "../utils/ipfsUtil";
-import React from "react";
+import React, {useEffect} from "react";
+import axios from "axios";
 // import eye2 from "../public/eye2.png";
 import Image from "next/image";
 
@@ -62,7 +63,7 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
   MyReviews = false,
   onReviewDeleted,
 }) => {
-  // const [imageSrc, setImageSrc] = React.useState<string | null>(null);
+  const [imageSrc, setImageSrc] = React.useState<string | null>(null);
 
   // React.useEffect(() => {
   //   if (
@@ -86,6 +87,20 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
   //   }
   // }, [metaData]);
 
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      const ipfsCid = metaData?.current_token_data?.token_uri.replace("ipfs://", "");
+
+  // Fetching metadata from IPFS
+  const metadataResponse = await axios.get(`https://ipfs.io/ipfs/${ipfsCid}`);
+  const metadata = metadataResponse.data;
+
+  console.log("Metadata:", metadata);
+  setImageSrc(metadata?.image.replace("ipfs://", ""));
+    }
+    fetchMetaData();
+  }, [metaData]);
+
   if (!metaData) {
     return (
       <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
@@ -106,28 +121,18 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
         <div>
           <div className="flex flex-col">
             <div className="">
-              {/* <img
+              <img
                       alt="alt"
                       src={`${
-                        "https://cloudflare-ipfs.com/ipfs"
-                      }/${metaData?.current_token_data.cdn_asset_uris.cdn_image_uri?.substring(7)}`}
+                        "https://nftstorage.link/ipfs"
+                      }/${imageSrc}`}
                       className=""
-                    /> */}
-                    <img
+                    />
+                    {/* <img
                       alt="alt"
                       src={`${metaData?.current_token_data.cdn_asset_uris.cdn_image_uri}`}
                       className=""
-                    />
-              {/* {imageSrc ? (
-                <Image
-                  src={imageSrc}
-                  alt={metaData?.current_token_data.token_name}
-                  width={80}
-                  height={80}
-                />
-              ) : ( */}
-                {/* <div className="w-full h-80 bg-gray-300"></div> */}
-              {/* )} */}
+                    /> */}
             </div>
             <div className="w-full">
               <h3 className="leading-12 mb-2 text-white">
