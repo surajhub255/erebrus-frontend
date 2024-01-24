@@ -247,16 +247,19 @@ const Subscription = () => {
         setConfigFile(configFile);
         setverify(true);
         setValueFromChild2("refreshafterclientcreate");
-      } else {
-        setMsg("error");
+      } else if(response.status === 400){
+        setMsg("Cant create more than 3 clients");
       }
-      // }
-    } catch (error) {
-      console.error("Error:", error);
-      setMsg("error");
-    } finally {
-      setLoading(false);
-    }
+      else{
+        setMsg("Failed to create VPN. Try with unique name.");
+      }
+    // }
+  } catch (error) {
+    console.error("Error:", error);
+    setMsg("Failed to create VPN. Try with unique name.");
+  } finally {
+    setLoading(false);
+  }
   };
 
   useEffect(() => {
@@ -1004,15 +1007,15 @@ const Subscription = () => {
                                 </div>
                               </div>
                             )}
-                            {msg == "success" && (
+                            {/* {msg == "success" && (
                               <p className="text-green-500">Successful</p>
-                            )}
+                            )} */}
 
-                            {msg == "error" && (
+                            {/* {msg == "error" && ( */}
                               <p className="text-red-500">
-                                Failed to create VPN. Enter unique name.
+                              {msg}
                               </p>
-                            )}
+                             {/* )} */}
                           </div>
                         </div>
                       </section>
