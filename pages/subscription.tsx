@@ -21,6 +21,7 @@ import crypto from "crypto";
 import { lib, enc } from "crypto-js";
 import { generateKeyPair } from "curve25519-js";
 import { Network } from "@aptos-labs/ts-sdk";
+import Button from "../components/Button";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
@@ -88,6 +89,8 @@ const Subscription = () => {
   //const txtvalue = localStorage.getItem("txtvalue");
 
   const { account, connected, network, signMessage } = useWallet();
+
+  let sendable = isSendableNetwork(connected, network?.name);
 
   const bg2 = {
     backgroundColor: "white",
@@ -480,6 +483,63 @@ const Subscription = () => {
     }
   };
 
+
+  const onSignMessage = async () => {
+    if (sendable) {
+      try {
+        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+      
+        const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+        console.log(data);
+  
+        const message = data.payload.eula;
+        const nonce = data.payload.flowId;
+        const publicKey = account?.publicKey;
+  
+        const payload = {
+          message: message,
+          nonce: nonce,
+        };
+        const response = await signMessage(payload);
+        console.log(response);
+  
+        const authenticationData = {
+          "flowId": nonce,
+          "signature": `0x${response.signature}`,
+          "pubKey": publicKey,
+        };
+  
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
+  
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+  
+        const authResponse = await axios(config);
+        console.log("auth data", authResponse.data);
+  
+        const token = await authResponse?.data?.payload?.token;
+        const userId = await authResponse?.data?.payload?.userId;
+  
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+  
+        window.location.reload();
+      } catch (error) {
+        console.error("error reach");
+        // setshowsignbutton(true);
+      }
+    } else {
+      alert(`Switch to ${mynetwork} in your wallet`);
+    }
+  };
+
   const handleChildValue = (value: string) => {
     // Callback function to update the state in the parent component
     setValueFromChild2(value);
@@ -515,7 +575,7 @@ const Subscription = () => {
     fetchMetaData();
   }, [collectionImage]);
 
-  if (!wallet) {
+  if (!wallet || !loggedin) {
     return (
       <>
         <div className="min-h-screen">
@@ -538,9 +598,12 @@ const Subscription = () => {
             )}
             {connected && (
               <div className="text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center">
-                <SingleSignerTransaction
-                  isSendableNetwork={isSendableNetwork}
-                />
+                <Button
+          color={"blue"}
+          onClick={onSignMessage}
+          disabled={!sendable}
+          message={"Authenticate"}
+        />
               </div>
             )}
           </div>
