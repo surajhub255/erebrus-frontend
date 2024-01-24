@@ -498,6 +498,23 @@ const Subscription = () => {
     setcollectionsPage(false);
   };
 
+  const [imageSrc, setImageSrc] = React.useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      console.log("collectionImage", collectionImage)
+      const ipfsCid = collectionImage?.replace("ipfs://", "");
+
+  // Fetching metadata from IPFS
+  const metadataResponse = await axios.get(`https://ipfs.io/ipfs/${ipfsCid}`);
+  const metadata = metadataResponse.data;
+
+  console.log("Metadata:", metadata);
+  setImageSrc(metadata?.image.replace("ipfs://", ""));
+    }
+    fetchMetaData();
+  }, [collectionImage]);
+
   if (!wallet) {
     return (
       <>
@@ -551,7 +568,9 @@ const Subscription = () => {
                   <h1 className="gap-4 mb-8 ml-6 mt-10 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
                     <span className="text-white">My VPN Clients</span>
                     <div className="text-left text-white mt-4 flex gap-4">
-                      <img src={collectionImage} className="w-14" />
+                      <img src={`${
+                        "https://nftstorage.link/ipfs"
+                      }/${imageSrc}`} className="w-14" />
                       <div className="mt-2">{collectionName}</div>
                       {/* (collection: {collectionId.slice(0, 4)}...
                       {collectionId.slice(-4)}) */}

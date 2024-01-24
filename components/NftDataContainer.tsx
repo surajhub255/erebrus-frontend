@@ -30,10 +30,10 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
   const handleClick = (
     collection_id: string,
     token_name: string,
-    cdn_image_uri: string
+    token_uri: string
   ) => {
     // Call the function passed as prop to change parent state
-    selectCollection(collection_id, token_name, cdn_image_uri);
+    selectCollection(collection_id, token_name, token_uri);
   };
   const renderNoReviewsFound = () => (
     <div className="w-full text-center py-20">
@@ -68,7 +68,7 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
                   handleClick(
                     metaData.current_token_data.token_data_id,
                     metaData.current_token_data.token_name,
-                    metaData.current_token_data.cdn_asset_uris.cdn_image_uri
+                    metaData.current_token_data.token_uri
                   )
                 }
               >
