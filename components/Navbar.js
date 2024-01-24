@@ -47,6 +47,7 @@ const Navbar = ({ isHome }) => {
   const [message, setMessage] = useState("");
   const [signature, setSignature] = useState("");
   const [challengeId, setChallengeId] = useState("");
+  const [showsignbutton, setshowsignbutton] = useState(false)
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const sdk = useSDK();
@@ -67,6 +68,7 @@ const Navbar = ({ isHome }) => {
     if (account && account.address) {
       // Update the cookie with the new address
       Cookies.set("erebrus_wallet", account.address);
+      onSignMessage();
     }
   }, [account?.address]);
 
@@ -238,6 +240,63 @@ const Navbar = ({ isHome }) => {
     }
   };
 
+  const onSignMessage = async () => {
+    if (sendable) {
+      try {
+        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+      
+        const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+        console.log(data);
+  
+        const message = data.payload.eula;
+        const nonce = data.payload.flowId;
+        const publicKey = account?.publicKey;
+  
+        const payload = {
+          message: message,
+          nonce: nonce,
+        };
+        const response = await signMessage(payload);
+        console.log(response);
+  
+        const authenticationData = {
+          "flowId": nonce,
+          "signature": `0x${response.signature}`,
+          "pubKey": publicKey,
+        };
+  
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
+  
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+  
+        const authResponse = await axios(config);
+        console.log("auth data", authResponse.data);
+  
+        const token = await authResponse?.data?.payload?.token;
+        const userId = await authResponse?.data?.payload?.userId;
+  
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+  
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        setshowsignbutton(true);
+      }
+    } else {
+      alert(`Switch to ${mynetwork} in your wallet`);
+    }
+  };
+  
+
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
@@ -370,8 +429,14 @@ const Navbar = ({ isHome }) => {
               <WalletSelectorAntDesign/>
               </button>
              )}
-              {connected && (
-            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+              {connected && showsignbutton && (
+            // <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+            <Button
+          color={"blue"}
+          onClick={onSignMessage}
+          disabled={!sendable}
+          message={"Authenticate"}
+        />
           )} 
             </div>
           )}
