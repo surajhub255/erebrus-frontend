@@ -16,6 +16,7 @@ import { AuthContext } from "../AuthContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import { Network } from "@aptos-labs/ts-sdk";
+import Button from "../components/Button";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
@@ -50,14 +51,18 @@ const Mint = () => {
   const [error, setError] = useState(null);
   const [isMinted, setMinted] = useState(false);
   const isSignedIn = Cookies.get("erebrus_wallet");
+  const isauthenticate = Cookies.get("erebrus_token");
   const [address, setAddress] = useState("");
   const [token, settoken] = useState("");
   const [wallet, setwallet] = useState("");
   const [userid, setuserid] = useState("");
   const [buttonblur, setbuttonblur] = useState(false);
   const [successpop, setsuccesspop] = useState(false);
+  const [showsignbutton, setshowsignbutton] = useState(false)
 
   const { account, connected, network, signMessage} = useWallet();
+
+  let sendable = isSendableNetwork(connected, network?.name);
   
   const getAptosWallet = () => {
     if ("aptos" in window) {
@@ -163,6 +168,63 @@ const Mint = () => {
       setbuttonblur(false);
     }
   };
+
+
+  const onSignMessage = async () => {
+    if (sendable) {
+      try {
+        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+      
+        const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+        console.log(data);
+  
+        const message = data.payload.eula;
+        const nonce = data.payload.flowId;
+        const publicKey = account?.publicKey;
+  
+        const payload = {
+          message: message,
+          nonce: nonce,
+        };
+        const response = await signMessage(payload);
+        console.log(response);
+  
+        const authenticationData = {
+          "flowId": nonce,
+          "signature": `0x${response.signature}`,
+          "pubKey": publicKey,
+        };
+  
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
+  
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+  
+        const authResponse = await axios(config);
+        console.log("auth data", authResponse.data);
+  
+        const token = await authResponse?.data?.payload?.token;
+        const userId = await authResponse?.data?.payload?.userId;
+  
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+  
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        setshowsignbutton(true);
+      }
+    } else {
+      alert(`Switch to ${mynetwork} in your wallet`);
+    }
+  };
   
 
   // if (!isSignedIn) {
@@ -239,7 +301,7 @@ Exceptional Value for Unmatched Security</div>
               <div className="animate-spin text-white text-7xl">⛏</div>
             ) : (
               <>
-              {!isSignedIn ? (
+              {!isSignedIn || !isauthenticate ? (
             <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
              
              {!connected && ( 
@@ -248,7 +310,13 @@ Exceptional Value for Unmatched Security</div>
               </button>
              )}
               {connected && (
-            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+            // <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+            <Button
+          color={"blue"}
+          onClick={onSignMessage}
+          disabled={!sendable}
+          message={"Authenticate"}
+        />
           )} 
             </div>
           ): (
