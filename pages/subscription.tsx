@@ -865,7 +865,7 @@ const Subscription = () => {
                                   >
                                     <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                                       <button
-                                        onClick={() => setbuttonset(false)}
+                                        onClick={() => {setbuttonset(false); setverify(false); setMsg("")}}
                                         type="button"
                                         className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                       >
@@ -964,7 +964,7 @@ const Subscription = () => {
                                     <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
                                       <button
                                         style={button}
-                                        onClick={() => setbuttonset(false)}
+                                        onClick={() => {setbuttonset(false); setverify(false);setMsg("");}}
                                         type="button"
                                         className="w-full text-black font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                       >
