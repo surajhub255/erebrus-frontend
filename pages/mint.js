@@ -99,6 +99,8 @@ const Mint = () => {
       });
       console.log("sign", signature, "full message", fullMessage);
 
+      // console.log(signature);
+
       let signaturewallet = signature;
 
       if(signaturewallet.length === 128)
@@ -108,7 +110,7 @@ const Mint = () => {
 
       const authenticationData = {
         flowId: nonce,
-        signature: `${signature}`,
+        signature: `${signaturewallet}`,
         pubKey: publicKey,
       };
 
@@ -196,11 +198,18 @@ const Mint = () => {
         const response = await signMessage(payload);
         console.log(response);
   
-        const authenticationData = {
-          "flowId": nonce,
-          "signature": `0x${response.signature}`,
-          "pubKey": publicKey,
-        };
+        let signaturewallet = response.signature;
+
+      if(signaturewallet.length === 128)
+      {
+        signaturewallet = `0x${signaturewallet}`;
+      }
+  
+      const authenticationData = {
+        "flowId": nonce,
+        "signature": `${signaturewallet}`,
+        "pubKey": publicKey,
+      };
   
         const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
   

@@ -52,7 +52,7 @@ const connectWallet = async () => {
 
       const authenticationData = {
         flowId: nonce,
-        signature: `${signature}`,
+        signature: `${signaturewallet}`,
         pubKey: publicKey,
       };
 

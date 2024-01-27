@@ -207,7 +207,7 @@ const Navbar = ({ isHome }) => {
 
       const authenticationData = {
         flowId: nonce,
-        signature: `${signature}`,
+        signature: `${signaturewallet}`,
         pubKey: publicKey,
       };
 
@@ -265,12 +265,19 @@ const Navbar = ({ isHome }) => {
         };
         const response = await signMessage(payload);
         console.log(response);
+
+        let signaturewallet = response.signature;
+
+      if(signaturewallet.length === 128)
+      {
+        signaturewallet = `0x${signaturewallet}`;
+      }
   
-        const authenticationData = {
-          "flowId": nonce,
-          "signature": `0x${response.signature}`,
-          "pubKey": publicKey,
-        };
+      const authenticationData = {
+        "flowId": nonce,
+        "signature": `${signaturewallet}`,
+        "pubKey": publicKey,
+      };
   
         const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
   
