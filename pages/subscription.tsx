@@ -447,11 +447,18 @@ const Subscription = () => {
         });
         console.log("sign", signature, "full message", fullMessage);
 
-        const authenticationData = {
-          flowId: nonce,
-          signature: `0x${signature}`,
-          pubKey: publicKey,
-        };
+        let signaturewallet = signature;
+
+      if(signaturewallet.length === 128)
+      {
+        signaturewallet = `0x${signaturewallet}`;
+      }
+
+      const authenticationData = {
+        flowId: nonce,
+        signature: `${signature}`,
+        pubKey: publicKey,
+      };
 
         const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
 

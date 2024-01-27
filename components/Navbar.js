@@ -198,9 +198,16 @@ const Navbar = ({ isHome }) => {
       });
       console.log("sign", signature, "full message", fullMessage);
 
+      let signaturewallet = signature;
+
+      if(signaturewallet.length === 128)
+      {
+        signaturewallet = `0x${signaturewallet}`;
+      }
+
       const authenticationData = {
         flowId: nonce,
-        signature: `0x${signature}`,
+        signature: `${signature}`,
         pubKey: publicKey,
       };
 
