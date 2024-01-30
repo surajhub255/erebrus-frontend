@@ -18,6 +18,16 @@ import dynamic from "next/dynamic";
 import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
+import GetStripe from "../utils/stripe.js";
+import { loadStripe } from "@stripe/stripe-js";
+import { redirect } from "next/dist/server/api-utils/index.js";
+import { useRouter } from "next/navigation";
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
+);
+
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 const envmintfucn = process.env.NEXT_PUBLIC_MINTFUNCTION;
@@ -154,6 +164,20 @@ const Mint = () => {
     }
   };
 
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      console.log("Order placed! You will receive an email confirmation.");
+    }
+
+    if (query.get("canceled")) {
+      console.log(
+        "Order canceled -- continue to shop around and checkout when you’re ready."
+      );
+    }
+  }, []);
+
   const transaction = {
     arguments: [],
     function:
@@ -176,6 +200,58 @@ const Mint = () => {
       console.error('Error connecting wallet or minting NFT:', error);
       setbuttonblur(false);
     }
+  };
+
+
+  const stripe = async () => {
+    // if (!isSignedIn) {
+    //   await connectWallet();
+    // }
+    setbuttonblur(true);
+
+      const auth = Cookies.get("erebrus_token");
+      const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+  
+      try {
+        const response = await axios.post(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/subscription/erebrus`,
+          {},
+          {
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth}`,
+            },
+          }
+        );
+    
+        const responseData = await response;
+        console.log('stripe response:', responseData);
+        try {
+          const res = await fetch("/api/checkout", {
+            method: "POST",
+            headers: {
+              "content-Type": "application/json",
+            },
+            body: JSON.stringify({ amount: 111 }),
+          });
+      
+          res.json().then((data) => {
+            console.log("stripe data", data);
+            // router.push(data.url);
+          });
+          if (res.statusCode === 500) {
+            console.error(data.message);
+            return;
+          }
+        setsuccesspop(true);
+
+        }catch(error){
+console.log("stripe error payment")
+        }
+      } catch (error) {
+        console.error('111 nft error:', error);
+      }
   };
 
 
@@ -348,7 +424,7 @@ Exceptional Value for Unmatched Security</div>
               (
 <button
                   className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-500`}
-                  onClick={mint}
+                  onClick={stripe}
                 >
                   Mint Erebrus NFT
                 </button>

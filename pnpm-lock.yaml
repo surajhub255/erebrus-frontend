@@ -50,6 +50,9 @@ dependencies:
   '@rise-wallet/wallet-adapter':
     specifier: ^0.1.2
     version: 0.1.2
+  '@stripe/stripe-js':
+    specifier: ^2.4.0
+    version: 2.4.0
   '@thirdweb-dev/react':
     specifier: ^3.6.9
     version: 3.16.5(@ethersproject/abstract-provider@5.7.0)(@ethersproject/abstract-signer@5.7.0)(@ethersproject/bignumber@5.7.0)(@ethersproject/properties@5.7.0)(@thirdweb-dev/sdk@3.10.67)(@types/react@18.2.47)(aptos@1.21.0)(ethers-gcp-kms-signer@1.1.6)(ethers@5.7.2)(localforage@1.10.0)(next@13.1.1)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
@@ -125,6 +128,9 @@ dependencies:
   react-toastify:
     specifier: ^9.1.1
     version: 9.1.3(react-dom@18.2.0)(react@18.2.0)
+  stripe:
+    specifier: ^14.14.0
+    version: 14.14.0
 
 devDependencies:
   '@types/react':
@@ -3527,6 +3533,10 @@ packages:
       '@stablelib/keyagreement': 1.0.1
       '@stablelib/random': 1.0.2
       '@stablelib/wipe': 1.0.1
+    dev: false
+
+  /@stripe/stripe-js@2.4.0:
+    resolution: {integrity: sha512-WFkQx1mbs2b5+7looI9IV1BLa3bIApuN3ehp9FP58xGg7KL9hCHDECgW3BwO9l9L+xBPVAD7Yjn1EhGe6EDTeA==}
     dev: false
 
   /@suchipi/femver@1.0.0:
@@ -10958,6 +10968,14 @@ packages:
   /strip-json-comments@3.1.1:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
+
+  /stripe@14.14.0:
+    resolution: {integrity: sha512-P6lvKHxgDzZXto9VMstG1ucv4Ls0U9nOoQhVZABXJ33kRD7zMwkBy5Y4c3BO59O230uSTkOFPLh87YxVzkp0Mg==}
+    engines: {node: '>=12.*'}
+    dependencies:
+      '@types/node': 20.11.5
+      qs: 6.11.2
+    dev: false
 
   /styled-jsx@5.1.1(react@18.2.0):
     resolution: {integrity: sha512-pW7uC1l4mBZ8ugbiZrcIsiIvVx1UmTfw7UkC3Um2tmfUq9Bhk8IiyEIPl6F8agHgjzku6j0xQEZbfA5uSgSaCw==}
