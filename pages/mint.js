@@ -11,7 +11,7 @@ import {
 import axios from "axios";
 import Head from "next/head";
 import { motion } from "framer-motion";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { AuthContext } from "../AuthContext";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
@@ -22,6 +22,9 @@ import GetStripe from "../utils/stripe.js";
 import { loadStripe } from "@stripe/stripe-js";
 import { redirect } from "next/dist/server/api-utils/index.js";
 import { useRouter } from "next/navigation";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "../components/CheckoutForm.tsx";
+
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
@@ -47,14 +50,10 @@ const WalletSelectorAntDesign = dynamic(
 );
 
 const isSendableNetwork = (connected, network) => {
-  return (
-    connected &&
-    ( network?.toLowerCase() === mynetwork.toLowerCase())
-  );
+  return connected && network?.toLowerCase() === mynetwork.toLowerCase();
 };
 
 const Mint = () => {
-  
   const [isOwned, setIsOwned] = useState(false);
   const [balance, setBalance] = useState(false);
   const [isLoadingTx, setLoadingTx] = useState(false);
@@ -68,12 +67,13 @@ const Mint = () => {
   const [userid, setuserid] = useState("");
   const [buttonblur, setbuttonblur] = useState(false);
   const [successpop, setsuccesspop] = useState(false);
-  const [showsignbutton, setshowsignbutton] = useState(false)
+  const [showsignbutton, setshowsignbutton] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
 
-  const { account, connected, network, signMessage} = useWallet();
+  const { account, connected, network, signMessage } = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
-  
+
   const getAptosWallet = () => {
     if ("aptos" in window) {
       return window.aptos;
@@ -95,70 +95,65 @@ const Mint = () => {
 
       // Check if the connected network is Mainnet
       if (networkwallet === mynetwork) {
+        const { data } = await axios.get(
+          `${GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`
+        );
+        console.log(data);
 
-      const { data } = await axios.get(`${GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
-      console.log(data);
+        const message = data.payload.eula;
+        const nonce = data.payload.flowId;
+        const publicKey = account.publicKey;
 
-      const message = data.payload.eula;
-      const nonce = data.payload.flowId;
-      const publicKey = account.publicKey;
+        const { signature, fullMessage } = await wallet.signMessage({
+          message,
+          nonce,
+        });
+        console.log("sign", signature, "full message", fullMessage);
 
-      const { signature, fullMessage } = await wallet.signMessage({
-        message,
-        nonce,
-      });
-      console.log("sign", signature, "full message", fullMessage);
+        // console.log(signature);
 
-      // console.log(signature);
+        let signaturewallet = signature;
 
-      let signaturewallet = signature;
+        if (signaturewallet.length === 128) {
+          signaturewallet = `0x${signaturewallet}`;
+        }
 
-      if(signaturewallet.length === 128)
-      {
-        signaturewallet = `0x${signaturewallet}`;
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signaturewallet}`,
+          pubKey: publicKey,
+        };
+
+        const authenticateApiUrl = `${GATEWAY_URL}api/v1.0/authenticate`;
+
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+
+        try {
+          const response = await axios(config);
+          console.log("auth data", response.data);
+          const token = await response?.data?.payload?.token;
+          const userId = await response?.data?.payload?.userId;
+
+          settoken(token), setwallet(account.address), setuserid(userId);
+
+          Cookies.set("erebrus_token", token, { expires: 7 });
+          Cookies.set("erebrus_wallet", account.address, { expires: 7 });
+          Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+          // await mint();
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert(`Switch to ${mynetwork} in your wallet`);
       }
-
-      const authenticationData = {
-        flowId: nonce,
-        signature: `${signaturewallet}`,
-        pubKey: publicKey,
-      };
-
-      const authenticateApiUrl = `${GATEWAY_URL}api/v1.0/authenticate`;
-
-      const config = {
-        url: authenticateApiUrl,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: authenticationData,
-      };
-
-      try {
-        const response = await axios(config);
-        console.log("auth data", response.data);
-        const token = await response?.data?.payload?.token;
-        const userId = await response?.data?.payload?.userId;
-
-        settoken(token),
-        setwallet(account.address),
-        setuserid(userId)
-
-        Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", account.address, { expires: 7 });
-        Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-        // await mint();
-
-      } catch (error) {
-        console.error(error);
-      }
-      }
-    else{
-      alert(`Switch to ${mynetwork} in your wallet`)
-    }
-
     } catch (err) {
       console.log(err);
     }
@@ -180,8 +175,7 @@ const Mint = () => {
 
   const transaction = {
     arguments: [],
-    function:
-      `${envmintfucn}`,
+    function: `${envmintfucn}`,
     type: "entry_function_payload",
     type_arguments: [],
   };
@@ -197,11 +191,10 @@ const Mint = () => {
       );
       setsuccesspop(true);
     } catch (error) {
-      console.error('Error connecting wallet or minting NFT:', error);
+      console.error("Error connecting wallet or minting NFT:", error);
       setbuttonblur(false);
     }
   };
-
 
   const stripe = async () => {
     // if (!isSignedIn) {
@@ -209,86 +202,86 @@ const Mint = () => {
     // }
     setbuttonblur(true);
 
-      const auth = Cookies.get("erebrus_token");
-      const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-  
-      try {
-        const response = await axios.post(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/subscription/erebrus`,
-          {},
-          {
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${auth}`,
-            },
-          }
-        );
-    
-        const responseData = await response;
-        console.log('stripe response:', responseData);
-        try {
-          const res = await fetch("/api/checkout", {
-            method: "POST",
-            headers: {
-              "content-Type": "application/json",
-            },
-            body: JSON.stringify({ amount: 111 }),
-          });
-      
-          res.json().then((data) => {
-            console.log("stripe data", data);
-            // router.push(data.url);
-          });
-          if (res.statusCode === 500) {
-            console.error(data.message);
-            return;
-          }
-        setsuccesspop(true);
+    const auth = Cookies.get("erebrus_token");
+    const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-        }catch(error){
-console.log("stripe error payment")
+    try {
+      const response = await axios.post(
+        `${REACT_APP_GATEWAY_URL}api/v1.0/subscription/erebrus`,
+        {},
+        {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth}`,
+          },
         }
-      } catch (error) {
-        console.error('111 nft error:', error);
-      }
-  };
+      );
 
+      const responseData = await response;
+      console.log("stripe response:", responseData);
+      setClientSecret(responseData.data.payload.clientSecret);
+      // try {
+      //   const res = await fetch("/api/checkout", {
+      //     method: "POST",
+      //     headers: {
+      //       "content-Type": "application/json",
+      //     },
+      //     body: JSON.stringify({ amount: 111 }),
+      //   });
+
+      //   res.json().then((data) => {
+      //     console.log("stripe data", data);
+      //     // router.push(data.url);
+      //   });
+      //   if (res.statusCode === 500) {
+      //     console.error(data.message);
+      //     return;
+      //   }
+      //   setsuccesspop(true);
+      // } catch (error) {
+      //   console.log("stripe error payment");
+      // }
+    } catch (error) {
+      console.error("111 nft error:", error);
+    }
+  };
 
   const onSignMessage = async () => {
     if (sendable) {
       try {
         const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-      
-        const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+
+        const { data } = await axios.get(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`
+        );
         console.log(data);
-  
+
         const message = data.payload.eula;
         const nonce = data.payload.flowId;
         const publicKey = account?.publicKey;
-  
+
         const payload = {
           message: message,
           nonce: nonce,
         };
         const response = await signMessage(payload);
         console.log(response);
-  
+
         let signaturewallet = response.signature;
 
-      if(signaturewallet.length === 128)
-      {
-        signaturewallet = `0x${signaturewallet}`;
-      }
-  
-      const authenticationData = {
-        "flowId": nonce,
-        "signature": `${signaturewallet}`,
-        "pubKey": publicKey,
-      };
-  
+        if (signaturewallet.length === 128) {
+          signaturewallet = `0x${signaturewallet}`;
+        }
+
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signaturewallet}`,
+          pubKey: publicKey,
+        };
+
         const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
-  
+
         const config = {
           url: authenticateApiUrl,
           method: "POST",
@@ -297,17 +290,17 @@ console.log("stripe error payment")
           },
           data: authenticationData,
         };
-  
+
         const authResponse = await axios(config);
         console.log("auth data", authResponse.data);
-  
+
         const token = await authResponse?.data?.payload?.token;
         const userId = await authResponse?.data?.payload?.userId;
-  
+
         Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+        Cookies.set("erebrus_wallet", account?.address ?? "", { expires: 7 });
         Cookies.set("erebrus_userid", userId, { expires: 7 });
-  
+
         window.location.reload();
       } catch (error) {
         console.error(error);
@@ -317,7 +310,6 @@ console.log("stripe error payment")
       alert(`Switch to ${mynetwork} in your wallet`);
     }
   };
-  
 
   // if (!isSignedIn) {
   //   return (
@@ -337,6 +329,13 @@ console.log("stripe error payment")
   //     </>
   //   );
   // }
+  const appearance = {
+    theme: "stripe",
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
 
   return (
     <>
@@ -344,171 +343,187 @@ console.log("stripe error payment")
         <title>Erebrus | Clients</title>
       </Head>
       <div class="flex h-screen">
-      <div className="w-1/2">
-      <div className="text-white text-4xl ml-20 mt-20 mx-auto">Step into the Future of Internet 
-Safety with 111 NFT VPN</div>
-<div className="text-white text-xl ml-20 mt-10 mx-auto">3-Month Coverage</div>
-<div className="text-white text-xl ml-20 mt-4 mx-auto">Unlimited Devices</div>
-<div className="text-white text-xl ml-20 mt-4 mx-auto">Only at 1.11 APT</div>
-<div className="text-white text-xl ml-20 mt-4 mx-auto">
-Exceptional Value for Unmatched Security</div>
-      {isOwned ? (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={transition}
-        >
-          <div className="mt-20 text-white flex flex-col justify-start items-center">
-            {`Number of NFTs owned: ${balance}`}
-            <img
-              src="./image1.jpeg"
-              alt="Mint Successful"
-              className="w-64 h-64 mt-8 mb-8"
-            ></img>
-            {isLoadingTx ? (
-              <div className="animate-spin text-white text-7xl">⛏</div>
-            ) : (
-              <>
-                <button
-                  className="bg-blue-500 text-white font-bold py-2 px-10 rounded-lg mt-20"
-                  onClick={mint}
-                >
-                  Mint Erebrus NFT
-                </button>
-                {error && <div className="text-red-500 mt-4">{error}</div>}
-              </>
-            )}
+        <div className="w-1/2">
+          <div className="text-white text-4xl ml-20 mt-20 mx-auto">
+            Step into the Future of Internet Safety with 111 NFT VPN
           </div>
-        </motion.div>
-      ) : (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={transition}
-        >
-          <div className="mt-20 text-white flex flex-col justify-center items-center">
-            {isLoadingTx ? (
-              <div className="animate-spin text-white text-7xl">⛏</div>
-            ) : (
-              <>
-              {!isSignedIn || !isauthenticate ? (
-            <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
-             
-             {!connected && ( 
-             <button className="">
-              <WalletSelectorAntDesign/>
-              </button>
-             )}
-              {connected && (
-            // <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
-            <Button
-          color={"blue"}
-          onClick={onSignMessage}
-          disabled={!sendable}
-          message={"Authenticate"}
-        />
-          )} 
-            </div>
-          ): (
-            <div className="mr-auto">
-              <div className="text-orange-300 ml-20 text-sm mb-2">(one wallet address can only mint one)</div>
-              { buttonblur ? (
-                <div
-                  className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-300`}
-                >
-                  Mint Erebrus NFT
-                </div>
-              ):
-              (
-<button
-                  className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-500`}
-                  onClick={stripe}
-                >
-                  Mint Erebrus NFT
-                </button>
-              )}  
-            </div>
-                
-
-          )}
-
-{successpop && (
-                            <div
-                              style={{ backgroundColor: "#222944E5" }}
-                              className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
-                              id="popupmodal"
-                            >
-                              <div className="relative p-4 w-full max-w-2xl max-h-full">
-                                <div
-                                  className="relative rounded-lg shadow dark:bg-gray-700"
-                                  style={{ backgroundColor: "#37406D" }}
+          <div className="text-white text-xl ml-20 mt-10 mx-auto">
+            3-Month Coverage
+          </div>
+          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+            Unlimited Devices
+          </div>
+          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+            Only at 1.11 APT
+          </div>
+          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+            Exceptional Value for Unmatched Security
+          </div>
+          {isOwned ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={transition}
+            >
+              <div className="mt-20 text-white flex flex-col justify-start items-center">
+                {`Number of NFTs owned: ${balance}`}
+                <img
+                  src="./image1.jpeg"
+                  alt="Mint Successful"
+                  className="w-64 h-64 mt-8 mb-8"
+                ></img>
+                {isLoadingTx ? (
+                  <div className="animate-spin text-white text-7xl">⛏</div>
+                ) : (
+                  <>
+                    <button
+                      className="bg-blue-500 text-white font-bold py-2 px-10 rounded-lg mt-20"
+                      onClick={mint}
+                    >
+                      Mint Erebrus NFT
+                    </button>
+                    {error && <div className="text-red-500 mt-4">{error}</div>}
+                  </>
+                )}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={transition}
+            >
+              <div className="mt-20 text-white flex flex-col justify-center items-center">
+                {isLoadingTx ? (
+                  <div className="animate-spin text-white text-7xl">⛏</div>
+                ) : (
+                  <>
+                    {!isSignedIn || !isauthenticate ? (
+                      <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
+                        {!connected && (
+                          <button className="">
+                            <WalletSelectorAntDesign />
+                          </button>
+                        )}
+                        {connected && (
+                          // <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+                          <Button
+                            color={"blue"}
+                            onClick={onSignMessage}
+                            disabled={!sendable}
+                            message={"Authenticate"}
+                          />
+                        )}
+                      </div>
+                    ) : (
+                      <div className="mr-auto">
+                        <div className="text-orange-300 ml-20 text-sm mb-2">
+                          (one wallet address can only mint one)
+                        </div>
+                        {buttonblur ? (
+                          <div
+                            className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-300`}
+                          >
+                            Mint Erebrus NFT
+                          </div>
+                        ) : (
+                          <button
+                            className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-500`}
+                            onClick={stripe}
+                          >
+                            Mint Erebrus NFT
+                          </button>
+                        )}
+                      </div>
+                    )}
+                    {clientSecret && (
+                      <div
+                        style={{ backgroundColor: "#222944E5" }}
+                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
+                        id="popupmodal"
+                      >
+                        <div className="bg-slate-500 p-10 w-2/5 flex flex-col">
+                          <Elements options={options} stripe={stripePromise}>
+                            <CheckoutForm />
+                          </Elements>
+                        </div>
+                      </div>
+                    )}
+                    {successpop && (
+                      <div
+                        style={{ backgroundColor: "#222944E5" }}
+                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                        id="popupmodal"
+                      >
+                        <div className="relative p-4 w-full max-w-2xl max-h-full">
+                          <div
+                            className="relative rounded-lg shadow dark:bg-gray-700"
+                            style={{ backgroundColor: "#37406D" }}
+                          >
+                            <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                              <button
+                                onClick={() => setsuccesspop(false)}
+                                type="button"
+                                className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                              >
+                                <svg
+                                  className="w-3 h-3"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 14 14"
                                 >
-                                  <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
-                                    <button
-                                      onClick={() => setsuccesspop(false)}
-                                      type="button"
-                                      className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                    >
-                                      <svg
-                                        className="w-3 h-3"
-                                        aria-hidden="true"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 14 14"
-                                      >
-                                        <path
-                                          stroke="currentColor"
-                                          stroke-linecap="round"
-                                          stroke-linejoin="round"
-                                          stroke-width="2"
-                                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                        />
-                                      </svg>
-                                      <span className="sr-only">
-                                        Close modal
-                                      </span>
-                                    </button>
-                                  </div>
-
-                                  <div className="p-4 md:p-5 space-y-4">
-                                    <p className="text-3xl text-center font-bold text-white">
-                                      Successfully Minted!
-                                    </p>
-                                    <p
-                                      className="text-md text-center w-1/2 mx-auto"
-                                    
-                                    >
-                                      You have minted an Erebrus NFT ! To set clients, click button to go to subscription page.
-                                    </p>
-                                  </div>
-
-                                  <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
-                                    <Link href="/subscription"
-                                     style={{border:'1px solid white'}}
-                                     
-                                      type="button"
-                                      className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                    >
-                                      Subscriptions
-                                    </Link>
-                                  </div>
-                                </div>
-                              </div>
+                                  <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                  />
+                                </svg>
+                                <span className="sr-only">Close modal</span>
+                              </button>
                             </div>
-                          )}
-                
-                {error && <div className="text-red-500 mt-4">{error}</div>}
-              </>
-            )}
-          </div>
-        </motion.div>
-      )}
-      </div>
 
-<div className="text-white w-1/4 ml-auto mr-40 mt-10"><img src="/111nft_gif.gif"/></div>
-</div>
+                            <div className="p-4 md:p-5 space-y-4">
+                              <p className="text-3xl text-center font-bold text-white">
+                                Successfully Minted!
+                              </p>
+                              <p className="text-md text-center w-1/2 mx-auto">
+                                You have minted an Erebrus NFT ! To set clients,
+                                click button to go to subscription page.
+                              </p>
+                            </div>
+
+                            <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                              <Link
+                                href="/subscription"
+                                style={{ border: "1px solid white" }}
+                                type="button"
+                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              >
+                                Subscriptions
+                              </Link>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {error && <div className="text-red-500 mt-4">{error}</div>}
+                  </>
+                )}
+              </div>
+            </motion.div>
+          )}
+        </div>
+
+        <div className="text-white w-1/4 ml-auto mr-40 mt-10">
+          <img src="/111nft_gif.gif" />
+        </div>
+      </div>
     </>
   );
 };
