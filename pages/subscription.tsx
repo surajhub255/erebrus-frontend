@@ -247,8 +247,8 @@ const Subscription = () => {
         setConfigFile(configFile);
         setverify(true);
         setValueFromChild2("refreshafterclientcreate");
-      } else if(response.status === 400){
-        setMsg("Cant create more than 3 clients");
+      // } else if(response.status === 400){
+      //   setMsg("Cant create more than 3 clients");
       }
       else{
         setMsg("Failed to create VPN. Try with unique name.");

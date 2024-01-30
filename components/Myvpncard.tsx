@@ -157,22 +157,18 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
 
           <div className="lg:flex md:flex justify-between w-1/4">
             <div>
-              <button className="text-lg rounded-lg pr-1 text-white">
+              <div className="text-lg rounded-lg pr-1 text-white">
                 <div style={color2}>{metaData.name}</div>
-              </button>
+              </div>
             </div>
           </div>
 
           <div className="text-white text-lg w-1/4 btn bg-blue-gray-700 text-center">
             <div className="">
-              <div className="cursor-pointer" onClick={() => {}}>
-                <button
-                  onClick={() => {
-                    setqr(true);
-                  }}
-                >
+              <div>
+                <div>
                   {metaData.region}
-                </button>
+                </div>
               </div>
             </div>
           </div>
