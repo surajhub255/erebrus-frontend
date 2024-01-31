@@ -183,7 +183,7 @@ const Mint = () => {
 
     if (query.get("canceled")) {
       console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready."
+        "Order canceled -- continue to shop around and checkout when youre ready."
       );
     }
   }, []);
@@ -561,7 +561,7 @@ const Mint = () => {
                               
                             </div>
 
-                            { !showconnectbutton && (<div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                            {/* { !showconnectbutton && (<div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
                               <button
                                 onClick={stripe}
                                 style={{ border: "1px solid white" }}
@@ -570,7 +570,7 @@ const Mint = () => {
                               >
                                 Pay using USD
                               </button>
-                            </div>)}
+                            </div>)} */}
                           </div>
                         </div>
                       </div>
