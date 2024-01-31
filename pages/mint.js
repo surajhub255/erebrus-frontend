@@ -9,11 +9,15 @@ import {
   useSDK,
 } from "@thirdweb-dev/react";
 import axios from "axios";
+import aptos from "aptos";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
 import { AuthContext } from "../AuthContext";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import {
+  useWallet,
+  InputTransactionData,
+} from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
@@ -24,6 +28,8 @@ import { redirect } from "next/dist/server/api-utils/index.js";
 import { useRouter } from "next/navigation";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm.tsx";
+import { aptosClient } from "../module";
+export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -71,7 +77,7 @@ const Mint = () => {
   const [clientSecret, setClientSecret] = useState("");
   const [mintpopup, setmintpopup] = useState(false);
 
-  const { account, connected, network, signMessage } = useWallet();
+  const { account, connected, network, signMessage, signAndSubmitTransaction } = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
 
@@ -174,27 +180,50 @@ const Mint = () => {
     }
   }, []);
 
+  // const transaction = {
+  //   arguments: [],
+  //   function: `${envmintfucn}`,
+  //   type: "entry_function_payload",
+  //   type_arguments: [],
+  // };
+
+  // const transaction = {
+  //   data: {
+  //     function: "0x1::coin::transfer",
+  //     typeArguments: [APTOS_COIN],
+  //     functionArguments: [account?.address, 1], // 1 is in Octas
+  //   },
+  // };
+
   const transaction = {
-    arguments: [],
-    function: `${envmintfucn}`,
-    type: "entry_function_payload",
-    type_arguments: [],
+    data: {
+      function: `${envmintfucn}`, // Assuming envmintfucn is the function name in the old format
+      typeArguments: [],           // No type arguments in the old format
+      functionArguments: [],       // No function arguments in the old format
+    },
   };
 
   const mint = async () => {
-    // if (!isSignedIn) {
-    //   await connectWallet();
-    // }
     setbuttonblur(true);
+    setLoadingTx(true);
+    console.log("connected", connected);
     try {
-      const pendingTransaction = await aptos.signAndSubmitTransaction(
-        transaction
-      );
-      setmintpopup(false);
-      setsuccesspop(true);
+      const pendingTransaction = await signAndSubmitTransaction(transaction);
+      await aptosClient(network?.name.toLowerCase()).waitForTransaction({
+        transactionHash: pendingTransaction.hash,
+      });
+      console.log("mint transaction", pendingTransaction.hash);
+      if(pendingTransaction.hash)
+      {
+        setmintpopup(false);
+        setsuccesspop(true);
+        setLoadingTx(false);
+      }
     } catch (error) {
       console.error("Error connecting wallet or minting NFT:", error);
       setbuttonblur(false);
+      setLoadingTx(false);
+      setmintpopup(false);
     }
   };
 
@@ -403,7 +432,7 @@ const Mint = () => {
                   <div className="animate-spin text-white text-7xl">⛏</div>
                 ) : (
                   <>
-                    {!isSignedIn || !isauthenticate ? (
+                    {/* {!isSignedIn || !isauthenticate ? (
                       <div className="text-white font-bold py-4 px-10 rounded-lg mr-auto ml-10 -mt-10">
                         {!connected && (
                           <button className="">
@@ -420,7 +449,7 @@ const Mint = () => {
                           />
                         )}
                       </div>
-                    ) : (
+                    ) : ( */}
                       <div className="mr-auto">
                         <div className="text-orange-300 ml-20 text-sm mb-2">
                           (one wallet address can only mint one)
@@ -440,14 +469,15 @@ const Mint = () => {
                           </button>
                         )}
                       </div>
-                    )}
+                    {/* )} */}
+
                     {clientSecret && (
                       <div
                         style={{ backgroundColor: "#222944E5" }}
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
                         id="popupmodal"
                       >
-                        <div className="bg-slate-500 p-10 w-2/5 flex flex-col">
+                        <div className="p-10 w-2/5 flex flex-col" style={{backgroundColor:'#37406D'}}>
                           <Elements options={options} stripe={stripePromise}>
                             <CheckoutForm />
                           </Elements>
@@ -492,7 +522,12 @@ const Mint = () => {
                             </div>
 
                             <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
-                              <button
+                            {!connected ? (
+                          <button className="">
+                            <WalletSelectorAntDesign />
+                          </button>
+                        ):(
+                          <button
                                 onClick={mint}
                                 style={{ border: "1px solid white" }}
                                 type="button"
@@ -500,6 +535,8 @@ const Mint = () => {
                               >
                                 Pay using APT
                               </button>
+                        )}
+                              
                             </div>
 
                             <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">

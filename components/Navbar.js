@@ -68,7 +68,7 @@ const Navbar = ({ isHome }) => {
     if (account && account.address) {
       // Update the cookie with the new address
       Cookies.set("erebrus_wallet", account.address);
-      onSignMessage();
+      // onSignMessage();
     }
   }, [account?.address]);
 
@@ -419,7 +419,7 @@ const Navbar = ({ isHome }) => {
             </div>
           )} */}
 
-{account?.address && (
+{/* {account?.address && (
             <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl text-white">
               <div>
                 {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
@@ -432,9 +432,9 @@ const Navbar = ({ isHome }) => {
                 )
               }  
             </div>
-          )}
+          )} */}
           
-          {!token && (
+          {!token ? (
             <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
              
              {!connected && ( <button 
@@ -443,7 +443,7 @@ const Navbar = ({ isHome }) => {
               <WalletSelectorAntDesign/>
               </button>
              )}
-              {connected && showsignbutton && (
+              {connected && (
             // <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
             <Button
           color={"blue"}
@@ -453,18 +453,18 @@ const Navbar = ({ isHome }) => {
         />
           )} 
             </div>
-          )}
-
-          {token && (
-            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
+          ):
+          (
+<div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
               <div>
-                {address.slice(0, 4)}...{address.slice(-4)}
+                {address?.slice(0, 4)}...{address?.slice(-4)}
               </div>
               <button onClick={handleDeleteCookie} 
               onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
             onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
             </div>
           )}
+
         </div>
         <div className="block lg:hidden">
           <button
