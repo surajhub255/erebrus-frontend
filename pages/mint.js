@@ -76,10 +76,18 @@ const Mint = () => {
   const [showsignbutton, setshowsignbutton] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [mintpopup, setmintpopup] = useState(false);
+  const [showconnectbutton, setshowconnectbutton] = useState(false);
 
   const { account, connected, network, signMessage, signAndSubmitTransaction } = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
+
+  useEffect( () => {
+    
+    mint();
+
+  }, [connected])
+  
 
   const getAptosWallet = () => {
     if ("aptos" in window) {
@@ -218,12 +226,14 @@ const Mint = () => {
         setmintpopup(false);
         setsuccesspop(true);
         setLoadingTx(false);
+        setshowconnectbutton(false);
       }
     } catch (error) {
       console.error("Error connecting wallet or minting NFT:", error);
       setbuttonblur(false);
       setLoadingTx(false);
       setmintpopup(false);
+      setshowconnectbutton(false);
     }
   };
 
@@ -521,11 +531,23 @@ const Mint = () => {
                               </button>
                             </div>
 
-                            <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                            <div className="items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
                             {!connected ? (
-                          <button className="">
+                              <>
+                              <button
+                               onClick={()=>{setshowconnectbutton(true)}}
+                              style={{ border: "1px solid white" }}
+                              type="button"
+                              className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >
+                              Pay using APT
+                            </button>
+                          { showconnectbutton && 
+                            (<button className="mx-auto justify-center mt-10">
                             <WalletSelectorAntDesign />
-                          </button>
+                          </button>)
+                            }
+                          </>
                         ):(
                           <button
                                 onClick={mint}
@@ -539,7 +561,7 @@ const Mint = () => {
                               
                             </div>
 
-                            <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                            { !showconnectbutton && (<div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
                               <button
                                 onClick={stripe}
                                 style={{ border: "1px solid white" }}
@@ -548,7 +570,7 @@ const Mint = () => {
                               >
                                 Pay using USD
                               </button>
-                            </div>
+                            </div>)}
                           </div>
                         </div>
                       </div>
