@@ -144,7 +144,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
     <div className="w-full">
       <div
         className="w-full h-full lg:px-10 md:px-10 lg:py-4 md:py-4 p-4 border-t border-gray-500"
-        style={{ backgroundColor: "#30385F" }}
+        style={{ backgroundColor: "#202333" }}
       >
         <div className="w-full px-4 flex justify-between">
           <div className="text-l leading-12 font-bold mb-2 text-white w-1/4">
@@ -158,7 +158,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
           <div className="lg:flex md:flex justify-between w-1/4">
             <div>
               <div className="text-lg rounded-lg pr-1 text-white">
-                <div style={color2}>{metaData.name}</div>
+                <div>{metaData.name}</div>
               </div>
             </div>
           </div>

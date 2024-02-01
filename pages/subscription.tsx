@@ -97,12 +97,12 @@ const Subscription = () => {
   };
 
   const bg = {
-    backgroundColor: "#30385F",
+    backgroundColor: "#202333",
   };
 
   const border = {
-    backgroundColor: "#30385F",
-    border: "1px solid #788AA3",
+    backgroundColor: "#202333",
+    border: "1px solid #5696FF",
   };
 
   const button = {
@@ -652,7 +652,7 @@ const Subscription = () => {
                     <span className="text-white">My VPN Clients</span>  
                   </h1>
 
-                  <h1 className="gap-4 mb-8 ml-6 mt-0 text-start text-lg font-semibold leading-none tracking-normal text-gray-100 md:text-xl md:tracking-tight">
+                  <h1 className="flex justify-between gap-4 mb-8 ml-6 mt-0 text-start text-lg font-semibold leading-none tracking-normal text-gray-100 md:text-xl md:tracking-tight">
                   <div className="text-left text-white mt-4 flex gap-4">
                       <img src={`${
                         "https://nftstorage.link/ipfs"
@@ -661,22 +661,21 @@ const Subscription = () => {
                       {/* (collection: {collectionId.slice(0, 4)}...
                       {collectionId.slice(-4)}) */}
                     </div>
-                    </h1>
 
-                  <div className="flex gap-4">
-                    <div className="mr-auto text-white">
+                    <div className="text-white mr-40 mt-6">
                       <button
-                        style={{ border: "1px solid #11D9C5" }}
+                        style={{ border: "1px solid #0162FF" }}
                         onClick={() => {
                           setcollectionsPage(true);
                           setvpnPage(false);
                         }}
-                        className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full ml-6"
+                        className="px-4 py-3 text-xs font-semibold rounded-full w-full"
                       >
                         View Subscriptions
                       </button>
-                    </div>
                   </div>
+
+                    </h1>
 
                   {/* <select
                               id="region"
@@ -723,7 +722,7 @@ const Subscription = () => {
 
                   {buttonset && (
                     <>
-                      <div className="flex text-xs mb-4">
+                      {/* <div className="flex text-xs mb-4">
                         <button
                           className="p-4 px-3 rounded-l-lg"
                           style={{
@@ -744,11 +743,49 @@ const Subscription = () => {
                         >
                           My Clients
                         </button>
-                      </div>
-                      <section className="rounded-xl" style={bg}>
-                        <div className="px-5 mx-auto max-w-3xl rounded-xl">
-                          <div className="w-full mx-auto text-left py-24">
-                            <h1 className="text-4xl font-bold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                      </div> */}
+                      
+                      <div
+                                style={{ backgroundColor: "#222944E5" }}
+                                className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                                id="popupmodal"
+                              >
+                                <div className="relative p-4 w-full max-w-2xl max-h-full">
+                                  <div
+                                    className="relative rounded-lg shadow dark:bg-gray-700 rounded-3xl mx-auto w-3/4"
+                                    style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
+                                  >
+                                    <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                                      <button
+                                        onClick={() => {setbuttonset(false)}}
+                                        type="button"
+                                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                      >
+                                        <svg
+                                          className="w-3 h-3"
+                                          aria-hidden="true"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 14 14"
+                                        >
+                                          <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                          />
+                                        </svg>
+                                        <span className="sr-only">
+                                          Close modal
+                                        </span>
+                                      </button>
+                                    </div>
+                      <section className="">
+                        <div className="mx-auto max-w-3xl">
+                          <div className="w-full mx-auto text-left px-10 pb-10">
+
+                            <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
                               <span className="text-white text-center">
                                 Create your client
                               </span>
@@ -760,13 +797,13 @@ const Subscription = () => {
                               onSubmit={handleSubmit}
                             >
                               <div className="mb-10">
-                                <div className="flex gap-4">
-                                  <div className="mb-4 w-1/2">
+                                <div className="">
+                                  <div className="mb-4 w-full">
                                     <input
                                       type="text"
                                       id="name"
                                       style={border}
-                                      className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                      className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                       placeholder="Name"
                                       value={formData.name}
                                       onChange={handleInputChange}
@@ -774,11 +811,11 @@ const Subscription = () => {
                                     />
                                   </div>
 
-                                  <div className="mb-4 w-1/2">
+                                  <div className="mb-4 w-full">
                                     <select
                                       id="region"
                                       style={border}
-                                      className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                      className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                       value={formData.region}
                                       onChange={handleInputChange}
                                       required
@@ -856,23 +893,44 @@ const Subscription = () => {
                                 </select>
                               </div> */}
 
-                                  <div className="text-center w-1/2 mt-10">
-                                    <div className="mb-4 space-x-0 md:space-x-2 md:mb-8">
+                                  <div className="text-center w-1/2 mt-10 mx-auto">
+                                    <div className="mb-4 md:mb-8">
                                       <button
-                                        style={button}
+                                        style={{backgroundColor:'#0162FF'}}
                                         type="submit"
                                         value="submit"
-                                        className="px-14 py-3 mb-2 text-lg text-black font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                                        className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
                                       >
-                                        Create
+                                        Create Client
                                       </button>
                                     </div>
                                   </div>
+
+                                  {/* {msg == "success" && (
+                              <p className="text-green-500">Successful</p>
+                            )} */}
+
+                            {/* {msg == "error" && ( */}
+                              <p className="text-red-500">
+                              {msg}
+                              </p>
+                             {/* )} */}
+
                                 </div>
                               </div>
                             </form>
 
-                            {verify && (
+                            
+                          </div>
+                        </div>
+                      </section>
+                      </div>
+                      </div>
+                      </div>
+                    </>
+                  )}
+
+                  {verify && (
                               <div
                                 style={{ backgroundColor: "#222944E5" }}
                                 className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
@@ -1027,20 +1085,7 @@ const Subscription = () => {
                                 </div>
                               </div>
                             )}
-                            {/* {msg == "success" && (
-                              <p className="text-green-500">Successful</p>
-                            )} */}
-
-                            {/* {msg == "error" && ( */}
-                              <p className="text-red-500">
-                              {msg}
-                              </p>
-                             {/* )} */}
-                          </div>
-                        </div>
-                      </section>
-                    </>
-                  )}
+                            
 
                   {!buttonset && (
                     <>
@@ -1053,16 +1098,16 @@ const Subscription = () => {
                             // (!projectsData || projectsData?.length == 0) &&
                             // (!dedicatedVpnData ||
                             //   dedicatedVpnData?.length == 0) && (
-                            <div className="mx-6">
+                            <div className="mx-6 -mt-20">
                               <div className="flex gap-4">
-                                <div className="ml-auto text-black">
+                                <div className="ml-auto text-white">
                                   <button
                                     style={{
-                                      border: "1px solid #11D9C5",
-                                      backgroundColor: "#11D9C5",
+                                      // border: "1px solid #11D9C5",
+                                      backgroundColor: "#0162FF",
                                     }}
                                     onClick={() => setbuttonset(true)}
-                                    className="px-4 py-3 mb-2 text-xs font-semibold rounded-lg w-full sm:mb-0"
+                                    className="px-4 py-3 mb-2 text-xs font-semibold rounded-full w-full sm:mb-0"
                                   >
                                     Add More Clients
                                   </button>
@@ -1072,7 +1117,7 @@ const Subscription = () => {
                               {/* {vpntype === "decentralized" && (
                             <> */}
                               <div
-                                className="w-full h-full rounded-xl mt-4 pb-2"
+                                className="w-full h-full rounded-xl mt-14 pb-2"
                                 style={bg}
                               >
                                 <div className="w-full flex justify-between px-14 p-4">
