@@ -60,11 +60,9 @@ const isSendableNetwork = (connected, network) => {
 };
 
 const Mint = () => {
-  const [isOwned, setIsOwned] = useState(false);
-  const [balance, setBalance] = useState(false);
+
   const [isLoadingTx, setLoadingTx] = useState(false);
   const [error, setError] = useState(null);
-  const [isMinted, setMinted] = useState(false);
   const isSignedIn = Cookies.get("erebrus_wallet");
   const isauthenticate = Cookies.get("erebrus_token");
   const [address, setAddress] = useState("");
@@ -72,11 +70,11 @@ const Mint = () => {
   const [wallet, setwallet] = useState("");
   const [userid, setuserid] = useState("");
   const [buttonblur, setbuttonblur] = useState(false);
-  const [successpop, setsuccesspop] = useState(false);
   const [showsignbutton, setshowsignbutton] = useState(false);
   const [clientSecret, setClientSecret] = useState("");
   const [mintpopup, setmintpopup] = useState(false);
   const [showconnectbutton, setshowconnectbutton] = useState(false);
+  const [mintpage, setmintpage] = useState("page1");
 
   const { account, connected, network, signMessage, signAndSubmitTransaction } = useWallet();
 
@@ -223,8 +221,7 @@ const Mint = () => {
       console.log("mint transaction", pendingTransaction.hash);
       if(pendingTransaction.hash)
       {
-        setmintpopup(false);
-        setsuccesspop(true);
+        setmintpage("page3");
         setLoadingTx(false);
         setshowconnectbutton(false);
       }
@@ -232,7 +229,7 @@ const Mint = () => {
       console.error("Error connecting wallet or minting NFT:", error);
       setbuttonblur(false);
       setLoadingTx(false);
-      setmintpopup(false);
+      setmintpage("page1");
       setshowconnectbutton(false);
     }
   };
@@ -384,7 +381,10 @@ const Mint = () => {
       <Head>
         <title>Erebrus | Clients</title>
       </Head>
-      <div class="flex h-screen">
+
+      { mintpage === "page1" &&
+        (
+<div class="flex h-screen">
         <div className="w-1/2">
           <div className="text-white text-4xl ml-20 mt-20 mx-auto">
             Step into the Future of Internet Safety with 111 NFT VPN
@@ -401,36 +401,7 @@ const Mint = () => {
           <div className="text-white text-xl ml-20 mt-4 mx-auto">
             Exceptional Value for Unmatched Security
           </div>
-          {isOwned ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={transition}
-            >
-              <div className="mt-20 text-white flex flex-col justify-start items-center">
-                {`Number of NFTs owned: ${balance}`}
-                <img
-                  src="./image1.jpeg"
-                  alt="Mint Successful"
-                  className="w-64 h-64 mt-8 mb-8"
-                ></img>
-                {isLoadingTx ? (
-                  <div className="animate-spin text-white text-7xl">⛏</div>
-                ) : (
-                  <>
-                    <button
-                      className="bg-blue-500 text-white font-bold py-2 px-10 rounded-lg mt-20"
-                      onClick={mint}
-                    >
-                      Mint Erebrus NFT
-                    </button>
-                    {error && <div className="text-red-500 mt-4">{error}</div>}
-                  </>
-                )}
-              </div>
-            </motion.div>
-          ) : (
+  
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -466,14 +437,15 @@ const Mint = () => {
                         </div>
                         {buttonblur ? (
                           <div
-                            className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-300`}
+                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20 bg-blue-300`}
                           >
                             Mint Erebrus NFT
                           </div>
                         ) : (
                           <button
-                            className={`text-white font-bold py-4 px-10 rounded-lg mr-auto ml-20 bg-blue-500`}
-                            onClick={()=>{setmintpopup(true)}}
+                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20`}
+                            onClick={()=>{setmintpage("page2")}}
+                            style={{backgroundColor:'#0162FF'}}
                           >
                             Mint Erebrus NFT
                           </button>
@@ -481,36 +453,38 @@ const Mint = () => {
                       </div>
                     {/* )} */}
 
-                    {clientSecret && (
-                      <div
-                        style={{ backgroundColor: "#222944E5" }}
-                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
-                        id="popupmodal"
-                      >
-                        <div className="p-10 w-2/5 flex flex-col" style={{backgroundColor:'#37406D'}}>
-                          <Elements options={options} stripe={stripePromise}>
-                            <CheckoutForm />
-                          </Elements>
-                        </div>
-                      </div>
-                    )}
+                    {error && <div className="text-red-500 mt-4">{error}</div>}
+                  </>
+                )}
+              </div>
+            </motion.div>
+        </div>
 
-{mintpopup && (
+        <div className="text-white w-1/4 ml-auto mr-40 mt-10">
+          <img src="/111nft_gif.gif" />
+        </div>
+      </div>
+        )
+      }
+      
+
+      {mintpage === "page2" && (
                       <div
-                        style={{ backgroundColor: "#222944E5" }}
+                        style={{ backgroundColor: "black" }}
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                         id="popupmodal"
                       >
-                        <div className="relative p-4 w-full max-w-2xl max-h-full">
+                        <div className="relative p-4 w-full max-w-xl max-h-full">
                           <div
-                            className="relative rounded-lg shadow dark:bg-gray-700"
-                            style={{ backgroundColor: "#37406D" }}
+                            className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor"
+                            style={{ border: "1px solid #0162FF"}}
                           >
-                            <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                            <div className="flex items-center justify-end px-4 py-6 rounded-t" style={{borderBottom: "1px solid #FFFFFF80"}}>
+                              <div className="text-2xl text-white">Choose the payment option</div>
                               <button
-                                onClick={() => setmintpopup(false)}
+                                onClick={() => setmintpage("page1")}
                                 type="button"
-                                className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                               >
                                 <svg
                                   className="w-3 h-3"
@@ -531,16 +505,16 @@ const Mint = () => {
                               </button>
                             </div>
 
-                            <div className="items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                            <div className="items-center pt-20 rounded-b w-1/2 mx-auto">
                             {!connected ? (
                               <>
                               <button
                                onClick={()=>{setshowconnectbutton(true)}}
-                              style={{ border: "1px solid white" }}
+                              style={{ border: "1px solid #0162FF" }}
                               type="button"
-                              className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             >
-                              Pay using APT
+                              Pay in APT
                             </button>
                           { showconnectbutton && 
                             (<button className="mx-auto justify-center mt-10">
@@ -551,35 +525,52 @@ const Mint = () => {
                         ):(
                           <button
                                 onClick={mint}
-                                style={{ border: "1px solid white" }}
+                                style={{ border: "1px solid #0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Pay using APT
+                                Pay in APT
                               </button>
                         )}
                               
                             </div>
 
-                            {/* { !showconnectbutton && (<div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                            { !showconnectbutton && (<div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
                               <button
                                 onClick={stripe}
-                                style={{ border: "1px solid white" }}
+                                style={{ border: "1px solid #0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Pay using USD
+                                Pay in USD
                               </button>
-                            </div>)} */}
+                            </div>)}
                           </div>
                         </div>
                       </div>
                     )}
 
 
-                    {successpop && (
+{clientSecret && (
                       <div
                         style={{ backgroundColor: "#222944E5" }}
+                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
+                        id="popupmodal"
+                      >
+                        <div className="p-10 w-2/5 flex flex-col" style={{backgroundColor:'#37406D'}}>
+                          <Elements options={options} stripe={stripePromise}>
+                            <CheckoutForm />
+                          </Elements>
+                        </div>
+                      </div>
+                    )}
+
+
+
+
+{mintpage === "page3" && (
+                      <div
+                        style={{ backgroundColor: "black" }}
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                         id="popupmodal"
                       >
@@ -590,7 +581,7 @@ const Mint = () => {
                           >
                             <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                               <button
-                                onClick={() => setsuccesspop(false)}
+                                onClick={() => setmintpage("page1")}
                                 type="button"
                                 className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                               >
@@ -619,7 +610,7 @@ const Mint = () => {
                               <p className="text-2xl text-center font-semibold text-white">
                               Congratulations
                               </p>
-                              <p className="text-md text-center w-full mx-auto">
+                              <p className="text-md text-center w-full mx-auto text-white">
                                 You have minted your Erebrus NFT, welcome to an exclusive journey of innovation and community.
                                 To set clients, click button to go to subscription page.
                               </p>
@@ -639,19 +630,6 @@ const Mint = () => {
                         </div>
                       </div>
                     )}
-
-                    {error && <div className="text-red-500 mt-4">{error}</div>}
-                  </>
-                )}
-              </div>
-            </motion.div>
-          )}
-        </div>
-
-        <div className="text-white w-1/4 ml-auto mr-40 mt-10">
-          <img src="/111nft_gif.gif" />
-        </div>
-      </div>
     </>
   );
 };
