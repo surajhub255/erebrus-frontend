@@ -636,7 +636,7 @@ const Subscription = () => {
           <div className="w-full mx-auto text-left md:text-center">
             {collectionsPage === true && (
               <>
-              <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">Erebrus NFTs</div>
+              <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">Subscription</div>
               <NftdataContainer
                 metaDataArray={nftdata}
                 MyReviews={false}
@@ -932,20 +932,20 @@ const Subscription = () => {
 
                   {verify && (
                               <div
-                                style={{ backgroundColor: "#222944E5" }}
+                                style={{ backgroundColor: "#040819D9" }}
                                 className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                                 id="popupmodal"
                               >
                                 <div className="relative p-4 w-full max-w-2xl max-h-full">
                                   <div
                                     className="relative rounded-lg shadow dark:bg-gray-700"
-                                    style={{ backgroundColor: "#37406D" }}
+                                    style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
                                   >
                                     <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                                       <button
                                         onClick={() => {setbuttonset(false); setverify(false); setMsg("")}}
                                         type="button"
-                                        className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                       >
                                         <svg
                                           className="w-3 h-3"
@@ -969,19 +969,16 @@ const Subscription = () => {
                                     </div>
 
                                     <div className="p-4 md:p-5 space-y-4">
-                                      <p className="text-3xl text-center font-bold text-white">
+                                      <p className="text-3xl text-center font-semibold text-white">
                                         Successfully created!
                                       </p>
 
                                       <p
-                                        className="text-md text-center mx-auto"
-                                        style={{ color: "orange" }}
+                                        className="text-sm mx-auto"
+                                        style={{ color: "#5696FF" }}
                                       >
-                                        Back up your WireGuard VPN client config
-                                        immediately by downloading it or
-                                        scanning its QR code. If lost and not
-                                        scanned, you&#39;ll have to set up a new
-                                        client to connect to Erebrus VPN.
+                                        Quick Reminder: Backup your WireGuard VPN config now! <br></br>
+                                        Download or scan the QR code to avoid re-setup for Erebrus VPN
                                       </p>
                                       <div className="flex w-full flex-col items-center justify-center">
                                         <QRCode value={ConfigFile} size={300} />
