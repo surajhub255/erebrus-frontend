@@ -115,9 +115,9 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
   }
 
   return (
-    <div className="w-full cursor-pointer">
+    <div className="w-full cursor-pointer rounded-3xl" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
       {/* <Link href={`/reviews/${metaData.domainName.replace(/^https:\/\//, '')}`}> */}
-      <div className="w-full h-full rounded-lg border border-gray-500 p-2">
+      <div className="w-full h-full rounded-lg p-6">
         <div>
           <div className="flex flex-col">
             <div className="">
@@ -137,7 +137,7 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
             <div className="w-full">
               <h3 className="leading-12 mb-2 text-white">
                 <div className="lg:flex md:flex justify-between">
-                  <div className="text-xl font-bold">
+                  <div className="text-xl font-semibold mt-4">
                     
                     {
                       metaData.current_token_data.token_name.slice(0, 4) === "ipfs" ? (

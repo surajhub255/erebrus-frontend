@@ -635,27 +635,33 @@ const Subscription = () => {
         <div className="px-10 mx-auto">
           <div className="w-full mx-auto text-left md:text-center">
             {collectionsPage === true && (
+              <>
+              <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">Erebrus NFTs</div>
               <NftdataContainer
                 metaDataArray={nftdata}
                 MyReviews={false}
                 selectCollection={handleCollectionClick}
               />
+              </>
             )}
 
             {vpnPage === true && (
               <>
                 <div className="min-h-screen">
-                  <h1 className="gap-4 mb-8 ml-6 mt-10 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
-                    <span className="text-white">My VPN Clients</span>
-                    <div className="text-left text-white mt-4 flex gap-4">
+                  <h1 className="border-b border-gray-700 gap-4 pb-4 ml-6 mt-10 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
+                    <span className="text-white">My VPN Clients</span>  
+                  </h1>
+
+                  <h1 className="gap-4 mb-8 ml-6 mt-0 text-start text-lg font-semibold leading-none tracking-normal text-gray-100 md:text-xl md:tracking-tight">
+                  <div className="text-left text-white mt-4 flex gap-4">
                       <img src={`${
                         "https://nftstorage.link/ipfs"
-                      }/${imageSrc}`} className="w-14" />
-                      <div className="mt-2">{collectionName}</div>
+                      }/${imageSrc}`} className="w-14 rounded-full" />
+                      <div className="mt-2">Name - {collectionName}</div>
                       {/* (collection: {collectionId.slice(0, 4)}...
                       {collectionId.slice(-4)}) */}
                     </div>
-                  </h1>
+                    </h1>
 
                   <div className="flex gap-4">
                     <div className="mr-auto text-white">

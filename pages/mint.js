@@ -583,16 +583,16 @@ const Mint = () => {
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                         id="popupmodal"
                       >
-                        <div className="relative p-4 w-full max-w-2xl max-h-full">
+                        <div className="relative p-4 w-1/3 max-w-2xl max-h-full">
                           <div
-                            className="relative rounded-lg shadow dark:bg-gray-700"
-                            style={{ backgroundColor: "#37406D" }}
+                            className="relative rounded-3xl shadow dark:bg-gray-700"
+                            style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
                           >
                             <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                               <button
                                 onClick={() => setsuccesspop(false)}
                                 type="button"
-                                className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                               >
                                 <svg
                                   className="w-3 h-3"
@@ -613,24 +613,26 @@ const Mint = () => {
                               </button>
                             </div>
 
+                            <img src="/mint.png" className="mx-auto"/>
+
                             <div className="p-4 md:p-5 space-y-4">
-                              <p className="text-3xl text-center font-bold text-white">
-                                Successfully Minted!
+                              <p className="text-2xl text-center font-semibold text-white">
+                              Congratulations
                               </p>
-                              <p className="text-md text-center w-1/2 mx-auto">
-                                You have minted an Erebrus NFT ! To set clients,
-                                click button to go to subscription page.
+                              <p className="text-md text-center w-full mx-auto">
+                                You have minted your Erebrus NFT, welcome to an exclusive journey of innovation and community.
+                                To set clients, click button to go to subscription page.
                               </p>
                             </div>
 
-                            <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                            <div className="flex items-center pb-10 pt-4 rounded-b w-1/3 mx-auto">
                               <Link
                                 href="/subscription"
-                                style={{ border: "1px solid white" }}
+                                style={{ backgroundColor: "#0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-2 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Subscriptions
+                                View Erebrus NFTs
                               </Link>
                             </div>
                           </div>
