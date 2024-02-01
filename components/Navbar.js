@@ -50,6 +50,7 @@ const Navbar = ({ isHome }) => {
   const [showsignbutton, setshowsignbutton] = useState(false)
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
+  const [avatarUrl, setAvatarUrl] = useState("");
   const sdk = useSDK();
 
   const { account, connected, network, wallet , signMessage} = useWallet();
@@ -153,6 +154,23 @@ const Navbar = ({ isHome }) => {
   //     console.error(error);
   //   }
   // };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const getRandomNumber = () => Math.floor(Math.random() * 1000);
+        const apiUrl = `https://api.multiavatar.com/${getRandomNumber()}`;
+
+        const response = await axios.get(apiUrl);
+        const svgDataUri = `data:image/svg+xml,${encodeURIComponent(response.data)}`;
+        setAvatarUrl(svgDataUri);
+      } catch (error) {
+        console.error('Error fetching avatar:', error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const signOut = () => {
     sessionStorage.removeItem("token");
@@ -320,7 +338,7 @@ const Navbar = ({ isHome }) => {
   return (
     <nav className="bg-transparent py-4">
       <div
-        className={`container mx-auto px-6 flex items-center justify-between lg:mb-0 ${
+        className={`container mx-auto px-10 flex items-center justify-between lg:mb-0 ${
           isHome && !isOpen ? "mb-24" : ""
         }`}
       >
@@ -455,13 +473,14 @@ const Navbar = ({ isHome }) => {
             </div>
           ):
           (
-<div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
-              <div>
+<div className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4" style={{color:'#0162FF'}}>
+              {/* <div>
                 {address?.slice(0, 4)}...{address?.slice(-4)}
-              </div>
+              </div> */}
               <button onClick={handleDeleteCookie} 
-              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
+              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #0162FF")}
+            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Log out</button>
+            {avatarUrl && <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto"/>}
             </div>
           )}
 
@@ -517,17 +536,18 @@ const Navbar = ({ isHome }) => {
                 </Link>
 
                 {account?.address && (
-            <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl text-white">
-              <div>
+            <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl flex gap-4" style={{color:'#0162FF'}}>
+              {/* <div>
                 {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
-              </div>
+              </div> */}
               {
                 address && (
                   <button onClick={handleDeleteCookie} 
-                  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-                  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
+                  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #0162FF")}
+                  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Log out</button>
                 )
-              }  
+              } 
+              {avatarUrl && <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto"/>} 
             </div>
           )}
           
@@ -547,13 +567,14 @@ const Navbar = ({ isHome }) => {
           )}
 
 {address && (
-            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl text-white">
-              <div>
+            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl flex gap-4" style={{color:'#0162FF'}}>
+              {/* <div>
                 {address.slice(0, 4)}...{address.slice(-4)}
-              </div>
+              </div> */}
               <button onClick={handleDeleteCookie}
-              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
+              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #0162FF")}
+              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Log out</button>
+              {avatarUrl && <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto"/>}
             </div>
           )}
 
