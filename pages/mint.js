@@ -476,7 +476,7 @@ const Mint = () => {
                       >
                         <div className="relative p-4 w-full max-w-xl max-h-full">
                           <div
-                            className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor"
+                            className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor pb-20"
                             style={{ border: "1px solid #0162FF"}}
                           >
                             <div className="flex items-center justify-end px-4 py-6 rounded-t" style={{borderBottom: "1px solid #FFFFFF80"}}>
@@ -517,7 +517,7 @@ const Mint = () => {
                               Pay in APT
                             </button>
                           { showconnectbutton && 
-                            (<button className="mx-auto justify-center mt-10">
+                            (<button className="mx-auto justify-center mt-10 items-center flex">
                             <WalletSelectorAntDesign />
                           </button>)
                             }
