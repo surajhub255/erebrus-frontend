@@ -1095,10 +1095,10 @@ const Subscription = () => {
                             // <Loader />
                             <div className="min-h-screen"></div>
                           ) : (
-                            // (!projectsData || projectsData?.length == 0) &&
+                            (projectsData && projectsData?.length !== 0) ?
                             // (!dedicatedVpnData ||
                             //   dedicatedVpnData?.length == 0) && (
-                            <div className="mx-6 -mt-20">
+                            (<div className="mx-6 -mt-20">
                               <div className="flex gap-4">
                                 <div className="ml-auto text-white">
                                   <button
@@ -1154,7 +1154,32 @@ const Subscription = () => {
                                 />
                               </div>
                             </div>
-                          )
+                            ):(
+                              <>
+                              <img src="/create.png" className="mx-auto -mt-10"/>
+
+                                <div className="p-2 md:p-5 space-y-4">
+                                  <p className="text-2xl text-center font-semibold text-white">
+                                  Ready for Enhanced security? <br></br>
+Create Your VPN Client, Start Safe Surfing Today!
+                                  </p>
+                                  <p className="text-md text-center w-full mx-auto">
+                                    You have minted your Erebrus NFT, welcome to an exclusive journey of innovation and community.
+                                    To set clients, click button to go to subscription page.
+                                  </p>
+                                  <button
+                                    style={{
+                                      // border: "1px solid #11D9C5",
+                                      backgroundColor: "#0162FF",
+                                    }}
+                                    onClick={() => setbuttonset(true)}
+                                    className="py-4 text-md rounded-full w-1/6 text-white"
+                                  >
+                                    Create Client now
+                                  </button>
+                                </div>
+                              </>
+                            ))
                           // )
                         }
 
