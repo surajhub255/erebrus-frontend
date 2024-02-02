@@ -22,7 +22,7 @@ const Features = () => {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { duration: 0.5 },
+      transition: { duration: 0.2 },
     },
     hidden: {
       y: -20,
@@ -36,51 +36,43 @@ const Features = () => {
       ref={setAboutRef}
       className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mb-36 lg:mb-12"
     >
-      <div className="mb-2 font-figtree lg:w-[40%] md:w-[60%] w-[85%] text-center">
+      <div className="mb-2 font-figtree w-[60%] text-center">
         <motion.h2
           animate={animation}
           initial="hidden"
           variants={itemVariants}
-          className="font-bold text-4xl lg:text-5xl mb-2 lg:mt-36  text-gray-200"
+          className="font-bold text-4xl mb-10 lg:mt-36 text-gray-200 text-left"
         >
-          The Future of the Internet is Decentralized
+         Be a part of Decentralized <br></br>Internet
         </motion.h2>
-        <motion.h1
-          animate={animation}
-          initial="hidden"
-          variants={itemVariants}
-          className="text-xl lg:text-xl font-figtree opacity-50 text-white text-center lg:mb-24 mb-12"
-        >
-          Be a part of it.
-        </motion.h1>
       </div>
-      <div className="lg:w-[50%] w-[60%] lg:ml-16">
+      <div className="w-[60%]">
         <motion.div
           animate={itemAnimation}
           initial="hidden"
           variants={itemVariants}
-          className="flex lg:mb-12 lg:flex-row flex-col justify-center items-start"
+          className="flex lg:mb-12 lg:flex-row flex-col justify-center items-start gap-4"
         >
-          <div className="flex lg:w-[50%] lg:mb-0 mb-4">
+          <div className="lg:w-[50%] pt-24 pb-5 px-6 rounded-2xl text-black" style={{backgroundColor: '#8EB9FF'}}>
             <span className="text-4xl mr-6">⛓</span>
-            <div className="flex flex-col">
-              <motion.h1 className="text-white font-bold text-xl">
-                Power of Decentralization
+            <div className="flex flex-col mt-4">
+              <motion.h1 className="font-bold text-3xl">
+                Power of <br></br>Decentralization
               </motion.h1>
-              <motion.p className="text-gray-400 lg:w-[80%]">
+              <motion.p className="lg:w-[80%] text-sm font-semibold mt-4">
                 Equipped with Blockchain based Security and verified Hosting
                 Providers, you get to experience the true power of
                 decentralization.
               </motion.p>
             </div>
           </div>
-          <div className="flex lg:w-[50%] lg:mb-0 mb-4">
+          <div className="lg:w-[50%] pt-28 pb-6 px-6 rounded-2xl text-black" style={{backgroundColor: '#E3EEFF'}}>
             <span className="text-4xl mr-6">⚡️</span>
-            <div className="flex flex-col">
-              <motion.h1 className="text-white font-bold text-xl">
-                Fast Speed & Unlimited Bandwidth.
+            <div className="flex flex-col mt-4">
+              <motion.h1 className="font-bold text-3xl">
+                Fast Speed & <br></br>Unlimited Bandwidth.
               </motion.h1>
-              <motion.p className="text-gray-400 lg:w-[80%]">
+              <motion.p className="lg:w-[80%] text-sm font-semibold mt-4">
                 We offer speeds that match popular providers out there, allowing
                 for a fast browsing experience.
               </motion.p>
@@ -92,27 +84,27 @@ const Features = () => {
           animate={itemAnimation}
           initial="hidden"
           variants={itemVariants}
-          className="flex lg:flex-row flex-col justify-center items-start lg:mb-12"
+          className="flex lg:flex-row flex-col justify-center items-start lg:mb-12 gap-4"
         >
-          <div className="flex lg:w-[50%] lg:mb-0 mb-4">
+          <div className="lg:w-[50%] pt-32 pb-10 px-6 rounded-2xl text-white" style={{backgroundColor: '#3985FF'}}>
             <span className="text-4xl mr-6">🌐</span>
-            <div className="flex flex-col">
-              <motion.h1 className="text-white font-bold text-xl">
+            <div className="flex flex-col mt-4">
+              <motion.h1 className="font-bold text-3xl">
                 IP Address Protection
               </motion.h1>
-              <motion.p className="text-gray-400 lg:w-[80%]">
+              <motion.p className="lg:w-[80%] text-sm font-semibold mt-4">
                 Hide your IP address and location from websites and applications
                 to keep your search history and downloads private.
               </motion.p>
             </div>
           </div>
-          <div className="flex lg:w-[50%] lg:mb-0 mb-4">
+          <div className="lg:w-[50%] pt-32 pb-10 px-6 rounded-2xl text-white" style={{backgroundColor: '#0162FF'}}>
             <span className="text-4xl mr-6">📱</span>
-            <div className="flex flex-col">
-              <motion.h1 className="text-white font-bold text-xl">
+            <div className="flex flex-col mt-4">
+              <motion.h1 className="font-bold text-3xl">
                 Multiple Devices
               </motion.h1>
-              <motion.p className="text-gray-400 lg:w-[80%]">
+              <motion.p className="lg:w-[80%] text-sm font-semibold mt-4">
                 Now you can access a fast and secure internet connection on
                 multiple devices! Connect to up to 2 devices starting on our
                 starter plan.
@@ -126,13 +118,13 @@ const Features = () => {
           variants={itemVariants}
           className="flex lg:flex-row flex-col justify-center items-center"
         >
-          <div className="flex lg:w-[60%] lg:mb-0 mb-4">
+          <div className="pt-32 pb-10 px-6 rounded-2xl text-white" style={{backgroundColor: '#202333'}}>
             <span className="text-4xl mr-6">🖼</span>
-            <div className="flex flex-col">
-              <motion.h1 className="text-white font-bold text-xl">
+            <div className="flex flex-col mt-4">
+              <motion.h1 className="font-bold text-3xl">
                 NFT Subscriptions
               </motion.h1>
-              <motion.p className="text-gray-400 lg:w-[80%]">
+              <motion.p className="lg:w-[60%] text-sm font-semibold mt-4">
                 Pay using cryptocurrencies and surf the internet securely -
                 Anonymous Browsing without sacrificing speed or bandwidth had
                 never been this easy.
