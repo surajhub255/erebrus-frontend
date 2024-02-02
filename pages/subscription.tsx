@@ -981,7 +981,11 @@ const Subscription = () => {
                                         Download or scan the QR code to avoid re-setup for Erebrus VPN
                                       </p>
                                       <div className="flex w-full flex-col items-center justify-center">
-                                        <QRCode value={ConfigFile} size={300} />
+                                        <div className="bg-white mx-auto my-auto w-1/2 justify-center flex h-60 rounded-3xl">
+                                          <div className="mt-4">
+                                        <QRCode value={ConfigFile} size={200} />
+                                        </div>
+                                        </div>
 
                                         <div className="flex gap-4">
                                           <button
