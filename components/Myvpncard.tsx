@@ -292,7 +292,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
         >
           <div className="relative lg:w-1/3 w-full max-w-2xl max-h-full">
             <div
-              className="relative rounded-lg shadow dark:bg-gray-700 p-16 md:p-20"
+              className="relative rounded-3xl shadow dark:bg-gray-700 p-16 md:p-20"
               style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
             >
               <div className="p-4 md:p-5 space-y-4">

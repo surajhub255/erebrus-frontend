@@ -105,8 +105,8 @@ const Subscription = () => {
     border: "1px solid #5696FF",
   };
 
-  const button = {
-    backgroundColor: "#11D9C5",
+  const button = {  
+    border: "1px solid #0162FF",
   };
 
   const text = {
@@ -752,7 +752,7 @@ const Subscription = () => {
                               >
                                 <div className="relative p-4 w-full max-w-2xl max-h-full">
                                   <div
-                                    className="relative rounded-lg shadow dark:bg-gray-700 rounded-3xl mx-auto w-3/4"
+                                    className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto w-3/4"
                                     style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
                                   >
                                     <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
@@ -938,10 +938,10 @@ const Subscription = () => {
                               >
                                 <div className="relative p-4 w-full max-w-2xl max-h-full">
                                   <div
-                                    className="relative rounded-lg shadow dark:bg-gray-700"
+                                    className="relative rounded-3xl shadow dark:bg-gray-700 w-3/4 mx-auto"
                                     style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
                                   >
-                                    <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                                    {/* <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                                       <button
                                         onClick={() => {setbuttonset(false); setverify(false); setMsg("")}}
                                         type="button"
@@ -966,30 +966,37 @@ const Subscription = () => {
                                           Close modal
                                         </span>
                                       </button>
-                                    </div>
+                                    </div> */}
 
-                                    <div className="p-4 md:p-5 space-y-4">
+                                    <div className="py-4 space-y-4 mt-4">
                                       <p className="text-3xl text-center font-semibold text-white">
                                         Successfully created!
                                       </p>
 
-                                      <p
+                                      {/* <p
                                         className="text-sm mx-auto"
                                         style={{ color: "#5696FF" }}
                                       >
                                         Quick Reminder: Backup your WireGuard VPN config now! <br></br>
                                         Download or scan the QR code to avoid re-setup for Erebrus VPN
-                                      </p>
+                                      </p> */}
                                       <div className="flex w-full flex-col items-center justify-center">
-                                        <div className="bg-white mx-auto my-auto w-1/2 justify-center flex h-60 rounded-3xl">
+                                        <div className="bg-white mx-auto my-4 w-1/2 justify-center flex h-60 rounded-3xl">
                                           <div className="mt-4">
                                         <QRCode value={ConfigFile} size={200} />
                                         </div>
                                         </div>
 
+                                        <div className="text-center text-white text-sm w-2/3 mt-2">
+                                        Open <Link
+                                            href="https://www.wireguard.com/"
+                                            target="_blank" style={{ color: "#5696FF" }}>WireGaurd</Link>&nbsp;app on mobile, scan the QR code 
+                                            to add a new connection, and instantly connect to Erebrus VPN.
+                                        </div>
+
                                         <div className="flex gap-4">
                                           <button
-                                            className="text-lg rounded-lg text-white flex btn bg-blue-gray-700"
+                                            className="text-md rounded-lg text-white flex btn bg-blue-gray-700"
                                             onClick={() => {
                                               const blob = new Blob(
                                                 [ConfigFile],
@@ -1001,51 +1008,33 @@ const Subscription = () => {
                                             }}
                                           >
                                             <div
-                                              className="flex cursor-pointer p-2 rounded-lg mt-4 gap-2"
+                                              className="flex cursor-pointer p-2 rounded-full mt-4 gap-2 px-20"
                                               style={{
-                                                border: "1px solid #11D9C5",
+                                                backgroundColor:'#0162FF'
                                               }}
                                             >
                                               <div style={{ color: "white" }}>
                                                 Download
                                               </div>
-                                              <FaDownload
+                                              {/* <FaDownload
                                                 style={{
                                                   color: "#11D9C5",
                                                 }}
                                                 className="mt-2"
-                                              />
+                                              /> */}
                                             </div>
                                           </button>
-
-                                          {/* <Link
-                                            href="https://www.wireguard.com/"
-                                            target="_blank"
-                                            className="mt-4 border p-2 rounded-lg"
-                                            style={{ color: "#11D9C5" }}
-                                          >
-                                            Wiregaurd
-                                          </Link> */}
                                         </div>
 
-                                        <div className="text-center text-white text-sm w-2/3 mt-2">
-                                          On your mobile, open the <Link
-                                            href="https://www.wireguard.com/"
-                                            target="_blank" style={{ color: "#11D9C5" }}>WireGaurd</Link>&nbsp;app, and use the option to add a new
-                                          connection by scanning a QR code.
-                                          After scanning, the app will import
-                                          the configuration. You can then
-                                          connect to Erebrus VPN through the
-                                          WireGuard app.
-                                        </div>
+                                        
                                       </div>
                                     </div>
-                                    <div className="flex items-center pb-10 pt-4 rounded-b w-1/2 mx-auto">
+                                    <div className="flex items-center pb-10 rounded-b w-1/2 mx-auto">
                                       <button
                                         style={button}
                                         onClick={() => {setbuttonset(false); setverify(false);setMsg("");}}
                                         type="button"
-                                        className="w-full text-black font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                        className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                                       >
                                         My VPN Clients
                                       </button>
