@@ -25,7 +25,6 @@ import SingleSignerTransaction from "../components/transactionFlow/SingleSigner"
 import GetStripe from "../utils/stripe.js";
 import { loadStripe } from "@stripe/stripe-js";
 import { redirect } from "next/dist/server/api-utils/index.js";
-import { useRouter } from "next/navigation";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm.tsx";
 import { aptosClient } from "../module";
@@ -85,6 +84,19 @@ const Mint = () => {
     mint();
 
   }, [connected])
+
+  useEffect(() => {
+    // Extract URL parameters
+    const currentUrl = window.location.href;
+    const params = new URLSearchParams(currentUrl.split('?')[1]);
+    const redirect_status = params.get('redirect_status');
+
+    console.log("redirect_status", redirect_status);
+    if (redirect_status === `succeeded`) {
+      setmintpage("page3");
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
   
 
   const getAptosWallet = () => {
@@ -172,19 +184,19 @@ const Mint = () => {
     }
   };
 
-  useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      console.log("Order placed! You will receive an email confirmation.");
-    }
+  // useEffect(() => {
+  //   // Check to see if this is a redirect back from Checkout
+  //   const query = new URLSearchParams(window.location.search);
+  //   if (query.get("success")) {
+  //     console.log("Order placed! You will receive an email confirmation.");
+  //   }
 
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when youre ready."
-      );
-    }
-  }, []);
+  //   if (query.get("canceled")) {
+  //     console.log(
+  //       "Order canceled -- continue to shop around and checkout when youre ready."
+  //     );
+  //   }
+  // }, []);
 
   // const transaction = {
   //   arguments: [],
@@ -229,7 +241,7 @@ const Mint = () => {
       console.error("Error connecting wallet or minting NFT:", error);
       setbuttonblur(false);
       setLoadingTx(false);
-      setmintpage("page1");
+      // setmintpage("page1");
       setshowconnectbutton(false);
     }
   };
