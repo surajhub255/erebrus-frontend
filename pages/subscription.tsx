@@ -86,6 +86,7 @@ const Subscription = () => {
   const [collectionImage, setcollectionImage] = useState<string>();
   const [vpnPage, setvpnPage] = useState<boolean>(false);
   const [valueFromChild2, setValueFromChild2] = useState<string>("");
+  const [note, setnote] = useState<boolean>(true);
   //const txtvalue = localStorage.getItem("txtvalue");
 
   const { account, connected, network, signMessage } = useWallet();
@@ -1143,6 +1144,51 @@ const Subscription = () => {
                                   onChildValue={handleChildValue}
                                 />
                               </div>
+                              {
+                                note && (
+                              <div className="fixed bottom-0 right-0 w-1/4 px-8 pt-4 pb-8 text-left" style={{backgroundColor:'#C7DCFF'}}>
+                                <div className="flex items-center justify-end rounded-t dark:border-gray-600">
+                                      <button
+                                        onClick={() => {setnote(false)}}
+                                        type="button"
+                                        className="text-black bg-transparent hover:bg-gray-800 hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                      >
+                                        <svg
+                                          className="w-3 h-3"
+                                          aria-hidden="true"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                          fill="none"
+                                          viewBox="0 0 14 14"
+                                        >
+                                          <path
+                                            stroke="currentColor"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                          />
+                                        </svg>
+                                        <span className="sr-only">
+                                          Close modal
+                                        </span>
+                                      </button>
+                                    </div>
+                                <div className="text-lg font-bold">Quick Reminder</div>
+                                <div className="text-sm py-4">Backup your WireGuard VPN config now! 
+                                      Download or scan the QR code to avoid 
+                                      re-setup for Erebrus VPN
+                                </div>
+                                <button className="py-2 px-10 text-white rounded-full" style={{ backgroundColor:'#0162FF' }}>
+                                  <Link
+                                            href="https://www.wireguard.com/"
+                                            target="_blank">
+                                              Download
+                                        </Link>
+                                  </button>
+                              </div>
+                                )
+                              }
+                              
                             </div>
                             ):(
                               <>
