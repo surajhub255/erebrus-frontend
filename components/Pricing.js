@@ -5,22 +5,17 @@ const Pricing = () => {
   return (
     <div
       id="pricing"
-      className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mx-auto mb-24"
+      className="flex items-center justify-center w-[80%] gap-20 mx-auto py-40"
     >
-      <h1 className="text-gray-200 text-4xl lg:text-5xl font-bold mb-4">
-        Pricing
+      <div>
+      <h1 className="text-4xl font-bold mb-4" style={{color:'#3985FF'}}>
+      Erebrus Beta Release
       </h1>
-      <p className="text-gray-400 mb-8 w-60 text-center">
+      {/* <p className="text-gray-400 mb-8 w-60 text-center">
         Erebrus VPN is available for purchase directly though ownership of the
         Erebrus NFT
-      </p>
-      <div className="flex flex-col justify-center items-center pt-6 pl-8 pr-8 pb-8 bg-[#1A202C] rounded">
-        <h1 className="text-gray-200 text-xl">Beta Release</h1>
-        <div className="flex items-center mb-4">
-          <h1 className="text-gray-200 mr-2 text-4xl">1.11 APT</h1>
-          <p className="text-gray-400">/ 3 months</p>
-        </div>
-        <div className="flex mr-16 mb-4">
+      </p> */}
+              <div className="flex mr-16 mb-10">
           <ul className="text-gray-400">
             <li>Unlimited Devices</li>
             <li>5 Regions</li>
@@ -30,10 +25,18 @@ const Pricing = () => {
         </div>
         <Link
           href="/mint"
-          className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-full"
+          className="bg-white text-black font-bold py-3 px-16 rounded-full w-full"
+          style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
         >
           Get Now
         </Link>
+        </div>
+      <div className="flex flex-col justify-start py-16 px-10 rounded-2xl shadow-lg shadow-blue-500" style={{backgroundColor:'#0162FF'}}>
+        <h1 className="text-gray-200 text-xl">Pricing</h1>
+        <div className="flex items-center mb-4">
+          <h1 className="text-gray-200 mr-2 text-4xl">1.11 APT / 3 months</h1>
+          {/* <p className="text-gray-400">/ 3 months</p> */}
+        </div>
       </div>
     </div>
   );
