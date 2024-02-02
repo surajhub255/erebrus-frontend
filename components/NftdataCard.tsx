@@ -64,6 +64,7 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
   onReviewDeleted,
 }) => {
   const [imageSrc, setImageSrc] = React.useState<string | null>(null);
+  const [attributes, setAttributes] = React.useState<any>(null);
 
   // React.useEffect(() => {
   //   if (
@@ -97,6 +98,7 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
 
   console.log("Metadata:", metadata);
   setImageSrc(metadata?.image.replace("ipfs://", ""));
+  setAttributes(metadata?.attributes);
     }
     fetchMetaData();
   }, [metaData]);
@@ -162,6 +164,16 @@ const NftdataCard: React.FC<ReviewCardProps> = ({
                   </div>
                 </div>
               </div>
+
+              {attributes && (
+                <div className="flex-wrap flex gap-2 text-xs text-white rounded-full px-4 py-2 mt-4" style={{backgroundColor:'#0162FF'}}>
+                  <div>Role: {attributes.Role}</div>
+                  <div className="ml-4">Agility: {attributes.Agility}</div>
+                  <div className="ml-4">Strength: {attributes.Strength}</div>
+                  <div>Endurance: {attributes.Endurance}</div>
+                  <div className="ml-4">Intelligence: {attributes.Intelligence}</div>
+                  </div>
+              )}
             </div>
           </div>
         </div>
