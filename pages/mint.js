@@ -524,9 +524,10 @@ const Mint = () => {
                                onClick={()=>{setshowconnectbutton(true)}}
                               style={{ border: "1px solid #0162FF" }}
                               type="button"
-                              className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             >
-                              Pay in APT
+                              <img src="/mint2.png" className="w-12"/>
+                              <div className="px-5 py-2.5 ">Pay in APT</div>
                             </button>
                           { showconnectbutton && 
                             (<button className="mx-auto justify-center mt-10 items-center flex">
@@ -539,9 +540,10 @@ const Mint = () => {
                                 onClick={mint}
                                 style={{ border: "1px solid #0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Pay in APT
+                                <img src="/mint2.png" className="w-12"/>
+                                <div className="px-5 py-2.5 ">Pay in APT</div>
                               </button>
                         )}
                               
@@ -552,9 +554,10 @@ const Mint = () => {
                                 onClick={stripe}
                                 style={{ border: "1px solid #0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Pay in USD
+                                <img src="/mint3.png" className="w-12"/>
+                                <div className="px-5 py-2.5 ">Pay in USD</div>
                               </button>
                             </div>)} */}
                           </div>
