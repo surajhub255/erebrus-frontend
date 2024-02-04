@@ -482,14 +482,22 @@ const Mint = () => {
 
       {mintpage === "page2" && (
                       <div
-                        style={{ backgroundColor: "black" }}
+                        style={{ backgroundImage: `url('/bgmint.png')`, 
+                        backgroundColor:"black", 
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat"}}
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                         id="popupmodal"
                       >
                         <div className="relative p-4 w-full max-w-xl max-h-full">
+                        <img src="/coin1.png" className="w-60 -mt-10 absolute -top-10 -left-20"/>
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor pb-20"
-                            style={{ border: "1px solid #0162FF"}}
+                            style={{
+                              border: "1px solid #0162FF",
+                              boxShadow: 'inset -10px -10px 60px 0 rgba(255, 255, 255, 0.4)',
+                            }}
                           >
                             <div className="flex items-center justify-end px-4 py-6 rounded-t" style={{borderBottom: "1px solid #FFFFFF80"}}>
                               <div className="text-2xl text-white">Choose the payment option</div>
@@ -561,6 +569,7 @@ const Mint = () => {
                               </button>
                             </div>)} */}
                           </div>
+                          <img src="/coin2.png" className="w-60 -mt-10 absolute -bottom-24 -right-24" style={{ zIndex: -1 }}/>
                         </div>
                       </div>
                     )}
