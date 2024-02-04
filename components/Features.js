@@ -106,8 +106,7 @@ const Features = () => {
               </motion.h1>
               <motion.p className="lg:w-[80%] text-sm font-semibold mt-4">
                 Now you can access a fast and secure internet connection on
-                multiple devices! Connect to up to 2 devices starting on our
-                starter plan.
+                multiple devices!
               </motion.p>
             </div>
           </div>
