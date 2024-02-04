@@ -619,7 +619,7 @@ const Subscription = () => {
                 <Button
           color={"blue"}
           onClick={onSignMessage}
-          disabled={!sendable}
+          disabled={false}
           message={"Authenticate"}
         />
               </div>
