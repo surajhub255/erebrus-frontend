@@ -547,7 +547,7 @@ const Mint = () => {
                               
                             </div>
 
-                            { !showconnectbutton && (<div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
+                            {/* { !showconnectbutton && (<div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
                               <button
                                 onClick={stripe}
                                 style={{ border: "1px solid #0162FF" }}
@@ -556,7 +556,7 @@ const Mint = () => {
                               >
                                 Pay in USD
                               </button>
-                            </div>)}
+                            </div>)} */}
                           </div>
                         </div>
                       </div>
