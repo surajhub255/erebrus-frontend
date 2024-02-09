@@ -106,7 +106,7 @@ const Subscription = () => {
     border: "1px solid #5696FF",
   };
 
-  const button = {  
+  const button = {
     border: "1px solid #0162FF",
   };
 
@@ -248,19 +248,18 @@ const Subscription = () => {
         setConfigFile(configFile);
         setverify(true);
         setValueFromChild2("refreshafterclientcreate");
-      // } else if(response.status === 400){
-      //   setMsg("Cant create more than 3 clients");
-      }
-      else{
+        // } else if(response.status === 400){
+        //   setMsg("Cant create more than 3 clients");
+      } else {
         setMsg("Failed to create VPN. Try with unique name.");
       }
-    // }
-  } catch (error) {
-    console.error("Error:", error);
-    setMsg("Failed to create VPN. Try with unique name.");
-  } finally {
-    setLoading(false);
-  }
+      // }
+    } catch (error) {
+      console.error("Error:", error);
+      setMsg("Failed to create VPN. Try with unique name.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -376,17 +375,13 @@ const Subscription = () => {
           operationName: "getAccountCurrentTokens",
         };
 
-        const response = await axios.post(
-          `${graphqlaptos}`,
-          graphqlbody,
-          {
-            headers: {
-              Accept: "application/json, text/plain, */*",
-              "Content-Type": "application/json",
-              // Authorization: `Bearer ${auth}`,
-            },
-          }
-        );
+        const response = await axios.post(`${graphqlaptos}`, graphqlbody, {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${auth}`,
+          },
+        });
 
         console.log("vpn nft", response.data.data.current_token_ownerships_v2);
         setnftdata(response.data.data.current_token_ownerships_v2);
@@ -450,16 +445,15 @@ const Subscription = () => {
 
         let signaturewallet = signature;
 
-      if(signaturewallet.length === 128)
-      {
-        signaturewallet = `0x${signaturewallet}`;
-      }
+        if (signaturewallet.length === 128) {
+          signaturewallet = `0x${signaturewallet}`;
+        }
 
-      const authenticationData = {
-        flowId: nonce,
-        signature: `${signaturewallet}`,
-        pubKey: publicKey,
-      };
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signaturewallet}`,
+          pubKey: publicKey,
+        };
 
         const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
 
@@ -494,41 +488,41 @@ const Subscription = () => {
     }
   };
 
-
   const onSignMessage = async () => {
     if (sendable) {
       try {
         const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-      
-        const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+
+        const { data } = await axios.get(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`
+        );
         console.log(data);
-  
+
         const message = data.payload.eula;
         const nonce = data.payload.flowId;
         const publicKey = account?.publicKey;
-  
+
         const payload = {
           message: message,
           nonce: nonce,
         };
         const response = await signMessage(payload);
         console.log(response);
-  
+
         let signaturewallet = response.signature;
 
-      if(signaturewallet.length === 128)
-      {
-        signaturewallet = `0x${signaturewallet}`;
-      }
-  
-      const authenticationData = {
-        "flowId": nonce,
-        "signature": `${signaturewallet}`,
-        "pubKey": publicKey,
-      };
-  
+        if (signaturewallet.length === 128) {
+          signaturewallet = `0x${signaturewallet}`;
+        }
+
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signaturewallet}`,
+          pubKey: publicKey,
+        };
+
         const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
-  
+
         const config = {
           url: authenticateApiUrl,
           method: "POST",
@@ -537,17 +531,17 @@ const Subscription = () => {
           },
           data: authenticationData,
         };
-  
+
         const authResponse = await axios(config);
         console.log("auth data", authResponse.data);
-  
+
         const token = await authResponse?.data?.payload?.token;
         const userId = await authResponse?.data?.payload?.userId;
-  
+
         Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+        Cookies.set("erebrus_wallet", account?.address ?? "", { expires: 7 });
         Cookies.set("erebrus_userid", userId, { expires: 7 });
-  
+
         window.location.reload();
       } catch (error) {
         console.error("error reach");
@@ -580,16 +574,18 @@ const Subscription = () => {
 
   useEffect(() => {
     const fetchMetaData = async () => {
-      console.log("collectionImage", collectionImage)
+      console.log("collectionImage", collectionImage);
       const ipfsCid = collectionImage?.replace("ipfs://", "");
 
-  // Fetching metadata from IPFS
-  const metadataResponse = await axios.get(`https://ipfs.io/ipfs/${ipfsCid}`);
-  const metadata = metadataResponse.data;
+      // Fetching metadata from IPFS
+      const metadataResponse = await axios.get(
+        `https://ipfs.io/ipfs/${ipfsCid}`
+      );
+      const metadata = metadataResponse.data;
 
-  console.log("Metadata:", metadata);
-  setImageSrc(metadata?.image.replace("ipfs://", ""));
-    }
+      console.log("Metadata:", metadata);
+      setImageSrc(metadata?.image.replace("ipfs://", ""));
+    };
     fetchMetaData();
   }, [collectionImage]);
 
@@ -617,11 +613,11 @@ const Subscription = () => {
             {connected && (
               <div className="text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center">
                 <Button
-          color={"blue"}
-          onClick={onSignMessage}
-          disabled={!sendable}
-          message={"Authenticate"}
-        />
+                  color={"blue"}
+                  onClick={onSignMessage}
+                  disabled={!sendable}
+                  message={"Authenticate"}
+                />
               </div>
             )}
           </div>
@@ -637,12 +633,14 @@ const Subscription = () => {
           <div className="w-full mx-auto text-left md:text-center">
             {collectionsPage === true && (
               <>
-              <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">Subscription</div>
-              <NftdataContainer
-                metaDataArray={nftdata}
-                MyReviews={false}
-                selectCollection={handleCollectionClick}
-              />
+                <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">
+                  Subscription
+                </div>
+                <NftdataContainer
+                  metaDataArray={nftdata}
+                  MyReviews={false}
+                  selectCollection={handleCollectionClick}
+                />
               </>
             )}
 
@@ -650,14 +648,15 @@ const Subscription = () => {
               <>
                 <div className="min-h-screen">
                   <h1 className="border-b border-gray-700 gap-4 pb-4 ml-6 mt-10 text-start text-2xl font-bold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
-                    <span className="text-white">My VPN Clients</span>  
+                    <span className="text-white">My VPN Clients</span>
                   </h1>
 
                   <h1 className="flex justify-between gap-4 mb-8 ml-6 mt-0 text-start text-lg font-semibold leading-none tracking-normal text-gray-100 md:text-xl md:tracking-tight">
-                  <div className="text-left text-white mt-4 flex gap-4">
-                      <img src={`${
-                        "https://nftstorage.link/ipfs"
-                      }/${imageSrc}`} className="w-14 rounded-full" />
+                    <div className="text-left text-white mt-4 flex gap-4">
+                      <img
+                        src={`${"https://nftstorage.link/ipfs"}/${imageSrc}`}
+                        className="w-14 rounded-full"
+                      />
                       <div className="mt-2">Name - {collectionName}</div>
                       {/* (collection: {collectionId.slice(0, 4)}...
                       {collectionId.slice(-4)}) */}
@@ -674,9 +673,8 @@ const Subscription = () => {
                       >
                         View Subscriptions
                       </button>
-                  </div>
-
-                    </h1>
+                    </div>
+                  </h1>
 
                   {/* <select
                               id="region"
@@ -745,126 +743,134 @@ const Subscription = () => {
                           My Clients
                         </button>
                       </div> */}
-                      
+
                       <div
-                                style={{ backgroundColor: "#222944E5" }}
-                                className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
-                                id="popupmodal"
+                        style={{ backgroundColor: "#222944E5" }}
+                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                        id="popupmodal"
+                      >
+                        <div className="relative p-4 w-full max-w-2xl max-h-full">
+                          <div
+                            className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto w-3/4"
+                            style={{
+                              backgroundColor: "#202333",
+                              border: "1px solid #0162FF",
+                            }}
+                          >
+                            <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                              <button
+                                onClick={() => {
+                                  setbuttonset(false);
+                                }}
+                                type="button"
+                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                               >
-                                <div className="relative p-4 w-full max-w-2xl max-h-full">
-                                  <div
-                                    className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto w-3/4"
-                                    style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
+                                <svg
+                                  className="w-3 h-3"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 14 14"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                  />
+                                </svg>
+                                <span className="sr-only">Close modal</span>
+                              </button>
+                            </div>
+                            <section className="">
+                              <div className="mx-auto max-w-3xl">
+                                <div className="w-full mx-auto text-left px-10 pb-10">
+                                  <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                                    <span className="text-white text-center">
+                                      Create your client
+                                    </span>
+                                  </h1>
+
+                                  <form
+                                    id="myForm"
+                                    className="rounded pt-10"
+                                    onSubmit={handleSubmit}
                                   >
-                                    <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
-                                      <button
-                                        onClick={() => {setbuttonset(false)}}
-                                        type="button"
-                                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                      >
-                                        <svg
-                                          className="w-3 h-3"
-                                          aria-hidden="true"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 14 14"
-                                        >
-                                          <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                    <div className="mb-10">
+                                      <div className="">
+                                        <div className="mb-4 w-full">
+                                          <input
+                                            type="text"
+                                            id="name"
+                                            style={border}
+                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                            placeholder="Name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            required
                                           />
-                                        </svg>
-                                        <span className="sr-only">
-                                          Close modal
-                                        </span>
-                                      </button>
-                                    </div>
-                      <section className="">
-                        <div className="mx-auto max-w-3xl">
-                          <div className="w-full mx-auto text-left px-10 pb-10">
+                                        </div>
 
-                            <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-                              <span className="text-white text-center">
-                                Create your client
-                              </span>
-                            </h1>
+                                        <div className="mb-4 w-full">
+                                          <select
+                                            id="region"
+                                            style={border}
+                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                            value={formData.region}
+                                            onChange={handleInputChange}
+                                            required
+                                          >
+                                            <option
+                                              className="bg-white text-black"
+                                              value=""
+                                            >
+                                              Select Region
+                                            </option>
+                                            <option
+                                              className="bg-white text-black"
+                                              value="us"
+                                            >
+                                              US
+                                            </option>
+                                            <option
+                                              className="bg-white text-black"
+                                              value="sg"
+                                            >
+                                              Singapore
+                                            </option>
+                                            {/* {(formData.type === "decentralized") && <> */}
+                                            <option
+                                              className="bg-white text-black"
+                                              value="eu"
+                                            >
+                                              Europe
+                                            </option>
+                                            <option
+                                              className="bg-white text-black"
+                                              value="ca"
+                                            >
+                                              Canada
+                                            </option>
+                                            <option
+                                              className="bg-white text-black"
+                                              value="jp"
+                                            >
+                                              Japan
+                                            </option>
+                                            <option
+                                              className="bg-white text-black"
+                                              value="hk"
+                                            >
+                                              Hong Kong
+                                            </option>
+                                            {/* </>} */}
+                                          </select>
+                                        </div>
+                                      </div>
 
-                            <form
-                              id="myForm"
-                              className="rounded pt-10"
-                              onSubmit={handleSubmit}
-                            >
-                              <div className="mb-10">
-                                <div className="">
-                                  <div className="mb-4 w-full">
-                                    <input
-                                      type="text"
-                                      id="name"
-                                      style={border}
-                                      className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                      placeholder="Name"
-                                      value={formData.name}
-                                      onChange={handleInputChange}
-                                      required
-                                    />
-                                  </div>
-
-                                  <div className="mb-4 w-full">
-                                    <select
-                                      id="region"
-                                      style={border}
-                                      className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                      value={formData.region}
-                                      onChange={handleInputChange}
-                                      required
-                                    >
-                                      <option
-                                        className="bg-white text-black"
-                                        value=""
-                                      >
-                                        Select Region
-                                      </option>
-                                      <option
-                                        className="bg-white text-black"
-                                        value="us"
-                                      >
-                                        US
-                                      </option>
-                                      <option
-                                        className="bg-white text-black"
-                                        value="sg"
-                                      >
-                                        Singapore
-                                      </option>
-                                      {/* {(formData.type === "decentralized") && <> */}
-                                      <option
-                                        className="bg-white text-black"
-                                        value="eu"
-                                      >
-                                        Europe
-                                      </option>
-                                      <option
-                                        className="bg-white text-black"
-                                        value="ca"
-                                      >
-                                        Canada
-                                      </option>
-                                      <option
-                                        className="bg-white text-black"
-                                        value="jp"
-                                      >
-                                        Japan
-                                      </option>
-                                      {/* </>} */}
-                                    </select>
-                                  </div>
-                                </div>
-
-                                <div className="flex-col gap-4 mr-4">
-                                  {/* <div className="mb-6 w-1/2">
+                                      <div className="flex-col gap-4 mr-4">
+                                        {/* <div className="mb-6 w-1/2">
                                 <select
                                   id="type"
                                   style={border}
@@ -894,55 +900,55 @@ const Subscription = () => {
                                 </select>
                               </div> */}
 
-                                  <div className="text-center w-1/2 mt-10 mx-auto">
-                                    <div className="mb-4 md:mb-8">
-                                      <button
-                                        style={{backgroundColor:'#0162FF'}}
-                                        type="submit"
-                                        value="submit"
-                                        className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                                      >
-                                        Create Client
-                                      </button>
-                                    </div>
-                                  </div>
+                                        <div className="text-center w-1/2 mt-10 mx-auto">
+                                          <div className="mb-4 md:mb-8">
+                                            <button
+                                              style={{
+                                                backgroundColor: "#0162FF",
+                                              }}
+                                              type="submit"
+                                              value="submit"
+                                              className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                                            >
+                                              Create Client
+                                            </button>
+                                          </div>
+                                        </div>
 
-                                  {/* {msg == "success" && (
+                                        {/* {msg == "success" && (
                               <p className="text-green-500">Successful</p>
                             )} */}
 
-                            {/* {msg == "error" && ( */}
-                              <p className="text-red-500">
-                              {msg}
-                              </p>
-                             {/* )} */}
-
+                                        {/* {msg == "error" && ( */}
+                                        <p className="text-red-500">{msg}</p>
+                                        {/* )} */}
+                                      </div>
+                                    </div>
+                                  </form>
                                 </div>
                               </div>
-                            </form>
-
-                            
+                            </section>
                           </div>
                         </div>
-                      </section>
-                      </div>
-                      </div>
                       </div>
                     </>
                   )}
 
                   {verify && (
-                              <div
-                                style={{ backgroundColor: "#040819D9" }}
-                                className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
-                                id="popupmodal"
-                              >
-                                <div className="relative p-4 w-full max-w-2xl max-h-full">
-                                  <div
-                                    className="relative rounded-3xl shadow dark:bg-gray-700 w-3/4 mx-auto"
-                                    style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
-                                  >
-                                    {/* <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                    <div
+                      style={{ backgroundColor: "#040819D9" }}
+                      className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                      id="popupmodal"
+                    >
+                      <div className="relative p-4 w-full max-w-2xl max-h-full">
+                        <div
+                          className="relative rounded-3xl shadow dark:bg-gray-700 w-3/4 mx-auto"
+                          style={{
+                            backgroundColor: "#202333",
+                            border: "1px solid #0162FF",
+                          }}
+                        >
+                          {/* <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
                                       <button
                                         onClick={() => {setbuttonset(false); setverify(false); setMsg("")}}
                                         type="button"
@@ -969,114 +975,119 @@ const Subscription = () => {
                                       </button>
                                     </div> */}
 
-                                    <div className="py-4 space-y-4 mt-4">
-                                      <p className="text-3xl text-center font-semibold text-white">
-                                        Successfully created!
-                                      </p>
+                          <div className="py-4 space-y-4 mt-4">
+                            <p className="text-3xl text-center font-semibold text-white">
+                              Successfully created!
+                            </p>
 
-                                      {/* <p
+                            {/* <p
                                         className="text-sm mx-auto"
                                         style={{ color: "#5696FF" }}
                                       >
                                         Quick Reminder: Backup your WireGuard VPN config now! <br></br>
                                         Download or scan the QR code to avoid re-setup for Erebrus VPN
                                       </p> */}
-                                      <div className="flex w-full flex-col items-center justify-center">
-                                        <div className="bg-white mx-auto my-4 w-1/2 justify-center flex h-60 rounded-3xl">
-                                          <div className="mt-4">
-                                        <QRCode value={ConfigFile} size={200} />
-                                        </div>
-                                        </div>
+                            <div className="flex w-full flex-col items-center justify-center">
+                              <div className="bg-white mx-auto my-4 w-1/2 justify-center flex h-60 rounded-3xl">
+                                <div className="mt-4">
+                                  <QRCode value={ConfigFile} size={200} />
+                                </div>
+                              </div>
 
-                                        <div className="text-center text-white text-sm w-2/3 mt-2">
-                                        Open <Link
-                                            href="https://www.wireguard.com/"
-                                            target="_blank" style={{ color: "#5696FF" }}>WireGaurd</Link>&nbsp;app on mobile, scan the QR code 
-                                            to add a new connection, and instantly connect to Erebrus VPN.
-                                        </div>
+                              <div className="text-center text-white text-sm w-2/3 mt-2">
+                                Open{" "}
+                                <Link
+                                  href="https://www.wireguard.com/"
+                                  target="_blank"
+                                  style={{ color: "#5696FF" }}
+                                >
+                                  WireGaurd
+                                </Link>
+                                &nbsp;app on mobile, scan the QR code to add a
+                                new connection, and instantly connect to Erebrus
+                                VPN.
+                              </div>
 
-                                        <div className="flex gap-4">
-                                          <button
-                                            className="text-md rounded-lg text-white flex btn bg-blue-gray-700"
-                                            onClick={() => {
-                                              const blob = new Blob(
-                                                [ConfigFile],
-                                                {
-                                                  type: "text/plain;charset=utf-8",
-                                                }
-                                              );
-                                              saveAs(blob, `${VpnName}.conf`);
-                                            }}
-                                          >
-                                            <div
-                                              className="flex cursor-pointer p-2 rounded-full mt-4 gap-2 px-20"
-                                              style={{
-                                                backgroundColor:'#0162FF'
-                                              }}
-                                            >
-                                              <div style={{ color: "white" }}>
-                                                Download
-                                              </div>
-                                              {/* <FaDownload
+                              <div className="flex gap-4">
+                                <button
+                                  className="text-md rounded-lg text-white flex btn bg-blue-gray-700"
+                                  onClick={() => {
+                                    const blob = new Blob([ConfigFile], {
+                                      type: "text/plain;charset=utf-8",
+                                    });
+                                    saveAs(blob, `${VpnName}.conf`);
+                                  }}
+                                >
+                                  <div
+                                    className="flex cursor-pointer p-2 rounded-full mt-4 gap-2 px-20"
+                                    style={{
+                                      backgroundColor: "#0162FF",
+                                    }}
+                                  >
+                                    <div style={{ color: "white" }}>
+                                      Download
+                                    </div>
+                                    {/* <FaDownload
                                                 style={{
                                                   color: "#11D9C5",
                                                 }}
                                                 className="mt-2"
                                               /> */}
-                                            </div>
-                                          </button>
-                                        </div>
-
-                                        
-                                      </div>
-                                    </div>
-                                    <div className="flex items-center pb-10 rounded-b w-1/2 mx-auto">
-                                      <button
-                                        style={button}
-                                        onClick={() => {setbuttonset(false); setverify(false);setMsg("");}}
-                                        type="button"
-                                        className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                      >
-                                        My VPN Clients
-                                      </button>
-                                    </div>
                                   </div>
-                                </div>
+                                </button>
                               </div>
-                            )}
+                            </div>
+                          </div>
+                          <div className="flex items-center pb-10 rounded-b w-1/2 mx-auto">
+                            <button
+                              style={button}
+                              onClick={() => {
+                                setbuttonset(false);
+                                setverify(false);
+                                setMsg("");
+                              }}
+                              type="button"
+                              className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                            >
+                              My VPN Clients
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
-                            {loading && (
-                              <div
-                                style={{
-                                  position: "absolute",
-                                  top: 700,
-                                  left: 0,
-                                  width: "100%",
-                                  height: "100%",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    zIndex: 9999,
-                                  }}
-                                >
-                                  <div
-                                    style={{
-                                      border: "8px solid #f3f3f3",
-                                      borderTop: "8px solid #3498db",
-                                      borderRadius: "50%",
-                                      width: "50px",
-                                      height: "50px",
-                                      animation: "spin 1s linear infinite",
-                                    }}
-                                  ></div>
-                                </div>
-                              </div>
-                            )}
-                            
+                  {loading && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: 700,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          zIndex: 9999,
+                        }}
+                      >
+                        <div
+                          style={{
+                            border: "8px solid #f3f3f3",
+                            borderTop: "8px solid #3498db",
+                            borderRadius: "50%",
+                            width: "50px",
+                            height: "50px",
+                            animation: "spin 1s linear infinite",
+                          }}
+                        ></div>
+                      </div>
+                    </div>
+                  )}
 
                   {!buttonset && (
                     <>
@@ -1085,11 +1096,10 @@ const Subscription = () => {
                           loading ? (
                             // <Loader />
                             <div className="min-h-screen"></div>
-                          ) : (
-                            (projectsData && projectsData?.length !== 0) ?
+                          ) : projectsData && projectsData?.length !== 0 ? (
                             // (!dedicatedVpnData ||
                             //   dedicatedVpnData?.length == 0) && (
-                            (<div className="mx-6 -mt-20">
+                            <div className="mx-6 -mt-20">
                               <div className="flex gap-4">
                                 <div className="ml-auto text-white">
                                   <button
@@ -1144,78 +1154,93 @@ const Subscription = () => {
                                   onChildValue={handleChildValue}
                                 />
                               </div>
-                              {
-                                note && (
-                              <div className="fixed bottom-0 right-0 w-1/4 px-8 pt-4 pb-8 text-left" style={{backgroundColor:'#C7DCFF'}}>
-                                <div className="flex items-center justify-end rounded-t dark:border-gray-600">
-                                      <button
-                                        onClick={() => {setnote(false)}}
-                                        type="button"
-                                        className="text-black bg-transparent hover:bg-gray-800 hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                              {note && (
+                                <div
+                                  className="fixed bottom-0 right-0 w-1/4 px-8 pt-4 pb-8 text-left"
+                                  style={{ backgroundColor: "#C7DCFF" }}
+                                >
+                                  <div className="flex items-center justify-end rounded-t dark:border-gray-600">
+                                    <button
+                                      onClick={() => {
+                                        setnote(false);
+                                      }}
+                                      type="button"
+                                      className="text-black bg-transparent hover:bg-gray-800 hover:text-white rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                                    >
+                                      <svg
+                                        className="w-3 h-3"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 14 14"
                                       >
-                                        <svg
-                                          className="w-3 h-3"
-                                          aria-hidden="true"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 14 14"
-                                        >
-                                          <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                          />
-                                        </svg>
-                                        <span className="sr-only">
-                                          Close modal
-                                        </span>
-                                      </button>
-                                    </div>
-                                <div className="text-lg font-bold">Quick Reminder</div>
-                                <div className="text-sm py-4">Backup your WireGuard VPN config now! 
-                                      Download or scan the QR code to avoid 
-                                      re-setup for Erebrus VPN
-                                </div>
-                                <button className="py-2 px-10 text-white rounded-full" style={{ backgroundColor:'#0162FF' }}>
-                                  <Link
-                                            href="https://www.wireguard.com/"
-                                            target="_blank">
-                                              Download
-                                        </Link>
-                                  </button>
-                              </div>
-                                )
-                              }
-                              
-                            </div>
-                            ):(
-                              <>
-                              <img src="/create.png" className="mx-auto -mt-10"/>
-
-                                <div className="p-2 md:p-5 space-y-4">
-                                  <p className="text-2xl text-center font-semibold text-white">
-                                  Ready for Enhanced security? <br></br>
-Create Your VPN Client, Start Safe Surfing Today!
-                                  </p>
-                                  <p className="text-md text-center w-full mx-auto">
-                                    You have minted your Erebrus NFT, welcome to an exclusive journey of innovation and community.
-                                    To set clients, click button to go to subscription page.
-                                  </p>
+                                        <path
+                                          stroke="currentColor"
+                                          stroke-linecap="round"
+                                          stroke-linejoin="round"
+                                          stroke-width="2"
+                                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                        />
+                                      </svg>
+                                      <span className="sr-only">
+                                        Close modal
+                                      </span>
+                                    </button>
+                                  </div>
+                                  <div className="text-lg font-bold">
+                                    Quick Reminder
+                                  </div>
+                                  <div className="text-sm py-4">
+                                    Backup your WireGuard VPN config now!
+                                    Download or scan the QR code to avoid
+                                    re-setup for Erebrus VPN
+                                  </div>
                                   <button
-                                    style={{
-                                      // border: "1px solid #11D9C5",
-                                      backgroundColor: "#0162FF",
-                                    }}
-                                    onClick={() => setbuttonset(true)}
-                                    className="py-4 text-md rounded-full w-1/6 text-white"
+                                    className="py-2 px-10 text-white rounded-full"
+                                    style={{ backgroundColor: "#0162FF" }}
                                   >
-                                    Create Client now
+                                    <Link
+                                      href="https://www.wireguard.com/"
+                                      target="_blank"
+                                    >
+                                      Download
+                                    </Link>
                                   </button>
                                 </div>
-                              </>
-                            ))
+                              )}
+                            </div>
+                          ) : (
+                            <>
+                              <img
+                                src="/create.png"
+                                className="mx-auto -mt-10"
+                              />
+
+                              <div className="p-2 md:p-5 space-y-4">
+                                <p className="text-2xl text-center font-semibold text-white">
+                                  Ready for Enhanced security? <br></br>
+                                  Create Your VPN Client, Start Safe Surfing
+                                  Today!
+                                </p>
+                                <p className="text-md text-center w-full mx-auto">
+                                  You have minted your Erebrus NFT, welcome to
+                                  an exclusive journey of innovation and
+                                  community. To set clients, click button to go
+                                  to subscription page.
+                                </p>
+                                <button
+                                  style={{
+                                    // border: "1px solid #11D9C5",
+                                    backgroundColor: "#0162FF",
+                                  }}
+                                  onClick={() => setbuttonset(true)}
+                                  className="py-4 text-md rounded-full w-1/6 text-white"
+                                >
+                                  Create Client now
+                                </button>
+                              </div>
+                            </>
+                          )
                           // )
                         }
 
