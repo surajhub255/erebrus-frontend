@@ -105,9 +105,8 @@ const Features = () => {
                 Multiple Devices
               </motion.h1>
               <motion.p className="lg:w-[80%] text-sm font-semibold mt-4">
-                Now you can access a fast and secure internet connection on
-                multiple devices! Connect to up to 2 devices starting on our
-                starter plan.
+              Experience a swift and secure internet connection across multiple devices! 
+              Our starter plan allows connections with multiple devices.
               </motion.p>
             </div>
           </div>
