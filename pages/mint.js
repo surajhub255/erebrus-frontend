@@ -482,14 +482,22 @@ const Mint = () => {
 
       {mintpage === "page2" && (
                       <div
-                        style={{ backgroundColor: "black" }}
+                        style={{ backgroundImage: `url('/bgmint.png')`, 
+                        backgroundColor:"black", 
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        backgroundRepeat: "no-repeat"}}
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
                         id="popupmodal"
                       >
                         <div className="relative p-4 w-full max-w-xl max-h-full">
+                        <img src="/coin1.png" className="w-60 -mt-10 absolute -top-10 -left-20"/>
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor pb-20"
-                            style={{ border: "1px solid #0162FF"}}
+                            style={{
+                              border: "1px solid #0162FF",
+                              boxShadow: 'inset -10px -10px 60px 0 rgba(255, 255, 255, 0.4)',
+                            }}
                           >
                             <div className="flex items-center justify-end px-4 py-6 rounded-t" style={{borderBottom: "1px solid #FFFFFF80"}}>
                               <div className="text-2xl text-white">Choose the payment option</div>
@@ -524,9 +532,10 @@ const Mint = () => {
                                onClick={()=>{setshowconnectbutton(true)}}
                               style={{ border: "1px solid #0162FF" }}
                               type="button"
-                              className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                              className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                             >
-                              Pay in APT
+                              <img src="/mint2.png" className="w-12"/>
+                              <div className="px-5 py-2.5 ">Pay in APT</div>
                             </button>
                           { showconnectbutton && 
                             (<button className="mx-auto justify-center mt-10 items-center flex">
@@ -539,25 +548,28 @@ const Mint = () => {
                                 onClick={mint}
                                 style={{ border: "1px solid #0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Pay in APT
+                                <img src="/mint2.png" className="w-12"/>
+                                <div className="px-5 py-2.5 ">Pay in APT</div>
                               </button>
                         )}
                               
                             </div>
 
-                            { !showconnectbutton && (<div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
+                            {/* { !showconnectbutton && (<div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
                               <button
                                 onClick={stripe}
                                 style={{ border: "1px solid #0162FF" }}
                                 type="button"
-                                className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                               >
-                                Pay in USD
+                                <img src="/mint3.png" className="w-12"/>
+                                <div className="px-5 py-2.5 ">Pay in USD</div>
                               </button>
-                            </div>)}
+                            </div>)} */}
                           </div>
+                          <img src="/coin2.png" className="w-60 -mt-10 absolute -bottom-24 -right-24" style={{ zIndex: -1 }}/>
                         </div>
                       </div>
                     )}
