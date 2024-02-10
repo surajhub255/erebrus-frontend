@@ -53,8 +53,8 @@ const Features = () => {
           variants={itemVariants}
           className="flex lg:mb-12 lg:flex-row flex-col justify-center items-start gap-4"
         >
-          <div className="lg:w-[50%] pt-24 pb-5 px-6 rounded-2xl text-black" style={{backgroundColor: '#8EB9FF'}}>
-            <span className="text-4xl mr-6">⛓</span>
+          <div className="lg:w-[50%] pt-24 pb-12 px-6 rounded-2xl text-black" style={{backgroundColor: '#8EB9FF'}}>
+            <div className="text-4xl bg-black rounded-full w-20 h-20"><img src="/icon1.png" className="w-12 mx-auto pt-4"/></div>
             <div className="flex flex-col mt-4">
               <motion.h1 className="font-bold text-3xl">
                 Power of <br></br>Decentralization
@@ -66,8 +66,8 @@ const Features = () => {
               </motion.p>
             </div>
           </div>
-          <div className="lg:w-[50%] pt-28 pb-6 px-6 rounded-2xl text-black" style={{backgroundColor: '#E3EEFF'}}>
-            <span className="text-4xl mr-6">⚡️</span>
+          <div className="lg:w-[50%] pt-28 pb-12 px-6 rounded-2xl text-black" style={{backgroundColor: '#E3EEFF'}}>
+          <div className="text-4xl bg-black rounded-full w-20 h-20"><img src="/icon2.png" className="w-12 mx-auto pt-4"/></div>
             <div className="flex flex-col mt-4">
               <motion.h1 className="font-bold text-3xl">
                 Fast Speed & <br></br>Unlimited Bandwidth.
@@ -87,7 +87,7 @@ const Features = () => {
           className="flex lg:flex-row flex-col justify-center items-start lg:mb-12 gap-4"
         >
           <div className="lg:w-[50%] pt-32 pb-10 px-6 rounded-2xl text-white" style={{backgroundColor: '#3985FF'}}>
-            <span className="text-4xl mr-6">🌐</span>
+          <div className="text-4xl bg-white rounded-full w-20 h-20"><img src="/icon3.png" className="w-12 mx-auto pt-4"/></div>
             <div className="flex flex-col mt-4">
               <motion.h1 className="font-bold text-3xl">
                 IP Address Protection
@@ -99,7 +99,7 @@ const Features = () => {
             </div>
           </div>
           <div className="lg:w-[50%] pt-32 pb-10 px-6 rounded-2xl text-white" style={{backgroundColor: '#0162FF'}}>
-            <span className="text-4xl mr-6">📱</span>
+          <div className="text-4xl bg-white rounded-full w-20 h-20"><img src="/icon4.png" className="w-12 mx-auto pt-4"/></div>
             <div className="flex flex-col mt-4">
               <motion.h1 className="font-bold text-3xl">
                 Multiple Devices
@@ -117,18 +117,21 @@ const Features = () => {
           variants={itemVariants}
           className="flex lg:flex-row flex-col justify-center items-center"
         >
-          <div className="pt-32 pb-10 px-6 rounded-2xl text-white" style={{backgroundColor: '#202333'}}>
-            <span className="text-4xl mr-6">🖼</span>
-            <div className="flex flex-col mt-4">
-              <motion.h1 className="font-bold text-3xl">
+          <div className="pt-32 pb-10 px-10 rounded-2xl text-white flex" style={{backgroundColor: '#202333'}}>
+            <div className="flex flex-col w-1/2">
+            <div className="text-4xl bg-white rounded-full w-20 h-20">
+            <img src="/icon5.png" className="w-12 mx-auto pt-4"/>
+            </div>
+              <motion.h1 className="font-bold text-3xl mt-4">
                 NFT Subscriptions
               </motion.h1>
-              <motion.p className="lg:w-[60%] text-sm font-semibold mt-4">
+              <motion.p className="text-sm font-semibold mt-4">
                 Pay using cryptocurrencies and surf the internet securely -
                 Anonymous Browsing without sacrificing speed or bandwidth had
                 never been this easy.
               </motion.p>
             </div>
+            <img src="/landing.png" className="w-1/2"/>
           </div>
         </motion.div>
       </div>

@@ -15,12 +15,14 @@ const Howto = () => {
         </h1>
         <div className="flex lg:flex-row flex-col items-center justify-center gap-4">
           <div className="flex flex-col py-10 px-6 rounded-3xl" style={{backgroundColor:'#3985FF'}}>
+            <div className="bg-white w-20 h-20 rounded-full mb-10 mt-14">
             <Link
               href="https://testnets.opensea.io/collection/erebrus-v4"
               target={"_blank"}
             >
-              <img src="/howto1.png" className="mb-4 w-40 h-40" />
+              <img src="/icon6.png" className="mt-2 w-16 h-16 mx-auto" />
             </Link>
+            </div>
             <h2 className="text-white lg:text-2xl text-xl font-bold">
               <div className="flex items-center">
                 Get the Erebrus NFT{" "}
@@ -36,7 +38,9 @@ const Howto = () => {
             </p>
           </div>
           <div className="flex flex-col py-10 px-4 rounded-3xl" style={{backgroundColor:'#8EB9FF'}}>
-            <img src="/howto2.png " className="mb-4 w-40 h-40" />
+          <div className="bg-black w-20 h-20 rounded-full mb-10 mt-14">
+            <img src="/icon7.png " className="mt-5 w-10 h-10 mx-auto" />
+            </div>
             <h2 className="text-black lg:text-2xl text-xl font-bold">
               Generate client config file
             </h2>
@@ -47,8 +51,10 @@ const Howto = () => {
             </p>
           </div>
           <div className="flex flex-col py-10 px-4 rounded-3xl" style={{backgroundColor:'#E3EEFF'}}>
-          <img src="/howto3.png " className="mt-8 mb-14 w-28 h-28 ml-4" />
-            <h2 className="text-black lg:text-2xl text-xl font-bold -mt-6">
+          <div className="bg-black w-20 h-20 rounded-full mb-10 mt-14">
+          <img src="/icon8.png " className="mt-5 w-10 h-10 mx-auto" />
+          </div>
+            <h2 className="text-black lg:text-2xl text-xl font-bold">
               Scan QR code or .conf
             </h2>
             <p className="text-black text-sm mt-4">
