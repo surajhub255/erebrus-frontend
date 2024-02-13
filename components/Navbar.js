@@ -466,7 +466,7 @@ const Navbar = ({ isHome }) => {
             <Button
           color={"blue"}
           onClick={onSignMessage}
-          disabled={!sendable}
+          disabled={false}
           message={"Authenticate"}
         />
           )} 
