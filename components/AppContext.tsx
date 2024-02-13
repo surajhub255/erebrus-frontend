@@ -7,7 +7,7 @@ import { MartianWallet } from "@martianwallet/aptos-wallet-adapter";
 import { NightlyWallet } from "@nightlylabs/aptos-wallet-adapter-plugin";
 import { OpenBlockWallet } from "@openblockhq/aptos-wallet-adapter";
 import { PetraWallet } from "petra-plugin-wallet-adapter";
-import { PontemWallet } from "@pontem/wallet-adapter-plugin";
+// import { PontemWallet } from "@pontem/wallet-adapter-plugin";
 import { RiseWallet } from "@rise-wallet/wallet-adapter";
 import { TokenPocketWallet } from "@tp-lab/aptos-wallet-adapter";
 import { TrustWallet } from "@trustwallet/aptos-wallet-adapter";
@@ -47,7 +47,7 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
     new NightlyWallet(),
     new OpenBlockWallet(),
     new PetraWallet(),
-    new PontemWallet(),
+    // new PontemWallet(),
     new RiseWallet(),
     new TokenPocketWallet(),
     new TrustWallet(),
