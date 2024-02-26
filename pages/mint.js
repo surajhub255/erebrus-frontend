@@ -294,7 +294,7 @@ const Mint = () => {
       //   console.log("stripe error payment");
       // }
     } catch (error) {
-      console.error("111 nft error:", error);
+      console.error("stripe error:", error);
     }
   };
 
@@ -581,7 +581,7 @@ const Mint = () => {
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
                         id="popupmodal"
                       >
-                        <div className="p-10 w-2/5 flex flex-col" style={{backgroundColor:'#37406D'}}>
+                        <div className="p-10 w-2/5 flex flex-col" style={{backgroundColor:'white'}}>
                           <Elements options={options} stripe={stripePromise}>
                             <CheckoutForm />
                           </Elements>
