@@ -48,8 +48,8 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
             className="text-black font-bold py-3 px-14 rounded-full bg-white" 
             style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
           >
-            <Link href="/mint">
-              Mint Now
+            <Link href="/plans">
+              Subscribe Now
             </Link>
           </motion.div>
         </div>
