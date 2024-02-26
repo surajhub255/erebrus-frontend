@@ -58,6 +58,11 @@ const Buy = () => {
   const [mintpopup, setmintpopup] = useState(false);
   const [showconnectbutton, setshowconnectbutton] = useState(false);
   const [mintpage, setmintpage] = useState("page1");
+  const [magiclinkpopup, setmagiclinkpopup] = useState(false);
+  const [gmail, setgmail] = useState("");
+  const [code, setcode] = useState("");
+  const [magicmessage, setmagicmessage] = useState("");
+  const [magicloginmessage, setmagicloginmessage] = useState(false);
 
   const { account, connected, network, signMessage, signAndSubmitTransaction } = useWallet();
 
@@ -79,6 +84,14 @@ const Buy = () => {
     if (redirect_status === `succeeded`) {
       setmintpage("page3");
       window.history.replaceState({}, document.title, window.location.pathname);
+    }
+  }, []);
+
+
+  useEffect(() => {
+   
+    if (!isauthenticate) {
+      setmagiclinkpopup(true);
     }
   }, []);
   
@@ -196,6 +209,56 @@ const Buy = () => {
   //     functionArguments: [account?.address, 1], // 1 is in Octas
   //   },
   // };
+
+
+  const handleMagicLink = async() =>{
+    const auth = Cookies.get("erebrus_token");
+    const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+
+    const obj = {"email":gmail};
+    const jsonData = JSON.stringify(obj);
+
+    try {
+      const response = await axios.post(`${REACT_APP_GATEWAY_URL}api/v1.0/account/generate-auth-id`, {
+       ...obj
+      },{headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${auth}`,
+      }});
+
+      const responseData = await response.data;
+      console.log('magic link response:', responseData);
+      setmagicmessage(responseData.message);
+    } catch (error) {
+      console.error('magic link error:', error);
+    }
+  };
+
+  const handleMagicLogin = async() =>{
+    const auth = Cookies.get("erebrus_token");
+    const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+
+    const obj = {"code":code,"emailId":gmail};
+    const jsonData = JSON.stringify(obj);
+
+    try {
+      const response = await axios.post(`${REACT_APP_GATEWAY_URL}api/v1.0/account/paseto-from-magic-link`, {
+       ...obj
+      },{headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${auth}`,
+      }});
+
+      const responseData = await response.data;
+      console.log('magic login response:', responseData);
+      Cookies.set("erebrus_token", responseData.payload.token, { expires: 7 });
+      setmagicloginmessage(true);
+    } catch (error) {
+      console.error('magic login error:', error);
+    }
+  };
 
   const transaction = {
     data: {
@@ -370,6 +433,11 @@ const Buy = () => {
   const options = {
     clientSecret,
     appearance,
+  };
+
+  const border = {
+    backgroundColor: "#30385F",
+    border: "1px solid #788AA3",
   };
 
   return (
@@ -566,6 +634,115 @@ const Buy = () => {
                         </div>
                       </div>
                     )}
+
+
+
+{ magiclinkpopup && (
+<div style={{backgroundColor:'#222944E5'}} className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full" id="popupmodal">
+    <div className="relative p-4 lg:w-1/2 w-full max-w-lg max-h-full">
+        <div className="relative rounded-lg shadow" style={{backgroundColor:'#37406D'}}>
+            <div className="flex items-center justify-end p-4 rounded-t text-white">
+                <h3 className="text-2xl font-semibold">
+                Login using Magic link
+                </h3>
+                <button 
+                    onClick={()=>{setmagiclinkpopup(false);window.location.reload();}}
+                    type="button" 
+                    className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span className="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            {/* <Image src={googletop} alt="" className="mx-auto"/> */}
+
+            {!magicmessage && (
+
+            <form
+                    id="myForm"
+                    className="rounded pt-10"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleMagicLink();
+                    }}
+                  >
+
+          <div className="pb-4 mx-10">
+                <input
+                          type="email"
+                          id="gmail"
+                          style={border}
+                          className="shadow border appearance-none rounded-lg w-full py-3 px-4 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="Enter your email address"
+                          value={gmail}
+                          onChange={(e) => setgmail(e.target.value)}
+                          required
+                        />
+          </div>
+
+          <div className="pb-10 mx-10">
+            <button className="text-white border p-2 rounded-lg w-full"
+            type="submit"
+            value="submit">
+            <div className="flex gap-2 justify-center">
+                <div>Send Magic Link</div>
+                </div>
+            </button>
+          </div>
+
+          </form>
+          )}
+
+          {magicmessage && !magicloginmessage && (
+            <>
+            <div className="text-green-500 py-10 w-2/3 mx-auto">{magicmessage}! Please check your mail and enter code here or click the magic link.</div>
+            <form
+                    id="magicForm"
+                    className="rounded pt-10"
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      handleMagicLogin();
+                    }}
+                  >
+
+          <div className="pb-4 mx-10">
+                <input
+                          type="text"
+                          id="code"
+                          style={border}
+                          className="shadow border appearance-none rounded-lg w-full py-3 px-4 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                          placeholder="Enter the code"
+                          value={code}
+                          onChange={(e) => setcode(e.target.value)}
+                          required
+                        />
+          </div>
+
+          <div className="pb-10 mx-10">
+            <button className="text-white border p-2 rounded-lg w-full"
+            type="submit"
+            value="submit">
+            <div className="flex gap-2 justify-center">
+                <div>Link</div>
+                </div>
+            </button>
+          </div>
+
+          </form>
+          </>
+          )}
+
+          {magicloginmessage && (
+            <div className="py-10 text-green-500 px-10">Successfully Linked your account!!</div>
+          )}
+
+        </div>          
+    </div>
+</div>
+)}
 
 
 
