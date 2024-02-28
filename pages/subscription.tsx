@@ -1123,7 +1123,7 @@ const Subscription = () => {
                               >
                               <div className="pt-4 pb-4 flex justify-between">
                               <div className="ml-8 text-white text-2xl">My Clients</div>
-                              <a href="https://docs.netsepio.com/erebrus/erebrus/setup" target="_blank" className="mr-8 underline" style={{color: "#5696FF"}}>How to Start Using Erebrus VPN</a>
+                              <a href="https://docs.netsepio.com/erebrus/erebrus/setup" target="_blank" rel="noreferrer" className="mr-8 underline" style={{color: "#5696FF"}}>How to Start Using Erebrus VPN</a>
                               </div>
 
                                 <div className="w-full flex justify-between px-14 p-4">
