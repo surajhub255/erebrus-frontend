@@ -1118,9 +1118,14 @@ const Subscription = () => {
                               {/* {vpntype === "decentralized" && (
                             <> */}
                               <div
-                                className="w-full h-full rounded-xl mt-14 pb-2"
+                                className="w-full h-full rounded-xl mt-10 pb-2"
                                 style={bg}
                               >
+                              <div className="pt-4 pb-4 flex justify-between">
+                              <div className="ml-8 text-white text-2xl">My Clients</div>
+                              <a href="https://docs.netsepio.com/erebrus/erebrus/setup" target="_blank" className="mr-8 underline" style={{color: "#5696FF"}}>How to Start Using Erebrus VPN</a>
+                              </div>
+
                                 <div className="w-full flex justify-between px-14 p-4">
                                   <h3 className="text-lg leading-12 w-1/4 text-left">
                                     <div style={text}>Id</div>
