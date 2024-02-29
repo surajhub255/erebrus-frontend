@@ -91,7 +91,7 @@ const Plans = () => {
 
                                         <div className="text-center w-1/2 mt-40 mx-auto">
                                           <div className="mb-6">
-                                            {/* <Link
+                                            <Link
                                               style={{
                                                 backgroundColor: "#0162FF",
                                               }}
@@ -99,7 +99,7 @@ const Plans = () => {
                                               className="py-3 mb-2 px-8 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
                                             >
                                               Buy Subscription
-                                            </Link> */}
+                                            </Link>
                                           </div>
                                         </div>
 
