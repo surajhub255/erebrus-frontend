@@ -4,7 +4,7 @@ import Link from "next/link";
 const Plans = () => {
 
     return(
-        <div className="flex mt-10 mx-auto min-h-screen mx-32">
+        <div className="flex mt-10 mx-auto min-h-screen max-w-6xl">
 
                         <div className="relative p-4 w-full">
                           <div
