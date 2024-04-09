@@ -436,26 +436,36 @@ const Mint = () => {
 
       { mintpage === "page1" &&
         (
-<div class="flex h-screen">
-        <div className="w-1/2">
-          <div className="text-white text-4xl ml-20 mt-20 mx-auto">
-            Step into the Future of Internet Safety with 111 NFT VPN
+          <>
+          <div className="p-20">
+          <div className="text-white text-5xl uppercase leading-normal" style={{marginLeft:'25vh', marginRight:'10vh', fontFamily:"Times New Roman"}}>
+            Step into the Future of Internet Safety with <span style={{color:"#0162FF"}}>111 NFT VPN</span>
           </div>
-          <div className="text-white text-xl ml-20 mt-10 mx-auto">
+<div class="flex justify-center gap-20">
+<div className="text-white w-1/3 p-10" style={{marginLeft:'20vh'}}>
+          <img src="/111nft_gif.gif" />
+        </div>
+        <div className="w-1/2 mt-10">
+          <div className="text-white text-xl mt-10 mx-auto">
             3-Month Coverage
           </div>
-          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+          <div className="text-white text-xl mt-4 mx-auto">
             Unlimited Devices
           </div>
-          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+          <div className="text-white text-xl mt-4 mx-auto">
             Only at 1.11 APT
           </div>
-          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+          <div className="text-white text-xl mt-4 mx-auto">
             Exceptional Value for Unmatched Security
           </div>
 
-          <div className="text-white text-xl ml-20 mt-4 mx-auto">
-            NFTs Minted Till Now - {totalNFTMinted ? totalNFTMinted.length: ""}
+          <div className="flex gap-10 mt-10">
+          <div className="text-white text-lg rounded-full py-3 px-10" style={{border: "1px solid #0162FF"}}>
+            {totalNFTMinted ? totalNFTMinted.length: ""} Minted NFTs
+          </div>
+          <div className="text-white text-lg rounded-full py-3 px-14" style={{border: "1px solid #0162FF"}}>
+            {totalNFTMinted ? `${111 - totalNFTMinted.length}`: ""} NFTs Left
+          </div>
           </div>
   
             <motion.div
@@ -464,7 +474,7 @@ const Mint = () => {
               exit={{ opacity: 0 }}
               transition={transition}
             >
-              <div className="mt-20 text-white flex flex-col justify-center items-center">
+              <div className="mt-10 text-white flex flex-col justify-center items-center">
                 {isLoadingTx ? (
                   <div className="animate-spin text-white text-7xl">⛏</div>
                 ) : (
@@ -488,18 +498,18 @@ const Mint = () => {
                       </div>
                     ) : ( */}
                       <div className="mr-auto">
-                        <div className="text-orange-300 ml-20 text-sm mb-2">
+                        <div className="text-orange-300 text-sm mb-2">
                           (one wallet address can only mint one)
                         </div>
                         {buttonblur ? (
                           <div
-                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20 bg-blue-300`}
+                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto bg-blue-300`}
                           >
                             Mint Erebrus NFT
                           </div>
                         ) : (
                           <button
-                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20`}
+                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto `}
                             onClick={()=>{setmintpage("page2")}}
                             style={{backgroundColor:'#0162FF'}}
                           >
@@ -515,11 +525,9 @@ const Mint = () => {
               </div>
             </motion.div>
         </div>
-
-        <div className="text-white w-1/4 ml-auto mr-40 mt-10">
-          <img src="/111nft_gif.gif" />
-        </div>
       </div>
+      </div>
+      </>
         )
       }
       
