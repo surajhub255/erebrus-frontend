@@ -443,28 +443,32 @@ const Mint = () => {
           </div>
 <div class="flex justify-center gap-20">
 <div className="text-white w-1/3 p-10" style={{marginLeft:'20vh'}}>
-          <img src="/111nft_gif.gif" />
+          <img src="/111nft_gif.gif" style={{border:'1px solid #0162FF'}} className="rounded-lg"/>
         </div>
         <div className="w-1/2 mt-10">
-          <div className="text-white text-xl mt-10 mx-auto">
-            3-Month Coverage
+          <div className="text-white text-xl mt-10 mx-auto flex gap-2">
+            <img src="/uis_calender.png" className="w-6 h-6 mt-1"/>
+            <div>3-Month Coverage</div>
           </div>
-          <div className="text-white text-xl mt-4 mx-auto">
-            Unlimited Devices
+          <div className="text-white text-xl mt-4 mx-auto flex gap-2">
+          <img src="/mdi_users.png" className="w-6 h-6 mt-1"/>
+            <div>Unlimited Devices</div>
           </div>
-          <div className="text-white text-xl mt-4 mx-auto">
-            Only at 1.11 APT
+          <div className="text-white text-xl mt-4 mx-auto flex gap-2">
+          <img src="/icomoon-free_price-tags.png" className="w-6 h-6 mt-1"/>
+            <div>Only at 1.11 APT</div>
           </div>
-          <div className="text-white text-xl mt-4 mx-auto">
-            Exceptional Value for Unmatched Security
+          <div className="text-white text-xl mt-4 mx-auto flex gap-2">
+          <img src="/wpf_security-checked.png" className="w-6 h-6 mt-1"/>
+            <div>Exceptional Value for Unmatched Security</div>
           </div>
 
           <div className="flex gap-10 mt-10">
-          <div className="text-white text-lg rounded-full py-3 px-10" style={{border: "1px solid #0162FF"}}>
-            {totalNFTMinted ? totalNFTMinted.length: ""} Minted NFTs
+          <div className="text-white text-md rounded-full py-3 px-10" style={{border: "1px solid #0162FF"}}>
+            <span className="font-bold text-2xl mr-4">{totalNFTMinted ? totalNFTMinted.length: ""}</span> Minted NFTs
           </div>
-          <div className="text-white text-lg rounded-full py-3 px-14" style={{border: "1px solid #0162FF"}}>
-            {totalNFTMinted ? `${111 - totalNFTMinted.length}`: ""} NFTs Left
+          <div className="text-white text-md rounded-full py-3 px-14" style={{border: "1px solid #0162FF"}}>
+            <span className="font-bold text-2xl mr-4">{totalNFTMinted ? `${111 - totalNFTMinted.length}`: ""}</span> NFTs Left
           </div>
           </div>
   
