@@ -39,6 +39,8 @@ const stripePromise = loadStripe(
 const GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 const envmintfucn = process.env.NEXT_PUBLIC_MINTFUNCTION;
+const envcollectionid = process.env.NEXT_PUBLIC_COLLECTIONID;
+const graphqlaptos = process.env.NEXT_PUBLIC_GRAPHQL_APTOS;
 
 const transition = {
   type: "tween",
@@ -74,6 +76,7 @@ const Mint = () => {
   const [mintpopup, setmintpopup] = useState(false);
   const [showconnectbutton, setshowconnectbutton] = useState(false);
   const [mintpage, setmintpage] = useState("page1");
+  const [totalNFTMinted, setTotalNFTMinted] = useState(null);
 
   const { account, connected, network, signMessage, signAndSubmitTransaction } = useWallet();
 
@@ -96,6 +99,43 @@ const Mint = () => {
       setmintpage("page3");
       window.history.replaceState({}, document.title, window.location.pathname);
     }
+  }, []);
+
+
+  useEffect(() => {
+    const vpnnft = async () => {
+      try {
+
+        const graphqlbody = {
+          query: `
+          query MyQuery {
+            current_token_datas_v2(
+              where: {collection_id: {_eq: \"${envcollectionid}\"}}
+            ) {
+              token_name
+              description
+            }
+          }
+            `,
+          operationName: "MyQuery",
+        };
+
+        const response = await axios.post(`${graphqlaptos}`, graphqlbody, {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+        });
+
+        console.log("vpn nft", response.data.data.current_token_datas_v2);
+        setTotalNFTMinted(response.data.data.current_token_datas_v2);
+      } catch (error) {
+        console.error("Error fetching nft data:", error);
+      } finally {
+      }
+    };
+
+    vpnnft();
   }, []);
   
 
@@ -412,6 +452,10 @@ const Mint = () => {
           </div>
           <div className="text-white text-xl ml-20 mt-4 mx-auto">
             Exceptional Value for Unmatched Security
+          </div>
+
+          <div className="text-white text-xl ml-20 mt-4 mx-auto">
+            NFTs Minted Till Now - {totalNFTMinted ? totalNFTMinted.length: ""}
           </div>
   
             <motion.div
