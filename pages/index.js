@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Features from "../components/Features";
 import Howto from "../components/Howto";
+import NodesData from "../components/NodesData";
 import Pricing from "../components/Pricing";
 import { motion } from "framer-motion";
 import { useAddress } from "@thirdweb-dev/react";
@@ -59,6 +60,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       </div>
 
       <Howto />
+      <NodesData />
       <Pricing />
       <Footer />
     </div>
