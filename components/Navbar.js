@@ -74,7 +74,7 @@ const Navbar = ({ isHome }) => {
   }, [account?.address]);
 
 
-  const [, switchNetwork] = useNetwork();
+  // const [, switchNetwork] = useNetwork();
   const isMismatched = useNetworkMismatch();
 
   const toggleMenu = () => {
