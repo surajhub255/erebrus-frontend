@@ -47,7 +47,7 @@ const DepinCarousel = () => {
             autoPlay={true}
             renderIndicator={customRenderIndicator}
           >
-            <div>
+            <div className="mb-20">
                 <div className="flex gap-2">
                   <div className="rounded-3xl w-2/3">
                     <img src="/depin1.png" alt="Slide 1" className="rounded-3xl"/>
@@ -65,7 +65,7 @@ const DepinCarousel = () => {
                   </div>
                 </div>
               </div>
-            <div>
+            <div className="mb-20">
             <div className="flex gap-2">
                   <div className="rounded-3xl w-2/3">
                     <img src="/depin2.png" alt="Slide 2" className="rounded-3xl"/>
@@ -84,7 +84,7 @@ const DepinCarousel = () => {
                   </div>
                 </div>
             </div>
-            <div>
+            <div className="mb-20">
             <div className="flex gap-2">
                   <div className="rounded-3xl w-2/3">
                     <img src="/depin3.png" alt="Slide 3" className="rounded-3xl"/>
@@ -104,7 +104,7 @@ const DepinCarousel = () => {
                   </div>
                 </div>
             </div>
-            <div>
+            <div className="mb-20">
             <div className="flex gap-2">
                   <div className="rounded-3xl w-2/3">
                     <img src="/depin4.png" alt="Slide 4" className="rounded-3xl"/>
@@ -122,7 +122,7 @@ const DepinCarousel = () => {
                   </div>
                 </div>
             </div>
-            <div>
+            <div className="mb-20">
             <div className="flex gap-2">
                   <div className="rounded-3xl w-2/3">
                     <img src="/depin5.png" alt="Slide 5" className="rounded-3xl"/>
