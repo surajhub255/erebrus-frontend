@@ -4,6 +4,7 @@ import QRCodeSVG from "qrcode.react";
 import axios from "axios";
 import Cookies from "js-cookie";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 interface QrCodeProps {
   clientId: string;
@@ -18,7 +19,7 @@ export const QrCode: React.FC<QrCodeProps> = ({ clientId, name, region }) => {
     try {
       const auth = Cookies.get("erebrus_token");
   
-      const response = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/config/${region}/${clientId}`, {
+      const response = await axios.get(`${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/config/${region}/${clientId}`, {
         headers: {
           Accept: "application/json, text/plain, */*",
           "Content-Type": "application/json",

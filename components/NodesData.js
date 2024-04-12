@@ -1,37 +1,42 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Link from "next/link";
+import axios from "axios";
+import Cookies from "js-cookie";
+const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const NodesData = () => {
 
-    const data = [
-        {
-          nodeId: 1,
-          nodeName: "Node A",
-          region: "US",
-          networkSpeed: "1 Gbps",
-          latency: "10 ms",
-          uptime: "99.9%",
-          lastPinged: "2024-04-10T12:00:00Z"
-        },
-        {
-          nodeId: 2,
-          nodeName: "Node B",
-          region: "EU",
-          networkSpeed: "500 Mbps",
-          latency: "20 ms",
-          uptime: "99.5%",
-          lastPinged: "2024-04-10T12:05:00Z"
-        },
-        {
-          nodeId: 3,
-          nodeName: "Node C",
-          region: "Asia",
-          networkSpeed: "250 Mbps",
-          latency: "30 ms",
-          uptime: "98.7%",
-          lastPinged: "2024-04-10T12:10:00Z"
-        }
-      ];
+      const [nodesdata, setNodesData] = useState([])
+
+      useEffect(() => {
+        const fetchNodesData = async () => {
+          try {
+            const auth = Cookies.get("erebrus_token");
+
+            const response = await axios.get(
+              `${EREBRUS_GATEWAY_URL}/api/v1.0/nodes/all`,
+              {
+                headers: {
+                  Accept: "application/json, text/plain, */*",
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${auth}`,
+                },
+              }
+            );
+        
+            if (response.status === 200) {
+              const payload = response.data.payload;
+              setNodesData(payload);
+              console.log("erebrus nodes", payload);
+            }
+          } catch (error) {
+            console.error("Error fetching nodes data:", error);
+          } finally {
+          }
+        };
+
+        fetchNodesData();
+  }, []);
 
   return (
     <div
@@ -56,9 +61,9 @@ const NodesData = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((node) => (
-          <tr style={{paddingTop:'20px'}} key={node.nodeId}>
-            <td style={{paddingTop:'20px'}}>{node.nodeId}</td>
+        {nodesdata.map((node) => (
+          <tr style={{paddingTop:'20px'}} key={node.id}>
+            <td style={{paddingTop:'20px'}}>{node.id}</td>
             <td style={{paddingTop:'20px'}}>{node.nodeName}</td>
             <td style={{paddingTop:'20px'}}>{node.region}</td>
             <td style={{paddingTop:'20px'}}>{node.networkSpeed}</td>

@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Features from "../components/Features";
 import Howto from "../components/Howto";
-import DepinCarousel from "../components/depinCarousel";
+import DepinCarousel from "../components/DepinCarousel";
 import NodesData from "../components/NodesData";
 import Pricing from "../components/Pricing";
 import { motion } from "framer-motion";

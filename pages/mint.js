@@ -294,10 +294,11 @@ const Mint = () => {
 
     const auth = Cookies.get("erebrus_token");
     const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+    const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
     try {
       const response = await axios.post(
-        `${REACT_APP_GATEWAY_URL}api/v1.0/subscription/erebrus`,
+        `${EREBRUS_GATEWAY_URL}/api/v1.0/subscription/erebrus`,
         {},
         {
           headers: {

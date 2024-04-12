@@ -4,17 +4,6 @@ import React, { useEffect, useState, ChangeEvent, FormEvent } from "react";
 import Link from "next/link";
 import MyVpnContainer from "../components/Myvpncontainer";
 import NftdataContainer from "../components/NftDataContainer";
-// import emoji from "../../../public/EmojiMessage.png";
-// import connectWallet from "../components/connectwallet";
-import novpn from "../public/novpn2.png";
-import vpn1 from "../public/vpn1.png";
-import vpn2 from "../public/vpn2.png";
-import vpn3 from "../public/vpn3.png";
-import vpn4 from "../public/vpn4.png";
-import vpn5 from "../public/vpn5.png";
-import vpn6 from "../public/vpn6.png";
-import vpn7 from "../public/vpn7.png";
-import Image from "next/image";
 import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import crypto from "crypto";
@@ -24,9 +13,9 @@ import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 import QRCode from "qrcode.react";
-import { FaDownload, FaQrcode } from "react-icons/fa";
 import { saveAs } from "file-saver";
 const envcollectionid = process.env.NEXT_PUBLIC_COLLECTIONID;
 const graphqlaptos = process.env.NEXT_PUBLIC_GRAPHQL_APTOS;
@@ -43,8 +32,6 @@ export interface WalletData {
 interface FormData {
   name: string;
   region: string;
-  // type: "decentralized";
-  // domain: string;
 }
 const transition = {
   type: "tween",
@@ -87,15 +74,10 @@ const Subscription = () => {
   const [vpnPage, setvpnPage] = useState<boolean>(false);
   const [valueFromChild2, setValueFromChild2] = useState<string>("");
   const [note, setnote] = useState<boolean>(true);
-  //const txtvalue = localStorage.getItem("txtvalue");
 
   const { account, connected, network, signMessage } = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
-
-  const bg2 = {
-    backgroundColor: "white",
-  };
 
   const bg = {
     backgroundColor: "#202333",
@@ -114,27 +96,9 @@ const Subscription = () => {
     color: "#788AA3",
   };
 
-  const text2 = {
-    color: "#11D9C5",
-  };
-
-  const successtext = {
-    color: "#141a31",
-  };
-
-  const errortext = {
-    color: "#EE4B2B",
-  };
-
-  const bgverify = {
-    backgroundColor: "#141a31",
-  };
-
   const initialFormData: FormData = {
     name: "",
     region: "",
-    // type: "",
-    // domain: '',
   };
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [ConfigFile, setConfigFile] = useState<string>("");
@@ -180,7 +144,7 @@ const Subscription = () => {
       const formDataObj = new FormData();
       formDataObj.append("name", formData.name);
       // formDataObj.append("region", formData.region);
-      formDataObj.append("collectionId", collectionId);
+      // formDataObj.append("collectionId", collectionId);
       formDataObj.append("presharedKey", keys.preSharedKey);
       formDataObj.append("publicKey", keys.pubKey);
 
@@ -215,7 +179,7 @@ const Subscription = () => {
       // } else
       // if (formData.type === "decentralized") {
       const response = await fetch(
-        `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/client/${formData.region}`,
+        `${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/client/${formData.region}`,
         {
           method: "POST",
           headers: {
@@ -269,7 +233,7 @@ const Subscription = () => {
         const auth = Cookies.get("erebrus_token");
 
         const response = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/erebrus/clients?region=${region}&collection_id=${collectionId}`,
+          `${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/clients`,
           {
             headers: {
               Accept: "application/json, text/plain, */*",
@@ -589,6 +553,43 @@ const Subscription = () => {
     fetchMetaData();
   }, [collectionImage]);
 
+
+  // -----------------------------------------------to fetch regions from node data-----------------------------------------------
+
+  const [nodesdata, setNodesData] = useState([])
+
+      useEffect(() => {
+        const fetchNodesData = async () => {
+          try {
+            const auth = Cookies.get("erebrus_token");
+
+            const response = await axios.get(
+              `${EREBRUS_GATEWAY_URL}/api/v1.0/nodes/all`,
+              {
+                headers: {
+                  Accept: "application/json, text/plain, */*",
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${auth}`,
+                },
+              }
+            );
+        
+            if (response.status === 200) {
+              const payload = response.data.payload;
+              setNodesData(payload);
+              console.log("erebrus nodes", payload);
+            }
+          } catch (error) {
+            console.error("Error fetching nodes data:", error);
+          } finally {
+          }
+        };
+
+        fetchNodesData();
+  }, []);
+
+  //-----------------------------------------------------------------------------------------------------------------------
+
   if (!wallet || !loggedin) {
     return (
       <>
@@ -827,44 +828,13 @@ const Subscription = () => {
                                             >
                                               Select Region
                                             </option>
-                                            <option
-                                              className="bg-white text-black"
-                                              value="us"
-                                            >
-                                              US
-                                            </option>
-                                            <option
-                                              className="bg-white text-black"
-                                              value="sg"
-                                            >
-                                              Singapore
-                                            </option>
-                                            {/* {(formData.type === "decentralized") && <> */}
-                                            <option
-                                              className="bg-white text-black"
-                                              value="eu"
-                                            >
-                                              Europe
-                                            </option>
-                                            <option
-                                              className="bg-white text-black"
-                                              value="ca"
-                                            >
-                                              Canada
-                                            </option>
-                                            <option
-                                              className="bg-white text-black"
-                                              value="jp"
-                                            >
-                                              Japan
-                                            </option>
-                                            <option
-                                              className="bg-white text-black"
-                                              value="hk"
-                                            >
-                                              Hong Kong
-                                            </option>
-                                            {/* </>} */}
+                                           
+                                            {nodesdata.map(node => (
+                                              <option key={node.id} className="bg-white text-black" value={node.id}>
+                                                {node.region}
+                                              </option>
+                                            ))}
+
                                           </select>
                                         </div>
                                       </div>
