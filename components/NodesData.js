@@ -41,13 +41,13 @@ const NodesData = () => {
   return (
     <div
       id="howto"
-      className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 lg:mb-36 mb-24"
+      className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 min-h-screen"
     >
       <div className="mb-2 font-figtree w-[70%] text-left text-gray-200">
-        <h1 className="font-bold text-4xl lg:mb-16 mb-12 lg:mt-36 text-left">
+        {/* <h1 className="font-bold text-4xl lg:mb-16 mb-12 lg:mt-36 text-left">
           Erebrus Nodes Data
-        </h1>
-        <div className="p-20 rounded-xl text-black"  style={{backgroundColor:'#8EB9FF'}}>
+        </h1> */}
+        <div className="p-20 rounded-xl text-black mt-20"  style={{backgroundColor:'#8EB9FF'}}>
         <table className="w-full text-center">
       <thead>
         <tr>

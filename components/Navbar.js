@@ -353,6 +353,32 @@ const Navbar = ({ isHome }) => {
           </Link> */}
         </div>
         <div className="hidden lg:flex items-center">
+
+        { link !== "explorer" ?(
+          <Link
+            href="/explorer"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            onClick={()=> {setlink("explorer")}}
+            style={{ textDecoration: "none", position: "relative",
+            borderBottom: router.pathname.includes('explorer') ? '2px solid white' : '', }}
+  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+          >
+            Explorer
+          </Link>):
+          (
+<Link
+            href="/explorer"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            style={{ textDecoration: "none", position: "relative",
+            borderBottom:'2px solid white'}}
+          >
+            Explorer
+          </Link>
+          )}
+
         { link !== "mint" ?(
           <Link
             href="/mint"
@@ -377,12 +403,7 @@ const Navbar = ({ isHome }) => {
             Mint NFT
           </Link>
           )}
-          {/* <Link href="/demo" className="text-gray-300 mr-8">
-            Demo
-          </Link>
-          <Link href="/clients" className="text-gray-300 mr-8">
-            Clients
-          </Link> */}
+
           { link !== "subscription" ?(
           <Link
             href="/subscription"

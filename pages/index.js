@@ -4,7 +4,6 @@ import Footer from "../components/Footer";
 import Features from "../components/Features";
 import Howto from "../components/Howto";
 import DepinCarousel from "../components/DepinCarousel";
-import NodesData from "../components/NodesData";
 import Pricing from "../components/Pricing";
 import { motion } from "framer-motion";
 import { useAddress } from "@thirdweb-dev/react";
@@ -71,7 +70,6 @@ Earn rewards and enhance your connectivity
 
       <Pricing />
       <Howto />
-      <NodesData />
 
       <div className="container mx-auto py-20 w-4/5 mb-20 rounded-3xl" style={{backgroundColor:'#202333'}}>
         <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
