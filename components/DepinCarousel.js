@@ -10,7 +10,7 @@ const DepinCarousel = () => {
       width: 20, // Adjust the width
       height: 20, // Adjust the height
       borderRadius: '50%',
-      backgroundColor: isSelected ? '#202434' : '#8EACDB', // Change colors as needed
+      backgroundColor: isSelected ? '#202434' : 'white', // Change colors as needed
       display: 'inline-block',
       margin: '10px 8px', // Adjust the space between indicators
       cursor: 'pointer'
@@ -31,11 +31,11 @@ const DepinCarousel = () => {
   return (
     <div
       id="howto"
-      className="min-h-screen flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 lg:mb-36 mb-24"
-      style={{ backgroundColor: "#E3EEFF" }}
+      className="min-h-screen flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mb-20"
+      // style={{ backgroundColor: "#E3EEFF" }}
     >
       <div className="mb-2 font-figtree w-[70%] text-left text-white text-2xl text-left">
-        <h1 className="font-bold text-4xl lg:mb-16 mb-12 mt-14 text-left text-black">
+        <h1 className="font-bold text-4xl lg:mb-16 mb-12 lg:mt-40 text-left text-black">
           From Challenge to Connectivity
         </h1>
         <div>

@@ -412,7 +412,7 @@ const Navbar = ({ isHome }) => {
             onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
             onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
             >
-          Setup VPN
+          Docs
           </Link>
 
           {/* {isMismatched && (

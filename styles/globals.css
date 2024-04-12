@@ -17,3 +17,15 @@
 .bgcolor {
   background: linear-gradient(0.25turn, #0162FF85, #0162FF0D);
 }
+
+.wallet-button{
+  background-color:white;
+  color:black;
+  border:none;
+  padding: 0;
+  border-radius: 30px;
+  /* Remove hover effect */
+  &:hover {
+    background-color: white; /* Keep the background color same as normal state */
+  }
+}

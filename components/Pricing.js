@@ -25,10 +25,10 @@ const Pricing = () => {
         </div>
         <Link
           href="/mint"
-          className="bg-white text-black font-bold py-3 px-16 rounded-full w-full"
+          className="bg-white text-black font-bold py-3 px-6 rounded-full w-full"
           style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
         >
-          Get Now
+          Start your free trial
         </Link>
         </div>
       <div className="flex flex-col justify-start py-16 px-10 rounded-2xl shadow-lg shadow-blue-500" style={{backgroundColor:'#0162FF'}}>
