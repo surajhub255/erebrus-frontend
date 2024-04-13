@@ -29,19 +29,19 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat"}}>
-      <div className="container mx-auto pt-20 md:w-[80%] lg:w-[80%]">
+      <div className="container mx-auto pt-20 w-[80%]">
         <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-6xl font-smeibold text-white mb-6 mr-auto w-3/5"
+            className="lg:text-6xl text-3xl font-smeibold text-white mb-6 mr-auto w-3/5"
           >
             Building a Resilient Decentralized Network 
           </motion.h1>
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-xl text-white mb-8 w-3/5 mr-auto"
+            className="lg:text-xl text-md text-white mb-8 w-3/5 mr-auto"
           >
             <p>
             Get on board with Erebrus DEPIN for a stable, decentralized internet.
