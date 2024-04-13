@@ -298,7 +298,7 @@ const Mint = () => {
 
     try {
       const response = await axios.post(
-        `${EREBRUS_GATEWAY_URL}/api/v1.0/subscription/erebrus`,
+        `${EREBRUS_GATEWAY_URL}api/v1.0/subscription/erebrus`,
         {},
         {
           headers: {

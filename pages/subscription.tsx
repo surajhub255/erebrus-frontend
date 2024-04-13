@@ -179,7 +179,7 @@ const Subscription = () => {
       // } else
       // if (formData.type === "decentralized") {
       const response = await fetch(
-        `${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/client/${formData.region}`,
+        `${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/client/${formData.region}`,
         {
           method: "POST",
           headers: {
@@ -233,7 +233,7 @@ const Subscription = () => {
         const auth = Cookies.get("erebrus_token");
 
         const response = await axios.get(
-          `${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/clients`,
+          `${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/clients`,
           {
             headers: {
               Accept: "application/json, text/plain, */*",
@@ -564,7 +564,7 @@ const Subscription = () => {
             const auth = Cookies.get("erebrus_token");
 
             const response = await axios.get(
-              `${EREBRUS_GATEWAY_URL}/api/v1.0/nodes/all`,
+              `${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`,
               {
                 headers: {
                   Accept: "application/json, text/plain, */*",

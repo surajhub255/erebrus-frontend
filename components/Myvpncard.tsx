@@ -53,7 +53,7 @@ const handleDownload = async (
     const auth = Cookies.get("erebrus_token");
 
     const response = await axios.get(
-      `${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/config/${region}/${clientId}`,
+      `${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/config/${region}/${clientId}`,
       {
         headers: {
           Accept: "application/json, text/plain, */*",
@@ -115,7 +115,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
 
     try {
       const response = await fetch(
-        `${EREBRUS_GATEWAY_URL}/api/v1.0/erebrus/client/${region}/${id}`,
+        `${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/client/${region}/${id}`,
         {
           method: "DELETE",
           headers: {

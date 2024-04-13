@@ -14,7 +14,7 @@ const NodesData = () => {
             const auth = Cookies.get("erebrus_token");
 
             const response = await axios.get(
-              `${EREBRUS_GATEWAY_URL}/api/v1.0/nodes/all`,
+              `${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`,
               {
                 headers: {
                   Accept: "application/json, text/plain, */*",
