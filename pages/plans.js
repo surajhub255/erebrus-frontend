@@ -7,9 +7,9 @@ const Plans = () => {
       <div className="mt-10 mx-auto min-h-screen max-w-7xl">
 <div className="text-center text-4xl text-white">Pay for what you use</div>
       
-              <div className="flex mt-10 mx-auto justify-center">
+              <div className="lg:flex mt-10 mx-auto justify-center">
 
-                        <div className="relative p-2 w-2/5">
+                        <div className="relative p-2 lg:w-2/5">
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
                             style={{
@@ -49,7 +49,7 @@ const Plans = () => {
 
                                       <div className="flex-col gap-4 mr-4">
 
-                                        <div className="text-center w-1/2 mt-20 mx-auto">
+                                        <div className="text-center lg:w-1/2 mt-20 mx-auto">
                                           <div className="mb-6">
                                             <Link
                                               style={{
@@ -70,7 +70,7 @@ const Plans = () => {
                           </div>
                         </div>
 
-                        <div className="relative p-2 w-2/5">
+                        <div className="relative p-2 lg:w-2/5">
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
                             style={{
@@ -111,7 +111,7 @@ const Plans = () => {
 
                                       <div className="flex-col gap-4 mr-4 mt-10">
 
-                                        <div className="text-center w-1/2 mt-14 mx-auto">
+                                        <div className="text-center lg:w-1/2 mt-14 mx-auto">
                                           <div className="mb-6 py-3 px-8 text-md text-white font-semibold rounded-full w-full sm:mb-0"
                                           style={{
                                             backgroundColor: "#0162FF",
