@@ -34,8 +34,8 @@ const DepinCarousel = () => {
       className="min-h-screen flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mb-20"
       // style={{ backgroundColor: "#E3EEFF" }}
     >
-      <div className="mb-2 font-figtree w-[70%] text-left text-white text-2xl text-left">
-        <h1 className="font-bold text-4xl lg:mb-16 mb-12 lg:mt-40 text-left text-black">
+      <div className="mb-2 font-figtree w-[70%] text-left text-white lg:text-2xl text-sm text-left">
+        <h1 className="font-bold lg:text-4xl text-2xl lg:mb-16 mb-12 lg:mt-40 text-left text-black">
           From Challenge to Connectivity
         </h1>
         <div>
@@ -48,12 +48,12 @@ const DepinCarousel = () => {
             renderIndicator={customRenderIndicator}
           >
             <div className="mb-20">
-                <div className="flex gap-2">
-                  <div className="rounded-3xl w-2/3">
+                <div className="lg:flex gap-2">
+                  <div className="rounded-3xl lg:w-2/3">
                     <img src="/depin1.png" alt="Slide 1" className="rounded-3xl"/>
                   </div>
                   <div
-                    className="rounded-3xl p-10 w-1/3 text-left"
+                    className="rounded-3xl p-10 lg:w-1/3 text-left"
                     style={{ backgroundColor: "#202434" }}
                   >
                     <div>
@@ -66,12 +66,12 @@ const DepinCarousel = () => {
                 </div>
               </div>
             <div className="mb-20">
-            <div className="flex gap-2">
-                  <div className="rounded-3xl w-2/3">
+            <div className="lg:flex gap-2">
+                  <div className="rounded-3xl lg:w-2/3">
                     <img src="/depin2.png" alt="Slide 2" className="rounded-3xl"/>
                   </div>
                   <div
-                    className="rounded-3xl p-10 w-1/3 text-left"
+                    className="rounded-3xl p-10 lg:w-1/3 text-left"
                     style={{ backgroundColor: "#202434" }}
                   >
                     <div>
@@ -85,12 +85,12 @@ const DepinCarousel = () => {
                 </div>
             </div>
             <div className="mb-20">
-            <div className="flex gap-2">
-                  <div className="rounded-3xl w-2/3">
+            <div className="lg:flex gap-2">
+                  <div className="rounded-3xl lg:w-2/3">
                     <img src="/depin3.png" alt="Slide 3" className="rounded-3xl"/>
                   </div>
                   <div
-                    className="rounded-3xl p-10 w-1/3 text-left"
+                    className="rounded-3xl p-10 lg:w-1/3 text-left"
                     style={{ backgroundColor: "#202434" }}
                   >
                     <div>
@@ -105,12 +105,12 @@ const DepinCarousel = () => {
                 </div>
             </div>
             <div className="mb-20">
-            <div className="flex gap-2">
-                  <div className="rounded-3xl w-2/3">
+            <div className="lg:flex gap-2">
+                  <div className="rounded-3xl lg:w-2/3">
                     <img src="/depin4.png" alt="Slide 4" className="rounded-3xl"/>
                   </div>
                   <div
-                    className="rounded-3xl p-10 w-1/3 text-left"
+                    className="rounded-3xl p-10 lg:w-1/3 text-left"
                     style={{ backgroundColor: "#202434" }}
                   >
                     <div>
@@ -123,12 +123,12 @@ const DepinCarousel = () => {
                 </div>
             </div>
             <div className="mb-20">
-            <div className="flex gap-2">
-                  <div className="rounded-3xl w-2/3">
+            <div className="lg:flex gap-2">
+                  <div className="rounded-3xl lg:w-2/3">
                     <img src="/depin5.png" alt="Slide 5" className="rounded-3xl"/>
                   </div>
                   <div
-                    className="rounded-3xl p-10 w-1/3 text-left"
+                    className="rounded-3xl p-10 lg:w-1/3 text-left"
                     style={{ backgroundColor: "#202434" }}
                   >
                     <div>
