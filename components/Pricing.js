@@ -24,7 +24,7 @@ const Pricing = () => {
           </ul>
         </div>
         <Link
-          href="/mint"
+          href="/plans"
           className="bg-white text-black font-bold py-3 px-6 rounded-full w-full"
           style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
         >
