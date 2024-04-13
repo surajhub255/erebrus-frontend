@@ -7,9 +7,9 @@ const Plans = () => {
       <div className="mt-10 mx-auto min-h-screen max-w-7xl">
 <div className="text-center text-4xl text-white">Pay for what you use</div>
       
-              <div className="flex mt-10 mx-auto">
+              <div className="flex mt-10 mx-auto justify-center">
 
-<div className="relative p-2 w-full">
+                        <div className="relative p-2 w-2/5">
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
                             style={{
@@ -20,76 +20,36 @@ const Plans = () => {
                             
                             <section className="mt-14">
                               <div className="mx-auto max-w-3xl">
-                                <div className="w-full mx-auto text-center px-10 pb-10">
-                                  <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-                                    <span className="text-white text-center">
-                                    Free
-                                    </span>
-                                  </h1>
-
-                                  <div className="text-left text-white mt-10 w-3/4 mx-auto">
-                                  &#x2022; 7 days free trial<br></br><br></br>
-      &#x2022; Utility NFT, tradable on marketplaces, 
-      VPN usage tied with NFT ownership<br></br><br></br>
-      &#x2022; Unlimited client<br></br><br></br>
-      &#x2022; Multiple devices
-                                  </div>
-
-                                      <div className="flex-col gap-4 mr-4">
-                                        <div className="text-center mt-32 mx-auto">
-                                          <div className="mb-6">
-                                            <Link
-                                              style={{
-                                                backgroundColor: "#0162FF",
-                                              }}
-                                              href="/trial"
-                                              className="py-3 mb-2 px-16 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                                            >
-                                               Try Now
-                                            </Link>
-                                          </div>
-                                        </div>
-
-                                      </div>
-                                </div>
-                              </div>
-                            </section>
-                          </div>
-                        </div>
-
-                        <div className="relative p-2 w-full">
-                          <div
-                            className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
-                            style={{
-                              backgroundColor: "#202333",
-                              border: "1px solid #0162FF",
-                            }}
-                          >
-                            
-                            <section className="mt-14">
-                              <div className="mx-auto max-w-3xl">
-                                <div className="w-full mx-auto text-center px-10 pb-10">
-                                  <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-                                    <span className="text-white text-center">
-                                    111 NFT Mint
-                                    </span>
-                                  </h1>
-
-                                  <div className="text-left text-white mt-10 w-3/4 mx-auto">
-                                  &#x2022; Erebrus Trial package<br></br><br></br>
-                                  &#x2022; Comes with a unique NFT from a 
-      limited collection of only 111 supply<br></br><br></br>
-      &#x2022; Utility NFT, tradable on marketplaces, 
-      VPN usage tied with NFT ownership<br></br><br></br>
-      &#x2022; Unlimited client<br></br><br></br>
-      &#x2022; Only 1.11 APT for a 3 month trial
-                                  </div>
-
+                                <div className="w-full mx-auto px-10 pb-10">
                                   
+                                  <h1 className="w-3/4 mx-auto mb-2 text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                                    <span className="text-white" style={{color: '#5696FF'}}>
+                                    NFT
+                                    </span>
+                                  </h1>
+                                  <h1 className="w-3/4 mx-auto text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                                    <span className="text-white">
+                                    1.11 APT/ 3 month
+                                    </span>
+                                  </h1>
+
+                                  <h1 className="mt-4 w-3/5 ml-10 font-bold leading-none tracking-normal rounded-full py-2 px-4 text-sm text-black" style={{backgroundColor:'#E3EEFF'}}>
+                                  Early Node Operator Access
+                                  </h1>
+
+                                  <h1 className="mt-4 w-2/5 ml-10 font-bold leading-none tracking-normal rounded-full py-2 px-4 text-sm text-black" style={{backgroundColor:'#E3EEFF'}}>
+                                  80 NFTs available
+                                  </h1>
+
+                                  <div className="text-left text-white mt-10 w-3/4 mx-auto">
+                                  &#x2022; Limited collection of only 111<br></br>
+                                  &#x2022; Tradable with VPN access benefits<br></br>
+                                  &#x2022; Unlimited Clients
+                                  </div>
 
                                       <div className="flex-col gap-4 mr-4">
 
-                                        <div className="text-center mt-16 mx-auto">
+                                        <div className="text-center w-1/2 mt-20 mx-auto">
                                           <div className="mb-6">
                                             <Link
                                               style={{
@@ -110,7 +70,7 @@ const Plans = () => {
                           </div>
                         </div>
 
-                        <div className="relative p-2 w-full">
+                        <div className="relative p-2 w-2/5">
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
                             style={{
@@ -121,37 +81,48 @@ const Plans = () => {
                         
                             <section className="mt-14">
                               <div className="mx-auto max-w-3xl">
-                                <div className="w-full mx-auto text-center px-10 pb-10">
-                                  <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-                                    <span className="text-white text-center">
+                                <div className="w-full mx-auto px-10 pb-10">
+
+                                <h1 className="w-3/4 mx-auto mb-2 text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                                    <span className="text-white" style={{color: '#5696FF'}}>
+                                    Standard 
+                                    </span>
+                                  </h1>
+                                  <h1 className="w-3/4 mx-auto text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                                    <span className="text-white">
                                     $9.99/month 
                                     </span>
                                   </h1>
 
-                                  <div className="text-left text-white mt-10 w-2/3 mx-auto">
-                                  &#x2022; Pay per use monthly by APT, cryto 
-     currencies or Fiat<br></br><br></br>
-     &#x2022; Up to 5 regions to choose from 
-     (more to come along the way)<br></br><br></br>
-     &#x2022; Multiple Tiers starting from 9.99USD
-                                  </div>
+                                  <h1 className="mt-4 w-2/5 ml-10 font-bold leading-none tracking-normal rounded-full py-2 px-4 text-sm text-black" style={{backgroundColor:'#E3EEFF'}}>
+                                  Free trial for 7 days
+                                  </h1>
 
-                                  
+                                  <h1 className="mt-4 w-1/3 ml-10 font-bold leading-none tracking-normal rounded-full py-2 px-4 text-sm text-black" style={{backgroundColor:'#E3EEFF'}}>
+                                  No credit card
+                                  </h1>
+
+                                  <div className="text-left text-white mt-10 w-2/3 mx-auto">
+                                  &#x2022; Free trial for 7 days<br></br>
+                                  &#x2022; Pay by APT, crytocurrency or Fiat<br></br>
+                                  &#x2022; Up to 5 options, more to come.<br></br>
+                                  &#x2022; Multiple tiers
+                                  </div>
 
                                       <div className="flex-col gap-4 mr-4 mt-10">
 
-                                        <div className="text-center w-2/3 mt-32 mx-auto">
-                                          <div className="mb-6 py-3 mb-2 px-8 text-md text-white font-semibold rounded-full w-full sm:mb-0"
+                                        <div className="text-center w-1/2 mt-14 mx-auto">
+                                          <div className="mb-6 py-3 px-8 text-md text-white font-semibold rounded-full w-full sm:mb-0"
                                           style={{
-                                            // backgroundColor: "#0162FF",
-                                            border:'solid 1px #0162FF',
+                                            backgroundColor: "#0162FF",
+                                            // border:'solid 1px #0162FF',
                                           }}>
-                                            {/* <Link
+                                            <Link
                                               href="/buy"
                                               className=""
-                                            > */}
-                                              Coming Soon
-                                            {/* </Link> */}
+                                            >
+                                              Start free trial
+                                            </Link>
                                           </div>
                                         </div>
 
