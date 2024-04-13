@@ -42,26 +42,27 @@ const NodesData = () => {
     <div
       id="howto"
       className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 min-h-screen"
+      style={{backgroundColor:'#202434'}}
     >
       <div className="font-figtree text-left text-gray-200 w-full">
         {/* <h1 className="font-bold text-4xl lg:mb-16 mb-12 lg:mt-36 text-left">
           Erebrus Nodes Data
         </h1> */}
-        <div className="text-white" style={{backgroundColor:'#202434'}}>
+        <div className="text-white">
 
           <div className="flex uppercase">
             <div className="flex gap-4 w-1/3 justify-center items-center p-6" style={{border:'solid 1px #FFFFFF66'}}>
               <img src="/nodetable1.png" className="w-20 h-20"/>
               <div>
                 <div>No. of Nodes</div>
-                <div className="text-3xl">{"000000"}</div>
+                <div className="text-3xl">{nodesdata.length}</div>
               </div>
             </div>
             <div className="flex gap-4 w-1/3 justify-center items-center p-6" style={{border:'solid 1px #FFFFFF66'}}>
               <img src="/nodetable2.png" className="w-14 h-14"/>
               <div>
                 <div>No. of Regions</div>
-                <div className="text-3xl">{"000000"}</div>
+                <div className="text-3xl">{nodesdata.length}</div>
               </div>
             </div>
             <div className="flex gap-4 w-1/3 justify-center items-center p-6" style={{border:'solid 1px #FFFFFF66'}}>
