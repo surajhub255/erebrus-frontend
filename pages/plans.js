@@ -4,9 +4,60 @@ import Link from "next/link";
 const Plans = () => {
 
     return(
-        <div className="flex mt-10 mx-auto min-h-screen max-w-6xl">
+      <div className="mt-10 mx-auto min-h-screen max-w-7xl">
+<div className="text-center text-4xl text-white">Pay for what you use</div>
+      
+              <div className="flex mt-10 mx-auto">
 
-                        <div className="relative p-4 w-full">
+<div className="relative p-2 w-full">
+                          <div
+                            className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
+                            style={{
+                              backgroundColor: "#202333",
+                              border: "1px solid #0162FF",
+                            }}
+                          >
+                            
+                            <section className="mt-14">
+                              <div className="mx-auto max-w-3xl">
+                                <div className="w-full mx-auto text-center px-10 pb-10">
+                                  <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
+                                    <span className="text-white text-center">
+                                    Free
+                                    </span>
+                                  </h1>
+
+                                  <div className="text-left text-white mt-10 w-3/4 mx-auto">
+                                  &#x2022; 7 days free trial<br></br><br></br>
+      &#x2022; Utility NFT, tradable on marketplaces, 
+      VPN usage tied with NFT ownership<br></br><br></br>
+      &#x2022; Unlimited client<br></br><br></br>
+      &#x2022; Multiple devices
+                                  </div>
+
+                                      <div className="flex-col gap-4 mr-4">
+                                        <div className="text-center mt-32 mx-auto">
+                                          <div className="mb-6">
+                                            <Link
+                                              style={{
+                                                backgroundColor: "#0162FF",
+                                              }}
+                                              href="/trial"
+                                              className="py-3 mb-2 px-16 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                                            >
+                                               Try Now
+                                            </Link>
+                                          </div>
+                                        </div>
+
+                                      </div>
+                                </div>
+                              </div>
+                            </section>
+                          </div>
+                        </div>
+
+                        <div className="relative p-2 w-full">
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
                             style={{
@@ -38,7 +89,7 @@ const Plans = () => {
 
                                       <div className="flex-col gap-4 mr-4">
 
-                                        <div className="text-center w-1/2 mt-16 mx-auto">
+                                        <div className="text-center mt-16 mx-auto">
                                           <div className="mb-6">
                                             <Link
                                               style={{
@@ -59,7 +110,7 @@ const Plans = () => {
                           </div>
                         </div>
 
-                        <div className="relative p-4 w-full">
+                        <div className="relative p-2 w-full">
                           <div
                             className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
                             style={{
@@ -89,17 +140,18 @@ const Plans = () => {
 
                                       <div className="flex-col gap-4 mr-4 mt-10">
 
-                                        <div className="text-center w-1/2 mt-40 mx-auto">
-                                          <div className="mb-6">
-                                            <Link
-                                              style={{
-                                                backgroundColor: "#0162FF",
-                                              }}
+                                        <div className="text-center w-2/3 mt-32 mx-auto">
+                                          <div className="mb-6 py-3 mb-2 px-8 text-md text-white font-semibold rounded-full w-full sm:mb-0"
+                                          style={{
+                                            // backgroundColor: "#0162FF",
+                                            border:'solid 1px #0162FF',
+                                          }}>
+                                            {/* <Link
                                               href="/buy"
-                                              className="py-3 mb-2 px-8 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                                            >
-                                              Buy Subscription
-                                            </Link>
+                                              className=""
+                                            > */}
+                                              Coming Soon
+                                            {/* </Link> */}
                                           </div>
                                         </div>
 
@@ -110,6 +162,7 @@ const Plans = () => {
                           </div>
                         </div>
                       </div>
+      </div>
     )
 
 }
