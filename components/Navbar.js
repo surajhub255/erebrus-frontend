@@ -379,7 +379,7 @@ const Navbar = ({ isHome }) => {
           </Link>
           )}
 
-        { link !== "mint" ?(
+        {/* { link !== "mint" ?(
           <Link
             href="/mint"
             className="text-gray-300 mr-8"
@@ -402,7 +402,7 @@ const Navbar = ({ isHome }) => {
           >
             Mint NFT
           </Link>
-          )}
+          )} */}
 
           { link !== "subscription" ?(
           <Link
@@ -435,43 +435,6 @@ const Navbar = ({ isHome }) => {
             >
           Docs
           </Link>
-
-          {/* {isMismatched && (
-            <button
-              className="text-purple-400 mr-12"
-              onClick={() => switchNetwork(ChainId.Mumbai)}
-            >
-              Switch To Mumbai
-            </button>
-          )} */}
-          {/* {address && !isSignedIn && (
-            <button
-              className="bg-blue-500 text-white lg:mr-20 font-bold py-2 px-4 rounded-lg"
-              onClick={signMessage}
-            >
-              Sign In
-            </button>
-          )} */}
-          {/* {address && isSignedIn && (
-            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-              <button onClick={connectWallet}>Connect</button>
-            </div>
-          )} */}
-
-{/* {account?.address && (
-            <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl text-white">
-              <div>
-                {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
-              </div>
-              {
-                token && (
-                  <button onClick={handleDeleteCookie} 
-                  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Logout</button>
-                )
-              }  
-            </div>
-          )} */}
           
           {!token ? (
             <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
@@ -535,25 +498,26 @@ const Navbar = ({ isHome }) => {
           <div className="bg-transparent py-4">
             <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:justify-between">
               <div className="flex flex-col lg:flex-row items-center">
-                {/* <Link
-                  href="/demo"
-                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
-                  scroll={false}
-                >
-                  Demo
-                </Link> */}
+
                 <Link
-                  href="/mint"
-                  className="text-white font-bold block lg:inline-block lg:mr-0 mb-4 lg:mb-0"
-                  scroll={false}
+                  href="/explorer"
+                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 >
-                  Mint NFT
+                  Explorer
                 </Link>
+
                 <Link
                   href="/subscription"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 >
                   Subscription
+                </Link>
+
+                <Link
+                  href="https://docs.netsepio.com/erebrus/" target="_blank"
+                  className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
+                >
+                  Docs
                 </Link>
 
                 {account?.address && (
@@ -599,33 +563,6 @@ const Navbar = ({ isHome }) => {
             </div>
           )}
 
-                {/* {isMismatched && (
-                  <button
-                    className="text-purple-400"
-                    onClick={() => switchNetwork(ChainId.Mumbai)}
-                  >
-                    Switch To Mumbai
-                  </button>
-                )} */}
-
-                {/* {address && !isSignedIn && (
-                  <button
-                    className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg"
-                    onClick={signMessage}
-                  >
-                    Sign In
-                  </button>
-                )}
-                {address && isSignedIn && (
-                  <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-                    <ConnectWallet />
-                  </div>
-                )}
-                {!address && (
-                  <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl">
-                    <ConnectWallet />
-                  </div>
-                )} */}
               </div>
             </div>
           </div>
