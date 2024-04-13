@@ -69,7 +69,7 @@ const Navbar = ({ isHome }) => {
     if (account && account.address) {
       // Update the cookie with the new address
       Cookies.set("erebrus_wallet", account.address);
-      // onSignMessage();
+      onSignMessage();
     }
   }, [account?.address]);
 
@@ -445,8 +445,7 @@ const Navbar = ({ isHome }) => {
               <WalletSelectorAntDesign/>
               </button>
              )}
-              {connected && (
-            // <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
+              {connected && showsignbutton && (
             <Button
           color={"blue"}
           onClick={onSignMessage}
