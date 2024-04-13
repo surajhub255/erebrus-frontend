@@ -76,7 +76,7 @@ Earn rewards and enhance your connectivity
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-5xl font-bold text-gray-300 mb-16 lg:text-center md:text-center md:w-[80%]"
+            className="lg:text-5xl text-3xl font-bold text-gray-300 mb-16 lg:text-center md:text-center md:w-[80%]"
           >
             Where Decentralization meets <br></br> VPN for ultimate internet security
           </motion.h1>
