@@ -5,6 +5,8 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const Plans = () => {
 
+  const [trialbuytrue, settrialbuytrue] = useState(false);
+
   const trialbuy = async() =>{
       const auth = Cookies.get("erebrus_token");
       try {
@@ -23,7 +25,12 @@ const Plans = () => {
 
         if (response.status === 200) {
               const responseData = await response.json();
-        console.log("trial subsc response", responseData);
+              console.log("trial subsc response", responseData);
+              settrialbuytrue(true);
+              // for alert
+              setTimeout(()=>{
+                  window.location.href="/subscription";
+              },3000)
         }
 
       } catch (error) {
@@ -33,6 +40,7 @@ const Plans = () => {
   }
 
     return(
+      <>
       <div className="mt-10 mx-auto min-h-screen max-w-7xl">
 <div className="text-center text-4xl text-white">Pay for what you use</div>
       
@@ -167,6 +175,15 @@ const Plans = () => {
                         </div>
                       </div>
       </div>
+      {trialbuytrue && 
+        <div className="fixed z-50 top-0 w-full">
+         <div className="bg-blue-100 text-blue-700 px-4 py-3" role="alert">
+          <p className="font-bold">Successfully Trial Subscription Taken!</p>
+          <p className="text-sm">You are redirected to subscription page to view your current subscription plan and to create clients.</p>
+         </div>
+        </div>
+        }
+        </>
     )
 
 }
