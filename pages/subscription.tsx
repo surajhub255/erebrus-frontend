@@ -53,20 +53,12 @@ const isSendableNetwork = (connected, network) => {
 
 const Subscription = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [profileset, setprofileset] = useState<boolean>(true);
   const [buttonset, setbuttonset] = useState<boolean>(false);
   const [projectsData, setprojectsData] = useState<any>(null);
-  const [dedicatedVpnData, setdedicatedVpnData] = useState<any>(null);
   const [nftdata, setnftdata] = useState<any>(null);
   const [msg, setMsg] = useState<string>("");
-  const [successmsg, setsuccessMsg] = useState<string>("");
-  const [errormsg, seterrorMsg] = useState<string>("");
   const [region, setregion] = useState<string>("");
   const [verify, setverify] = useState<boolean>(false);
-  const [endpoint, setEndpoint] = useState<string>("");
-  const [vpntype, setvpntype] = useState<string>("decentralized");
-  const [subscription, setSubscription] = useState<string>("option");
-  const [about, setabout] = useState<boolean>(false);
   const [collectionsPage, setcollectionsPage] = useState<boolean>(true);
   const [collectionId, setcollectionId] = useState<string>();
   const [collectionName, setcollectionName] = useState<string>();
@@ -74,6 +66,7 @@ const Subscription = () => {
   const [vpnPage, setvpnPage] = useState<boolean>(false);
   const [valueFromChild2, setValueFromChild2] = useState<string>("");
   const [note, setnote] = useState<boolean>(true);
+  const [trialsubscriptiondata, settrialsubscriptiondata] = useState<any>(null);
 
   const { account, connected, network, signMessage } = useWallet();
 
@@ -594,6 +587,40 @@ const Subscription = () => {
 
   //-----------------------------------------------------------------------------------------------------------------------
 
+
+  // -------------------------------------------------- check for trial subscription ------------------------------------------------
+
+  useEffect(() => {
+    const trialbuycheck = async() =>{
+      const auth = Cookies.get("erebrus_token");
+      try {
+        const response = await fetch(
+          `${EREBRUS_GATEWAY_URL}api/v1.0/subscription`,
+          {
+            method: "GET",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth}`,
+            },
+          }
+        );
+  
+        if (response.status === 200) {
+              const responseData = await response.json();
+              settrialsubscriptiondata(responseData);
+              console.log("trial subsc response", responseData);
+        }
+  
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+      }
+  }
+  
+    trialbuycheck();
+  }, [])
+
   if (!wallet || !loggedin) {
     return (
       <>
@@ -646,6 +673,44 @@ const Subscription = () => {
                   MyReviews={false}
                   selectCollection={handleCollectionClick}
                 />
+                {
+                  trialsubscriptiondata && !nftdata && (
+                    <div className="w-1/4 cursor-pointer rounded-3xl" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
+      <div className="w-full h-full rounded-lg p-6">
+        <div>
+          <div className="flex flex-col">
+            <div className="w-full">
+              <h3 className="leading-12 mb-2 text-white">
+              <div className="text-lg font-semibold mt-4 uppercase">
+                    {trialsubscriptiondata.data.type} Subscription         
+                  </div>  
+                <div className="lg:flex md:flex justify-between">
+                  <div className="text-md font-semibold mt-4">
+                  Status: {trialsubscriptiondata.status}                    
+                  </div>
+                  <div className="text-md font-semibold mt-4">
+                  Valid for 7 days 
+                  </div>
+                </div>  
+              </h3>
+
+              <div className="rounded-xl">
+                <div className="text-sm text-white text-start mt-2">
+                  <div className="">
+                  Start time: {trialsubscriptiondata.data.startTime}
+                  </div>
+                  <div className="">                 
+                  End Time: {trialsubscriptiondata.data.endTime}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+                  )
+                }
               </>
             )}
 
@@ -663,8 +728,6 @@ const Subscription = () => {
                         className="w-14 rounded-full"
                       />
                       <div className="mt-2">Name - {collectionName}</div>
-                      {/* (collection: {collectionId.slice(0, 4)}...
-                      {collectionId.slice(-4)}) */}
                     </div>
 
                     <div className="text-white mr-40 mt-6">
@@ -681,73 +744,8 @@ const Subscription = () => {
                     </div>
                   </h1>
 
-                  {/* <select
-                              id="region"
-                              style={border}
-                              className="shadow border flex appearance-none rounded lg:w-1/5 md:w-1/3 py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                              value={region}
-                              onChange={handleRegionChange}
-                              required
-                            >
-                              <option className="bg-white text-black" value="">
-                                Select Region
-                              </option>
-                              <option
-                                    className="bg-white text-black"
-                                    value="us"
-                                  >
-                                    US
-                                  </option>
-                                  <option
-                                    className="bg-white text-black"
-                                    value="sg"
-                                  >
-                                    Singapore
-                                  </option>
-                                      <option
-                                      className="bg-white text-black"
-                                      value="eu"
-                                    >
-                                      Europe
-                                    </option>
-                                    <option
-                                      className="bg-white text-black"
-                                      value="ca"
-                                    >
-                                      Canada
-                                    </option>
-                                    <option
-                                      className="bg-white text-black"
-                                      value="jp"
-                                    >
-                                      Japan
-                                    </option>
-                                  </select> */}
-
                   {buttonset && (
                     <>
-                      {/* <div className="flex text-xs mb-4">
-                        <button
-                          className="p-4 px-3 rounded-l-lg"
-                          style={{
-                            backgroundColor: buttonset ? "#11D9C5" : "#222944",
-                            color: buttonset ? "black" : "white",
-                          }}
-                          onClick={() => setvpntype("decentralized")}
-                        >
-                          Create VPNs
-                        </button>
-                        <button
-                          className="p-4 px-6 rounded-r-lg"
-                          style={{
-                            backgroundColor: !buttonset ? "#11D9C5" : "#222944",
-                            color: !buttonset ? "black" : "white",
-                          }}
-                          onClick={() => setbuttonset(false)}
-                        >
-                          My Clients
-                        </button>
-                      </div> */}
 
                       <div
                         style={{ backgroundColor: "#222944E5" }}
@@ -847,35 +845,6 @@ const Subscription = () => {
                                       </div>
 
                                       <div className="flex-col gap-4 mr-4">
-                                        {/* <div className="mb-6 w-1/2">
-                                <select
-                                  id="type"
-                                  style={border}
-                                  className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                  value={formData.type}
-                                  onChange={handleInputChange}
-                                  required
-                                >
-                                  <option
-                                    className="bg-white text-black"
-                                    value=""
-                                  >
-                                    Select VPN type
-                                  </option>
-                                  <option
-                                    className="bg-white text-black"
-                                    value="dedicated"
-                                  >
-                                    Dedicated
-                                  </option>
-                                  <option
-                                    className="bg-white text-black"
-                                    value="decentralized"
-                                  >
-                                    Decentralized
-                                  </option>
-                                </select>
-                              </div> */}
 
                                         <div className="text-center w-1/2 mt-10 mx-auto">
                                           <div className="mb-4 md:mb-8">
@@ -891,14 +860,7 @@ const Subscription = () => {
                                             </button>
                                           </div>
                                         </div>
-
-                                        {/* {msg == "success" && (
-                              <p className="text-green-500">Successful</p>
-                            )} */}
-
-                                        {/* {msg == "error" && ( */}
                                         <p className="text-red-500">{msg}</p>
-                                        {/* )} */}
                                       </div>
                                     </div>
                                   </form>
@@ -925,45 +887,12 @@ const Subscription = () => {
                             border: "1px solid #0162FF",
                           }}
                         >
-                          {/* <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
-                                      <button
-                                        onClick={() => {setbuttonset(false); setverify(false); setMsg("")}}
-                                        type="button"
-                                        className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                      >
-                                        <svg
-                                          className="w-3 h-3"
-                                          aria-hidden="true"
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          fill="none"
-                                          viewBox="0 0 14 14"
-                                        >
-                                          <path
-                                            stroke="currentColor"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            stroke-width="2"
-                                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                          />
-                                        </svg>
-                                        <span className="sr-only">
-                                          Close modal
-                                        </span>
-                                      </button>
-                                    </div> */}
 
                           <div className="py-4 space-y-4 mt-4">
                             <p className="text-3xl text-center font-semibold text-white">
                               Successfully created!
                             </p>
 
-                            {/* <p
-                                        className="text-sm mx-auto"
-                                        style={{ color: "#5696FF" }}
-                                      >
-                                        Quick Reminder: Backup your WireGuard VPN config now! <br></br>
-                                        Download or scan the QR code to avoid re-setup for Erebrus VPN
-                                      </p> */}
                             <div className="flex w-full flex-col items-center justify-center">
                               <div className="bg-white mx-auto my-4 w-1/2 justify-center flex h-60 rounded-3xl">
                                 <div className="mt-4">
@@ -1004,12 +933,6 @@ const Subscription = () => {
                                     <div style={{ color: "white" }}>
                                       Download
                                     </div>
-                                    {/* <FaDownload
-                                                style={{
-                                                  color: "#11D9C5",
-                                                }}
-                                                className="mt-2"
-                                              /> */}
                                   </div>
                                 </button>
                               </div>
@@ -1082,8 +1005,6 @@ const Subscription = () => {
                                 </div>
                               </div>
 
-                              {/* {vpntype === "decentralized" && (
-                            <> */}
                               <div
                                 className="w-full h-full rounded-xl mt-10 pb-2"
                                 style={bg}
