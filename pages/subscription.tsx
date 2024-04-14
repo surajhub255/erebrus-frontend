@@ -527,6 +527,11 @@ const Subscription = () => {
     setcollectionsPage(false);
   };
 
+  const handleTrialClick = () =>{
+    setvpnPage(true);
+    setcollectionsPage(false);
+  }
+
   const [imageSrc, setImageSrc] = React.useState<string | null>(null);
 
   useEffect(() => {
@@ -621,6 +626,16 @@ const Subscription = () => {
     trialbuycheck();
   }, [])
 
+  // Extracting day, year, and time from the dateTime string
+  const formatDateTime = (dateTime) => {
+    const dateObj = new Date(dateTime);
+    const day = dateObj.getDate();
+    const month = dateObj.toLocaleString('default', { month: 'long' });
+    const year = dateObj.getFullYear();
+    const time = dateObj.toLocaleTimeString();
+    return `${day} ${month} ${year} ${time}`;
+  };
+
   if (!wallet || !loggedin) {
     return (
       <>
@@ -668,16 +683,27 @@ const Subscription = () => {
                 <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">
                   Subscription
                 </div>
-                <NftdataContainer
+                { !nftdata && !trialsubscriptiondata && (
+                  <div
+                  className="mx-auto px-4 min-h-screen">
+                  <div className="w-full text-center py-20">
+                  <h2 className="text-4xl font-bold text-white">No Subscription</h2>
+                  <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-1/5 mx-auto my-20">
+                    <Link href="/plans">Try our free trial now</Link>
+                  </div>
+                </div>
+                </div>
+                )}
+                {nftdata && (<NftdataContainer
                   metaDataArray={nftdata}
                   MyReviews={false}
                   selectCollection={handleCollectionClick}
-                />
+                />)}
                 {
-                  trialsubscriptiondata && !nftdata && (
-                    <div className="w-1/4 cursor-pointer rounded-3xl" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
-      <div className="w-full h-full rounded-lg p-6">
-        <div>
+                  trialsubscriptiondata && (
+                    <div className="w-1/4 rounded-3xl" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
+      <div className="w-full h-full rounded-lg px-6 pt-6">
+        <button onClick={handleTrialClick}>
           <div className="flex flex-col">
             <div className="w-full">
               <h3 className="leading-12 mb-2 text-white">
@@ -696,17 +722,19 @@ const Subscription = () => {
 
               <div className="rounded-xl">
                 <div className="text-sm text-white text-start mt-2">
-                  <div className="">
-                  Start time: {trialsubscriptiondata.data.startTime}
+                  <div className="mb-3">
+                  <span className="text-green-500 ">Start time :</span> {trialsubscriptiondata.data.startTime ? formatDateTime(trialsubscriptiondata.data.startTime) : 'Loading...'}
                   </div>
                   <div className="">                 
-                  End Time: {trialsubscriptiondata.data.endTime}
+                  <span className="text-red-500 ">End time :</span> {trialsubscriptiondata.data.endTime ? formatDateTime(trialsubscriptiondata.data.endTime) : 'Loading...'}
                   </div>
                 </div>
               </div>
+
+              <div className="rounded-full px-10 py-2 mt-32 mb-10 text-white" style={{backgroundColor:'#0162FF'}}>Create Clients</div>
             </div>
           </div>
-        </div>
+        </button>
       </div>
     </div>
                   )
