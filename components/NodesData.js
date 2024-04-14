@@ -123,46 +123,46 @@ const NodesData = () => {
             </div>
           </div>
           <table className="w-full text-center">
-            <thead>
+            <thead style={{ height: "10px" }}>
               <tr>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable4.png" className="w-12 h-12" />
                     <div>NODE ID</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable5.png" className="w-10 h-10" />
                     <div>NODE NAME</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable6.png" className="w-10 h-10" />
                     <div>REGION</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable7.png" className="w-10 h-10" />
                     <div>NETWORK SPEED</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable8.png" className="w-10 h-10" />
                     <div>STATUS</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable9.png" className="w-10 h-10" />
                     <div>UPTIME</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
-                  <div className="flex gap-4 justify-center items-center pt-2 pb-10 px-4">
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable9.png" className="w-10 h-10" />
                     <div>LAST PING</div>
                   </div>
@@ -171,24 +171,32 @@ const NodesData = () => {
             </thead>
             <tbody>
               {nodesdata.map((node) => (
-                <tr key={node.id}>
+                <tr
+                  key={node.id}
+                  className={
+                    node.status === "inactive"
+                      ? "text-red-300"
+                      : "text-blue-100"
+                  }
+                  style={{ height: "60px" }} // Adjust the height as needed
+                >
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {node.id.slice(0, 4)}...{node.id.slice(-4)}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {node.name}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {node.region}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       <span>DL:</span>
                       {node.downloadSpeed}
                       <span>UL:</span>
@@ -196,17 +204,17 @@ const NodesData = () => {
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {node.status}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {elapsedTimeSince(node.startTimeStamp)}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
-                    <div className="flex gap-4 justify-center items-center py-10 px-4">
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {elapsedTimeSince(node.lastPingedTimeStamp)}
                     </div>
                   </td>
