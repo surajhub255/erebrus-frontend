@@ -1,7 +1,36 @@
 import React, { useEffect, useState} from "react";
 import Link from "next/link";
+import Cookies from "js-cookie";
+const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const Plans = () => {
+
+  const trialbuy = async() =>{
+      const auth = Cookies.get("erebrus_token");
+      try {
+        const response = await fetch(
+          `${EREBRUS_GATEWAY_URL}api/v1.0/subscription/trial`,
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth}`,
+            },
+            // body: jsonData,
+          }
+        );
+
+        if (response.status === 200) {
+              const responseData = await response.json();
+        console.log("trial subsc response", responseData);
+        }
+
+      } catch (error) {
+        console.error("Error:", error);
+      } finally {
+      }
+  }
 
     return(
       <div className="mt-10 mx-auto min-h-screen max-w-7xl">
@@ -117,12 +146,16 @@ const Plans = () => {
                                             backgroundColor: "#0162FF",
                                             // border:'solid 1px #0162FF',
                                           }}>
-                                            <Link
+                                            {/* <Link
                                               href="/buy"
-                                              className=""
                                             >
                                               Start free trial
-                                            </Link>
+                                            </Link> */}
+                                            <button
+                                              onClick={trialbuy}
+                                            >
+                                              Start free trial
+                                            </button>
                                           </div>
                                         </div>
 
