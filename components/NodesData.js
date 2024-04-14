@@ -6,6 +6,8 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const NodesData = () => {
   const [nodesdata, setNodesData] = useState([]);
+  const [activeNodesData, setActiveNodesData] = useState([]);
+  const [uniqueRegionsCount, setUniqueRegionsCount] = useState(0);
 
   useEffect(() => {
     const fetchNodesData = async () => {
@@ -26,6 +28,12 @@ const NodesData = () => {
         if (response.status === 200) {
           const payload = response.data.payload;
           setNodesData(payload);
+          const filteredNodes = payload.filter(
+            (node) => node.status === "active"
+          );
+          setActiveNodesData(filteredNodes);
+          const uniqueRegions = new Set(payload.map((node) => node.region));
+          setUniqueRegionsCount(uniqueRegions.size);
           console.log("erebrus nodes", payload);
         }
       } catch (error) {
@@ -100,7 +108,7 @@ const NodesData = () => {
               <img src="/nodetable2.png" className="w-14 h-14" />
               <div>
                 <div>No. of Regions</div>
-                <div className="text-3xl">{nodesdata.length}</div>
+                <div className="text-3xl">{uniqueRegionsCount}</div>
               </div>
             </div>
             <div
@@ -110,7 +118,7 @@ const NodesData = () => {
               <img src="/nodetable3.png" className="w-20 h-12" />
               <div>
                 <div>Active Nodes</div>
-                <div className="text-3xl">{"000000"}</div>
+                <div className="text-3xl">{activeNodesData.length}</div>
               </div>
             </div>
           </div>

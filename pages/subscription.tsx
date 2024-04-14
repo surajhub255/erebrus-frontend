@@ -553,39 +553,43 @@ const Subscription = () => {
     fetchMetaData();
   }, [collectionImage]);
 
-
   // -----------------------------------------------to fetch regions from node data-----------------------------------------------
 
-  const [nodesdata, setNodesData] = useState([])
+  const [nodesdata, setNodesData] = useState([]);
+  const [activeNodesData, setActiveNodesData] = useState([]);
 
-      useEffect(() => {
-        const fetchNodesData = async () => {
-          try {
-            const auth = Cookies.get("erebrus_token");
+  useEffect(() => {
+    const fetchNodesData = async () => {
+      try {
+        const auth = Cookies.get("erebrus_token");
 
-            const response = await axios.get(
-              `${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`,
-              {
-                headers: {
-                  Accept: "application/json, text/plain, */*",
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${auth}`,
-                },
-              }
-            );
-        
-            if (response.status === 200) {
-              const payload = response.data.payload;
-              setNodesData(payload);
-              console.log("erebrus nodes", payload);
-            }
-          } catch (error) {
-            console.error("Error fetching nodes data:", error);
-          } finally {
+        const response = await axios.get(
+          `${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`,
+          {
+            headers: {
+              Accept: "application/json, text/plain, */*",
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${auth}`,
+            },
           }
-        };
+        );
 
-        fetchNodesData();
+        if (response.status === 200) {
+          const payload = response.data.payload;
+          setNodesData(payload);
+          const filteredNodes = payload.filter(
+            (node) => node.status === "active"
+          );
+          setActiveNodesData(filteredNodes);
+          console.log("erebrus nodes", payload);
+        }
+      } catch (error) {
+        console.error("Error fetching nodes data:", error);
+      } finally {
+      }
+    };
+
+    fetchNodesData();
   }, []);
 
   //-----------------------------------------------------------------------------------------------------------------------
@@ -828,13 +832,16 @@ const Subscription = () => {
                                             >
                                               Select Region
                                             </option>
-                                           
-                                            {nodesdata.map(node => (
-                                              <option key={node.id} className="bg-white text-black" value={node.id}>
+
+                                            {activeNodesData.map((node) => (
+                                              <option
+                                                key={node.id}
+                                                className="bg-white text-black"
+                                                value={node.id}
+                                              >
                                                 {node.region}
                                               </option>
                                             ))}
-
                                           </select>
                                         </div>
                                       </div>
@@ -1029,24 +1036,24 @@ const Subscription = () => {
 
                   {loading && (
                     <div
-                    style={{ backgroundColor: "#040819D9" }}
-                    className='flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full'
-                    id='popupmodal'
-                  >
-                    <div className='relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full'>
-                      <div className='relative rounded-lg shadow'>
-                        <div className='flex justify-center gap-4'>
-                          <img
-                            className='w-12 animate-spin duration-[3000] h-12'
-                            src='/Loadingerebrus.png'
-                            alt='Loading icon'
-                          />
-              
-                          <span className='text-white mt-2'>Loading...</span>
+                      style={{ backgroundColor: "#040819D9" }}
+                      className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                      id="popupmodal"
+                    >
+                      <div className="relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full">
+                        <div className="relative rounded-lg shadow">
+                          <div className="flex justify-center gap-4">
+                            <img
+                              className="w-12 animate-spin duration-[3000] h-12"
+                              src="/Loadingerebrus.png"
+                              alt="Loading icon"
+                            />
+
+                            <span className="text-white mt-2">Loading...</span>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
                   )}
 
                   {!buttonset && (
@@ -1081,10 +1088,20 @@ const Subscription = () => {
                                 className="w-full h-full rounded-xl mt-10 pb-2"
                                 style={bg}
                               >
-                              <div className="pt-4 pb-4 flex justify-between">
-                              <div className="ml-8 text-white text-2xl">My Clients</div>
-                              <a href="https://docs.netsepio.com/erebrus/erebrus/setup" target="_blank" rel="noreferrer" className="mr-8 underline" style={{color: "#5696FF"}}>How to Start Using Erebrus VPN</a>
-                              </div>
+                                <div className="pt-4 pb-4 flex justify-between">
+                                  <div className="ml-8 text-white text-2xl">
+                                    My Clients
+                                  </div>
+                                  <a
+                                    href="https://docs.netsepio.com/erebrus/erebrus/setup"
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="mr-8 underline"
+                                    style={{ color: "#5696FF" }}
+                                  >
+                                    How to Start Using Erebrus VPN
+                                  </a>
+                                </div>
 
                                 <div className="w-full flex justify-between px-14 p-4">
                                   <h3 className="text-lg leading-12 w-1/4 text-left">
@@ -1211,24 +1228,26 @@ const Subscription = () => {
 
                         {loading && (
                           <div
-                          style={{ backgroundColor: "#040819D9" }}
-                          className='flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full'
-                          id='popupmodal'
-                        >
-                          <div className='relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full'>
-                            <div className='relative rounded-lg shadow'>
-                              <div className='flex justify-center gap-4'>
-                                <img
-                                  className='w-12 animate-spin duration-[3000] h-12'
-                                  src='/Loadingerebrus.png'
-                                  alt='Loading icon'
-                                />
-                    
-                                <span className='text-white mt-2'>Loading...</span>
+                            style={{ backgroundColor: "#040819D9" }}
+                            className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                            id="popupmodal"
+                          >
+                            <div className="relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full">
+                              <div className="relative rounded-lg shadow">
+                                <div className="flex justify-center gap-4">
+                                  <img
+                                    className="w-12 animate-spin duration-[3000] h-12"
+                                    src="/Loadingerebrus.png"
+                                    alt="Loading icon"
+                                  />
+
+                                  <span className="text-white mt-2">
+                                    Loading...
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
                         )}
                       </section>
                     </>
