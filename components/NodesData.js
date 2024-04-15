@@ -20,7 +20,6 @@ const NodesData = () => {
             headers: {
               Accept: "application/json, text/plain, */*",
               "Content-Type": "application/json",
-              Authorization: `Bearer ${auth}`,
             },
           }
         );
