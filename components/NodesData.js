@@ -210,7 +210,9 @@ const NodesData = () => {
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
                     <div className="flex gap-4 justify-center items-center py-2 px-4">
-                      {elapsedTimeSince(node.startTimeStamp)}
+                      {node.status === "inactive"
+                        ? "---"
+                        : elapsedTimeSince(node.startTimeStamp)}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
