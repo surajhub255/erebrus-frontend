@@ -694,14 +694,17 @@ const Subscription = () => {
                 </div>
                 </div>
                 )}
+                <div className="flex gap-10 w-1/2">
+                  <div className="w-1/2">
                 {nftdata && (<NftdataContainer
                   metaDataArray={nftdata}
                   MyReviews={false}
                   selectCollection={handleCollectionClick}
                 />)}
+                </div>
                 {
                   trialsubscriptiondata && (
-                    <div className="w-1/4 rounded-3xl" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
+                    <div className="w-1/2 rounded-3xl mt-2 mb-2 relative" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
       <div className="w-full h-full rounded-lg px-6 pt-6">
         <button onClick={handleTrialClick}>
           <div className="flex flex-col">
@@ -731,7 +734,9 @@ const Subscription = () => {
                 </div>
               </div>
 
-              <div className="rounded-full px-10 py-2 mt-32 mb-10 text-white" style={{backgroundColor:'#0162FF'}}>Create Clients</div>
+              <div className="rounded-full px-10 py-2 mb-10 text-white" 
+              style={{backgroundColor:'#0162FF', position: 'absolute',bottom: 0, left:80}}>
+                Create Clients</div>
             </div>
           </div>
         </button>
@@ -739,6 +744,7 @@ const Subscription = () => {
     </div>
                   )
                 }
+          </div>
               </>
             )}
 

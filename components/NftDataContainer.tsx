@@ -47,18 +47,18 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
   return (
     <>
       <div
-        className="mx-auto px-4 min-h-screen"
+        // className="mx-auto px-4 min-h-screen"
         // style={{ overflowY: "auto", maxHeight: "500px" }}
       >
         {metaDataArray?.length === 0 ? (
           renderNoReviewsFound()
         ) : (
           <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
-              gap: "2rem",
-            }}
+            // style={{
+            //   display: "grid",
+            //   gridTemplateColumns: "repeat(4, minmax(0, 1fr))",
+            //   gap: "2rem",
+            // }}
           >
             {metaDataArray?.map((metaData, index) => (
               <div
