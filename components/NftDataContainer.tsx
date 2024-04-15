@@ -51,7 +51,8 @@ const NftdataContainer: React.FC<MyReviewContainerProps> = ({
         // style={{ overflowY: "auto", maxHeight: "500px" }}
       >
         {metaDataArray?.length === 0 ? (
-          renderNoReviewsFound()
+          // renderNoReviewsFound()
+          <></>
         ) : (
           <div
             // style={{

@@ -341,7 +341,9 @@ const Subscription = () => {
         });
 
         console.log("vpn nft", response.data.data.current_token_ownerships_v2);
-        setnftdata(response.data.data.current_token_ownerships_v2);
+        if(response.data.data.current_token_ownerships_v2.length > 0) {
+          setnftdata(response.data.data.current_token_ownerships_v2);
+        }
       } catch (error) {
         console.error("Error fetching nft data:", error);
       } finally {
