@@ -676,7 +676,7 @@ const Subscription = () => {
   }
 
   return (
-    <div className="py-0">
+    <div className="py-0 min-h-screen">
       <section className="">
         <div className="px-10 mx-auto">
           <div className="w-full mx-auto text-left md:text-center">
@@ -697,16 +697,20 @@ const Subscription = () => {
                 </div>
                 )}
                 <div className="flex gap-10 w-1/2">
-                  <div className="w-1/2">
-                {nftdata && (<NftdataContainer
+                  
+                {nftdata && (
+                <div className="w-1/2">
+                  <NftdataContainer
                   metaDataArray={nftdata}
                   MyReviews={false}
                   selectCollection={handleCollectionClick}
-                />)}
+                />
                 </div>
+                )}
+            
                 {
                   trialsubscriptiondata && (
-                    <div className="w-1/2 rounded-3xl mt-2 mb-2 relative" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
+                    <div className="w-1/2 rounded-3xl mt-2 mb-2 relative min-h-96" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
       <div className="w-full h-full rounded-lg px-6 pt-6">
         <button onClick={handleTrialClick}>
           <div className="flex flex-col">
