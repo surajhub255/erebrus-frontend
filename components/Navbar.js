@@ -51,6 +51,13 @@ const Navbar = ({ isHome }) => {
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [avatarUrl, setAvatarUrl] = useState("");
+
+  const [hidefilter, setHideFilter] = useState(false);
+
+  const handleClick = () => {
+    setHideFilter(!hidefilter);
+};
+
   const sdk = useSDK();
 
   const { account, connected, network, wallet , signMessage} = useWallet();
@@ -467,7 +474,63 @@ const Navbar = ({ isHome }) => {
             </div>
           )}
 
+<div>
+          <button onClick={handleClick} 
+  className="text-white p-2 relative">
+    {/* &#9776; */}
+
+    <span className={`bg-gray-500 block transition-all duration-300 ease-out 
+                    h-0.5 w-6 rounded-sm ${hidefilter ? 
+                    'rotate-45 translate-y-1' : '-translate-y-0.5'
+                    }`} >
+                      
+    </span>
+    <span className={`bg-gray-500 block transition-all duration-300 ease-out 
+                    h-0.5 w-6 rounded-sm my-0.5 ${hidefilter ? 
+                    'opacity-0' : 'opacity-100'
+                    }`} >
+                    
+    </span>
+
+    <span className={`bg-gray-500 block transition-all duration-300 ease-out 
+                    h-0.5 w-6 rounded-sm ${hidefilter ? 
+                    '-rotate-45 -translate-y-1' : 'translate-y-0.5'
+                    }`} >
+    </span>    
+  </button>
+
+  {
+              hidefilter && (
+                <>
+                  <div className="z-10 bg-white w-36 rounded-lg shadow absolute" style={{backgroundColor:'white', right:10, top:80, width:'100px'}}>
+                  <div className="divide-y divide-gray-500 border-gray-500 border-t">
+                    <div className="py-1">
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                        <button onClick={()=>setHideFilter(false)} className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Aptos</button>
+                      </div>
+                    </div>
+
+                    <div className="py-1">
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                        <button onClick={()=>setHideFilter(false)} className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sui</button>
+                      </div>
+                    </div>
+
+                    <div className="py-1">
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                      <button onClick={()=>setHideFilter(false)} className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sol</button>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                </>
+              )
+            }
+
+  </div>
+
         </div>
+            
         <div className="block lg:hidden">
           <button
             className="flex items-center px-3 py-2 rounded-full text-gray-300"
