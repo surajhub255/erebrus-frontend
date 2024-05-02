@@ -17,7 +17,7 @@ import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
@@ -36,10 +36,7 @@ const WalletSelectorAntDesign = dynamic(
 );
 
 const isSendableNetwork = (connected, network) => {
-  return (
-    connected &&
-    ( network?.toLowerCase() === mynetwork.toLowerCase())
-  );
+  return connected && network?.toLowerCase() === mynetwork.toLowerCase();
 };
 
 const Navbar = ({ isHome }) => {
@@ -47,20 +44,20 @@ const Navbar = ({ isHome }) => {
   const [message, setMessage] = useState("");
   const [signature, setSignature] = useState("");
   const [challengeId, setChallengeId] = useState("");
-  const [showsignbutton, setshowsignbutton] = useState(false)
+  const [showsignbutton, setshowsignbutton] = useState(false);
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [avatarUrl, setAvatarUrl] = useState("");
-
+  const [chainsym, setchainsym] = useState("");
   const [hidefilter, setHideFilter] = useState(false);
 
   const handleClick = () => {
     setHideFilter(!hidefilter);
-};
+  };
 
   const sdk = useSDK();
 
-  const { account, connected, network, wallet , signMessage} = useWallet();
+  const { account, connected, network, wallet, signMessage } = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
 
@@ -79,7 +76,6 @@ const Navbar = ({ isHome }) => {
       onSignMessage();
     }
   }, [account?.address]);
-
 
   // const [, switchNetwork] = useNetwork();
   const isMismatched = useNetworkMismatch();
@@ -169,10 +165,12 @@ const Navbar = ({ isHome }) => {
         const apiUrl = `https://api.multiavatar.com/${getRandomNumber()}`;
 
         const response = await axios.get(apiUrl);
-        const svgDataUri = `data:image/svg+xml,${encodeURIComponent(response.data)}`;
+        const svgDataUri = `data:image/svg+xml,${encodeURIComponent(
+          response.data
+        )}`;
         setAvatarUrl(svgDataUri);
       } catch (error) {
-        console.error('Error fetching avatar:', error.message);
+        console.error("Error fetching avatar:", error.message);
       }
     };
 
@@ -209,64 +207,62 @@ const Navbar = ({ isHome }) => {
 
       // Check if the connected network is Mainnet
       if (networkwallet === mynetwork) {
+        const { data } = await axios.get(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`
+        );
+        console.log(data);
 
-      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`);
-      console.log(data);
+        const message = data.payload.eula;
+        const nonce = data.payload.flowId;
+        const publicKey = account.publicKey;
 
-      const message = data.payload.eula;
-      const nonce = data.payload.flowId;
-      const publicKey = account.publicKey;
+        const { signature, fullMessage } = await wallet.signMessage({
+          message,
+          nonce,
+        });
+        console.log("sign", signature, "full message", fullMessage);
 
-      const { signature, fullMessage } = await wallet.signMessage({
-        message,
-        nonce,
-      });
-      console.log("sign", signature, "full message", fullMessage);
+        let signaturewallet = signature;
 
-      let signaturewallet = signature;
+        if (signaturewallet.length === 128) {
+          signaturewallet = `0x${signaturewallet}`;
+        }
 
-      if(signaturewallet.length === 128)
-      {
-        signaturewallet = `0x${signaturewallet}`;
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signaturewallet}`,
+          pubKey: publicKey,
+        };
+
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
+
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+
+        try {
+          const response = await axios(config);
+          console.log("auth data", response.data);
+          const token = await response?.data?.payload?.token;
+          const userId = await response?.data?.payload?.userId;
+          // localStorage.setItem("platform_token", token);
+          Cookies.set("erebrus_token", token, { expires: 7 });
+          Cookies.set("erebrus_wallet", account.address, { expires: 7 });
+          Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+          // setUserWallet(account.address);
+          window.location.reload();
+        } catch (error) {
+          console.error(error);
+        }
+      } else {
+        alert(`Switch to ${mynetwork} in your wallet`);
       }
-
-      const authenticationData = {
-        flowId: nonce,
-        signature: `${signaturewallet}`,
-        pubKey: publicKey,
-      };
-
-      const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
-
-      const config = {
-        url: authenticateApiUrl,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: authenticationData,
-      };
-
-      try {
-        const response = await axios(config);
-        console.log("auth data", response.data);
-        const token = await response?.data?.payload?.token;
-        const userId = await response?.data?.payload?.userId;
-        // localStorage.setItem("platform_token", token);
-        Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", account.address, { expires: 7 });
-        Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-        // setUserWallet(account.address);
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-      }
-      }
-    else{
-      alert(`Switch to ${mynetwork} in your wallet`)
-    }
-
     } catch (err) {
       console.log(err);
     }
@@ -276,14 +272,16 @@ const Navbar = ({ isHome }) => {
     if (sendable) {
       try {
         const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-      
-        const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+
+        const { data } = await axios.get(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}?chain=${chainsym}`
+        );
         console.log(data);
-  
+
         const message = data.payload.eula;
         const nonce = data.payload.flowId;
         const publicKey = account?.publicKey;
-  
+
         const payload = {
           message: message,
           nonce: nonce,
@@ -293,19 +291,18 @@ const Navbar = ({ isHome }) => {
 
         let signaturewallet = response.signature;
 
-      if(signaturewallet.length === 128)
-      {
-        signaturewallet = `0x${signaturewallet}`;
-      }
-  
-      const authenticationData = {
-        "flowId": nonce,
-        "signature": `${signaturewallet}`,
-        "pubKey": publicKey,
-      };
-  
-        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
-  
+        if (signaturewallet.length === 128) {
+          signaturewallet = `0x${signaturewallet}`;
+        }
+
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signaturewallet}`,
+          pubKey: publicKey,
+        };
+
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=${chainsym}`;
+
         const config = {
           url: authenticateApiUrl,
           method: "POST",
@@ -314,17 +311,17 @@ const Navbar = ({ isHome }) => {
           },
           data: authenticationData,
         };
-  
+
         const authResponse = await axios(config);
         console.log("auth data", authResponse.data);
-  
+
         const token = await authResponse?.data?.payload?.token;
         const userId = await authResponse?.data?.payload?.userId;
-  
+
         Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", account?.address ?? '', { expires: 7 });
+        Cookies.set("erebrus_wallet", account?.address ?? "", { expires: 7 });
         Cookies.set("erebrus_userid", userId, { expires: 7 });
-  
+
         window.location.reload();
       } catch (error) {
         console.error(error);
@@ -334,7 +331,6 @@ const Navbar = ({ isHome }) => {
       alert(`Switch to ${mynetwork} in your wallet`);
     }
   };
-  
 
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
@@ -352,7 +348,11 @@ const Navbar = ({ isHome }) => {
         <div className="flex items-center">
           <Link href="/" scroll={false}>
             <div className="block">
-              <img src="/Erebrus_logo_wordmark.png" alt="Logo" className="w-48" />
+              <img
+                src="/Erebrus_logo_wordmark.png"
+                alt="Logo"
+                className="w-48"
+              />
             </div>
           </Link>
           {/* <Link href="/" scroll={false}>
@@ -360,33 +360,44 @@ const Navbar = ({ isHome }) => {
           </Link> */}
         </div>
         <div className="hidden lg:flex items-center">
-
-        { link !== "explorer" ?(
-          <Link
-            href="/explorer"
-            className="text-gray-300 mr-8"
-            scroll={false}
-            onClick={()=> {setlink("explorer")}}
-            style={{ textDecoration: "none", position: "relative",
-            borderBottom: router.pathname.includes('explorer') ? '2px solid white' : '', }}
-  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
-          >
-            Explorer
-          </Link>):
-          (
-<Link
-            href="/explorer"
-            className="text-gray-300 mr-8"
-            scroll={false}
-            style={{ textDecoration: "none", position: "relative",
-            borderBottom:'2px solid white'}}
-          >
-            Explorer
-          </Link>
+          {link !== "explorer" ? (
+            <Link
+              href="/explorer"
+              className="text-gray-300 mr-8"
+              scroll={false}
+              onClick={() => {
+                setlink("explorer");
+              }}
+              style={{
+                textDecoration: "none",
+                position: "relative",
+                borderBottom: router.pathname.includes("explorer")
+                  ? "2px solid white"
+                  : "",
+              }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.borderBottom = "1px solid #fff")
+              }
+              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+            >
+              Explorer
+            </Link>
+          ) : (
+            <Link
+              href="/explorer"
+              className="text-gray-300 mr-8"
+              scroll={false}
+              style={{
+                textDecoration: "none",
+                position: "relative",
+                borderBottom: "2px solid white",
+              }}
+            >
+              Explorer
+            </Link>
           )}
 
-        {/* { link !== "mint" ?(
+          {/* { link !== "mint" ?(
           <Link
             href="/mint"
             className="text-gray-300 mr-8"
@@ -411,126 +422,197 @@ const Navbar = ({ isHome }) => {
           </Link>
           )} */}
 
-          { link !== "subscription" ?(
-          <Link
-            href="/subscription"
-            className="text-gray-300 mr-8"
-            scroll={false}
-            onClick={()=> {setlink("subscription")}}
-            style={{ textDecoration: "none", position: "relative",
-            borderBottom: router.pathname.includes('subscription') ? '2px solid white' : '', }}
-  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
-          >
-            Subscription
-          </Link>):
-          (
-<Link
-            href="/subscription"
-            className="text-gray-300 mr-8"
-            scroll={false}
-            style={{ textDecoration: "none", position: "relative",
-            borderBottom:'2px solid white'}}
-          >
-            Subscription
-          </Link>
+          {link !== "subscription" ? (
+            <Link
+              href="/subscription"
+              className="text-gray-300 mr-8"
+              scroll={false}
+              onClick={() => {
+                setlink("subscription");
+              }}
+              style={{
+                textDecoration: "none",
+                position: "relative",
+                borderBottom: router.pathname.includes("subscription")
+                  ? "2px solid white"
+                  : "",
+              }}
+              onMouseOver={(e) =>
+                (e.currentTarget.style.borderBottom = "1px solid #fff")
+              }
+              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+            >
+              Subscription
+            </Link>
+          ) : (
+            <Link
+              href="/subscription"
+              className="text-gray-300 mr-8"
+              scroll={false}
+              style={{
+                textDecoration: "none",
+                position: "relative",
+                borderBottom: "2px solid white",
+              }}
+            >
+              Subscription
+            </Link>
           )}
 
-          <Link href="https://docs.netsepio.com/erebrus/" target="_blank" className="text-gray-300 mr-8"
-            onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
+          <Link
+            href="https://docs.netsepio.com/erebrus/"
+            target="_blank"
+            className="text-gray-300 mr-8"
+            onMouseOver={(e) =>
+              (e.currentTarget.style.borderBottom = "1px solid #fff")
+            }
             onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
-            >
-          Docs
+          >
+            Docs
           </Link>
-          
+
           {!token ? (
             <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
-             
-             {!connected && ( <button 
-              // onClick={connectWallet}
-              >
-              <WalletSelectorAntDesign/>
-              </button>
-             )}
+              {!connected && (
+                <button
+                // onClick={connectWallet}
+                >
+                  <WalletSelectorAntDesign />
+                </button>
+              )}
               {connected && showsignbutton && (
-            <Button
-          color={"blue"}
-          onClick={onSignMessage}
-          disabled={false}
-          message={"Authenticate"}
-        />
-          )} 
+                <Button
+                  color={"blue"}
+                  onClick={onSignMessage}
+                  disabled={false}
+                  message={"Authenticate"}
+                />
+              )}
             </div>
-          ):
-          (
-<div className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4" style={{color:'#0162FF'}}>
+          ) : (
+            <div
+              className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4"
+              style={{ color: "#0162FF" }}
+            >
               {/* <div>
                 {address?.slice(0, 4)}...{address?.slice(-4)}
               </div> */}
-              <button onClick={handleDeleteCookie} 
-              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #0162FF")}
-            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Log out</button>
-            {avatarUrl && <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto"/>}
+              <button
+                onClick={handleDeleteCookie}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.borderBottom = "1px solid #0162FF")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.borderBottom = "none")
+                }
+              >
+                Log out
+              </button>
+              {avatarUrl && (
+                <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto" />
+              )}
             </div>
           )}
 
-<div>
-          <button onClick={handleClick} 
-  className="text-white p-2 relative">
-    {/* &#9776; */}
+          <div>
+            <button onClick={handleClick} className="text-white p-2 relative">
+              {/* &#9776; */}
 
-    <span className={`bg-gray-500 block transition-all duration-300 ease-out 
-                    h-0.5 w-6 rounded-sm ${hidefilter ? 
-                    'rotate-45 translate-y-1' : '-translate-y-0.5'
-                    }`} >
-                      
-    </span>
-    <span className={`bg-gray-500 block transition-all duration-300 ease-out 
-                    h-0.5 w-6 rounded-sm my-0.5 ${hidefilter ? 
-                    'opacity-0' : 'opacity-100'
-                    }`} >
-                    
-    </span>
+              <span
+                className={`bg-gray-500 block transition-all duration-300 ease-out 
+                    h-0.5 w-6 rounded-sm ${
+                      hidefilter
+                        ? "rotate-45 translate-y-1"
+                        : "-translate-y-0.5"
+                    }`}
+              ></span>
+              <span
+                className={`bg-gray-500 block transition-all duration-300 ease-out 
+                    h-0.5 w-6 rounded-sm my-0.5 ${
+                      hidefilter ? "opacity-0" : "opacity-100"
+                    }`}
+              ></span>
 
-    <span className={`bg-gray-500 block transition-all duration-300 ease-out 
-                    h-0.5 w-6 rounded-sm ${hidefilter ? 
-                    '-rotate-45 -translate-y-1' : 'translate-y-0.5'
-                    }`} >
-    </span>    
-  </button>
+              <span
+                className={`bg-gray-500 block transition-all duration-300 ease-out 
+                    h-0.5 w-6 rounded-sm ${
+                      hidefilter
+                        ? "-rotate-45 -translate-y-1"
+                        : "translate-y-0.5"
+                    }`}
+              ></span>
+            </button>
 
-  {
-              hidefilter && (
-                <>
-                  <div className="z-10 bg-white w-36 rounded-lg shadow absolute" style={{backgroundColor:'white', right:10, top:80, width:'100px'}}>
+            {hidefilter && (
+              <>
+                <div
+                  className="z-10 bg-white w-36 rounded-lg shadow absolute"
+                  style={{
+                    backgroundColor: "white",
+                    right: 10,
+                    top: 80,
+                    width: "100px",
+                  }}
+                >
                   <div className="divide-y divide-gray-500 border-gray-500 border-t">
                     <div className="py-1">
                       <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
-                        <button onClick={()=>setHideFilter(false)} className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Aptos</button>
+                        <button
+                          onClick={() => {
+                            setHideFilter(false), setchainsym("apt");
+                          }}
+                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Aptos
+                        </button>
                       </div>
                     </div>
 
                     <div className="py-1">
                       <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
-                        <button onClick={()=>setHideFilter(false)} className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sui</button>
+                        <button
+                          onClick={() => {
+                            setHideFilter(false), setchainsym("evm");
+                          }}
+                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Ethereum
+                        </button>
                       </div>
                     </div>
 
                     <div className="py-1">
                       <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
-                      <button onClick={()=>setHideFilter(false)} className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Sol</button>
+                        <button
+                          onClick={() => {
+                            setHideFilter(false), setchainsym("sol");
+                          }}
+                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Sol
+                        </button>
                       </div>
                     </div>
+
+                    <div className="py-1">
+                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                        <button
+                          onClick={() => {
+                            setHideFilter(false), setchainsym("sui");
+                          }}
+                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                        >
+                          Sui
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </>
-              )
-            }
-
-  </div>
-
+                </div>
+              </>
+            )}
+          </div>
         </div>
-            
+
         <div className="block lg:hidden">
           <button
             className="flex items-center px-3 py-2 rounded-full text-gray-300"
@@ -560,7 +642,6 @@ const Navbar = ({ isHome }) => {
           <div className="bg-transparent py-4">
             <div className="container mx-auto px-6 flex flex-col lg:flex-row items-center lg:justify-between">
               <div className="flex flex-col lg:flex-row items-center">
-
                 <Link
                   href="/explorer"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
@@ -576,55 +657,92 @@ const Navbar = ({ isHome }) => {
                 </Link>
 
                 <Link
-                  href="https://docs.netsepio.com/erebrus/" target="_blank"
+                  href="https://docs.netsepio.com/erebrus/"
+                  target="_blank"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 >
                   Docs
                 </Link>
 
                 {account?.address && (
-            <div className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl flex gap-4" style={{color:'#0162FF'}}>
-              {/* <div>
+                  <div
+                    className="lg:mt-0 mt-4 lg:mr-4 z-50 rounded-xl flex gap-4"
+                    style={{ color: "#0162FF" }}
+                  >
+                    {/* <div>
                 {account?.address.slice(0, 4)}...{account?.address.slice(-4)}
               </div> */}
-              {
-                address && (
-                  <button onClick={handleDeleteCookie} 
-                  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #0162FF")}
-                  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Log out</button>
-                )
-              } 
-              {avatarUrl && <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto"/>} 
-            </div>
-          )}
-          
-          {!address && (
-            <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
-             
-             {!connected && ( <button 
-              // onClick={connectWallet}
-              >
-              <WalletSelectorAntDesign/>
-              </button>
-             )}
-              {connected && (
-            <SingleSignerTransaction isSendableNetwork={isSendableNetwork} />
-          )} 
-            </div>
-          )}
+                    {address && (
+                      <button
+                        onClick={handleDeleteCookie}
+                        onMouseOver={(e) =>
+                          (e.currentTarget.style.borderBottom =
+                            "1px solid #0162FF")
+                        }
+                        onMouseOut={(e) =>
+                          (e.currentTarget.style.borderBottom = "none")
+                        }
+                      >
+                        Log out
+                      </button>
+                    )}
+                    {avatarUrl && (
+                      <img
+                        src={avatarUrl}
+                        alt="Avatar"
+                        className="w-10 ml-auto"
+                      />
+                    )}
+                  </div>
+                )}
 
-{address && (
-            <div className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl flex gap-4" style={{color:'#0162FF'}}>
-              {/* <div>
+                {!address && (
+                  <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
+                    {!connected && (
+                      <button
+                      // onClick={connectWallet}
+                      >
+                        <WalletSelectorAntDesign />
+                      </button>
+                    )}
+                    {connected && (
+                      <SingleSignerTransaction
+                        isSendableNetwork={isSendableNetwork}
+                        chainsymbol={chainsym}
+                      />
+                    )}
+                  </div>
+                )}
+
+                {address && (
+                  <div
+                    className="lg:mt-0 mt-4 lg:mr-20 z-50 rounded-xl flex gap-4"
+                    style={{ color: "#0162FF" }}
+                  >
+                    {/* <div>
                 {address.slice(0, 4)}...{address.slice(-4)}
               </div> */}
-              <button onClick={handleDeleteCookie}
-              onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #0162FF")}
-              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}>Log out</button>
-              {avatarUrl && <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto"/>}
-            </div>
-          )}
-
+                    <button
+                      onClick={handleDeleteCookie}
+                      onMouseOver={(e) =>
+                        (e.currentTarget.style.borderBottom =
+                          "1px solid #0162FF")
+                      }
+                      onMouseOut={(e) =>
+                        (e.currentTarget.style.borderBottom = "none")
+                      }
+                    >
+                      Log out
+                    </button>
+                    {avatarUrl && (
+                      <img
+                        src={avatarUrl}
+                        alt="Avatar"
+                        className="w-10 ml-auto"
+                      />
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

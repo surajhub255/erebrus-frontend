@@ -14,10 +14,12 @@ const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
 type SingleSignerTransactionProps = {
   isSendableNetwork: (connected: boolean, network?: string) => boolean;
+  chainsymbol: string;
 };
 
 export default function SingleSignerTransaction({
   isSendableNetwork,
+  chainsymbol
 }: SingleSignerTransactionProps) {
   const { setSuccessAlertMessage, setSuccessAlertHash } = useAlert();
 
@@ -50,7 +52,7 @@ export default function SingleSignerTransaction({
 
       const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
     
-      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`);
+      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}?chain=${chainsymbol}`);
       console.log(data);
 
       const message = data.payload.eula;
@@ -77,7 +79,7 @@ export default function SingleSignerTransaction({
         "pubKey": publicKey,
       };
 
-    const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
+    const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=${chainsymbol}`;
 
     const config = {
       url: authenticateApiUrl,
