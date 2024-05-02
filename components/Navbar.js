@@ -274,7 +274,7 @@ const Navbar = ({ isHome }) => {
         const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
         const { data } = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}?chain=${chainsym}`
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}&chain=${chainsym}`
         );
         console.log(data);
 

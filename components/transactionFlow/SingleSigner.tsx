@@ -52,7 +52,7 @@ export default function SingleSignerTransaction({
 
       const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
     
-      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}?chain=${chainsymbol}`);
+      const { data } = await axios.get(`${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}&chain=${chainsymbol}`);
       console.log(data);
 
       const message = data.payload.eula;
