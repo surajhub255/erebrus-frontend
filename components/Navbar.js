@@ -560,67 +560,47 @@ const Navbar = ({ isHome }) => {
 
             {hidefilter && (
               <>
-                <div
-                  className="z-10 bg-white w-36 rounded-lg shadow absolute"
-                  style={{
-                    backgroundColor: "white",
-                    right: 10,
-                    top: 80,
-                    width: "100px",
-                  }}
-                >
-                  <div className="divide-y divide-gray-500 border-gray-500 border-t">
-                    <div className="py-1">
-                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
+                  <div className="bg-white p-8 rounded-lg shadow-md">
+                    <h2 className="text-xl font-bold mb-4">Choose a Chain</h2>
+                    <ul className="space-y-4">
+                      <li className="flex items-center justify-between gap-64">
+                        <span>Ethereum</span>
+                        <ConnectWallet theme={"dark"} modalSize={"wide"} />{" "}
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <span>Aptos</span>
+                        {/* <button onClick={() => setHideFilter(false)}> */}
+                        <WalletSelectorAntDesign />
+                        {/* </button> */}
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <span>Sui</span>
                         <button
-                          onClick={() => {
-                            setHideFilter(false), setchainsym("apt");
-                          }}
-                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                          onClick={() => onConnect("sui")}
                         >
-                          Aptos
+                          Connect
                         </button>
-                      </div>
-                    </div>
-
-                    <div className="py-1">
-                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <span>Solana</span>
                         <button
-                          onClick={() => {
-                            setHideFilter(false), setchainsym("evm");
-                          }}
-                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                          onClick={() => onConnect("solana")}
                         >
-                          Ethereum
+                          Connect
                         </button>
-                      </div>
-                    </div>
-
-                    <div className="py-1">
-                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
-                        <button
-                          onClick={() => {
-                            setHideFilter(false), setchainsym("sol");
-                          }}
-                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Sol
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="py-1">
-                      <div className="dark:hover:bg-gray-600 hover:bg-gray-100 flex flex-row">
-                        <button
-                          onClick={() => {
-                            setHideFilter(false), setchainsym("sui");
-                          }}
-                          className="mx-auto block px-2 py-2 text-sm text-black hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                        >
-                          Sui
-                        </button>
-                      </div>
-                    </div>
+                      </li>
+                    </ul>
+                    <button
+                      className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                      onClick={() => {
+                        setHideFilter(false);
+                      }}
+                    >
+                      Close
+                    </button>
                   </div>
                 </div>
               </>
