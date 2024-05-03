@@ -55,6 +55,16 @@ const Navbar = ({ isHome }) => {
     setHideFilter(!hidefilter);
   };
 
+  useEffect(() => {
+    const getchainsym = () => {
+      const symbol = Cookies.get("Chain_symbol");
+      setchainsym(symbol);
+    }
+
+    getchainsym();
+  }, [])
+  
+
   const sdk = useSDK();
 
   const { account, connected, network, wallet, signMessage } = useWallet();
@@ -321,6 +331,7 @@ const Navbar = ({ isHome }) => {
         Cookies.set("erebrus_token", token, { expires: 7 });
         Cookies.set("erebrus_wallet", account?.address ?? "", { expires: 7 });
         Cookies.set("erebrus_userid", userId, { expires: 7 });
+        Cookies.set("Chain_symbol", chainsym, { expires: 7 });
 
         window.location.reload();
       } catch (error) {
@@ -471,6 +482,8 @@ const Navbar = ({ isHome }) => {
             Docs
           </Link>
 
+{ chainsym == "apt" && (
+  <>
           {!token ? (
             <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
               {!connected && (
@@ -513,6 +526,8 @@ const Navbar = ({ isHome }) => {
               )}
             </div>
           )}
+</>)}
+
 
           <div>
             <button onClick={handleClick} className="text-white p-2 relative">
