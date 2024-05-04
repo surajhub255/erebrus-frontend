@@ -1,13 +1,6 @@
 import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
-import {
-  useNetworkMismatch,
-  useNetwork,
-  useAddress,
-  ChainId,
-  ConnectWallet,
-  useSDK,
-} from "@thirdweb-dev/react";
+
 import axios from "axios";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
@@ -21,6 +14,7 @@ import { useRouter } from "next/router";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
+import { useAccount, useSignMessage } from "wagmi";
 
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
@@ -50,6 +44,9 @@ const Navbar = ({ isHome }) => {
   const [avatarUrl, setAvatarUrl] = useState("");
   const [chainsym, setchainsym] = useState("");
   const [hidefilter, setHideFilter] = useState(false);
+  const [connectedAddress, setConnectedAddress] = useState("");
+  const [sendable, setSendable] = useState(false);
+  const [requiredNetwork, setRequiredNetwork] = useState(false);
 
   const handleClick = () => {
     setHideFilter(!hidefilter);
@@ -59,36 +56,51 @@ const Navbar = ({ isHome }) => {
     const getchainsym = () => {
       const symbol = Cookies.get("Chain_symbol");
       setchainsym(symbol);
-    }
+    };
 
     getchainsym();
-  }, [])
-  
-
-  const sdk = useSDK();
+    if (chainsym == "evm") {
+      setConnectedAddress(ethAddress);
+      setRequiredNetwork("Polygon Amoy");
+      if (isConnected && ethAddress) {
+        Cookies.set("erebrus_wallet", ethAddress);
+      }
+      onSignMessageEth();
+    } else if (chainsym == "apt") {
+      setConnectedAddress(ethAddress);
+      setRequiredNetwork(mynetwork);
+      if (account && account.address) {
+        // Update the cookie with the new address
+        Cookies.set("erebrus_wallet", account.address);
+      }
+      onSignMessage();
+    }
+  }, []);
 
   const { account, connected, network, wallet, signMessage } = useWallet();
-
-  let sendable = isSendableNetwork(connected, network?.name);
-
+  let sendableApt = isSendableNetwork(connected, network?.name);
+  const {
+    address: ethAddress,
+    isConnecting,
+    isDisconnected,
+    isConnected,
+    chain,
+  } = useAccount();
+  const { signMessage: ethSignMessage } = useSignMessage();
   const router = useRouter();
-  console.log("router", router);
-
-  console.log("account details", account);
-
   const address = Cookies.get("erebrus_wallet");
   const token = Cookies.get("erebrus_token");
 
   useEffect(() => {
-    if (account && account.address) {
+    if ((account && account.address) || (isConnected && ethAddress)) {
       // Update the cookie with the new address
-      Cookies.set("erebrus_wallet", account.address);
-      onSignMessage();
+      if (chainsym == "apt") {
+        Cookies.set("erebrus_wallet", account.address);
+      } else if (chainsym == "evm") {
+        Cookies.set("erebrus_wallet", ethAddress);
+      }
     }
   }, [account?.address]);
-
-  // const [, switchNetwork] = useNetwork();
-  const isMismatched = useNetworkMismatch();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -204,89 +216,14 @@ const Navbar = ({ isHome }) => {
     }
   };
 
-  const connectWallet = async () => {
-    const wallet = getAptosWallet();
-    try {
-      const response = await wallet.connect();
-
-      const account = await wallet.account();
-      console.log("account", account);
-
-      // Get the current network after connecting (optional)
-      const networkwallet = await window.aptos.network();
-
-      // Check if the connected network is Mainnet
-      if (networkwallet === mynetwork) {
-        const { data } = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`
-        );
-        console.log(data);
-
-        const message = data.payload.eula;
-        const nonce = data.payload.flowId;
-        const publicKey = account.publicKey;
-
-        const { signature, fullMessage } = await wallet.signMessage({
-          message,
-          nonce,
-        });
-        console.log("sign", signature, "full message", fullMessage);
-
-        let signaturewallet = signature;
-
-        if (signaturewallet.length === 128) {
-          signaturewallet = `0x${signaturewallet}`;
-        }
-
-        const authenticationData = {
-          flowId: nonce,
-          signature: `${signaturewallet}`,
-          pubKey: publicKey,
-        };
-
-        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
-
-        const config = {
-          url: authenticateApiUrl,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: authenticationData,
-        };
-
-        try {
-          const response = await axios(config);
-          console.log("auth data", response.data);
-          const token = await response?.data?.payload?.token;
-          const userId = await response?.data?.payload?.userId;
-          // localStorage.setItem("platform_token", token);
-          Cookies.set("erebrus_token", token, { expires: 7 });
-          Cookies.set("erebrus_wallet", account.address, { expires: 7 });
-          Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-          // setUserWallet(account.address);
-          window.location.reload();
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        alert(`Switch to ${mynetwork} in your wallet`);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const onSignMessage = async () => {
-    if (sendable) {
+    if (sendableApt) {
       try {
         const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
         const { data } = await axios.get(
           `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}&chain=${chainsym}`
         );
-        console.log(data);
 
         const message = data.payload.eula;
         const nonce = data.payload.flowId;
@@ -297,7 +234,6 @@ const Navbar = ({ isHome }) => {
           nonce: nonce,
         };
         const response = await signMessage(payload);
-        console.log(response);
 
         let signaturewallet = response.signature;
 
@@ -323,7 +259,6 @@ const Navbar = ({ isHome }) => {
         };
 
         const authResponse = await axios(config);
-        console.log("auth data", authResponse.data);
 
         const token = await authResponse?.data?.payload?.token;
         const userId = await authResponse?.data?.payload?.userId;
@@ -340,6 +275,66 @@ const Navbar = ({ isHome }) => {
       }
     } else {
       alert(`Switch to ${mynetwork} in your wallet`);
+    }
+  };
+
+  const onSignMessageEth = async () => {
+    if (isConnected) {
+      if (chainsym == "evm" && chain.name == "Polygon Amoy") {
+        try {
+          const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+
+          const { data } = await axios.get(
+            `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${ethAddress}&chain=${chainsym}`
+          );
+
+          const message = data.payload.eula;
+          const nonce = data.payload.flowId;
+
+          const payload = message + nonce;
+
+          await ethSignMessage(
+            { message: payload },
+            {
+              onSuccess: (data) => {
+                setSignature(data);
+                const authenticationData = {
+                  flowId: nonce,
+                  signature: data,
+                };
+
+                const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=${chainsym}`;
+
+                const config = {
+                  url: authenticateApiUrl,
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  data: authenticationData,
+                };
+
+                const authResponse = axios(config);
+
+                const token = authResponse?.data?.payload?.token;
+                const userId = authResponse?.data?.payload?.userId;
+
+                Cookies.set("erebrus_token", token, { expires: 7 });
+                Cookies.set("erebrus_wallet", account?.address ?? "", {
+                  expires: 7,
+                });
+                Cookies.set("erebrus_userid", userId, { expires: 7 });
+                Cookies.set("Chain_symbol", chainsym, { expires: 7 });
+              },
+            }
+          );
+        } catch (error) {
+          console.error(error);
+          setshowsignbutton(true);
+        }
+      } else {
+        alert(`Switch to ${chain.name} in your wallet`);
+      }
     }
   };
 
@@ -370,6 +365,7 @@ const Navbar = ({ isHome }) => {
             <h1 className="text-xl font-bold text-white ml-2">EREBRUS</h1>
           </Link> */}
         </div>
+
         <div className="hidden lg:flex items-center">
           {link !== "explorer" ? (
             <Link
@@ -407,31 +403,6 @@ const Navbar = ({ isHome }) => {
               Explorer
             </Link>
           )}
-
-          {/* { link !== "mint" ?(
-          <Link
-            href="/mint"
-            className="text-gray-300 mr-8"
-            scroll={false}
-            onClick={()=> {setlink("mint")}}
-            style={{ textDecoration: "none", position: "relative",
-            borderBottom: router.pathname.includes('mint') ? '2px solid white' : '', }}
-  onMouseOver={(e) => (e.currentTarget.style.borderBottom = "1px solid #fff")}
-  onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
-          >
-            Mint NFT
-          </Link>):
-          (
-<Link
-            href="/mint"
-            className="text-gray-300 mr-8"
-            scroll={false}
-            style={{ textDecoration: "none", position: "relative",
-            borderBottom:'2px solid white'}}
-          >
-            Mint NFT
-          </Link>
-          )} */}
 
           {link !== "subscription" ? (
             <Link
@@ -482,52 +453,62 @@ const Navbar = ({ isHome }) => {
             Docs
           </Link>
 
-{ chainsym == "apt" && (
-  <>
-          {!token ? (
-            <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
-              {!connected && (
-                <button
-                // onClick={connectWallet}
-                >
-                  <WalletSelectorAntDesign />
-                </button>
-              )}
-              {connected && showsignbutton && (
-                <Button
-                  color={"blue"}
-                  onClick={onSignMessage}
-                  disabled={false}
-                  message={"Authenticate"}
-                />
-              )}
-            </div>
-          ) : (
-            <div
-              className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4"
-              style={{ color: "#0162FF" }}
-            >
-              {/* <div>
-                {address?.slice(0, 4)}...{address?.slice(-4)}
-              </div> */}
-              <button
-                onClick={handleDeleteCookie}
-                onMouseOver={(e) =>
-                  (e.currentTarget.style.borderBottom = "1px solid #0162FF")
-                }
-                onMouseOut={(e) =>
-                  (e.currentTarget.style.borderBottom = "none")
-                }
+          <>
+            {!token ? (
+              <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
+                {!connected && chainsym == "apt" && (
+                  <button
+                  // onClick={connectWallet}
+                  >
+                    <WalletSelectorAntDesign />
+                  </button>
+                )}
+                {chainsym == "evm" && (
+                  <button
+                  // onClick={connectWallet}
+                  >
+                    <w3m-button />
+                  </button>
+                )}
+                {connected && showsignbutton && (
+                  <Button
+                    color={"blue"}
+                    onClick={onSignMessage}
+                    disabled={false}
+                    message={"Authenticate"}
+                  />
+                )}
+                {isConnected && chainsym == "evm" && (
+                  <Button
+                    color={"blue"}
+                    onClick={onSignMessageEth}
+                    disabled={false}
+                    message={"Authenticate"}
+                  />
+                )}
+              </div>
+            ) : (
+              <div
+                className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4"
+                style={{ color: "#0162FF" }}
               >
-                Log out
-              </button>
-              {avatarUrl && (
-                <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto" />
-              )}
-            </div>
-          )}
-</>)}
-
+                <button
+                  onClick={handleDeleteCookie}
+                  onMouseOver={(e) =>
+                    (e.currentTarget.style.borderBottom = "1px solid #0162FF")
+                  }
+                  onMouseOut={(e) =>
+                    (e.currentTarget.style.borderBottom = "none")
+                  }
+                >
+                  Log out
+                </button>
+                {avatarUrl && (
+                  <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto" />
+                )}
+              </div>
+            )}
+          </>
 
           <div>
             <button onClick={handleClick} className="text-white p-2 relative">
@@ -565,31 +546,52 @@ const Navbar = ({ isHome }) => {
                     <h2 className="text-xl font-bold mb-4">Choose a Chain</h2>
                     <ul className="space-y-4">
                       <li className="flex items-center justify-between gap-64">
-                        <span>Ethereum</span>
-                        <ConnectWallet theme={"dark"} modalSize={"wide"} />{" "}
-                      </li>
-                      <li className="flex items-center justify-between">
-                        <span>Aptos</span>
-                        {/* <button onClick={() => setHideFilter(false)}> */}
-                        <WalletSelectorAntDesign />
-                        {/* </button> */}
-                      </li>
-                      <li className="flex items-center justify-between">
-                        <span>Sui</span>
+                        {/* <span>Ethereum</span>
+                        <ConnectWallet theme={"dark"} modalSize={"wide"} />{" "} */}
                         <button
-                          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                          onClick={() => onConnect("sui")}
+                          onClick={() => {
+                            setHideFilter(false);
+                            Cookies.set("Chain_symbol", "evm");
+                            setchainsym("evm");
+                          }}
                         >
-                          Connect
+                          Ethereum
                         </button>
                       </li>
                       <li className="flex items-center justify-between">
-                        <span>Solana</span>
+                        {/* <button onClick={() => setHideFilter(false)}> */}
+                        {/* <WalletSelectorAntDesign /> */}
+                        {/* </button> */}
                         <button
-                          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-                          onClick={() => onConnect("solana")}
+                          onClick={() => {
+                            setHideFilter(false);
+                            Cookies.set("Chain_symbol", "apt");
+                            setchainsym("apt");
+                          }}
                         >
-                          Connect
+                          Aptos
+                        </button>
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <button
+                          onClick={() => {
+                            setHideFilter(false);
+                            Cookies.set("Chain_symbol", "sui");
+                            setchainsym("sui");
+                          }}
+                        >
+                          Sui
+                        </button>
+                      </li>
+                      <li className="flex items-center justify-between">
+                        <button
+                          onClick={() => {
+                            setHideFilter(false);
+                            Cookies.set("Chain_symbol", "sol");
+                            setchainsym("sol");
+                          }}
+                        >
+                          Solana
                         </button>
                       </li>
                     </ul>
