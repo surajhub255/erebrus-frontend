@@ -96,11 +96,13 @@ const Navbar = ({ isHome }) => {
       // Update the cookie with the new address
       if (chainsym == "apt") {
         Cookies.set("erebrus_wallet", account.address);
+        setshowsignbutton(true);
       } else if (chainsym == "evm") {
         Cookies.set("erebrus_wallet", ethAddress);
+        setshowsignbutton(true);
       }
     }
-  }, [account?.address]);
+  }, [account?.address, ethAddress]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -478,7 +480,7 @@ const Navbar = ({ isHome }) => {
                     message={"Authenticate"}
                   />
                 )}
-                {isConnected && chainsym == "evm" && (
+                {isConnected && chainsym == "evm" && showsignbutton && (
                   <Button
                     color={"blue"}
                     onClick={onSignMessageEth}
