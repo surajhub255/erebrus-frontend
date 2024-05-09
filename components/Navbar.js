@@ -14,7 +14,13 @@ import { useRouter } from "next/router";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
+const networkSui = process.env.NEXT_PUBLIC_SUI_NETWORK;
 import { useAccount, useSignMessage } from "wagmi";
+import {
+  ConnectButton,
+  useWallet as suiUseWallet,
+  addressEllipsis,
+} from "@suiet/wallet-kit";
 
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
@@ -30,7 +36,7 @@ const WalletSelectorAntDesign = dynamic(
 );
 
 const isSendableNetwork = (connected, network) => {
-  return connected && network?.toLowerCase() === mynetwork.toLowerCase();
+  return connected && network?.toLowerCase() === mynetwork.toLowerCase() || networkSui;
 };
 
 const Navbar = ({ isHome }) => {
@@ -51,6 +57,21 @@ const Navbar = ({ isHome }) => {
   const handleClick = () => {
     setHideFilter(!hidefilter);
   };
+  const {
+    status,
+    connected: suiConnected,
+    connecting,
+    account: suiAccount,
+    network: SuiNetwork,
+    name,
+  } = suiUseWallet();
+  const wallet = suiUseWallet();
+  console.log("suiwalet", wallet);
+  console.log("suiconnecte", suiConnected);
+  console.log("suiaccount", suiAccount);
+  console.log("suiname", wallet.chain.name);
+
+  let sendableSui = isSendableNetwork(status === "connected", wallet.chain.id);
 
   useEffect(() => {
     const getchainsym = () => {
@@ -74,11 +95,20 @@ const Navbar = ({ isHome }) => {
         Cookies.set("erebrus_wallet", account.address);
       }
       onSignMessage();
+    } else if (chainsym == "sui") {
+      setConnectedAddress(suiAccount.address);
+      setRequiredNetwork(networkSui);
+      if (suiAccount && suiAccount.address) {
+        // Update the cookie with the new address
+        Cookies.set("sui_wallet", suiAccount.address);
+      }
+      onSignMessageSui();
     }
   }, []);
 
-  const { account, connected, network, wallet, signMessage } = useWallet();
+  const { account, connected, network, signMessage } = useWallet();
   let sendableApt = isSendableNetwork(connected, network?.name);
+
   const {
     address: ethAddress,
     isConnecting,
@@ -92,7 +122,11 @@ const Navbar = ({ isHome }) => {
   const token = Cookies.get("erebrus_token");
 
   useEffect(() => {
-    if ((account && account.address) || (isConnected && ethAddress)) {
+    if (
+      (account && account.address) ||
+      (isConnected && ethAddress) ||
+      (status === "connected" && suiAccount.address)
+    ) {
       // Update the cookie with the new address
       if (chainsym == "apt") {
         Cookies.set("erebrus_wallet", account.address);
@@ -100,9 +134,12 @@ const Navbar = ({ isHome }) => {
       } else if (chainsym == "evm") {
         Cookies.set("erebrus_wallet", ethAddress);
         setshowsignbutton(true);
+      } else if (chainsym == "sui") {
+        Cookies.set("erebrus_wallet", suiAccount.address);
+        setshowsignbutton(true);
       }
     }
-  }, [account?.address, ethAddress]);
+  }, [account?.address, ethAddress, suiAccount?.address]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -340,6 +377,84 @@ const Navbar = ({ isHome }) => {
     }
   };
 
+  const onSignMessageSui = async () => {
+    if (sendableSui) {
+      if (chainsym == "sui" && wallet.chain.name == "Sui Testnet" ) {
+      try {
+        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+        const { data } = await axios.get(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${wallet.address}&chain=sui`
+        );
+        console.log("address", wallet.address);
+        const msg = data.payload.eula + data.payload.flowId;
+        const nonce = data.payload.flowId;
+        // convert string to Uint8Array
+        const msgBytes = new TextEncoder().encode(msg);
+
+        const result = await wallet.signPersonalMessage({
+          message: msgBytes,
+        });
+        console.log("signature", result.signature);
+        console.log("publickey", wallet.account?.publicKey);
+        // verify signature with publicKey and SignedMessage (params are all included in result)
+        const verifyResult = await wallet.verifySignedMessage(
+          result,
+          wallet.account.publicKey
+        );
+        if (!verifyResult) {
+          console.log(
+            "signPersonalMessage succeed, but verify signedMessage failed"
+          );
+        } else {
+          console.log(
+            "signPersonalMessage succeed, and verify signedMessage succeed!"
+          );
+        }
+
+        const payload = {
+          message: message,
+          nonce: nonce,
+        };
+
+        const authenticationData = {
+          flowId: nonce,
+          signatureSui: result.signature,
+        };
+        console.log("adaddasdasd", result.signature);
+
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=sui`;
+
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+
+        const authResponse = await axios(config);
+        console.log("auth data", authResponse.data);
+
+        const token = await authResponse?.data?.payload?.token;
+        const userId = await authResponse?.data?.payload?.userId;
+
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", suiAccount?.address ?? "", { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        setshowsignbutton(true);
+      }  
+  }
+else {
+      alert(`Switch to ${wallet.chain.name} in your wallet`);
+    }
+  }
+  };
+
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
@@ -472,6 +587,14 @@ const Navbar = ({ isHome }) => {
                     <w3m-button />
                   </button>
                 )}
+                {chainsym == "sui" && (
+                  <button
+                  // onClick={connectWallet}
+                  >
+                    <ConnectButton />
+                  </button>
+                )}
+
                 {connected && showsignbutton && (
                   <Button
                     color={"blue"}
@@ -488,6 +611,16 @@ const Navbar = ({ isHome }) => {
                     message={"Authenticate"}
                   />
                 )}
+                {status === "connected" &&
+                  chainsym == "sui" &&
+                  showsignbutton && (
+                    <Button
+                      color={"blue"}
+                      onClick={onSignMessageSui}
+                      disabled={false}
+                      message={"Authenticate"}
+                    />
+                  )}
               </div>
             ) : (
               <div
