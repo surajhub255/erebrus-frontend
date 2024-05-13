@@ -24,6 +24,8 @@ import { FC, ReactNode } from "react";
 // import face from "../lib/faceInitialization";
 import { AlertProvider, useAlert } from "./AlertProvider";
 import { IdentityConnectWallet } from "@identity-connect/wallet-adapter-plugin";
+import {WalletProvider} from '@suiet/wallet-kit';
+import '@suiet/wallet-kit/style.css';
 
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { autoConnect } = useAutoConnect();
@@ -74,7 +76,7 @@ export const AppContext: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <AutoConnectProvider>
       <AlertProvider>
-        <WalletContextProvider>{children}</WalletContextProvider>
+        <WalletContextProvider><WalletProvider>{children}</WalletProvider></WalletContextProvider>
       </AlertProvider>
     </AutoConnectProvider>
   );
