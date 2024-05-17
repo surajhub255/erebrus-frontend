@@ -83,6 +83,21 @@ const Navbar = ({ isHome }) => {
   let sendableSol = isSendableNetwork(solconnected, networkSol);
   const accountsol = solpublickey;
 
+  const { account, connected, network, signMessage } = useWallet();
+  let sendableApt = isSendableNetwork(connected, network?.name);
+
+  const {
+    address: ethAddress,
+    isConnecting,
+    isDisconnected,
+    isConnected,
+    chain,
+  } = useAccount();
+  const { signMessage: ethSignMessage } = useSignMessage();
+  const router = useRouter();
+  const address = Cookies.get("erebrus_wallet");
+  const token = Cookies.get("erebrus_token");
+
   useEffect(() => {
     const getchainsym = () => {
       const symbol = Cookies.get("Chain_symbol");
@@ -119,26 +134,11 @@ const Navbar = ({ isHome }) => {
       setRequiredNetwork(networkSol);
       if (accountsol) {
         // Update the cookie with the new address
-        Cookies.set("sol_wallet", accountsol);
+        Cookies.set("erebrus_wallet", accountsol);
       }
       onSignMessageSol();
     }
-  }, []);
-
-  const { account, connected, network, signMessage } = useWallet();
-  let sendableApt = isSendableNetwork(connected, network?.name);
-
-  const {
-    address: ethAddress,
-    isConnecting,
-    isDisconnected,
-    isConnected,
-    chain,
-  } = useAccount();
-  const { signMessage: ethSignMessage } = useSignMessage();
-  const router = useRouter();
-  const address = Cookies.get("erebrus_wallet");
-  const token = Cookies.get("erebrus_token");
+  }, [isConnected, account, suiAccount, solconnected]);
 
   useEffect(() => {
     if (
@@ -778,7 +778,7 @@ else {
                   </button>
                 )}
 
-                {showsignbutton && (
+                {solconnected && showsignbutton && (
                 <Button
                   color={"blue"}
                   onClick={onSignMessageSol}
