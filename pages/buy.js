@@ -4,9 +4,7 @@ import axios from "axios";
 import Head from "next/head";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
-import {
-  useWallet,
-} from "@aptos-labs/wallet-adapter-react";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
 import dynamic from "next/dynamic";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -43,7 +41,6 @@ const isSendableNetwork = (connected, network) => {
 };
 
 const Buy = () => {
-
   const [isLoadingTx, setLoadingTx] = useState(false);
   const [error, setError] = useState(null);
   const isSignedIn = Cookies.get("erebrus_wallet");
@@ -64,21 +61,20 @@ const Buy = () => {
   const [magicmessage, setmagicmessage] = useState("");
   const [magicloginmessage, setmagicloginmessage] = useState(false);
 
-  const { account, connected, network, signMessage, signAndSubmitTransaction } = useWallet();
+  const { account, connected, network, signMessage, signAndSubmitTransaction } =
+    useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
 
-  useEffect( () => {
-    
+  useEffect(() => {
     mint();
-
-  }, [connected])
+  }, [connected]);
 
   useEffect(() => {
     // Extract URL parameters
     const currentUrl = window.location.href;
-    const params = new URLSearchParams(currentUrl.split('?')[1]);
-    const redirect_status = params.get('redirect_status');
+    const params = new URLSearchParams(currentUrl.split("?")[1]);
+    const redirect_status = params.get("redirect_status");
 
     console.log("redirect_status", redirect_status);
     if (redirect_status === `succeeded`) {
@@ -87,14 +83,11 @@ const Buy = () => {
     }
   }, []);
 
-
   useEffect(() => {
-   
     if (!isauthenticate) {
       setmagiclinkpopup(true);
     }
   }, []);
-  
 
   const getAptosWallet = () => {
     if ("aptos" in window) {
@@ -210,61 +203,72 @@ const Buy = () => {
   //   },
   // };
 
-
-  const handleMagicLink = async() =>{
+  const handleMagicLink = async () => {
     const auth = Cookies.get("erebrus_token");
     const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-    const obj = {"email":gmail};
+    const obj = { email: gmail };
     const jsonData = JSON.stringify(obj);
 
     try {
-      const response = await axios.post(`${REACT_APP_GATEWAY_URL}api/v1.0/account/generate-auth-id`, {
-       ...obj
-      },{headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${auth}`,
-      }});
+      const response = await axios.post(
+        `${REACT_APP_GATEWAY_URL}api/v1.0/account/generate-auth-id`,
+        {
+          ...obj,
+        },
+        {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${auth}`,
+          },
+        }
+      );
 
       const responseData = await response.data;
-      console.log('magic link response:', responseData);
+      console.log("magic link response:", responseData);
       setmagicmessage(responseData.message);
     } catch (error) {
-      console.error('magic link error:', error);
+      console.error("magic link error:", error);
     }
   };
 
-  const handleMagicLogin = async() =>{
+  const handleMagicLogin = async () => {
     const auth = Cookies.get("erebrus_token");
     const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-    const obj = {"code":code,"emailId":gmail};
+    const obj = { code: code, emailId: gmail };
     const jsonData = JSON.stringify(obj);
 
     try {
-      const response = await axios.post(`${REACT_APP_GATEWAY_URL}api/v1.0/account/paseto-from-magic-link`, {
-       ...obj
-      },{headers: {
-        Accept: "application/json, text/plain, */*",
-        "Content-Type": "application/json",
-        // Authorization: `Bearer ${auth}`,
-      }});
+      const response = await axios.post(
+        `${REACT_APP_GATEWAY_URL}api/v1.0/account/paseto-from-magic-link`,
+        {
+          ...obj,
+        },
+        {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${auth}`,
+          },
+        }
+      );
 
       const responseData = await response.data;
-      console.log('magic login response:', responseData);
+      console.log("magic login response:", responseData);
       Cookies.set("erebrus_token", responseData.payload.token, { expires: 7 });
       setmagicloginmessage(true);
     } catch (error) {
-      console.error('magic login error:', error);
+      console.error("magic login error:", error);
     }
   };
 
   const transaction = {
     data: {
       function: `${envmintfucn}`, // Assuming envmintfucn is the function name in the old format
-      typeArguments: [],           // No type arguments in the old format
-      functionArguments: [],       // No function arguments in the old format
+      typeArguments: [], // No type arguments in the old format
+      functionArguments: [], // No function arguments in the old format
     },
   };
 
@@ -278,8 +282,7 @@ const Buy = () => {
         transactionHash: pendingTransaction.hash,
       });
       console.log("mint transaction", pendingTransaction.hash);
-      if(pendingTransaction.hash)
-      {
+      if (pendingTransaction.hash) {
         setmintpage("page3");
         setLoadingTx(false);
         setshowconnectbutton(false);
@@ -447,23 +450,22 @@ const Buy = () => {
         <title>Erebrus | Clients</title>
       </Head>
 
-      { mintpage === "page1" &&
-        (
-<div class="flex h-screen">
-        <div className="w-1/2">
-          <div className="text-white text-4xl ml-20 mt-20 mx-auto">
-            Buy Subscription
-          </div>
-          <div className="text-white text-xl ml-20 mt-10 mx-auto">
-          Pay per use monthly by APT, cryto currencies or Fiat  
-          </div>
-          <div className="text-white text-xl ml-20 mt-4 mx-auto">
-          Up to 5 regions to choose from (more to come along the way)
-          </div>
-          <div className="text-white text-xl ml-20 mt-4 mx-auto">
-          Multiple tiers starting from 9.99USD
-          </div>
-  
+      {mintpage === "page1" && (
+        <div class="flex h-screen">
+          <div className="w-1/2">
+            <div className="text-white text-4xl ml-20 mt-20 mx-auto">
+              Buy Subscription
+            </div>
+            <div className="text-white text-xl ml-20 mt-10 mx-auto">
+              Pay per use monthly by APT, cryto currencies or Fiat
+            </div>
+            <div className="text-white text-xl ml-20 mt-4 mx-auto">
+              Up to 5 regions to choose from (more to come along the way)
+            </div>
+            <div className="text-white text-xl ml-20 mt-4 mx-auto">
+              Multiple tiers starting from 9.99USD
+            </div>
+
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -493,23 +495,25 @@ const Buy = () => {
                         )}
                       </div>
                     ) : ( */}
-                      <div className="mr-auto">
-                        {buttonblur ? (
-                          <div
-                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20 bg-blue-300`}
-                          >
-                            Buy Subscription
-                          </div>
-                        ) : (
-                          <button
-                            className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20`}
-                            onClick={()=>{setmintpage("page2")}}
-                            style={{backgroundColor:'#0162FF'}}
-                          >
-                            Buy Subscription
-                          </button>
-                        )}
-                      </div>
+                    <div className="mr-auto">
+                      {buttonblur ? (
+                        <div
+                          className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20 bg-blue-300`}
+                        >
+                          Buy Subscription
+                        </div>
+                      ) : (
+                        <button
+                          className={`text-white font-bold py-4 px-10 rounded-full mr-auto ml-20`}
+                          onClick={() => {
+                            setmintpage("page2");
+                          }}
+                          style={{ backgroundColor: "#0162FF" }}
+                        >
+                          Buy Subscription
+                        </button>
+                      )}
+                    </div>
                     {/* )} */}
 
                     {error && <div className="text-red-500 mt-4">{error}</div>}
@@ -517,62 +521,70 @@ const Buy = () => {
                 )}
               </div>
             </motion.div>
-        </div>
+          </div>
 
-        {/* <div className="text-white w-1/4 ml-auto mr-40 mt-10">
+          {/* <div className="text-white w-1/4 ml-auto mr-40 mt-10">
           <img src="/111nft_gif.gif" />
         </div> */}
-      </div>
-        )
-      }
-      
+        </div>
+      )}
 
       {mintpage === "page2" && (
-                      <div
-                        style={{ backgroundImage: `url('/bgmint.png')`, 
-                        backgroundColor:"black", 
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat"}}
-                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
-                        id="popupmodal"
-                      >
-                        <div className="relative p-4 w-full max-w-xl max-h-full">
-                        <img src="/coin1.png" className="w-60 -mt-10 absolute -top-10 -left-20"/>
-                          <div
-                            className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor pb-20"
-                            style={{
-                              border: "1px solid #0162FF",
-                              boxShadow: 'inset -10px -10px 60px 0 rgba(255, 255, 255, 0.4)',
-                            }}
-                          >
-                            <div className="flex items-center justify-end px-4 py-6 rounded-t" style={{borderBottom: "1px solid #FFFFFF80"}}>
-                              <div className="text-2xl text-white">Choose the payment option</div>
-                              <button
-                                onClick={() => setmintpage("page1")}
-                                type="button"
-                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                <svg
-                                  className="w-3 h-3"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 14 14"
-                                >
-                                  <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                  />
-                                </svg>
-                                <span className="sr-only">Close modal</span>
-                              </button>
-                            </div>
+        <div
+          style={{
+            backgroundImage: `url('/bgmint.png')`,
+            backgroundColor: "black",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+          }}
+          className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+          id="popupmodal"
+        >
+          <div className="relative p-4 w-full max-w-xl max-h-full">
+            <img
+              src="/coin1.png"
+              className="w-60 -mt-10 absolute -top-10 -left-20"
+            />
+            <div
+              className="relative rounded-3xl shadow dark:bg-gray-700 bgcolor pb-20"
+              style={{
+                border: "1px solid #0162FF",
+                boxShadow: "inset -10px -10px 60px 0 rgba(255, 255, 255, 0.4)",
+              }}
+            >
+              <div
+                className="flex items-center justify-end px-4 py-6 rounded-t"
+                style={{ borderBottom: "1px solid #FFFFFF80" }}
+              >
+                <div className="text-2xl text-white">
+                  Choose the payment option
+                </div>
+                <button
+                  onClick={() => setmintpage("page1")}
+                  type="button"
+                  className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <svg
+                    className="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
 
-                            {/* <div className="items-center pt-20 rounded-b w-1/2 mx-auto">
+              {/* <div className="items-center pt-20 rounded-b w-1/2 mx-auto">
                             {!connected ? (
                               <>
                               <button
@@ -604,103 +616,133 @@ const Buy = () => {
                               
                             </div> */}
 
-                            { !showconnectbutton && (<div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
-                              <button
-                                onClick={stripe}
-                                style={{ border: "1px solid #0162FF" }}
-                                type="button"
-                                className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                              >
-                                <img src="/mint3.png" className="w-12"/>
-                                <div className="px-5 py-2.5 ">Pay in USD</div>
-                              </button>
-                            </div>)}
-                          </div>
-                          <img src="/coin2.png" className="w-60 -mt-10 absolute -bottom-24 -right-24" style={{ zIndex: -1 }}/>
-                        </div>
-                      </div>
-                    )}
-
-
-{clientSecret && (
-                      <div
-                        style={{ backgroundColor: "#222944E5" }}
-                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
-                        id="popupmodal"
-                      >
-                        <div className="p-10 w-2/5 flex flex-col" style={{backgroundColor:'white'}}>
-                          <Elements options={options} stripe={stripePromise}>
-                            <CheckoutForm />
-                          </Elements>
-                        </div>
-                      </div>
-                    )}
-
-
-
-{ magiclinkpopup && (
-<div style={{backgroundColor:'#222944E5'}} className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full" id="popupmodal">
-    <div className="relative p-4 lg:w-1/2 w-full max-w-lg max-h-full">
-        <div className="relative rounded-lg shadow" style={{backgroundColor:'#37406D'}}>
-            <div className="flex items-center justify-end p-4 rounded-t text-white">
-                <h3 className="text-2xl font-semibold">
-                Login using Magic link
-                </h3>
-                <button 
-                    onClick={()=>{setmagiclinkpopup(false);window.location.reload();}}
-                    type="button" 
-                    className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                >
-                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span className="sr-only">Close modal</span>
-                </button>
-            </div>
-
-            {/* <Image src={googletop} alt="" className="mx-auto"/> */}
-
-            {!magicmessage && (
-
-            <form
-                    id="myForm"
-                    className="rounded pt-10"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleMagicLink();
-                    }}
+              {!showconnectbutton && (
+                <div className="flex items-center pb-20 pt-10 rounded-b w-1/2 mx-auto">
+                  <button
+                    onClick={stripe}
+                    style={{ border: "1px solid #0162FF" }}
+                    type="button"
+                    className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-
-          <div className="pb-4 mx-10">
-                <input
-                          type="email"
-                          id="gmail"
-                          style={border}
-                          className="shadow border appearance-none rounded-lg w-full py-3 px-4 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                          placeholder="Enter your email address"
-                          value={gmail}
-                          onChange={(e) => setgmail(e.target.value)}
-                          required
-                        />
-          </div>
-
-          <div className="pb-10 mx-10">
-            <button className="text-white border p-2 rounded-lg w-full"
-            type="submit"
-            value="submit">
-            <div className="flex gap-2 justify-center">
-                <div>Send Magic Link</div>
+                    <img src="/mint3.png" className="w-12" />
+                    <div className="px-5 py-2.5 ">Pay in USD</div>
+                  </button>
                 </div>
-            </button>
+              )}
+            </div>
+            <img
+              src="/coin2.png"
+              className="w-60 -mt-10 absolute -bottom-24 -right-24"
+              style={{ zIndex: -1 }}
+            />
           </div>
+        </div>
+      )}
 
-          </form>
-          )}
+      {clientSecret && (
+        <div
+          style={{ backgroundColor: "#222944E5" }}
+          className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full p-30"
+          id="popupmodal"
+        >
+          <div
+            className="p-10 w-2/5 flex flex-col"
+            style={{ backgroundColor: "white" }}
+          >
+            <Elements options={options} stripe={stripePromise}>
+              <CheckoutForm />
+            </Elements>
+          </div>
+        </div>
+      )}
 
-          {magicmessage && !magicloginmessage && (
-            <>
-            <div className="text-green-500 py-10 w-2/3 mx-auto">{magicmessage}! Please check your mail and enter code here or click the magic link.</div>
-            <form
+      {magiclinkpopup && (
+        <div
+          style={{ backgroundColor: "#222944E5" }}
+          className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+          id="popupmodal"
+        >
+          <div className="relative p-4 lg:w-1/2 w-full max-w-lg max-h-full">
+            <div
+              className="relative rounded-lg shadow"
+              style={{ backgroundColor: "#37406D" }}
+            >
+              <div className="flex items-center justify-end p-4 rounded-t text-white">
+                <h3 className="text-2xl font-semibold">
+                  Login using Magic link
+                </h3>
+                <button
+                  onClick={() => {
+                    setmagiclinkpopup(false);
+                    window.location.reload();
+                  }}
+                  type="button"
+                  className="text-gray-900 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <svg
+                    className="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+
+              {/* <Image src={googletop} alt="" className="mx-auto"/> */}
+
+              {!magicmessage && (
+                <form
+                  id="myForm"
+                  className="rounded pt-10"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    handleMagicLink();
+                  }}
+                >
+                  <div className="pb-4 mx-10">
+                    <input
+                      type="email"
+                      id="gmail"
+                      style={border}
+                      className="shadow border appearance-none rounded-lg w-full py-3 px-4 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                      placeholder="Enter your email address"
+                      value={gmail}
+                      onChange={(e) => setgmail(e.target.value)}
+                      required
+                    />
+                  </div>
+
+                  <div className="pb-10 mx-10">
+                    <button
+                      className="text-white border p-2 rounded-lg w-full"
+                      type="submit"
+                      value="submit"
+                    >
+                      <div className="flex gap-2 justify-center">
+                        <div>Send Magic Link</div>
+                      </div>
+                    </button>
+                  </div>
+                </form>
+              )}
+
+              {magicmessage && !magicloginmessage && (
+                <>
+                  <div className="text-green-500 py-10 w-2/3 mx-auto">
+                    {magicmessage}! Please check your mail and enter code here
+                    or click the magic link.
+                  </div>
+                  <form
                     id="magicForm"
                     className="rounded pt-10"
                     onSubmit={(e) => {
@@ -708,108 +750,110 @@ const Buy = () => {
                       handleMagicLogin();
                     }}
                   >
+                    <div className="pb-4 mx-10">
+                      <input
+                        type="text"
+                        id="code"
+                        style={border}
+                        className="shadow border appearance-none rounded-lg w-full py-3 px-4 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                        placeholder="Enter the code"
+                        value={code}
+                        onChange={(e) => setcode(e.target.value)}
+                        required
+                      />
+                    </div>
 
-          <div className="pb-4 mx-10">
-                <input
-                          type="text"
-                          id="code"
-                          style={border}
-                          className="shadow border appearance-none rounded-lg w-full py-3 px-4 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                          placeholder="Enter the code"
-                          value={code}
-                          onChange={(e) => setcode(e.target.value)}
-                          required
-                        />
-          </div>
-
-          <div className="pb-10 mx-10">
-            <button className="text-white border p-2 rounded-lg w-full"
-            type="submit"
-            value="submit">
-            <div className="flex gap-2 justify-center">
-                <div>Link</div>
-                </div>
-            </button>
-          </div>
-
-          </form>
-          </>
-          )}
-
-          {magicloginmessage && (
-            <div className="py-10 text-green-500 px-10">Successfully Linked your account!!</div>
-          )}
-
-        </div>          
-    </div>
-</div>
-)}
-
-
-
-
-{mintpage === "page3" && (
-                      <div
-                        style={{ backgroundColor: "black" }}
-                        className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
-                        id="popupmodal"
+                    <div className="pb-10 mx-10">
+                      <button
+                        className="text-white border p-2 rounded-lg w-full"
+                        type="submit"
+                        value="submit"
                       >
-                        <div className="relative p-4 w-1/3 max-w-2xl max-h-full">
-                          <div
-                            className="relative rounded-3xl shadow dark:bg-gray-700"
-                            style={{ backgroundColor: "#202333", border: "1px solid #0162FF"}}
-                          >
-                            <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
-                              <button
-                                onClick={() => setmintpage("page1")}
-                                type="button"
-                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                              >
-                                <svg
-                                  className="w-3 h-3"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 14 14"
-                                >
-                                  <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                  />
-                                </svg>
-                                <span className="sr-only">Close modal</span>
-                              </button>
-                            </div>
-
-                            <img src="/mint.png" className="mx-auto"/>
-
-                            <div className="p-4 md:p-5 space-y-4">
-                              <p className="text-2xl text-center font-semibold text-white">
-                              Congratulations
-                              </p>
-                              <p className="text-md text-center w-full mx-auto text-white">
-                                You have minted your Erebrus NFT, welcome to an exclusive journey of innovation and community.
-                                To set clients, click button to go to subscription page.
-                              </p>
-                            </div>
-
-                            <div className="flex items-center pb-10 pt-4 rounded-b w-1/3 mx-auto">
-                              <Link
-                                href="/subscription"
-                                style={{ backgroundColor: "#0162FF" }}
-                                type="button"
-                                className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-2 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                              >
-                                View Subscription
-                              </Link>
-                            </div>
-                          </div>
+                        <div className="flex gap-2 justify-center">
+                          <div>Link</div>
                         </div>
-                      </div>
-                    )}
+                      </button>
+                    </div>
+                  </form>
+                </>
+              )}
+
+              {magicloginmessage && (
+                <div className="py-10 text-green-500 px-10">
+                  Successfully Linked your account!!
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {mintpage === "page3" && (
+        <div
+          style={{ backgroundColor: "black" }}
+          className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+          id="popupmodal"
+        >
+          <div className="relative p-4 w-1/3 max-w-2xl max-h-full">
+            <div
+              className="relative rounded-3xl shadow dark:bg-gray-700"
+              style={{
+                backgroundColor: "#202333",
+                border: "1px solid #0162FF",
+              }}
+            >
+              <div className="flex items-center justify-end p-4 md:p-5 rounded-t dark:border-gray-600">
+                <button
+                  onClick={() => setmintpage("page1")}
+                  type="button"
+                  className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                >
+                  <svg
+                    className="w-3 h-3"
+                    aria-hidden="true"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 14 14"
+                  >
+                    <path
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                    />
+                  </svg>
+                  <span className="sr-only">Close modal</span>
+                </button>
+              </div>
+
+              <img src="/mint.png" className="mx-auto" />
+
+              <div className="p-4 md:p-5 space-y-4">
+                <p className="text-2xl text-center font-semibold text-white">
+                  Congratulations
+                </p>
+                <p className="text-md text-center w-full mx-auto text-white">
+                  You have minted your Erebrus NFT, welcome to an exclusive
+                  journey of innovation and community. To set clients, click
+                  button to go to subscription page.
+                </p>
+              </div>
+
+              <div className="flex items-center pb-10 pt-4 rounded-b w-1/3 mx-auto">
+                <Link
+                  href="/subscription"
+                  style={{ backgroundColor: "#0162FF" }}
+                  type="button"
+                  className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-sm px-2 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  View Subscription
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
