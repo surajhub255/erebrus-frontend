@@ -22,6 +22,12 @@ import {
   addressEllipsis,
 } from "@suiet/wallet-kit";
 
+import { useWallet as solUseWallet } from "@solana/wallet-adapter-react";
+import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+
+const networkSol = WalletAdapterNetwork.Devnet;
+
 const variants = {
   open: { opacity: 1, x: 0, y: 0 },
   closed: { opacity: 0, y: 0 },
@@ -36,7 +42,7 @@ const WalletSelectorAntDesign = dynamic(
 );
 
 const isSendableNetwork = (connected, network) => {
-  return connected && network?.toLowerCase() === mynetwork.toLowerCase() || networkSui;
+  return connected && network?.toLowerCase() === mynetwork.toLowerCase() || networkSui || networkSol;
 };
 
 const Navbar = ({ isHome }) => {
@@ -73,6 +79,10 @@ const Navbar = ({ isHome }) => {
 
   let sendableSui = isSendableNetwork(status === "connected", wallet.chain.id);
 
+  const {connected: solconnected, publicKey: solpublickey } = solUseWallet();
+  let sendableSol = isSendableNetwork(solconnected, networkSol);
+  const accountsol = solpublickey;
+
   useEffect(() => {
     const getchainsym = () => {
       const symbol = Cookies.get("Chain_symbol");
@@ -103,6 +113,15 @@ const Navbar = ({ isHome }) => {
         Cookies.set("sui_wallet", suiAccount.address);
       }
       onSignMessageSui();
+    }
+    else if (chainsym == "sol"){
+      setConnectedAddress(accountsol);
+      setRequiredNetwork(networkSol);
+      if (accountsol) {
+        // Update the cookie with the new address
+        Cookies.set("sol_wallet", accountsol);
+      }
+      onSignMessageSol();
     }
   }, []);
 
@@ -136,6 +155,9 @@ const Navbar = ({ isHome }) => {
         setshowsignbutton(true);
       } else if (chainsym == "sui") {
         Cookies.set("erebrus_wallet", suiAccount.address);
+        setshowsignbutton(true);
+      } else if (chainsym == "sol") {
+        Cookies.set("erebrus_wallet", accountsol);
         setshowsignbutton(true);
       }
     }
@@ -529,6 +551,86 @@ else {
   };
 
 
+  const getPhantomWallet = () => {
+    if ('phantom' in window) {
+      const provider = window.phantom?.solana;
+  
+      if (provider?.isPhantom) {
+        return provider;
+      }
+    } else {
+      window.open('https://phantom.app/', '_blank');
+    }
+  };
+
+  const onSignMessageSol = async () => {
+    if (sendableSol) {
+      try {
+        const wallet = getPhantomWallet();
+        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+
+        const { data } = await axios.get(
+          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${accountsol}&chain=sol`
+        );
+        console.log(data);
+
+        const message = data.payload.eula;
+        const nonce = data.payload.flowId;
+        const publicKey = accountsol;
+
+        const payload = {
+          message: message,
+          nonce: nonce,
+        };
+
+
+        const encodedMessage = new TextEncoder().encode(message);
+        const response = await wallet.signMessage(encodedMessage, "utf8");
+      
+        let signaturewallet = response.signature;
+
+        const signatureHex = Array.from(signaturewallet).map(byte => ('0' + byte.toString(16)).slice(-2)).join('');
+
+        const authenticationData = {
+          flowId: nonce,
+          signature: `${signatureHex}`,
+          pubKey: publicKey,
+          walletAddress: accountsol,
+          message: message,
+        };
+
+        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?walletAddress=${accountsol}&chain=sol`;
+
+        const config = {
+          url: authenticateApiUrl,
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: authenticationData,
+        };
+
+        const authResponse = await axios(config);
+        console.log("auth data", authResponse.data);
+
+        const token = await authResponse?.data?.payload?.token;
+        const userId = await authResponse?.data?.payload?.userId;
+
+        Cookies.set("erebrus_token", token, { expires: 7 });
+        Cookies.set("erebrus_wallet", accountsol, { expires: 7 });
+        Cookies.set("erebrus_userid", userId, { expires: 7 });
+
+        window.location.reload();
+      } catch (error) {
+        console.error(error);
+        setshowsignbutton(true);
+      }
+    } else {
+      alert(`Switch to ${networkSol} in your wallet`);
+    }
+  };
+
+
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
@@ -667,6 +769,22 @@ else {
                   >
                     <ConnectButton />
                   </button>
+                )}
+                {chainsym == "sol" && (
+                  <button
+                  // onClick={connectWallet}
+                  >
+                    <WalletMultiButton />
+                  </button>
+                )}
+
+                {showsignbutton && (
+                <Button
+                  color={"blue"}
+                  onClick={onSignMessageSol}
+                  disabled={false}
+                  message={"Authenticate"}
+                />
                 )}
 
                 {connected && showsignbutton && (
