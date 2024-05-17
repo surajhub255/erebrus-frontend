@@ -20,16 +20,23 @@ import {
   NetworkName,
 } from "@aptos-labs/wallet-adapter-react";
 import { AutoConnectProvider, useAutoConnect } from "./AutoConnectProvider";
-import { FC, ReactNode } from "react";
 // import face from "../lib/faceInitialization";
 import { AlertProvider, useAlert } from "./AlertProvider";
 import { IdentityConnectWallet } from "@identity-connect/wallet-adapter-plugin";
-import {WalletProvider} from '@suiet/wallet-kit';
+import {WalletProvider as SuiWalletProvider} from '@suiet/wallet-kit';
 import '@suiet/wallet-kit/style.css';
+import { ConnectionProvider, WalletProvider as SolanaWalletProvider } from '@solana/wallet-adapter-react';
+import { WalletModalProvider } from "@solana/wallet-adapter-react-ui"
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets"
+import "@solana/wallet-adapter-react-ui/styles.css"
+import { clusterApiUrl } from "@solana/web3.js";
+import { FC, ReactNode, useEffect, useMemo, useState } from "react";
+import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
 
 const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const { autoConnect } = useAutoConnect();
   const { setErrorAlertMessage } = useAlert();
+
 
   const wallets = [
     // TODO IdentityConnectWallet and BloctoWallet to use Network enum from @aptos-labs/ts-sdk
@@ -73,10 +80,21 @@ const WalletContextProvider: FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 export const AppContext: FC<{ children: ReactNode }> = ({ children }) => {
+  const network = WalletAdapterNetwork.Devnet;
+  const endpoint = useMemo(() => clusterApiUrl(network), [network]);
+  const wallets = useMemo(() => [new PhantomWalletAdapter()], [network]);
   return (
     <AutoConnectProvider>
       <AlertProvider>
-        <WalletContextProvider><WalletProvider>{children}</WalletProvider></WalletContextProvider>
+        <WalletContextProvider><SuiWalletProvider>
+        <ConnectionProvider endpoint={endpoint}>
+        <SolanaWalletProvider wallets={wallets} >
+        <WalletModalProvider>
+          {children}
+          </WalletModalProvider>
+      </SolanaWalletProvider>
+     </ConnectionProvider>
+          </SuiWalletProvider></WalletContextProvider>
       </AlertProvider>
     </AutoConnectProvider>
   );
