@@ -417,60 +417,94 @@ const Navbar = ({ isHome }) => {
 
             {hidefilter && (
               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
-                <div className="bg-white p-8 rounded-lg shadow-md">
-                  <h2 className="text-xl font-bold mb-4">Choose a Chain</h2>
-                  <ul className="space-y-4">
-                    <li className="flex items-center justify-between gap-64">
+                <div className="p-8 rounded-3xl shadow-md text-white w-1/4" style={{backgroundColor:'#0162FF'}}>
+                <div className="flex items-center justify-end rounded-t">
+                              <button
+                                onClick={() => setHideFilter(false)}
+                                type="button"
+                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                              >
+                                <svg
+                                  className="w-3 h-3"
+                                  aria-hidden="true"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  fill="none"
+                                  viewBox="0 0 14 14"
+                                >
+                                  <path
+                                    stroke="currentColor"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    stroke-width="2"
+                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                                  />
+                                </svg>
+                                <span className="sr-only">Close modal</span>
+                              </button>
+                            </div>
+                  <h2 className="text-2xl font-bold -mt-4 text-center">Choose a Chain</h2>
+                  <ul className="space-y-4 mt-10">
+                    <li className="flex items-center justify-between gap-64 p-2 rounded-full" style={{backgroundColor:'#202333'}}>
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "evm");
                           setchainsym("evm");
                         }}
+                        // className="mx-auto"
                       >
-                        Ethereum
+                        <div className="flex gap-2" style={{marginLeft:100}}>
+                          <img src="/ethicon.png" className="w-6 h-6"/>
+                          <div>Ethereum</div>
+                        </div>
                       </button>
                     </li>
-                    <li className="flex items-center justify-between">
+                    <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "apt");
                           setchainsym("apt");
                         }}
+                        // className="mx-auto"
                       >
-                        Aptos
+                         <div className="flex gap-2" style={{marginLeft:100}}>
+                          <img src="/aptosicon.png" className="w-6 h-6"/>
+                          <div>Aptos</div>
+                        </div>
                       </button>
                     </li>
-                    <li className="flex items-center justify-between">
+                    <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sui");
                           setchainsym("sui");
                         }}
+                        // className="mx-auto"
                       >
-                        Sui
+                         <div className="flex gap-2" style={{marginLeft:105}}>
+                          <img src="/suiicon.png" className="w-4 h-5"/>
+                          <div>Sui</div>
+                        </div>
                       </button>
                     </li>
-                    <li className="flex items-center justify-between">
+                    <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sol");
                           setchainsym("sol");
                         }}
+                        // className="mx-auto"
                       >
-                        Solana
+                         <div className="flex gap-2" style={{marginLeft:100}}>
+                          <img src="/solanaicon.png" className="w-6 h-6"/>
+                          <div>Solana</div>
+                        </div>
                       </button>
                     </li>
                   </ul>
-                  <button
-                    className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-                    onClick={() => setHideFilter(false)}
-                  >
-                    Close
-                  </button>
                 </div>
               </div>
             )}
