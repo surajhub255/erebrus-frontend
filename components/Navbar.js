@@ -25,6 +25,10 @@ import {
 import { useWallet as solUseWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
+import { useAptosWallet } from "./Login/aptos";
+import { useSuiWallet } from "./Login/suiwallet";
+import { useEthWallet } from "./Login/ethereum";
+import { useSolWallet } from "./Login/solana";
 
 const networkSol = WalletAdapterNetwork.Devnet;
 
@@ -50,7 +54,7 @@ const Navbar = ({ isHome }) => {
   const [message, setMessage] = useState("");
   const [signature, setSignature] = useState("");
   const [challengeId, setChallengeId] = useState("");
-  const [showsignbutton, setshowsignbutton] = useState(false);
+  // const [showsignbutton, setshowsignbutton] = useState(false);
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [avatarUrl, setAvatarUrl] = useState("");
@@ -59,109 +63,47 @@ const Navbar = ({ isHome }) => {
   const [connectedAddress, setConnectedAddress] = useState("");
   const [sendable, setSendable] = useState(false);
   const [requiredNetwork, setRequiredNetwork] = useState(false);
+  //--------------------------------gpt --------------------------------------------------------------------
+  const { account: aptosAccount, connected: aptosConnected, onSignMessage: onSignMessage } = useAptosWallet();
+  const { suiConnected, suiAccount, onSignMessageSui } = useSuiWallet();
+  const { ethAddress, isConnected: ethConnected, onSignMessageEth } = useEthWallet();
+  const { solconnected, solpublickey, onSignMessageSol } = useSolWallet();
 
+  const [showsignbutton, setshowsignbutton] = useState(true);
+
+  useEffect(() => {
+    if (aptosConnected || suiConnected || ethConnected || solconnected) {
+      setshowsignbutton(true);
+    } else {
+      setshowsignbutton(false);
+    }
+  }, [aptosConnected, suiConnected, ethConnected, solconnected]);
+
+  // const handleSignMessage = (chainsym) => {
+  //   if (chainsym === "aptos") {
+  //     onSignMessage(chainsym, setshowsignbutton);
+  //   } else if (chainsym === "sui") {
+  //     onSignMessageSui(chainsym, setshowsignbutton);
+  //   } else if (chainsym === "eth") {
+  //     onSignMessageEth(chainsym, setshowsignbutton);
+  //   } else if (chainsym === "sol") {
+  //     onSignMessageSol(chainsym, setshowsignbutton);
+  //   }
+  // };
+  // //=------------------------------------------------------------------------
   const handleClick = () => {
     setHideFilter(!hidefilter);
   };
-  const {
-    status,
-    connected: suiConnected,
-    connecting,
-    account: suiAccount,
-    network: SuiNetwork,
-    name,
-  } = suiUseWallet();
-  const wallet = suiUseWallet();
-  console.log("suiwalet", wallet);
-  console.log("suiconnecte", suiConnected);
-  console.log("suiaccount", suiAccount);
-  console.log("suiname", wallet.chain.name);
 
-  let sendableSui = isSendableNetwork(status === "connected", wallet.chain.id);
 
-  const {connected: solconnected, publicKey: solpublickey } = solUseWallet();
-  let sendableSol = isSendableNetwork(solconnected, networkSol);
-  const accountsol = solpublickey;
+  
 
-  const { account, connected, network, signMessage } = useWallet();
-  let sendableApt = isSendableNetwork(connected, network?.name);
 
-  const {
-    address: ethAddress,
-    isConnecting,
-    isDisconnected,
-    isConnected,
-    chain,
-  } = useAccount();
-  const { signMessage: ethSignMessage } = useSignMessage();
   const router = useRouter();
   const address = Cookies.get("erebrus_wallet");
   const token = Cookies.get("erebrus_token");
 
-  useEffect(() => {
-    const getchainsym = () => {
-      const symbol = Cookies.get("Chain_symbol");
-      setchainsym(symbol);
-    };
-
-    getchainsym();
-    if (chainsym == "evm") {
-      setConnectedAddress(ethAddress);
-      setRequiredNetwork("Polygon Amoy");
-      if (isConnected && ethAddress) {
-        Cookies.set("erebrus_wallet", ethAddress);
-      }
-      onSignMessageEth();
-    } else if (chainsym == "apt") {
-      setConnectedAddress(ethAddress);
-      setRequiredNetwork(mynetwork);
-      if (account && account.address) {
-        // Update the cookie with the new address
-        Cookies.set("erebrus_wallet", account.address);
-      }
-      onSignMessage();
-    } else if (chainsym == "sui") {
-      setConnectedAddress(suiAccount.address);
-      setRequiredNetwork(networkSui);
-      if (suiAccount && suiAccount.address) {
-        // Update the cookie with the new address
-        Cookies.set("sui_wallet", suiAccount.address);
-      }
-      onSignMessageSui();
-    }
-    else if (chainsym == "sol"){
-      setConnectedAddress(accountsol);
-      setRequiredNetwork(networkSol);
-      if (accountsol) {
-        // Update the cookie with the new address
-        Cookies.set("erebrus_wallet", accountsol);
-      }
-      onSignMessageSol();
-    }
-  }, [isConnected, account, suiAccount, solconnected]);
-
-  useEffect(() => {
-    if (
-      (account && account.address) ||
-      (isConnected && ethAddress) ||
-      (status === "connected" && suiAccount.address)
-    ) {
-      // Update the cookie with the new address
-      if (chainsym == "apt") {
-        Cookies.set("erebrus_wallet", account.address);
-        setshowsignbutton(true);
-      } else if (chainsym == "evm") {
-        Cookies.set("erebrus_wallet", ethAddress);
-        setshowsignbutton(true);
-      } else if (chainsym == "sui") {
-        Cookies.set("erebrus_wallet", suiAccount.address);
-        setshowsignbutton(true);
-      } else if (chainsym == "sol") {
-        Cookies.set("erebrus_wallet", accountsol);
-        setshowsignbutton(true);
-      }
-    }
-  }, [account?.address, ethAddress, suiAccount?.address]);
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -210,37 +152,7 @@ const Navbar = ({ isHome }) => {
     };
   }, [address, isSignedIn]);
 
-  // const signMessage = async () => {
-  //   setIsSignedIn(false);
-  //   console.log("signing message");
-  //   const signature = await sdk?.wallet.sign(message);
-  //   setSignature(signature);
-  //   try {
-  //     //make a post request to the erebrus server with the signature and challengeId
-  //     const response = await axios.post(
-  //       "api/getToken",
-  //       {
-  //         signature,
-  //         challengeId,
-  //       },
-  //       {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     );
-  //     if (response.data.status === 200) {
-  //       //store the token in the session storage
-  //       sessionStorage.setItem("token", response.data.token);
-  //       localStorage.setItem("token", response.data.token);
-  //     }
-  //     setIsSignedIn(true);
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -277,358 +189,7 @@ const Navbar = ({ isHome }) => {
     }
   };
 
-  const onSignMessage = async () => {
-    if (sendableApt) {
-      try {
-        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-        const { data } = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}&chain=${chainsym}`
-        );
-
-        const message = data.payload.eula;
-        const nonce = data.payload.flowId;
-        const publicKey = account?.publicKey;
-
-        const payload = {
-          message: message,
-          nonce: nonce,
-        };
-        const response = await signMessage(payload);
-
-        let signaturewallet = response.signature;
-
-        if (signaturewallet.length === 128) {
-          signaturewallet = `0x${signaturewallet}`;
-        }
-
-        const authenticationData = {
-          flowId: nonce,
-          signature: `${signaturewallet}`,
-          pubKey: publicKey,
-        };
-
-        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=${chainsym}`;
-
-        const config = {
-          url: authenticateApiUrl,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: authenticationData,
-        };
-
-        const authResponse = await axios(config);
-
-        const token = await authResponse?.data?.payload?.token;
-        const userId = await authResponse?.data?.payload?.userId;
-
-        Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", account?.address ?? "", { expires: 7 });
-        Cookies.set("erebrus_userid", userId, { expires: 7 });
-        Cookies.set("Chain_symbol", chainsym, { expires: 7 });
-
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-        setshowsignbutton(true);
-      }
-    } else {
-      alert(`Switch to ${mynetwork} in your wallet`);
-    }
-  };
-
-  const onSignMessageEth = async () => {
-    if (isConnected) {
-      if (chainsym == "evm" && chain.name == "Polygon Amoy") {
-        try {
-          const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-
-          const { data } = await axios.get(
-            `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${ethAddress}&chain=${chainsym}`
-          );
-
-          const message = data.payload.eula;
-          const nonce = data.payload.flowId;
-
-          const payload = message + nonce;
-
-          await ethSignMessage(
-            { message: payload },
-            {
-              onSuccess: (data) => {
-                setSignature(data);
-                const authenticationData = {
-                  flowId: nonce,
-                  signature: data,
-                };
-
-                const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=${chainsym}`;
-
-                const config = {
-                  url: authenticateApiUrl,
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  data: authenticationData,
-                };
-
-                const authResponse = axios(config);
-
-                const token = authResponse?.data?.payload?.token;
-                const userId = authResponse?.data?.payload?.userId;
-
-                Cookies.set("erebrus_token", token, { expires: 7 });
-                Cookies.set("erebrus_wallet", account?.address ?? "", {
-                  expires: 7,
-                });
-                Cookies.set("erebrus_userid", userId, { expires: 7 });
-                Cookies.set("Chain_symbol", chainsym, { expires: 7 });
-              },
-            }
-          );
-        } catch (error) {
-          console.error(error);
-          setshowsignbutton(true);
-        }
-      } else {
-        alert(`Switch to ${chain.name} in your wallet`);
-      }
-    }
-  };
-  const onSignMessageSui = async () => {
-    if (sendableSui && wallet.account?.publicKey.length !=0) {
-      if (chainsym == "sui" && wallet.chain.name == "Sui Testnet" ) {
-      try {
-        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-        const { data } = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${wallet.address}&chain=sui`
-        );
-        console.log("address", wallet.address);
-        const msg = data.payload.eula + data.payload.flowId;
-        const nonce = data.payload.flowId;
-        // convert string to Uint8Array
-        const msgBytes = new TextEncoder().encode(msg);
-
-        const result = await wallet.signPersonalMessage({
-          message: msgBytes,
-        });
-        console.log("signature", result.signature);
-        console.log("publickey", wallet.account?.publicKey);
-        // verify signature with publicKey and SignedMessage (params are all included in result)
-        const verifyResult = await wallet.verifySignedMessage(
-          result,
-          wallet.account.publicKey
-        );
-        if (!verifyResult) {
-          console.log(
-            "signPersonalMessage succeed, but verify signedMessage failed"
-          );
-        } else {
-          console.log(
-            "signPersonalMessage succeed, and verify signedMessage succeed!"
-          );
-        }
-
-        const payload = {
-          message: message,
-          nonce: nonce,
-        };
-
-        const authenticationData = {
-          flowId: nonce,
-          signatureSui: result.signature,
-        };
-        console.log("adaddasdasd", result.signature);
-
-        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?chain=sui`;
-
-        const config = {
-          url: authenticateApiUrl,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: authenticationData,
-        };
-
-        const authResponse = await axios(config);
-        console.log("auth data", authResponse.data);
-
-        const token = await authResponse?.data?.payload?.token;
-        const userId = await authResponse?.data?.payload?.userId;
-
-        Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", suiAccount?.address ?? "", { expires: 7 });
-        Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-        setshowsignbutton(true);
-      }  
-  }
-}
-else if (sendable && wallet.account?.publicKey.length == 0){
-  if (chainsym == "sui" && wallet.chain.name == "Sui Testnet" ) {
-    try {
-      const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-      const { data } = await axios.get(
-        `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${wallet.address}&chain=sui`
-      );
-      console.log("address", wallet.address);
-      const msg = data.payload.eula + data.payload.flowId;
-      const nonce = data.payload.flowId;
-      // convert string to Uint8Array
-      const msgBytes = new TextEncoder().encode(msg);
-
-      const result = await wallet.signPersonalMessage({
-        message: msgBytes,
-      });
-      console.log("signature", result.signature);
-      console.log("publickey", wallet.account?.publicKey);
-      // verify signature with publicKey and SignedMessage (params are all included in result)
-      const verifyResult = await wallet.verifySignedMessage(
-        result,
-        wallet.account.publicKey
-      );
-      if (!verifyResult) {
-        console.log(
-          "signPersonalMessage succeed, but verify signedMessage failed"
-        );
-      } else {
-        console.log(
-          "signPersonalMessage succeed, and verify signedMessage succeed!"
-        );
-      }
-
-      const payload = {
-        message: message,
-        nonce: nonce,
-      };
-
-      const authenticationData = {
-        flowId: nonce,
-        signatureSui: result.signature,
-      };
-      console.log("adaddasdasd", result.signature);
-
-      const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate/NonSign`;
-
-      const config = {
-        url: authenticateApiUrl,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: authenticationData,
-      };
-
-      const authResponse = await axios(config);
-      console.log("auth data", authResponse.data);
-
-      const token = await authResponse?.data?.payload?.token;
-      const userId = await authResponse?.data?.payload?.userId;
-
-      Cookies.set("erebrus_token", token, { expires: 7 });
-      Cookies.set("erebrus_wallet", suiAccount?.address ?? "", { expires: 7 });
-      Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-      window.location.reload();
-    } catch (error) {
-      console.error(error);
-      setshowsignbutton(true);
-    }  
-}
-
-}
-else {
-      alert(`Switch to Sui Testnet in your wallet`);
-    }
-  
-  };
-
-
-  const getPhantomWallet = () => {
-    if ('phantom' in window) {
-      const provider = window.phantom?.solana;
-  
-      if (provider?.isPhantom) {
-        return provider;
-      }
-    } else {
-      window.open('https://phantom.app/', '_blank');
-    }
-  };
-
-  const onSignMessageSol = async () => {
-    if (sendableSol) {
-      try {
-        const wallet = getPhantomWallet();
-        const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
-
-        const { data } = await axios.get(
-          `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${accountsol}&chain=sol`
-        );
-        console.log(data);
-
-        const message = data.payload.eula;
-        const nonce = data.payload.flowId;
-        const publicKey = accountsol;
-
-        const payload = {
-          message: message,
-          nonce: nonce,
-        };
-
-
-        const encodedMessage = new TextEncoder().encode(message);
-        const response = await wallet.signMessage(encodedMessage, "utf8");
-      
-        let signaturewallet = response.signature;
-
-        const signatureHex = Array.from(signaturewallet).map(byte => ('0' + byte.toString(16)).slice(-2)).join('');
-
-        const authenticationData = {
-          flowId: nonce,
-          signature: `${signatureHex}`,
-          pubKey: publicKey,
-          walletAddress: accountsol,
-          message: message,
-        };
-
-        const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate?walletAddress=${accountsol}&chain=sol`;
-
-        const config = {
-          url: authenticateApiUrl,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: authenticationData,
-        };
-
-        const authResponse = await axios(config);
-        console.log("auth data", authResponse.data);
-
-        const token = await authResponse?.data?.payload?.token;
-        const userId = await authResponse?.data?.payload?.userId;
-
-        Cookies.set("erebrus_token", token, { expires: 7 });
-        Cookies.set("erebrus_wallet", accountsol, { expires: 7 });
-        Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-        window.location.reload();
-      } catch (error) {
-        console.error(error);
-        setshowsignbutton(true);
-      }
-    } else {
-      alert(`Switch to ${networkSol} in your wallet`);
-    }
-  };
 
 
   const handleDeleteCookie = () => {
@@ -747,74 +308,62 @@ else {
           </Link>
 
           <>
-            {!token ? (
-              <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
-                {!connected && chainsym == "apt" && (
-                  <button
-                  // onClick={connectWallet}
-                  >
-                    <WalletSelectorAntDesign />
-                  </button>
-                )}
-                {chainsym == "evm" && (
-                  <button
-                  // onClick={connectWallet}
-                  >
-                    <w3m-button />
-                  </button>
-                )}
-                {chainsym == "sui" && (
-                  <button
-                  // onClick={connectWallet}
-                  >
-                    <ConnectButton />
-                  </button>
-                )}
-                {chainsym == "sol" && (
-                  <button
-                  // onClick={connectWallet}
-                  >
-                    <WalletMultiButton />
-                  </button>
-                )}
-
-                {solconnected && showsignbutton && (
+          {!token ? (
+            <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
+              {!aptosConnected && chainsym === "apt" && (
+                <button>
+                  <WalletSelectorAntDesign />
+                </button>
+              )}
+              {chainsym === "evm" && (
+                <button>
+                  <w3m-button />
+                </button>
+              )}
+              {chainsym === "sui" && (
+                <button>
+                  <ConnectButton />
+                </button>
+              )}
+              {chainsym === "sol" && (
+                <button>
+                  <WalletMultiButton />
+                </button>
+              )}
+              {solconnected && showsignbutton && (
                 <Button
                   color={"blue"}
                   onClick={onSignMessageSol}
                   disabled={false}
                   message={"Authenticate"}
                 />
-                )}
-
-                {connected && showsignbutton && (
-                  <Button
-                    color={"blue"}
-                    onClick={onSignMessage}
-                    disabled={false}
-                    message={"Authenticate"}
-                  />
-                )}
-                {isConnected && chainsym == "evm" && showsignbutton && (
-                  <Button
-                    color={"blue"}
-                    onClick={onSignMessageEth}
-                    disabled={false}
-                    message={"Authenticate"}
-                  />
-                )}
-                {status === "connected" &&
-                  chainsym == "sui" &&
-                  showsignbutton && (
-                    <Button
-                      color={"blue"}
-                      onClick={onSignMessageSui}
-                      disabled={false}
-                      message={"Authenticate"}
-                    />
-                  )}
-              </div>
-            ) : (
+              )}
+              {aptosConnected && showsignbutton && (
+                <Button
+                  color={"blue"}
+                  onClick={onSignMessage}
+                  disabled={false}
+                  message={"Authenticate"}
+                />
+              )}
+              {ethConnected && chainsym === "evm" && showsignbutton && (
+                <Button
+                  color={"blue"}
+                  onClick={onSignMessageEth}
+                  disabled={false}
+                  message={"Authenticate"}
+                />
+              )}
+              {suiConnected && chainsym === "sui" && showsignbutton && (
+                <Button
+                  color={"blue"}
+                  onClick={onSignMessageSui}
+                  disabled={false}
+                  message={"Authenticate"}
+                />
+              )}
+            </div>
+          )  : (
               <div
                 className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4"
                 style={{ color: "#0162FF" }}
@@ -867,72 +416,63 @@ else {
             </button>
 
             {hidefilter && (
-              <>
-                <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
-                  <div className="bg-white p-8 rounded-lg shadow-md">
-                    <h2 className="text-xl font-bold mb-4">Choose a Chain</h2>
-                    <ul className="space-y-4">
-                      <li className="flex items-center justify-between gap-64">
-                        {/* <span>Ethereum</span>
-                        <ConnectWallet theme={"dark"} modalSize={"wide"} />{" "} */}
-                        <button
-                          onClick={() => {
-                            setHideFilter(false);
-                            Cookies.set("Chain_symbol", "evm");
-                            setchainsym("evm");
-                          }}
-                        >
-                          Ethereum
-                        </button>
-                      </li>
-                      <li className="flex items-center justify-between">
-                        {/* <button onClick={() => setHideFilter(false)}> */}
-                        {/* <WalletSelectorAntDesign /> */}
-                        {/* </button> */}
-                        <button
-                          onClick={() => {
-                            setHideFilter(false);
-                            Cookies.set("Chain_symbol", "apt");
-                            setchainsym("apt");
-                          }}
-                        >
-                          Aptos
-                        </button>
-                      </li>
-                      <li className="flex items-center justify-between">
-                        <button
-                          onClick={() => {
-                            setHideFilter(false);
-                            Cookies.set("Chain_symbol", "sui");
-                            setchainsym("sui");
-                          }}
-                        >
-                          Sui
-                        </button>
-                      </li>
-                      <li className="flex items-center justify-between">
-                        <button
-                          onClick={() => {
-                            setHideFilter(false);
-                            Cookies.set("Chain_symbol", "sol");
-                            setchainsym("sol");
-                          }}
-                        >
-                          Solana
-                        </button>
-                      </li>
-                    </ul>
-                    <button
-                      className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
-                      onClick={() => {
-                        setHideFilter(false);
-                      }}
-                    >
-                      Close
-                    </button>
-                  </div>
+              <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
+                <div className="bg-white p-8 rounded-lg shadow-md">
+                  <h2 className="text-xl font-bold mb-4">Choose a Chain</h2>
+                  <ul className="space-y-4">
+                    <li className="flex items-center justify-between gap-64">
+                      <button
+                        onClick={() => {
+                          setHideFilter(false);
+                          Cookies.set("Chain_symbol", "evm");
+                          setchainsym("evm");
+                        }}
+                      >
+                        Ethereum
+                      </button>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <button
+                        onClick={() => {
+                          setHideFilter(false);
+                          Cookies.set("Chain_symbol", "apt");
+                          setchainsym("apt");
+                        }}
+                      >
+                        Aptos
+                      </button>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <button
+                        onClick={() => {
+                          setHideFilter(false);
+                          Cookies.set("Chain_symbol", "sui");
+                          setchainsym("sui");
+                        }}
+                      >
+                        Sui
+                      </button>
+                    </li>
+                    <li className="flex items-center justify-between">
+                      <button
+                        onClick={() => {
+                          setHideFilter(false);
+                          Cookies.set("Chain_symbol", "sol");
+                          setchainsym("sol");
+                        }}
+                      >
+                        Solana
+                      </button>
+                    </li>
+                  </ul>
+                  <button
+                    className="mt-4 px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+                    onClick={() => setHideFilter(false)}
+                  >
+                    Close
+                  </button>
                 </div>
-              </>
+              </div>
             )}
           </div>
         </div>
