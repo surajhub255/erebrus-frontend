@@ -29,7 +29,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm.tsx";
 import { aptosClient } from "../module";
 export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
-import { useMintOnChainA } from '../components/mint/aptosmint';
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -81,12 +80,10 @@ const Mint = () => {
   const { account, connected, network, signMessage, signAndSubmitTransaction } =
     useWallet();
 
-  const { mint: aptosmint, minting, transactionHash } = useMintOnChainA();
-
   let sendable = isSendableNetwork(connected, network?.name);
 
   useEffect(() => {
-    aptosmint();
+    mint();
   }, [connected]);
 
   useEffect(() => {
@@ -251,32 +248,25 @@ const Mint = () => {
   //   },
   // };
 
-  const mint = async (chain) => {
+  const transaction = {
+    data: {
+      function: `${envmintfucn}`, // Assuming envmintfucn is the function name in the old format
+      typeArguments: [], // No type arguments in the old format
+      functionArguments: [], // No function arguments in the old format
+    },
+  };
+
+  const mint = async () => {
     setbuttonblur(true);
     setLoadingTx(true);
     console.log("connected", connected);
-  
     try {
-      let transactionHash;
-      switch (chain) {
-        case 'aptos':
-          transactionHash = await aptosmint();
-          break;
-        case 'ChainB':
-          transactionHash = await mintOnChainB();
-          break;
-        case 'ChainC':
-          transactionHash = await mintOnChainC();
-          break;
-        case 'ChainD':
-          transactionHash = await mintOnChainD();
-          break;
-        default:
-          throw new Error(`Unsupported chain: ${chain}`);
-      }
-  
-      console.log("mint transaction", transactionHash);
-      if (transactionHash) {
+      const pendingTransaction = await signAndSubmitTransaction(transaction);
+      await aptosClient(network?.name.toLowerCase()).waitForTransaction({
+        transactionHash: pendingTransaction.hash,
+      });
+      console.log("mint transaction", pendingTransaction.hash);
+      if (pendingTransaction.hash) {
         setmintpage("page3");
         setLoadingTx(false);
         setshowconnectbutton(false);
@@ -285,6 +275,7 @@ const Mint = () => {
       console.error("Error connecting wallet or minting NFT:", error);
       setbuttonblur(false);
       setLoadingTx(false);
+      // setmintpage("page1");
       setshowconnectbutton(false);
     }
   };
@@ -651,7 +642,7 @@ const Mint = () => {
                   </>
                 ) : (
                   <button
-                    onClick={()=>{mint("aptos")}}
+                    onClick={mint}
                     style={{ border: "1px solid #0162FF" }}
                     type="button"
                     className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
