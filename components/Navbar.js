@@ -181,17 +181,6 @@ const Navbar = ({ isHome }) => {
     setIsSignedIn(false);
   };
 
-  const getAptosWallet = () => {
-    if ("aptos" in window) {
-      return window.aptos;
-    } else {
-      window.open("https://petra.app/", "_blank");
-    }
-  };
-
-
-
-
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");

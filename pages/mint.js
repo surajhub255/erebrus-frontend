@@ -1,13 +1,5 @@
 import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
-import {
-  useNetworkMismatch,
-  useNetwork,
-  useAddress,
-  ChainId,
-  ConnectWallet,
-  useSDK,
-} from "@thirdweb-dev/react";
 import axios from "axios";
 import aptos from "aptos";
 import Head from "next/head";
@@ -30,8 +22,6 @@ import CheckoutForm from "../components/CheckoutForm.tsx";
 import { aptosClient } from "../module";
 export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
 
-// Make sure to call `loadStripe` outside of a component’s render to avoid
-// recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
@@ -134,120 +124,6 @@ const Mint = () => {
     vpnnft();
   }, []);
 
-  const getAptosWallet = () => {
-    if ("aptos" in window) {
-      return window.aptos;
-    } else {
-      window.open("https://petra.app/", "_blank");
-    }
-  };
-
-  const connectWallet = async () => {
-    const wallet = getAptosWallet();
-    try {
-      const response = await wallet.connect();
-
-      const account = await wallet.account();
-      console.log("account", account);
-
-      // Get the current network after connecting (optional)
-      const networkwallet = await window.aptos.network();
-
-      // Check if the connected network is Mainnet
-      if (networkwallet === mynetwork) {
-        const { data } = await axios.get(
-          `${GATEWAY_URL}api/v1.0/flowid?walletAddress=${account.address}`
-        );
-        console.log(data);
-
-        const message = data.payload.eula;
-        const nonce = data.payload.flowId;
-        const publicKey = account.publicKey;
-
-        const { signature, fullMessage } = await wallet.signMessage({
-          message,
-          nonce,
-        });
-        console.log("sign", signature, "full message", fullMessage);
-
-        // console.log(signature);
-
-        let signaturewallet = signature;
-
-        if (signaturewallet.length === 128) {
-          signaturewallet = `0x${signaturewallet}`;
-        }
-
-        const authenticationData = {
-          flowId: nonce,
-          signature: `${signaturewallet}`,
-          pubKey: publicKey,
-        };
-
-        const authenticateApiUrl = `${GATEWAY_URL}api/v1.0/authenticate`;
-
-        const config = {
-          url: authenticateApiUrl,
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          data: authenticationData,
-        };
-
-        try {
-          const response = await axios(config);
-          console.log("auth data", response.data);
-          const token = await response?.data?.payload?.token;
-          const userId = await response?.data?.payload?.userId;
-
-          settoken(token), setwallet(account.address), setuserid(userId);
-
-          Cookies.set("erebrus_token", token, { expires: 7 });
-          Cookies.set("erebrus_wallet", account.address, { expires: 7 });
-          Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-          // await mint();
-        } catch (error) {
-          console.error(error);
-        }
-      } else {
-        alert(`Switch to ${mynetwork} in your wallet`);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  // useEffect(() => {
-  //   // Check to see if this is a redirect back from Checkout
-  //   const query = new URLSearchParams(window.location.search);
-  //   if (query.get("success")) {
-  //     console.log("Order placed! You will receive an email confirmation.");
-  //   }
-
-  //   if (query.get("canceled")) {
-  //     console.log(
-  //       "Order canceled -- continue to shop around and checkout when youre ready."
-  //     );
-  //   }
-  // }, []);
-
-  // const transaction = {
-  //   arguments: [],
-  //   function: `${envmintfucn}`,
-  //   type: "entry_function_payload",
-  //   type_arguments: [],
-  // };
-
-  // const transaction = {
-  //   data: {
-  //     function: "0x1::coin::transfer",
-  //     typeArguments: [APTOS_COIN],
-  //     functionArguments: [account?.address, 1], // 1 is in Octas
-  //   },
-  // };
-
   const transaction = {
     data: {
       function: `${envmintfucn}`, // Assuming envmintfucn is the function name in the old format
@@ -281,9 +157,6 @@ const Mint = () => {
   };
 
   const stripe = async () => {
-    // if (!isSignedIn) {
-    //   await connectWallet();
-    // }
     setbuttonblur(true);
 
     const auth = Cookies.get("erebrus_token");
@@ -307,27 +180,6 @@ const Mint = () => {
       console.log("stripe response:", responseData);
       setClientSecret(responseData.data.payload.clientSecret);
       setmintpopup(false);
-      // try {
-      //   const res = await fetch("/api/checkout", {
-      //     method: "POST",
-      //     headers: {
-      //       "content-Type": "application/json",
-      //     },
-      //     body: JSON.stringify({ amount: 111 }),
-      //   });
-
-      //   res.json().then((data) => {
-      //     console.log("stripe data", data);
-      //     // router.push(data.url);
-      //   });
-      //   if (res.statusCode === 500) {
-      //     console.error(data.message);
-      //     return;
-      //   }
-      //   setsuccesspop(true);
-      // } catch (error) {
-      //   console.log("stripe error payment");
-      // }
     } catch (error) {
       console.error("stripe error:", error);
     }
@@ -397,24 +249,6 @@ const Mint = () => {
     }
   };
 
-  // if (!isSignedIn) {
-  //   return (
-  //     <>
-  //       <Head>
-  //         <title>Erebrus | Clients</title>
-  //       </Head>
-  //       <div className="flex justify-center mt-48 text-white bg-black h-screen">
-  //         Please sign in to Erebrus to view your NFT
-  //       </div>
-  //       {/* <button
-  //                 className="bg-blue-500 text-white font-bold py-2 px-4 rounded-lg lg:mb-48"
-  //                 onClick={mint}
-  //               >
-  //                 Mint Erebrus NFT
-  //               </button> */}
-  //     </>
-  //   );
-  // }
   const appearance = {
     theme: "stripe",
   };
