@@ -69,13 +69,28 @@ const Navbar = ({ isHome }) => {
   const { ethAddress, isConnected: ethConnected, onSignMessageEth } = useEthWallet();
   const { solconnected, solpublickey, onSignMessageSol } = useSolWallet();
 
-  const [showsignbutton, setshowsignbutton] = useState(true);
+  const [showsignbuttoneth, setshowsignbuttoneth] = useState(false);
+  const [showsignbuttonaptos, setshowsignbuttonaptos] = useState(false);
+  const [showsignbuttonsui, setshowsignbuttonsui] = useState(false);
+  const [showsignbuttonsol, setshowsignbuttonsol] = useState(false);
 
   useEffect(() => {
-    if (aptosConnected || suiConnected || ethConnected || solconnected) {
-      setshowsignbutton(true);
-    } else {
-      setshowsignbutton(false);
+    if (aptosConnected) {
+      setshowsignbuttonaptos(true);
+    } else if(suiConnected){
+      setshowsignbuttonsui(true);
+    }
+    else if(solconnected)
+    { setshowsignbuttonsol(true);
+    }
+    else if(ethConnected)
+    { setshowsignbuttoneth(true);
+    }
+    else{
+      setshowsignbuttoneth(false);
+      setshowsignbuttonsol(false);
+      setshowsignbuttonsui(false);
+      setshowsignbuttonaptos(false);
     }
   }, [aptosConnected, suiConnected, ethConnected, solconnected]);
 
@@ -319,7 +334,7 @@ const Navbar = ({ isHome }) => {
                   <WalletMultiButton />
                 </button>
               )}
-              {solconnected && showsignbutton && (
+              {solconnected && showsignbuttonsol && (
                 <Button
                   color={"blue"}
                   onClick={onSignMessageSol}
@@ -327,7 +342,7 @@ const Navbar = ({ isHome }) => {
                   message={"Authenticate"}
                 />
               )}
-              {aptosConnected && showsignbutton && (
+              {aptosConnected && showsignbuttonaptos && (
                 <Button
                   color={"blue"}
                   onClick={onSignMessage}
@@ -335,7 +350,7 @@ const Navbar = ({ isHome }) => {
                   message={"Authenticate"}
                 />
               )}
-              {ethConnected && chainsym === "evm" && showsignbutton && (
+              {ethConnected && chainsym === "evm" && showsignbuttoneth && (
                 <Button
                   color={"blue"}
                   onClick={onSignMessageEth}
@@ -343,7 +358,7 @@ const Navbar = ({ isHome }) => {
                   message={"Authenticate"}
                 />
               )}
-              {suiConnected && chainsym === "sui" && showsignbutton && (
+              {suiConnected && chainsym === "sui" && showsignbuttonsui && (
                 <Button
                   color={"blue"}
                   onClick={onSignMessageSui}
@@ -439,6 +454,10 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "evm");
                           setchainsym("evm");
+                          setshowsignbuttoneth(false);
+      setshowsignbuttonsol(false);
+      setshowsignbuttonsui(false);
+      setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
@@ -454,6 +473,10 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "apt");
                           setchainsym("apt");
+                          setshowsignbuttoneth(false);
+      setshowsignbuttonsol(false);
+      setshowsignbuttonsui(false);
+      setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
@@ -469,6 +492,10 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sui");
                           setchainsym("sui");
+                          setshowsignbuttoneth(false);
+      setshowsignbuttonsol(false);
+      setshowsignbuttonsui(false);
+      setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
@@ -484,6 +511,10 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sol");
                           setchainsym("sol");
+                          setshowsignbuttoneth(false);
+      setshowsignbuttonsol(false);
+      setshowsignbuttonsui(false);
+      setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
