@@ -5,7 +5,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { motion } from "framer-motion";
 import { AuthContext } from "../AuthContext";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+// import { useWallet } from "@aptos-labs/wallet-adapter-react";
 // import { WalletConnector } from "@aptos-labs/wallet-adapter-mui-design";
 import dynamic from "next/dynamic";
 import { Network } from "@aptos-labs/ts-sdk";
@@ -14,11 +14,11 @@ import { useRouter } from "next/router";
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
-const networkSui = process.env.NEXT_PUBLIC_SUI_NETWORK;
+const networkSui = process.env.NEXT_PUBLIC_SUI_NETWORK_SUI;
 import { useAccount, useSignMessage } from "wagmi";
 import {
   ConnectButton,
-  useWallet as suiUseWallet,
+  useWallet,
   addressEllipsis,
 } from "@suiet/wallet-kit";
 
@@ -45,9 +45,9 @@ const WalletSelectorAntDesign = dynamic(
   }
 );
 
-const isSendableNetwork = (connected, network) => {
-  return connected && network?.toLowerCase() === mynetwork.toLowerCase() || networkSui || networkSol;
-};
+// const isSendableNetwork = (connected, network) => {
+//   return connected && network?.toLowerCase() === mynetwork.toLowerCase() || networkSui || networkSol;
+// };
 
 const Navbar = ({ isHome }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -65,7 +65,8 @@ const Navbar = ({ isHome }) => {
   const [requiredNetwork, setRequiredNetwork] = useState(false);
   //--------------------------------gpt --------------------------------------------------------------------
   const { account: aptosAccount, connected: aptosConnected, onSignMessage: onSignMessage } = useAptosWallet();
-  const { suiConnected, suiAccount, onSignMessageSui } = useSuiWallet();
+  const {  handleSignMsg } = useSuiWallet();
+  const { status, connected, connecting,disconnect, account, network, name } = useWallet();
   const { ethAddress, isConnected: ethConnected, onSignMessageEth } = useEthWallet();
   const { solconnected, solpublickey, onSignMessageSol } = useSolWallet();
 
@@ -73,11 +74,13 @@ const Navbar = ({ isHome }) => {
   const [showsignbuttonaptos, setshowsignbuttonaptos] = useState(false);
   const [showsignbuttonsui, setshowsignbuttonsui] = useState(false);
   const [showsignbuttonsol, setshowsignbuttonsol] = useState(false);
-
+  
+  console.log("sui connected", status == "connected")
   useEffect(() => {
+    console
     if (aptosConnected) {
       setshowsignbuttonaptos(true);
-    } else if(suiConnected){
+    } else if(status == "connected"){
       setshowsignbuttonsui(true);
     }
     else if(solconnected)
@@ -92,7 +95,11 @@ const Navbar = ({ isHome }) => {
       setshowsignbuttonsui(false);
       setshowsignbuttonaptos(false);
     }
-  }, [aptosConnected, suiConnected, ethConnected, solconnected]);
+   
+  }, [aptosConnected, status == "connected", ethConnected, solconnected]);
+  console.log("sui connected", status == "connected")
+
+  
 
   // const handleSignMessage = (chainsym) => {
   //   if (chainsym === "aptos") {
@@ -199,7 +206,11 @@ const Navbar = ({ isHome }) => {
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
+    if(status=="connected"){
+      disconnect();
+    }
     window.location.href = "/";
+
   };
 
   return (
@@ -327,6 +338,7 @@ const Navbar = ({ isHome }) => {
               {chainsym === "sui" && (
                 <button>
                   <ConnectButton />
+                  
                 </button>
               )}
               {chainsym === "sol" && (
@@ -358,10 +370,10 @@ const Navbar = ({ isHome }) => {
                   message={"Authenticate"}
                 />
               )}
-              {suiConnected && chainsym === "sui" && showsignbuttonsui && (
+              {status == "connected" && chainsym === "sui" && showsignbuttonsui && (
                 <Button
                   color={"blue"}
-                  onClick={onSignMessageSui}
+                  onClick={handleSignMsg}
                   disabled={false}
                   message={"Authenticate"}
                 />
@@ -380,6 +392,7 @@ const Navbar = ({ isHome }) => {
                   onMouseOut={(e) =>
                     (e.currentTarget.style.borderBottom = "none")
                   }
+                  
                 >
                   Log out
                 </button>
