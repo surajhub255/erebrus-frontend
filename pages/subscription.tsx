@@ -19,6 +19,7 @@ import QRCode from "qrcode.react";
 import { saveAs } from "file-saver";
 const envcollectionid = process.env.NEXT_PUBLIC_COLLECTIONID;
 const graphqlaptos = process.env.NEXT_PUBLIC_GRAPHQL_APTOS;
+import Login from '../components/loginComponent'
 
 export interface FlowIdResponse {
   eula: string;
@@ -656,7 +657,8 @@ const Subscription = () => {
           <div className="text-white font-bold py-4 px-10 rounded-lg mx-auto flex justify-center mt-10">
             {!connected && (
               <button className="">
-                <WalletSelectorAntDesign />
+                {/* <WalletSelectorAntDesign /> */}
+                <Login/>
               </button>
             )}
             {connected && (
