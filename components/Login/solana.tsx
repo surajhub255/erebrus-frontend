@@ -35,7 +35,7 @@ export const useSolWallet = (setshowsignbutton) => {
 
   const getPhantomWallet = () => {
     if ('phantom' in window) {
-      const provider = window.phantom?.solana;
+      const provider = (window as any).phantom?.solana;
   
       if (provider?.isPhantom) {
         return provider;
@@ -69,7 +69,8 @@ export const useSolWallet = (setshowsignbutton) => {
       
         let signaturewallet = response.signature;
 
-        const signatureHex = Array.from(signaturewallet).map(byte => ('0' + byte.toString(16)).slice(-2)).join('');
+        const signatureHex = Array.from(Array.from(signaturewallet)).map(byte => ('0' + byte.toString()).slice(-2)).join('');
+
 
         const authenticationData = {
           flowId: nonce,
