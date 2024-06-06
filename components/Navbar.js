@@ -222,6 +222,14 @@ const Navbar = ({ isHome }) => {
     window.location.href = "/";
 
   };
+  //dropdown
+  const [selectedOption, setSelectedOption] = useState('Chain 1'); // Set default to 'Chain 1'
+  const options = ['Chain 1', 'Chain 2', 'Chain 3', 'Chain 4'];
+
+  const handleOptionSelect = (option) => {
+    setSelectedOption(option);
+    setSelectedOption(null); // Close the dropdown after selecting an option
+  };
 
   return (
     <nav className="bg-transparent py-4">
@@ -414,33 +422,32 @@ const Navbar = ({ isHome }) => {
           </>
 
           <div>
-            <button onClick={handleClick} className="text-white p-2 relative">
-              {/* &#9776; */}
+            {/* dropdown */}
+          <div className="relative">
+      <button
+        className="block w-full px-4 py-2 text-left bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+        onClick={() => setSelectedOption(selectedOption ? null : 'Chain 1')} // Toggle dropdown on button click
+      >
+        {selectedOption || 'Select Chain'}
+      </button>
+      {selectedOption && (
+        <div className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            {options.map((option, index) => (
+              <button
+                key={index}
+                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                onClick={() => handleOptionSelect(option)}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+      
 
-              <span
-                className={`bg-gray-500 block transition-all duration-300 ease-out 
-                    h-0.5 w-6 rounded-sm ${
-                      hidefilter
-                        ? "rotate-45 translate-y-1"
-                        : "-translate-y-0.5"
-                    }`}
-              ></span>
-              <span
-                className={`bg-gray-500 block transition-all duration-300 ease-out 
-                    h-0.5 w-6 rounded-sm my-0.5 ${
-                      hidefilter ? "opacity-0" : "opacity-100"
-                    }`}
-              ></span>
-
-              <span
-                className={`bg-gray-500 block transition-all duration-300 ease-out 
-                    h-0.5 w-6 rounded-sm ${
-                      hidefilter
-                        ? "-rotate-45 -translate-y-1"
-                        : "translate-y-0.5"
-                    }`}
-              ></span>
-            </button>
 
             {hidefilter && (
               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
