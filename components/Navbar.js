@@ -136,6 +136,7 @@ const Navbar = ({ isHome }) => {
 
     }
   }, [solAccount]);
+  
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
