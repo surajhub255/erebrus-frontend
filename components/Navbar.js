@@ -223,12 +223,13 @@ const Navbar = ({ isHome }) => {
 
   };
   //dropdown
+  const [selectedDropwdown, setSelectedDropwdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Chain 1'); // Set default to 'Chain 1'
   const options = ['Chain 1', 'Chain 2', 'Chain 3', 'Chain 4'];
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
-    setSelectedOption(null); // Close the dropdown after selecting an option
+    setSelectedDropwdown(false); // Close the dropdown after selecting an option
   };
 
   return (
@@ -426,11 +427,11 @@ const Navbar = ({ isHome }) => {
           <div className="relative">
       <button
         className="block w-full px-4 py-2 text-left bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        onClick={() => setSelectedOption(selectedOption ? null : 'Chain 1')} // Toggle dropdown on button click
+        onClick={() => {setSelectedDropwdown(true); setSelectedOption(selectedOption ? selectedOption : 'Chain 1');}} // Toggle dropdown on button click
       >
         {selectedOption || 'Select Chain'}
       </button>
-      {selectedOption && (
+      {selectedDropwdown && (
         <div className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             {options.map((option, index) => (
