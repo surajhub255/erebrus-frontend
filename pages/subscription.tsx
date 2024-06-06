@@ -19,7 +19,7 @@ import QRCode from "qrcode.react";
 import { saveAs } from "file-saver";
 const envcollectionid = process.env.NEXT_PUBLIC_COLLECTIONID;
 const graphqlaptos = process.env.NEXT_PUBLIC_GRAPHQL_APTOS;
-import Login from '../components/loginComponent'
+import Login from "../components/loginComponent";
 
 export interface FlowIdResponse {
   eula: string;
@@ -33,6 +33,7 @@ export interface WalletData {
 interface FormData {
   name: string;
   region: string;
+  nodename:string;
 }
 const transition = {
   type: "tween",
@@ -93,6 +94,7 @@ const Subscription = () => {
   const initialFormData: FormData = {
     name: "",
     region: "",
+    nodename:"",
   };
   const [formData, setFormData] = useState<FormData>(initialFormData);
   const [ConfigFile, setConfigFile] = useState<string>("");
@@ -342,7 +344,7 @@ const Subscription = () => {
         });
 
         console.log("vpn nft", response.data.data.current_token_ownerships_v2);
-        if(response.data.data.current_token_ownerships_v2.length > 0) {
+        if (response.data.data.current_token_ownerships_v2.length > 0) {
           setnftdata(response.data.data.current_token_ownerships_v2);
         }
       } catch (error) {
@@ -530,10 +532,10 @@ const Subscription = () => {
     setcollectionsPage(false);
   };
 
-  const handleTrialClick = () =>{
+  const handleTrialClick = () => {
     setvpnPage(true);
     setcollectionsPage(false);
-  }
+  };
 
   const [imageSrc, setImageSrc] = React.useState<string | null>(null);
 
@@ -595,11 +597,10 @@ const Subscription = () => {
 
   //-----------------------------------------------------------------------------------------------------------------------
 
-
   // -------------------------------------------------- check for trial subscription ------------------------------------------------
 
   useEffect(() => {
-    const trialbuycheck = async() =>{
+    const trialbuycheck = async () => {
       const auth = Cookies.get("erebrus_token");
       try {
         const response = await fetch(
@@ -613,27 +614,26 @@ const Subscription = () => {
             },
           }
         );
-        
+
         const responseData = await response.json();
         if (responseData?.subscription) {
-              settrialsubscriptiondata(responseData);
-              console.log("trial subsc response", responseData);
+          settrialsubscriptiondata(responseData);
+          console.log("trial subsc response", responseData);
         }
-  
       } catch (error) {
         console.error("Error:", error);
       } finally {
       }
-  }
-  
+    };
+
     trialbuycheck();
-  }, [])
+  }, []);
 
   // Extracting day, year, and time from the dateTime string
   const formatDateTime = (dateTime) => {
     const dateObj = new Date(dateTime);
     const day = dateObj.getDate();
-    const month = dateObj.toLocaleString('default', { month: 'long' });
+    const month = dateObj.toLocaleString("default", { month: "long" });
     const year = dateObj.getFullYear();
     const time = dateObj.toLocaleTimeString();
     return `${day} ${month} ${year} ${time}`;
@@ -658,7 +658,7 @@ const Subscription = () => {
             {!connected && (
               <button className="">
                 {/* <WalletSelectorAntDesign /> */}
-                <Login/>
+                <Login />
               </button>
             )}
             {connected && (
@@ -687,72 +687,102 @@ const Subscription = () => {
                 <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">
                   Subscription
                 </div>
-                { !nftdata && !trialsubscriptiondata && (
-                  <div
-                  className="mx-auto px-4 min-h-screen">
-                  <div className="w-full text-center py-20">
-                  <h2 className="text-4xl font-bold text-white">No Subscription</h2>
-                  <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-1/5 mx-auto my-20">
-                    <Link href="/plans">Try our free trial now</Link>
+                {!nftdata && !trialsubscriptiondata && (
+                  <div className="mx-auto px-4 min-h-screen">
+                    <div className="w-full text-center py-20">
+                      <h2 className="text-4xl font-bold text-white">
+                        No Subscription
+                      </h2>
+                      <div className="bg-blue-500 text-white font-bold py-4 px-6 rounded-lg w-1/5 mx-auto my-20">
+                        <Link href="/plans">Try our free trial now</Link>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                </div>
                 )}
                 <div className="flex gap-10 w-1/2">
-                  
-                {nftdata && (
-                <div className="w-1/2">
-                  <NftdataContainer
-                  metaDataArray={nftdata}
-                  MyReviews={false}
-                  selectCollection={handleCollectionClick}
-                />
-                </div>
-                )}
-            
-                {
-                  trialsubscriptiondata && (
-                    <div className="w-1/2 rounded-3xl mt-2 mb-2 relative min-h-96" style={{ backgroundColor:'#202333', border: '1px solid #0162FF'}}>
-      <div className="w-full h-full rounded-lg px-6 pt-6">
-        <button onClick={handleTrialClick}>
-          <div className="flex flex-col">
-            <div className="w-full">
-              <h3 className="leading-12 mb-2 text-white">
-              <div className="text-lg font-semibold mt-4 uppercase">
-                    {trialsubscriptiondata.subscription.type} Subscription         
-                  </div>  
-                <div className="lg:flex md:flex justify-between">
-                  <div className="text-md font-semibold mt-4">
-                  Status: {trialsubscriptiondata.status}                    
-                  </div>
-                  <div className="text-md font-semibold mt-4">
-                  Valid for 7 days 
-                  </div>
-                </div>  
-              </h3>
+                  {nftdata && (
+                    <div className="w-1/2">
+                      <NftdataContainer
+                        metaDataArray={nftdata}
+                        MyReviews={false}
+                        selectCollection={handleCollectionClick}
+                      />
+                    </div>
+                  )}
 
-              <div className="rounded-xl">
-                <div className="text-sm text-white text-start mt-2">
-                  <div className="mb-3">
-                  <span className="text-green-500 ">Start time :</span> {trialsubscriptiondata.subscription.startTime ? formatDateTime(trialsubscriptiondata.subscription.startTime) : 'Loading...'}
-                  </div>
-                  <div className="">                 
-                  <span className="text-red-500 ">End time :</span> {trialsubscriptiondata.subscription.endTime ? formatDateTime(trialsubscriptiondata.subscription.endTime) : 'Loading...'}
-                  </div>
-                </div>
-              </div>
+                  {trialsubscriptiondata && (
+                    <div
+                      className="w-1/2 rounded-3xl mt-2 mb-2 relative min-h-96"
+                      style={{
+                        backgroundColor: "#202333",
+                        border: "1px solid #0162FF",
+                      }}
+                    >
+                      <div className="w-full h-full rounded-lg px-6 pt-6">
+                        <button onClick={handleTrialClick}>
+                          <div className="flex flex-col">
+                            <div className="w-full">
+                              <h3 className="leading-12 mb-2 text-white">
+                                <div className="text-lg font-semibold mt-4 uppercase">
+                                  {trialsubscriptiondata.subscription.type}{" "}
+                                  Subscription
+                                </div>
+                                <div className="lg:flex md:flex justify-between">
+                                  <div className="text-md font-semibold mt-4">
+                                    Status: {trialsubscriptiondata.status}
+                                  </div>
+                                  <div className="text-md font-semibold mt-4">
+                                    Valid for 7 days
+                                  </div>
+                                </div>
+                              </h3>
 
-              <div className="rounded-full px-10 py-2 mb-10 text-white" 
-              style={{backgroundColor:'#0162FF', position: 'absolute',bottom: 0, left:80}}>
-                Create Clients</div>
-            </div>
-          </div>
-        </button>
-      </div>
-    </div>
-                  )
-                }
-          </div>
+                              <div className="rounded-xl">
+                                <div className="text-sm text-white text-start mt-2">
+                                  <div className="mb-3">
+                                    <span className="text-green-500 ">
+                                      Start time :
+                                    </span>{" "}
+                                    {trialsubscriptiondata.subscription
+                                      .startTime
+                                      ? formatDateTime(
+                                          trialsubscriptiondata.subscription
+                                            .startTime
+                                        )
+                                      : "Loading..."}
+                                  </div>
+                                  <div className="">
+                                    <span className="text-red-500 ">
+                                      End time :
+                                    </span>{" "}
+                                    {trialsubscriptiondata.subscription.endTime
+                                      ? formatDateTime(
+                                          trialsubscriptiondata.subscription
+                                            .endTime
+                                        )
+                                      : "Loading..."}
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div
+                                className="rounded-full px-10 py-2 mb-10 text-white"
+                                style={{
+                                  backgroundColor: "#0162FF",
+                                  position: "absolute",
+                                  bottom: 0,
+                                  left: 80,
+                                }}
+                              >
+                                Create Clients
+                              </div>
+                            </div>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </>
             )}
 
@@ -788,7 +818,6 @@ const Subscription = () => {
 
                   {buttonset && (
                     <>
-
                       <div
                         style={{ backgroundColor: "#222944E5" }}
                         className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
@@ -837,75 +866,94 @@ const Subscription = () => {
                                     </span>
                                   </h1>
 
-                                  <form
-                                    id="myForm"
-                                    className="rounded pt-10"
-                                    onSubmit={handleSubmit}
-                                  >
-                                    <div className="mb-10">
-                                      <div className="">
-                                        <div className="mb-4 w-full">
-                                          <input
-                                            type="text"
-                                            id="name"
-                                            style={border}
-                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                            placeholder="Name"
-                                            value={formData.name}
-                                            onChange={handleInputChange}
-                                            required
-                                          />
-                                        </div>
+                                  <form id="myForm" className="rounded pt-10" onSubmit={handleSubmit}>
+  <div className="mb-10">
+    <div className="">
+      <div className="mb-4 w-full">
+        <input
+          type="text"
+          id="name"
+          style={border}
+          className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
 
-                                        <div className="mb-4 w-full">
-                                          <select
-                                            id="region"
-                                            style={border}
-                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                                            value={formData.region}
-                                            onChange={handleInputChange}
-                                            required
-                                          >
-                                            <option
-                                              className="bg-white text-black"
-                                              value=""
-                                            >
-                                              Select Region
-                                            </option>
+      <div className="mb-4 w-full">
+        <select
+          id="region"
+          style={border}
+          className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+          value={formData.region}
+          onChange={handleInputChange}
+          required
+        >
+          <option className="bg-white text-black" value="">
+            Select Region
+          </option>
+          {activeNodesData.map((node) => (
+            <option key={node.id} className="bg-white text-green-500" value={node.region}>
+              {node.region}
+            </option>
+          ))}
+        </select>
+      </div>
 
-                                            {activeNodesData.map((node) => (
-                                              <option
-                                                key={node.id}
-                                                className="bg-white text-black"
-                                                value={node.id}
-                                              >
-                                                {node.region}
-                                              </option>
-                                            ))}
-                                          </select>
-                                        </div>
-                                      </div>
+      {formData.region && (
+        <div className="mb-4 w-full">
+          <select
+            id="nodeName"
+            style={border}
+            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+            value={formData.nodename}
+            onChange={(e) => {
+              const selectedNode = activeNodesData.find(node => node.nodename === e.target.value && node.region === formData.region);
+              setFormData(prevFormData => ({
+                ...prevFormData,
+                nodeName: selectedNode ? selectedNode.nodename : '',
+                nodeNameId: selectedNode ? selectedNode.id : ''
+              }));
+            }}
+            required
+          >
+            <option className="bg-white text-black" value="">
+              Select Node Name
+            </option>
+            {activeNodesData
+              .filter((node) => node.region === formData.region)
+              .map((node) => (
+                <option key={node.id} className="bg-white text-green-500" value={node.nodename}>
+                  {node.nodename}
+                </option>
+              ))}
+          </select>
+        </div>
+      )}
+    </div>
 
-                                      <div className="flex-col gap-4 mr-4">
+    <div className="flex-col gap-4 mr-4">
+      <div className="text-center w-1/2 mt-10 mx-auto">
+        <div className="mb-4 md:mb-8">
+          <button
+            style={{
+              backgroundColor: "#0162FF",
+            }}
+            type="submit"
+            value="submit"
+            className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+          >
+            Create Client
+          </button>
+        </div>
+      </div>
+      <p className="text-red-500">{msg}</p>
+    </div>
+  </div>
+</form>
 
-                                        <div className="text-center w-1/2 mt-10 mx-auto">
-                                          <div className="mb-4 md:mb-8">
-                                            <button
-                                              style={{
-                                                backgroundColor: "#0162FF",
-                                              }}
-                                              type="submit"
-                                              value="submit"
-                                              className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
-                                            >
-                                              Create Client
-                                            </button>
-                                          </div>
-                                        </div>
-                                        <p className="text-red-500">{msg}</p>
-                                      </div>
-                                    </div>
-                                  </form>
                                 </div>
                               </div>
                             </section>
@@ -929,7 +977,6 @@ const Subscription = () => {
                             border: "1px solid #0162FF",
                           }}
                         >
-
                           <div className="py-4 space-y-4 mt-4">
                             <p className="text-3xl text-center font-semibold text-white">
                               Successfully created!
