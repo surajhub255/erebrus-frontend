@@ -58,7 +58,7 @@ const Navbar = ({ isHome }) => {
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [chainsym, setchainsym] = useState("");
+  const [chainsym, setchainsym] = useState("apt");
   const [hidefilter, setHideFilter] = useState(false);
   const [connectedAddress, setConnectedAddress] = useState("");
   const [sendable, setSendable] = useState(false);
@@ -224,9 +224,9 @@ const Navbar = ({ isHome }) => {
   };
   //dropdown
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Chain 1'); // Set default to 'Chain 1'
-  const options = ['Chain 1', 'Chain 2', 'Chain 3', 'Chain 4'];
-
+  const [selectedOption, setSelectedOption] = useState('Aptos'); // Set default to 'Chain 1'
+  const options = ['Aptos', 'Solana', 'Sui', 'Ethereum'];
+const optionssym= ['apt', 'sol', 'sui', 'evm']
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSelectedDropwdown(false); // Close the dropdown after selecting an option
@@ -438,7 +438,7 @@ const Navbar = ({ isHome }) => {
               <button
                 key={index}
                 className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                onClick={() => handleOptionSelect(option)}
+                onClick={() => {handleOptionSelect(option); setchainsym(optionssym[index])}}
               >
                 {option}
               </button>
