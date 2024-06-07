@@ -226,8 +226,9 @@ const Navbar = ({ isHome }) => {
   //dropdown
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
   const [selectedOption, setSelectedOption] = useState('Aptos'); // Set default to 'Chain 1'
-  const options = ['Aptos', 'Solana', 'Sui', 'Ethereum'];
-const optionssym= ['apt', 'sol', 'sui', 'evm']
+  const options = ['Aptos', 'Ethereum', 'Sui', 'Solana'];
+  const optionssym= ['apt', 'evm', 'sui', 'sol' ];
+  const chainimg = ['aptosicon', 'ethicon', 'suiicon', 'solanaicon'];
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSelectedDropwdown(false); // Close the dropdown after selecting an option
@@ -427,21 +428,28 @@ const optionssym= ['apt', 'sol', 'sui', 'evm']
             {/* dropdown */}
           <div className="relative">
       <button
-        className="block w-full px-4 py-2 text-left bg-white rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        onClick={() => {setSelectedDropwdown(true); setSelectedOption(selectedOption ? selectedOption : 'Chain 1');}} // Toggle dropdown on button click
+        className="block w-full px-10 py-2 text-left rounded-full text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" style={{backgroundColor:'#253776'}}
+        onClick={() => {setSelectedDropwdown(true); setSelectedOption(selectedOption ? selectedOption : 'Chains');}} // Toggle dropdown on button click
       >
-        {selectedOption || 'Select Chain'}
+        <div className="flex gap-2">
+        {selectedOption || 'Select Chain'}  <img src="/chainarrow.png"/>
+        </div>
       </button>
       {selectedDropwdown && (
-        <div className="absolute right-0 mt-2 w-56 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" style={{backgroundColor: '#20253A'}}>
           <div className="py-1">
             {options.map((option, index) => (
               <button
                 key={index}
-                className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
                 onClick={() => {handleOptionSelect(option); setchainsym(optionssym[index])}}
               >
-                {option}
+                <div className="flex gap-4">
+                <span>
+                  <img src={`/${chainimg[index]}.png`} className={`${chainimg[index] === "suiicon" ? "w-4 ml-1 mt-1" : "w-6 mt-0.5"}`}/>
+                </span>
+                <span>{option}</span>
+                </div>
               </button>
             ))}
           </div>
