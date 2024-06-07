@@ -4,11 +4,17 @@ import React from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { ReactWorldCountriesMap } from "react-world-countries-map";
+
 
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const NodeDetail = ({ node, id }) => {
   console.log("node data", node, id);
+
+  const data = [
+    { country: `${node.region}`, value: `${node.ipinfocity}` },
+  ];
 
   return (
     <div className="bg-black text-white p-20">
@@ -36,7 +42,15 @@ const NodeDetail = ({ node, id }) => {
               Bandwidth trans. data
             </div>
         </div>
-        <div className="w-1/5">lSNDlk</div>
+        <div className="w-1/5 rounded-xl text-black">
+        <ReactWorldCountriesMap
+        color="blue"
+        title="Node Region"
+        value-prefix="IP info city:   "
+        size="sm"
+        data={data}
+      />
+        </div>
       </div>
 
       <div className="flex gap-4 mt-4">
