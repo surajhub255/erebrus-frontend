@@ -78,6 +78,12 @@ const NodesData = () => {
 
     return elapsedTimeString;
   }
+
+  const handleRowClick = (id) => {
+    window.location.href = `/nodeinfo/${id}`; // Navigate to the node info page
+  };
+
+
   return (
     <div
       id="howto"
@@ -172,12 +178,11 @@ const NodesData = () => {
               {nodesdata.map((node) => (
                 <tr
                   key={node.id}
-                  className={
-                    node.status === "inactive"
-                      ? "text-red-300"
-                      : "text-blue-100"
-                  }
-                  style={{ height: "60px" }} // Adjust the height as needed
+                  className={`table-row cursor-pointer ${
+                    node.status === "inactive" ? "text-red-300" : "text-blue-100"
+                  }`}
+                  style={{ height: "60px"}} // Adjust the height as needed
+                  onClick={() => handleRowClick(node.id)}
                 >
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
                     <div className="flex gap-4 justify-center items-center py-2 px-4">

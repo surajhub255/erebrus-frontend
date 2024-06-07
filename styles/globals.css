@@ -29,3 +29,11 @@
     background-color: white; /* Keep the background color same as normal state */
   }
 }
+
+.table-row {
+  transition: background 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.table-row:hover {
+  background-color: #5696FF; /* Path to your image */
+}
