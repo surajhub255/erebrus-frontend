@@ -100,6 +100,8 @@ const Subscription = () => {
   const [ConfigFile, setConfigFile] = useState<string>("");
   const [VpnName, setVpnName] = useState<string>("");
 
+  const [regionname, setregionname] = useState<string>("");
+
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -108,6 +110,14 @@ const Subscription = () => {
       ...prevFormData,
       [id]: value,
     }));
+  };
+
+
+  const handleRegionChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target;
+    setregionname(value);
   };
 
   const genKeys = () => {
@@ -361,10 +371,10 @@ const Subscription = () => {
     }
   }, [collectionsPage, collectionId, region, valueFromChild2]);
 
-  const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    // Update the selected region when the dropdown value changes
-    setregion(e.target.value);
-  };
+  // const handleRegionChange = (e: ChangeEvent<HTMLSelectElement>) => {
+  //   // Update the selected region when the dropdown value changes
+  //   setregion(e.target.value);
+  // };
 
   const loggedin = Cookies.get("erebrus_token");
   const wallet = Cookies.get("erebrus_wallet");
@@ -645,6 +655,19 @@ const Subscription = () => {
     return `${day} ${month} ${year} ${time}`;
   };
 
+
+  const regiondata = [
+    { id: 'SG', region: 'SG'},
+    { id: 'Qmazkrm8RSy1C',region: 'FI' },
+    { id: 'Qmazkrm8RSy1D',region: 'US'},
+    // Add more nodes as needed
+  ];
+
+  // Log activeNodesData and filtered result
+  console.log('Current activeNodesData:', activeNodesData);
+  const filteredNodes = activeNodesData.filter((node) => node.region === regionname);
+  console.log('Filtered nodes based on region:', filteredNodes, regionname);
+
   if (!wallet || !loggedin) {
     return (
       <>
@@ -872,98 +895,104 @@ const Subscription = () => {
                                     </span>
                                   </h1>
 
-                                  <form id="myForm" className="rounded pt-10" onSubmit={handleSubmit}>
-  <div className="mb-10">
-    <div className="">
-      <div className="mb-4 w-full">
-        <input
-          type="text"
-          id="name"
-          style={border}
-          className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Name"
-          value={formData.name}
-          onChange={handleInputChange}
-          required
-        />
-      </div>
+                                  <form
+                                    id="myForm"
+                                    className="rounded pt-10"
+                                    onSubmit={handleSubmit}
+                                  >
+                                    <div className="mb-10">
+                                      <div className="">
+                                        <div className="mb-4 w-full">
+                                          <input
+                                            type="text"
+                                            id="name"
+                                            style={border}
+                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                            placeholder="Name"
+                                            value={formData.name}
+                                            onChange={handleInputChange}
+                                            required
+                                          />
+                                        </div>
 
-      <div className="mb-4 w-full">
-        <select
-          id="region"
-          style={border}
-          className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-          value={formData.region}
-          onChange={handleInputChange}
-          required
-        >
-          <option className="bg-white text-black" value="">
-            Select Region
-          </option>
-          {uniqueRegions.map((region, index) => (
-              <option key={index} className="bg-white text-green-500" value={region}>
-                {region}
-              </option>
-            ))}
-        </select>
-      </div>
+                                        <div className="mb-4 w-full">
+                                          <select
+                                            id="regionname"
+                                            style={border}
+                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                            value={regionname}
+                                            onChange={handleRegionChange}
+                                            required
+                                          >
+                                            <option
+                                              className="bg-white text-black"
+                                              value=""
+                                            >
+                                              Select Region
+                                            </option>
 
-      {formData.region && (
-        <div className="mb-4 w-full">
-          <select
-            id="nodeName"
-            style={border}
-            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-            value={formData.nodename}
-            onChange={(e) => {
-              const selectedNode = activeNodesData.find(node => node.nodename === e.target.value && node.region === formData.region);
-              console.log("Selected Node:", selectedNode);
-              setFormData(prevFormData => ({
-                ...prevFormData,
-                nodename: selectedNode ? selectedNode.nodename : '',
-                // nodeNameId: selectedNode ? selectedNode.id : ''
-              }));
-            }}
-            required
-          >
-            <option className="bg-white text-black" value="">
-              Select Node Name
-            </option>
-            {activeNodesData
-              .filter((node) => node.region === formData.region)
-              .map((node, index) => (
+                                            {regiondata.map((node) => (
+                                              <option
+                                                key={node.id}
+                                                className="bg-white text-black"
+                                                value={node.id}
+                                              >
+                                                {node.region}
+                                              </option>
+                                            ))}
+                                          </select>
+                                        </div>
+
+
+                                        <div className="mb-4 w-full">
+                                          <select
+                                            id="region"
+                                            style={border}
+                                            className="shadow border appearance-none rounded-full w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                            value={formData.region}
+                                            onChange={handleInputChange}
+                                            required
+                                          >
+                                            <option
+                                              className="bg-white text-black"
+                                              value=""
+                                            >
+                                              Select Node ID
+                                            </option>
+
+                                            {activeNodesData
+              .filter((node) => node.region === regionname)
+              .map((node) => (
                 <option key={node.id} className="bg-white text-green-500" value={node.id}>
-                  <div className="flex gap-10">
-                  <div>{index+1}</div>
-                  <div className="ml-4">{node.id.slice(0, 4)}...{node.id.slice(-4)}</div>
-                  <div className="ml-4">{node.walletAddress.slice(0, 4)}...{node.walletAddress.slice(-4)}</div>
-                  </div>
+                  {node.id}
                 </option>
               ))}
-          </select>
-        </div>
-      )}
-    </div>
 
-    <div className="flex-col gap-4 mr-4">
-      <div className="text-center w-1/2 mt-10 mx-auto">
-        <div className="mb-4 md:mb-8">
-          <button
-            style={{
-              backgroundColor: "#0162FF",
-            }}
-            type="submit"
-            value="submit"
-            className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
-          >
-            Create Client
-          </button>
-        </div>
-      </div>
-      <p className="text-red-500">{msg}</p>
-    </div>
-  </div>
-</form>
+
+                                          </select>
+                                        </div>
+                                      </div>
+
+                                      <div className="flex-col gap-4 mr-4">
+
+                                        <div className="text-center w-1/2 mt-10 mx-auto">
+                                          <div className="mb-4 md:mb-8">
+                                            <button
+                                              style={{
+                                                backgroundColor: "#0162FF",
+                                              }}
+                                              type="submit"
+                                              value="submit"
+                                              className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                                            >
+                                              Create Client
+                                            </button>
+                                          </div>
+                                        </div>
+                                        <p className="text-red-500">{msg}</p>
+                                      </div>
+                                    </div>
+                                  </form>
 
                                 </div>
                               </div>
