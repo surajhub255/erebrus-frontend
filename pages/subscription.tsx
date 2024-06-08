@@ -560,6 +560,7 @@ const Subscription = () => {
 
   const [nodesdata, setNodesData] = useState([]);
   const [activeNodesData, setActiveNodesData] = useState([]);
+  const [uniqueRegions, setUniqueRegions] = useState([]);
 
   useEffect(() => {
     const fetchNodesData = async () => {
@@ -581,9 +582,14 @@ const Subscription = () => {
           const payload = response.data.payload;
           setNodesData(payload);
           const filteredNodes = payload.filter(
-            (node) => node.status === "active"
+            (node) => node.status === "active" && node.region !== undefined && node.region !== null && node.region.trim()
           );
           setActiveNodesData(filteredNodes);
+
+          // Extract and store unique regions
+          const regions = Array.from(new Set(filteredNodes.map(node => node.region)));
+          setUniqueRegions(regions);
+
           console.log("erebrus nodes", payload);
         }
       } catch (error) {
@@ -894,11 +900,11 @@ const Subscription = () => {
           <option className="bg-white text-black" value="">
             Select Region
           </option>
-          {activeNodesData.map((node) => (
-            <option key={node.id} className="bg-white text-green-500" value={node.region}>
-              {node.region}
-            </option>
-          ))}
+          {uniqueRegions.map((region, index) => (
+              <option key={index} className="bg-white text-green-500" value={region}>
+                {region}
+              </option>
+            ))}
         </select>
       </div>
 
@@ -911,10 +917,11 @@ const Subscription = () => {
             value={formData.nodename}
             onChange={(e) => {
               const selectedNode = activeNodesData.find(node => node.nodename === e.target.value && node.region === formData.region);
+              console.log("Selected Node:", selectedNode);
               setFormData(prevFormData => ({
                 ...prevFormData,
-                nodeName: selectedNode ? selectedNode.nodename : '',
-                nodeNameId: selectedNode ? selectedNode.id : ''
+                nodename: selectedNode ? selectedNode.nodename : '',
+                // nodeNameId: selectedNode ? selectedNode.id : ''
               }));
             }}
             required
@@ -924,9 +931,13 @@ const Subscription = () => {
             </option>
             {activeNodesData
               .filter((node) => node.region === formData.region)
-              .map((node) => (
-                <option key={node.id} className="bg-white text-green-500" value={node.nodename}>
-                  {node.nodename}
+              .map((node, index) => (
+                <option key={node.id} className="bg-white text-green-500" value={node.id}>
+                  <div className="flex gap-10">
+                  <div>{index+1}</div>
+                  <div className="ml-4">{node.id.slice(0, 4)}...{node.id.slice(-4)}</div>
+                  <div className="ml-4">{node.walletAddress.slice(0, 4)}...{node.walletAddress.slice(-4)}</div>
+                  </div>
                 </option>
               ))}
           </select>
