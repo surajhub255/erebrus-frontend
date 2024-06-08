@@ -158,7 +158,7 @@ const Navbar = ({ isHome }) => {
   }, [connected]);
   useEffect(() => {
     // const erebrus_wallet =Cookies.get("erebrus_wallet") ;
-    if (ethConnected ) {
+    if (ethConnected && getchainsym == "evm") {
       onSignMessageEth();
     
 

@@ -38,6 +38,7 @@
     "@thirdweb-dev/sdk": "^3.6.9",
     "@tp-lab/aptos-wallet-adapter": "^1.0.1",
     "@trustwallet/aptos-wallet-adapter": "^0.1.6",
+    "@wagmi/core": "^2.10.5",
     "@web3-react/core": "^8.2.3",
     "@web3modal/wagmi": "^4.1.11",
     "@welldone-studio/aptos-wallet-adapter": "^0.1.5",

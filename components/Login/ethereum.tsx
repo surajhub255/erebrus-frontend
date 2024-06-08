@@ -17,7 +17,7 @@
     
   
       if (isConnected) {
-        if (chainsym == "evm" && chain.name == "Manta Pacific") {
+        if (chainsym == "evm" && chain?.name == "Manta Pacific") {
           try {
             const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
@@ -71,7 +71,7 @@
             setshowsignbutton(true);
           }
         } else {
-          alert(`Switch to ${chain.name} in your wallet`);
+          alert(`Switch to ${chain?.name} in your wallet`);
         }
       }
     };
