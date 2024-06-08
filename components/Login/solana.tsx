@@ -21,7 +21,7 @@ export const useSolWallet = (setshowsignbutton) => {
   
 
   const getchainsym = () => {
-    return Cookies.get("Chain_symbol") || "default_chain_sym";
+    return Cookies.get("Chain_symbol") ;
   };
 
   const isSendableNetwork = (connected, network) => {

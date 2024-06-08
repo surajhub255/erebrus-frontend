@@ -8,7 +8,7 @@
     const { signMessage: ethSignMessage } = useSignMessage();
 
     const getchainsym = () => {
-      return Cookies.get("Chain_symbol") || "default_chain_sym";
+      return Cookies.get("Chain_symbol");
     };
     console.log('asjdhahsd', chain, ethAddress)
 
@@ -17,7 +17,7 @@
     
   
       if (isConnected) {
-        if (chainsym == "evm" && chain.name == "Polygon Amoy") {
+        if (chainsym == "evm" && chain.name == "Manta Pacific") {
           try {
             const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 

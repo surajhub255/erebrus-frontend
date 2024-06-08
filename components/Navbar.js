@@ -119,7 +119,9 @@ const Navbar = ({ isHome }) => {
   };
 
 
-  
+  const getchainsym =Cookies.get("Chain_symbol") ;
+
+  console.log("chainsym", getchainsym)
 
 
   const router = useRouter();
@@ -137,7 +139,43 @@ const Navbar = ({ isHome }) => {
     }
   }, [solAccount]);
   
+  useEffect(() => {
+    
+    if (aptosConnected) {
+      onSignMessage();
+    
 
+    }
+  }, [aptosConnected]);
+  
+  useEffect(() => {
+    const erebrus_wallet =Cookies.get("erebrus_wallet") ;
+    if (connected && !erebrus_wallet ) {
+      handleSignMsg();
+    
+
+    }
+  }, [connected]);
+  useEffect(() => {
+    // const erebrus_wallet =Cookies.get("erebrus_wallet") ;
+    if (ethConnected ) {
+      onSignMessageEth();
+    
+
+    }
+  }, [ethConnected]);
+
+ 
+  useEffect(() => {
+    const getchainsym =Cookies.get("Chain_symbol") ;
+
+      // Update the cookie with the new symbol
+      if(getchainsym == null)
+      Cookies.set("Chain_symbol", "apt");    
+  }, []);
+ 
+  
+  
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -217,6 +255,7 @@ const Navbar = ({ isHome }) => {
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
+    Cookies.remove("Chain_symbol")
     if(status=="connected"){
       disconnect();
     }
@@ -225,15 +264,35 @@ const Navbar = ({ isHome }) => {
   };
   //dropdown
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
-  const [selectedOption, setSelectedOption] = useState('Aptos'); // Set default to 'Chain 1'
+
+  const [selectedOption, setSelectedOption] = useState(''); // Set default to 'Chain 1'
   const options = ['Aptos', 'Ethereum', 'Sui', 'Solana'];
   const optionssym= ['apt', 'evm', 'sui', 'sol' ];
   const chainimg = ['aptosicon', 'ethicon', 'suiicon', 'solanaicon'];
+
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSelectedDropwdown(false); // Close the dropdown after selecting an option
   };
+  useEffect(() => {
+    const getchainsym =Cookies.get("Chain_symbol") ;
+    if (getchainsym!=null) {
+      if(getchainsym == "apt"){
+      setSelectedOption("Aptos")
+      }
+      if(getchainsym == "sui"){
+        setSelectedOption("Sui")
+        }
+      if(getchainsym == "sol"){
+          setSelectedOption("Solona")
+          }
+      if(getchainsym == "evm"){
+            setSelectedOption("Ethereum")
+            }
 
+    }
+    else{  setSelectedOption("Aptos")}
+  }, []);
   return (
     <nav className="bg-transparent py-4">
       <div
@@ -367,7 +426,7 @@ const Navbar = ({ isHome }) => {
                   <WalletMultiButton />
                 </button>
               )}
-              {solconnected && showsignbuttonsol && (
+              {/* {solconnected && showsignbuttonsol && (
                 <Button
                   color={"blue"}
                   onClick={OnSignMessageSol}
@@ -398,7 +457,7 @@ const Navbar = ({ isHome }) => {
                   disabled={false}
                   message={"Authenticate"}
                 />
-              )}
+              )} */}
             </div>
           )  : (
               <div
@@ -442,7 +501,7 @@ const Navbar = ({ isHome }) => {
               <button
                 key={index}
                 className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
-                onClick={() => {handleOptionSelect(option); setchainsym(optionssym[index])}}
+                onClick={() => {handleOptionSelect(option); setchainsym(optionssym[index]);  Cookies.set("Chain_symbol", optionssym[index]);}}
               >
                 <div className="flex gap-4">
                 <span>
@@ -510,13 +569,14 @@ const Navbar = ({ isHome }) => {
                     <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
                       <button
                         onClick={() => {
-                          setHideFilter(false);
+                          
                           Cookies.set("Chain_symbol", "apt");
                           setchainsym("apt");
                           setshowsignbuttoneth(false);
       setshowsignbuttonsol(false);
       setshowsignbuttonsui(false);
       setshowsignbuttonaptos(false);
+      setHideFilter(false);
                         }}
                         // className="mx-auto"
                       >
