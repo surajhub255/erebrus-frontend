@@ -16,6 +16,9 @@ export const useSuiWallet = (setshowsignbutton) => {
     return connected && network === mynetwork;
   };
   const sendable = isSendableNetwork(status === "connected", wallet.chain.id);
+
+
+
   async function handleSignMsg() {
     if(sendable && wallet.account?.publicKey.length !=0){
     try {

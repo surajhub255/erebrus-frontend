@@ -12,14 +12,15 @@ export const useAptosWallet = () => {
   const sendableApt = isSendableNetwork(connected, network?.name);
 
   const getchainsym = () => {
-    return Cookies.get("Chain_symbol") || "default_chain_sym";
+    return Cookies.get("Chain_symbol") ;
   };
 
-  const onSignMessage = async (setshowsignbutton) => {
+  const onSignMessage = async (setshowsignbuttonaptos) => {
     const chainsym = getchainsym();
     if (sendableApt) {
       try {
         const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+        console.log("aptos", REACT_APP_GATEWAY_URL)
         const { data } = await axios.get(
           `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}&chain=${chainsym}`
         );
@@ -68,7 +69,7 @@ export const useAptosWallet = () => {
         window.location.reload();
       } catch (error) {
         console.error(error);
-        setshowsignbutton(true);
+        setshowsignbuttonaptos(true);
       }
     } else {
       alert(`Switch to ${process.env.NEXT_PUBLIC_NETWORK} in your wallet`);
