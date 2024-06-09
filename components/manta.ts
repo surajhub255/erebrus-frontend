@@ -1,9 +1,37 @@
-import { Chain } from "@wagmi/core";
 
-export const MantaPacific = {
+interface Chain {
+  id: number;
+  name: string;
+  nativeCurrency: {
+    decimals: number;
+    name: string;
+    symbol: string;
+  };
+  rpcUrls: {
+    public: {
+      http: string[];
+    };
+    default: {
+      http: string[];
+    };
+  };
+  blockExplorers: {
+    etherscan?: {
+      name: string;
+      url: string;
+    };
+    default: {
+      name: string;
+      url: string;
+    };
+  };
+}
+
+export const MantaPacific: Chain = {
+  // ... your existing MantaPacific object
   id: 169,
   name: "Manta Pacific",
-  network: "Manta Pacific Mainnet",
+  // network: "Manta Pacific Mainnet",
   nativeCurrency: {
     decimals: 18,
     name: "Manta Pacific",
@@ -27,4 +55,4 @@ export const MantaPacific = {
       url: "https://pacific-explorer.manta.network/",
     },
   },
-} as const satisfies Chain;
+} as const;
