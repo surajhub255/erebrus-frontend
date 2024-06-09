@@ -16,11 +16,7 @@ const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const mynetwork = process.env.NEXT_PUBLIC_NETWORK;
 const networkSui = process.env.NEXT_PUBLIC_SUI_NETWORK_SUI;
 import { useAccount, useSignMessage } from "wagmi";
-import {
-  ConnectButton,
-  useWallet,
-  addressEllipsis,
-} from "@suiet/wallet-kit";
+import { ConnectButton, useWallet, addressEllipsis } from "@suiet/wallet-kit";
 
 import { useWallet as solUseWallet } from "@solana/wallet-adapter-react";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
@@ -64,43 +60,49 @@ const Navbar = ({ isHome }) => {
   const [sendable, setSendable] = useState(false);
   const [requiredNetwork, setRequiredNetwork] = useState(false);
   //--------------------------------gpt --------------------------------------------------------------------
-  const { account: aptosAccount, connected: aptosConnected, onSignMessage: onSignMessage } = useAptosWallet();
-  const {  handleSignMsg } = useSuiWallet();
-  const { status, connected, connecting,disconnect, account, network, name } = useWallet();
-  const { ethAddress, isConnected: ethConnected, onSignMessageEth } = useEthWallet();
+  const {
+    account: aptosAccount,
+    connected: aptosConnected,
+    onSignMessage: onSignMessage,
+  } = useAptosWallet();
+  const { handleSignMsg } = useSuiWallet();
+  const { status, connected, connecting, disconnect, account, network, name } =
+    useWallet();
+  const {
+    ethAddress,
+    isConnected: ethConnected,
+    onSignMessageEth,
+  } = useEthWallet();
   const { solconnected, solPublicKey, OnSignMessageSol } = useSolWallet();
 
   const [showsignbuttoneth, setshowsignbuttoneth] = useState(false);
   const [showsignbuttonaptos, setshowsignbuttonaptos] = useState(false);
   const [showsignbuttonsui, setshowsignbuttonsui] = useState(false);
   const [showsignbuttonsol, setshowsignbuttonsol] = useState(false);
+
+  const [showchainbutton, setshowchainbutton] = useState(false);
+
   const solAccount = solPublicKey;
-  
-  console.log("sui connected", status == "connected")
+
+  console.log("sui connected", status == "connected");
   useEffect(() => {
-    console
+    console;
     if (aptosConnected) {
       setshowsignbuttonaptos(true);
-    } else if(status == "connected"){
+    } else if (status == "connected") {
       setshowsignbuttonsui(true);
-    }
-    else if(solconnected)
-    { setshowsignbuttonsol(true);
-    }
-    else if(ethConnected)
-    { setshowsignbuttoneth(true);
-    }
-    else{
+    } else if (solconnected) {
+      setshowsignbuttonsol(true);
+    } else if (ethConnected) {
+      setshowsignbuttoneth(true);
+    } else {
       setshowsignbuttoneth(false);
       setshowsignbuttonsol(false);
       setshowsignbuttonsui(false);
       setshowsignbuttonaptos(false);
     }
-   
   }, [aptosConnected, status == "connected", ethConnected, solconnected]);
-  console.log("sui connected", status == "connected")
-
-  
+  console.log("sui connected", status == "connected");
 
   // const handleSignMessage = (chainsym) => {
   //   if (chainsym === "aptos") {
@@ -118,64 +120,50 @@ const Navbar = ({ isHome }) => {
     setHideFilter(!hidefilter);
   };
 
+  const getchainsym = Cookies.get("Chain_symbol");
 
-  const getchainsym =Cookies.get("Chain_symbol") ;
-
-  console.log("chainsym", getchainsym)
-
+  console.log("chainsym", getchainsym);
 
   const router = useRouter();
   const address = Cookies.get("erebrus_wallet");
   const token = Cookies.get("erebrus_token");
 
-  
-
   useEffect(() => {
     if (solAccount) {
       // Update the cookie with the new address
       Cookies.set("erebrus_wallet", solAccount);
-    
-
     }
   }, [solAccount]);
-  
+
   useEffect(() => {
-    
     if (aptosConnected) {
       onSignMessage();
-    
-
     }
   }, [aptosConnected]);
-  
-  useEffect(() => {
-    const erebrus_wallet =Cookies.get("erebrus_wallet") ;
-    if (connected && !erebrus_wallet ) {
-      handleSignMsg();
-    
 
+  useEffect(() => {
+    const erebrus_wallet = Cookies.get("erebrus_wallet");
+    if (connected && !erebrus_wallet) {
+      handleSignMsg();
     }
   }, [connected]);
   useEffect(() => {
     // const erebrus_wallet =Cookies.get("erebrus_wallet") ;
     if (ethConnected && getchainsym == "evm") {
       onSignMessageEth();
-    
-
     }
   }, [ethConnected]);
 
- 
   useEffect(() => {
-    const getchainsym =Cookies.get("Chain_symbol") ;
+    const getchainsym = Cookies.get("Chain_symbol");
 
-      // Update the cookie with the new symbol
-      if(getchainsym == null)
-      Cookies.set("Chain_symbol", "apt");    
+    // Update the cookie with the new symbol
+    if (getchainsym == null) {
+      Cookies.set("Chain_symbol", "apt");
+      setshowchainbutton(true);
+    }
   }, []);
- 
-  
-  
+
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
@@ -223,7 +211,6 @@ const Navbar = ({ isHome }) => {
     };
   }, [address, isSignedIn]);
 
-  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -255,43 +242,42 @@ const Navbar = ({ isHome }) => {
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
-    Cookies.remove("Chain_symbol")
-    if(status=="connected"){
+    Cookies.remove("Chain_symbol");
+    if (status == "connected") {
       disconnect();
     }
     window.location.href = "/";
-
   };
   //dropdown
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState(''); // Set default to 'Chain 1'
-  const options = ['Aptos', 'Ethereum', 'Sui', 'Solana'];
-  const optionssym= ['apt', 'evm', 'sui', 'sol' ];
-  const chainimg = ['aptosicon', 'ethicon', 'suiicon', 'solanaicon'];
+  const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
+  const options = ["Aptos", "Ethereum", "Sui", "Solana"];
+  const optionssym = ["apt", "evm", "sui", "sol"];
+  const chainimg = ["aptosicon", "ethicon", "suiicon", "solanaicon"];
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
     setSelectedDropwdown(false); // Close the dropdown after selecting an option
   };
   useEffect(() => {
-    const getchainsym =Cookies.get("Chain_symbol") ;
-    if (getchainsym!=null) {
-      if(getchainsym == "apt"){
-      setSelectedOption("Aptos")
+    const getchainsym = Cookies.get("Chain_symbol");
+    if (getchainsym != null) {
+      if (getchainsym == "apt") {
+        setSelectedOption("Aptos");
       }
-      if(getchainsym == "sui"){
-        setSelectedOption("Sui")
-        }
-      if(getchainsym == "sol"){
-          setSelectedOption("Solona")
-          }
-      if(getchainsym == "evm"){
-            setSelectedOption("Ethereum")
-            }
-
+      if (getchainsym == "sui") {
+        setSelectedOption("Sui");
+      }
+      if (getchainsym == "sol") {
+        setSelectedOption("Solona");
+      }
+      if (getchainsym == "evm") {
+        setSelectedOption("Ethereum");
+      }
+    } else {
+      setSelectedOption("Aptos");
     }
-    else{  setSelectedOption("Aptos")}
   }, []);
   return (
     <nav className="bg-transparent py-4">
@@ -403,30 +389,29 @@ const Navbar = ({ isHome }) => {
           </Link>
 
           <>
-          {!token ? (
-            <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
-              {!aptosConnected && chainsym === "apt" && (
-                <button>
-                  <WalletSelectorAntDesign />
-                </button>
-              )}
-              {chainsym === "evm" && (
-                <button>
-                  <w3m-button />
-                </button>
-              )}
-              {chainsym === "sui" && (
-                <button>
-                  <ConnectButton />
-                  
-                </button>
-              )}
-              {chainsym === "sol" && (
-                <button>
-                  <WalletMultiButton />
-                </button>
-              )}
-              {/* {solconnected && showsignbuttonsol && (
+            {!token ? (
+              <div className="lg:mt-0 mt-4 z-50 rounded-xl text-white">
+                {!aptosConnected && chainsym === "apt" && (
+                  <button>
+                    <WalletSelectorAntDesign />
+                  </button>
+                )}
+                {chainsym === "evm" && (
+                  <button>
+                    <w3m-button />
+                  </button>
+                )}
+                {chainsym === "sui" && (
+                  <button>
+                    <ConnectButton />
+                  </button>
+                )}
+                {chainsym === "sol" && (
+                  <button>
+                    <WalletMultiButton />
+                  </button>
+                )}
+                {/* {solconnected && showsignbuttonsol && (
                 <Button
                   color={"blue"}
                   onClick={OnSignMessageSol}
@@ -458,8 +443,8 @@ const Navbar = ({ isHome }) => {
                   message={"Authenticate"}
                 />
               )} */}
-            </div>
-          )  : (
+              </div>
+            ) : (
               <div
                 className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4"
                 style={{ color: "#0162FF" }}
@@ -472,7 +457,6 @@ const Navbar = ({ isHome }) => {
                   onMouseOut={(e) =>
                     (e.currentTarget.style.borderBottom = "none")
                   }
-                  
                 >
                   Log out
                 </button>
@@ -485,141 +469,178 @@ const Navbar = ({ isHome }) => {
 
           <div>
             {/* dropdown */}
-          <div className="relative">
-      <button
-        className="block w-full px-10 py-2 text-left rounded-full text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" style={{backgroundColor:'#253776'}}
-        onClick={() => {setSelectedDropwdown(true); setSelectedOption(selectedOption ? selectedOption : 'Chains');}} // Toggle dropdown on button click
-      >
-        <div className="flex gap-2">
-        {selectedOption || 'Select Chain'}  <img src="/chainarrow.png"/>
-        </div>
-      </button>
-      {selectedDropwdown && (
-        <div className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" style={{backgroundColor: '#20253A'}}>
-          <div className="py-1">
-            {options.map((option, index) => (
+
+            {
+  showchainbutton && (
+            <div className="relative">
               <button
-                key={index}
-                className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
-                onClick={() => {handleOptionSelect(option); setchainsym(optionssym[index]);  Cookies.set("Chain_symbol", optionssym[index]);}}
+                className="block w-full px-10 py-2 text-left rounded-full text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                style={{ backgroundColor: "#253776" }}
+                onClick={() => {
+                  setSelectedDropwdown(true);
+                  setSelectedOption(selectedOption ? selectedOption : "Chains");
+                }} // Toggle dropdown on button click
               >
-                <div className="flex gap-4">
-                <span>
-                  <img src={`/${chainimg[index]}.png`} className={`${chainimg[index] === "suiicon" ? "w-4 ml-1 mt-1" : "w-6 mt-0.5"}`}/>
-                </span>
-                <span>{option}</span>
+                <div className="flex gap-2">
+                  {selectedOption || "Select Chain"}{" "}
+                  <img src="/chainarrow.png" />
                 </div>
               </button>
-            ))}
-          </div>
-        </div>
-      )}
-    </div>
-      
-
+              {selectedDropwdown && (
+                <div
+                  className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  style={{ backgroundColor: "#20253A" }}
+                >
+                  <div className="py-1">
+                    {options.map((option, index) => (
+                      <button
+                        key={index}
+                        className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+                        onClick={() => {
+                          handleOptionSelect(option);
+                          setchainsym(optionssym[index]);
+                          Cookies.set("Chain_symbol", optionssym[index]);
+                        }}
+                      >
+                        <div className="flex gap-4">
+                          <span>
+                            <img
+                              src={`/${chainimg[index]}.png`}
+                              className={`${
+                                chainimg[index] === "suiicon"
+                                  ? "w-4 ml-1 mt-1"
+                                  : "w-6 mt-0.5"
+                              }`}
+                            />
+                          </span>
+                          <span>{option}</span>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+  )}
 
             {hidefilter && (
               <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-900 bg-opacity-50">
-                <div className="p-8 rounded-3xl shadow-md text-white w-1/4" style={{backgroundColor:'#0162FF'}}>
-                <div className="flex items-center justify-end rounded-t">
-                              <button
-                                onClick={() => setHideFilter(false)}
-                                type="button"
-                                className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-800 dark:hover:text-white"
-                              >
-                                <svg
-                                  className="w-3 h-3"
-                                  aria-hidden="true"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                  fill="none"
-                                  viewBox="0 0 14 14"
-                                >
-                                  <path
-                                    stroke="currentColor"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="2"
-                                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
-                                  />
-                                </svg>
-                                <span className="sr-only">Close modal</span>
-                              </button>
-                            </div>
-                  <h2 className="text-2xl font-bold -mt-4 text-center">Choose a Chain</h2>
+                <div
+                  className="p-8 rounded-3xl shadow-md text-white w-1/4"
+                  style={{ backgroundColor: "#0162FF" }}
+                >
+                  <div className="flex items-center justify-end rounded-t">
+                    <button
+                      onClick={() => setHideFilter(false)}
+                      type="button"
+                      className="text-white bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-800 dark:hover:text-white"
+                    >
+                      <svg
+                        className="w-3 h-3"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 14 14"
+                      >
+                        <path
+                          stroke="currentColor"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                        />
+                      </svg>
+                      <span className="sr-only">Close modal</span>
+                    </button>
+                  </div>
+                  <h2 className="text-2xl font-bold -mt-4 text-center">
+                    Choose a Chain
+                  </h2>
                   <ul className="space-y-4 mt-10">
-                    <li className="flex items-center justify-between gap-64 p-2 rounded-full" style={{backgroundColor:'#202333'}}>
+                    <li
+                      className="flex items-center justify-between gap-64 p-2 rounded-full"
+                      style={{ backgroundColor: "#202333" }}
+                    >
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "evm");
                           setchainsym("evm");
                           setshowsignbuttoneth(false);
-      setshowsignbuttonsol(false);
-      setshowsignbuttonsui(false);
-      setshowsignbuttonaptos(false);
+                          setshowsignbuttonsol(false);
+                          setshowsignbuttonsui(false);
+                          setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
-                        <div className="flex gap-2" style={{marginLeft:100}}>
-                          <img src="/ethicon.png" className="w-6 h-6"/>
+                        <div className="flex gap-2" style={{ marginLeft: 100 }}>
+                          <img src="/ethicon.png" className="w-6 h-6" />
                           <div>Ethereum</div>
                         </div>
                       </button>
                     </li>
-                    <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
+                    <li
+                      className="flex items-center justify-between p-2 rounded-full"
+                      style={{ backgroundColor: "#202333" }}
+                    >
                       <button
                         onClick={() => {
-                          
                           Cookies.set("Chain_symbol", "apt");
                           setchainsym("apt");
                           setshowsignbuttoneth(false);
-      setshowsignbuttonsol(false);
-      setshowsignbuttonsui(false);
-      setshowsignbuttonaptos(false);
-      setHideFilter(false);
+                          setshowsignbuttonsol(false);
+                          setshowsignbuttonsui(false);
+                          setshowsignbuttonaptos(false);
+                          setHideFilter(false);
                         }}
                         // className="mx-auto"
                       >
-                         <div className="flex gap-2" style={{marginLeft:100}}>
-                          <img src="/aptosicon.png" className="w-6 h-6"/>
+                        <div className="flex gap-2" style={{ marginLeft: 100 }}>
+                          <img src="/aptosicon.png" className="w-6 h-6" />
                           <div>Aptos</div>
                         </div>
                       </button>
                     </li>
-                    <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
+                    <li
+                      className="flex items-center justify-between p-2 rounded-full"
+                      style={{ backgroundColor: "#202333" }}
+                    >
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sui");
                           setchainsym("sui");
                           setshowsignbuttoneth(false);
-      setshowsignbuttonsol(false);
-      setshowsignbuttonsui(false);
-      setshowsignbuttonaptos(false);
+                          setshowsignbuttonsol(false);
+                          setshowsignbuttonsui(false);
+                          setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
-                         <div className="flex gap-2" style={{marginLeft:105}}>
-                          <img src="/suiicon.png" className="w-4 h-5"/>
+                        <div className="flex gap-2" style={{ marginLeft: 105 }}>
+                          <img src="/suiicon.png" className="w-4 h-5" />
                           <div>Sui</div>
                         </div>
                       </button>
                     </li>
-                    <li className="flex items-center justify-between p-2 rounded-full" style={{backgroundColor:'#202333'}}>
+                    <li
+                      className="flex items-center justify-between p-2 rounded-full"
+                      style={{ backgroundColor: "#202333" }}
+                    >
                       <button
                         onClick={() => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sol");
                           setchainsym("sol");
                           setshowsignbuttoneth(false);
-      setshowsignbuttonsol(false);
-      setshowsignbuttonsui(false);
-      setshowsignbuttonaptos(false);
+                          setshowsignbuttonsol(false);
+                          setshowsignbuttonsui(false);
+                          setshowsignbuttonaptos(false);
                         }}
                         // className="mx-auto"
                       >
-                         <div className="flex gap-2" style={{marginLeft:100}}>
-                          <img src="/solanaicon.png" className="w-6 h-6"/>
+                        <div className="flex gap-2" style={{ marginLeft: 100 }}>
+                          <img src="/solanaicon.png" className="w-6 h-6" />
                           <div>Solana</div>
                         </div>
                       </button>
