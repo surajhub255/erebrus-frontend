@@ -90,7 +90,7 @@ const Profile = () => {
 
     setLoading(true);
 
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
 
     try {
       const formDataObj = new FormData();
@@ -173,7 +173,7 @@ const Profile = () => {
   const wallet = Cookies.get("platform_wallet");
 
   const handleMagicLink = async() =>{
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
 
     const obj = {"email":gmail};
     const jsonData = JSON.stringify(obj);
@@ -198,7 +198,7 @@ const Profile = () => {
   };
 
   const handleMagicLogin = async() =>{
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
 
     const obj = {"code":code,"emailId":gmail};
     const jsonData = JSON.stringify(obj);
@@ -293,7 +293,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
 
 
   const handleremoveClick = async () => {
-    const auth = Cookies.get("platform_token");
+    const auth = Cookies.get("erebrus_token");
 
     try {
       const response = await axios.delete(`${REACT_APP_GATEWAY_URL}api/v1.0/account/remove-mail`,{headers: {
@@ -313,7 +313,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
 
   useEffect(() => {
       const handleConnectWallet = async () => {
-        const loggedin = Cookies.get("platform_token");
+        const loggedin = Cookies.get("erebrus_token");
         // const auth = Cookies.get("google_token");
         if (loggedin) {
           setloggedin(true);
