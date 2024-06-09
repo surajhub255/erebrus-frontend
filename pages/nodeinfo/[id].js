@@ -19,6 +19,7 @@ const NodeDetail = ({ node, id }) => {
           IP City: {node.ipinfocity}, {node.ipinfocountry}
         </div>
         <div className="mt-2">IP TimeZone: {node.ipinfotimezone}</div>
+        <div className="mt-2">IP Org: {node.ipinfoorg}</div>
       </div>
 
       <div className="flex gap-4 mt-10">
@@ -109,8 +110,24 @@ const NodeDetail = ({ node, id }) => {
           />
         </div>
         <div className="w-1/2">
+
+        <div
+            className="rounded-xl px-10 py-40"
+            style={{
+              backgroundImage:`url(/dns_bg.png)`,
+              backgroundPosition:'center',
+              // paddingTop: "80px",
+              // paddingBottom: "90px",
+            }}
+          >
+            <div className="text-xl" style={{ color: "#FFFFFF99" }}>
+              Domain
+            </div>
+            <div className="text-3xl">{node.domain}</div>
+          </div>
+
           <div
-            className="rounded-xl px-10 py-10"
+            className="rounded-xl px-10 py-12 mt-4"
             style={{
               backgroundColor: "#1B213A",
               backgroundImage: "radial-gradient(#5F9AF933, #5F9AF900)",
@@ -121,33 +138,20 @@ const NodeDetail = ({ node, id }) => {
             </div>
             <div className="text-3xl">{node.ipinfoip}</div>
           </div>
-          <div
-            className="rounded-xl px-10 py-10 mt-4"
-            style={{
-              backgroundColor: "#1B213A",
-              backgroundImage: "radial-gradient(#5F9AF933, #5F9AF900)",
-            }}
-          >
-            <div className="text-xl" style={{ color: "#FFFFFF99" }}>
-              Domain
-            </div>
-            <div className="text-3xl">{node.domain}</div>
-          </div>
+          
 
-          <div
-            className="rounded-xl px-10 mt-4"
+          {/* <div
+            className="rounded-xl px-10 mt-4 py-8"
             style={{
               backgroundColor: "#1B213A",
               backgroundImage: "radial-gradient(#5F9AF933, #5F9AF900)",
-              paddingTop: "80px",
-              paddingBottom: "90px",
             }}
           >
             <div className="text-xl" style={{ color: "#FFFFFF99" }}>
               IP Org
             </div>
             <div className="text-3xl">{node.ipinfoorg}</div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
