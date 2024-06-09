@@ -55,6 +55,7 @@
     "framer-motion": "^8.0.2",
     "js-cookie": "^3.0.5",
     "next": "13.1.1",
+    "nft.storage": "^7.1.1",
     "petra-plugin-wallet-adapter": "^0.3.0",
     "qrcode.react": "^3.1.0",
     "react": "18.2.0",

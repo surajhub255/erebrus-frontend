@@ -160,6 +160,14 @@ const Navbar = ({ isHome }) => {
     // Update the cookie with the new symbol
     if (getchainsym == null) {
       Cookies.set("Chain_symbol", "apt");
+    }
+  }, []);
+
+  useEffect(() => {
+    const token = Cookies.get("erebrus_token");
+
+    // Update the cookie with the new symbol
+    if (token == null) {
       setshowchainbutton(true);
     }
   }, []);
@@ -461,7 +469,9 @@ const Navbar = ({ isHome }) => {
                   Log out
                 </button>
                 {avatarUrl && (
+                  <Link href="/profile">
                   <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto" />
+                  </Link>
                 )}
               </div>
             )}
