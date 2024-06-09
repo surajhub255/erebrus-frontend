@@ -664,9 +664,10 @@ const Subscription = () => {
   ];
 //form 
 const [isOpen, setIsOpen] = useState(false);
- const [selectedOption, setSelectedOption] = useState('');
- const handleOptionClick = (option) => {
-  setSelectedOption(option);
+const [selectedOption, setSelectedOption] = useState(null); 
+;
+const handleOptionClick = (option) => {
+  setSelectedOption(option); // Ensuring option is an object
   setFormData((prevData) => ({ ...prevData, region: option.id }));
   setIsOpen(false);
 };
