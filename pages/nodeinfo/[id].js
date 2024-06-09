@@ -6,15 +6,6 @@ import { ReactWorldCountriesMap } from "react-world-countries-map";
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const NodeDetail = ({ node, id }) => {
-
-  if (!node) {
-    return (
-      <div className="bg-black text-white p-20">
-        <div className="text-4xl font-semibold">Node not found</div>
-      </div>
-    );
-  }
-  
   console.log("node data", node, id);
 
   const data = [{ country: `${node.region}`, value: `${node.ipinfocity}` }];
