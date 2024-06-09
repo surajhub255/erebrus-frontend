@@ -682,11 +682,11 @@ const generateSerialNumber = (region, index) => {
 };
 
 const sliceNodeId = (nodeId) => {
-  return `${nodeId.slice(0, 3)}...${nodeId.slice(-3)}`;
+  return `${nodeId.slice(0, 4)}...${nodeId.slice(-4)}`;
 };
 
 const sliceWalletAddress = (walletAddress) => {
-  return `${walletAddress.slice(0, 3)}...${walletAddress.slice(-3)}`;
+  return `${walletAddress.slice(0, 4)}...${walletAddress.slice(-4)}`;
 };
 
 
