@@ -132,11 +132,10 @@ const Navbar = ({ isHome }) => {
     if (solAccount) {
       // Update the cookie with the new address
       Cookies.set("erebrus_wallet", solAccount);
-<<<<<<< Updated upstream
-=======
+
       OnSignMessageSol();
     
->>>>>>> Stashed changes
+
     }
   }, [solAccount]);
 
