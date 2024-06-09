@@ -617,6 +617,7 @@ const Subscription = () => {
 
   useEffect(() => {
     const trialbuycheck = async () => {
+      setLoading(true);
       const auth = Cookies.get("erebrus_token");
       try {
         const response = await fetch(
@@ -639,6 +640,7 @@ const Subscription = () => {
       } catch (error) {
         console.error("Error:", error);
       } finally {
+        setLoading(false);
       }
     };
 
@@ -745,7 +747,7 @@ const sliceWalletAddress = (walletAddress) => {
                 <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">
                   Subscription
                 </div>
-                {!nftdata && !trialsubscriptiondata && (
+                {!nftdata && !trialsubscriptiondata && !loading && (
                   <div className="mx-auto px-4 min-h-screen">
                     <div className="w-full text-center py-20">
                       <h2 className="text-4xl font-bold text-white">
@@ -757,6 +759,32 @@ const sliceWalletAddress = (walletAddress) => {
                     </div>
                   </div>
                 )}
+
+{loading && (
+                          <div
+                            style={{ backgroundColor: "#040819D9" }}
+                            className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full"
+                            id="popupmodal"
+                          >
+                            <div className="relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full">
+                              <div className="relative rounded-lg shadow">
+                                <div className="flex justify-center gap-4">
+                                  <img
+                                    className="w-12 animate-spin duration-[3000] h-12"
+                                    src="/Loadingerebrus.png"
+                                    alt="Loading icon"
+                                  />
+
+                                  <span className="text-white mt-2">
+                                    Loading...
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+
                 <div className="flex gap-10 w-1/2">
                   {nftdata && (
                     <div className="w-1/2">
