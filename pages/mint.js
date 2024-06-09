@@ -21,6 +21,9 @@ import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../components/CheckoutForm.tsx";
 import { aptosClient } from "../module";
 export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
+import { useAddress } from "@thirdweb-dev/react";
+import { ethers } from 'ethers';
+import { abi } from "../components/mantaabi";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -69,6 +72,38 @@ const Mint = () => {
 
   const { account, connected, network, signMessage, signAndSubmitTransaction } =
     useWallet();
+    const [chainSymbol, setChainSymbol] = useState('');
+    const [erebrusWallet, setErebrusWallet] = useState(null);
+    const [displayText, setDisplayText] = useState('Only at 1.11 APT');
+    const [displayText2, setDisplayText2] = useState('Pay in APT');
+    const [imageSrc, setImageSrc] = useState('/mintApt.png');
+    const [imageSrc2, setImageSrc2] = useState('/nft_ape2.png');
+  
+    useEffect(() => {
+      const chainSym = Cookies.get('Chain_symbol');
+      const wallet = Cookies.get('erebrus_wallet');
+      setChainSymbol(chainSym);
+      setErebrusWallet(wallet);
+  
+      if (wallet) {
+        if (chainSym === 'sui') {
+          setDisplayText('Only at 1.11 SUI');
+          setDisplayText2('Pay in SUI');
+          setImageSrc('/mintSui.png');
+          setImageSrc2('/nft_ape1.png')
+        } else if (chainSym === 'evm') {
+          setDisplayText('Only at 1.11 ETH');
+          setDisplayText2('Pay in ETH')
+          setImageSrc('/mintSui.png');
+          setImageSrc2('/nft_ape2.png')
+        } else if (chainSym === 'sol') {
+          setDisplayText('Only at 1.11 SOL');
+          setDisplayText2('Pay in SOL')
+          setImageSrc('/mintSui.png');
+          setImageSrc2('/nft_ape1.png')
+        }
+      }
+    }, []);
 
   let sendable = isSendableNetwork(connected, network?.name);
 
@@ -185,6 +220,44 @@ const Mint = () => {
     }
   };
 
+  //---------------------------------------------------------------------------------------------------------------------------------
+  const mintreading = async () => {
+    // setLoading(true);
+
+    try {
+
+      if (typeof window !== "undefined" && window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+        // Create a JavaScript object from the Contract ABI, to interact
+        // with the HelloWorld contract.
+        const contract = new ethers.Contract(
+          '0x3414457C53D076D395B05dA6a9FD1b856c30E5F9',
+          abi ,
+          provider.getSigner()
+        )
+
+        
+        const tx = await contract.mintNFT();
+      //  const tx = await  contract.registerNode(
+      //     354353453453,
+      //     34543535345,
+      //     "active",
+      //     "SG"
+      // )
+        const result = await tx.wait();
+        const integerValue = parseInt(result.logs[1].data, 16);
+        console.log("Result:", result, integerValue);
+        setLoading(false);
+        setmintdone(true);
+      }
+
+    } catch (error) {
+      console.error("Error handling draw card and fetching reading:", error);
+      // setLoading(false); // Set loading state to false in case of error
+    }
+  };
+
   const onSignMessage = async () => {
     if (sendable) {
       try {
@@ -283,7 +356,7 @@ const Mint = () => {
                 style={{ marginLeft: "20vh" }}
               >
                 <img
-                  src="/111nft_gif.gif"
+                  src={imageSrc2}
                   style={{ border: "1px solid #0162FF" }}
                   className="rounded-lg"
                 />
@@ -302,7 +375,7 @@ const Mint = () => {
                     src="/icomoon-free_price-tags.png"
                     className="w-6 h-6 mt-1"
                   />
-                  <div>Only at 1.11 APT</div>
+                  <div>{displayText}</div>
                 </div>
                 <div className="text-white text-xl mt-4 mx-auto flex gap-2">
                   <img
@@ -459,14 +532,14 @@ const Mint = () => {
                   <>
                     <button
                       onClick={() => {
-                        setshowconnectbutton(true);
+                        mintreading()
                       }}
                       style={{ border: "1px solid #0162FF" }}
                       type="button"
                       className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      <img src="/mint2.png" className="w-12" />
-                      <div className="px-5 py-2.5 ">Pay in APT</div>
+                      <img src={imageSrc} className="w-12" />
+                      <div className="px-5 py-2.5 ">{displayText2}</div>
                     </button>
                     {showconnectbutton && (
                       <button className="mx-auto justify-center mt-10 items-center flex">
@@ -481,8 +554,8 @@ const Mint = () => {
                     type="button"
                     className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    <img src="/mint2.png" className="w-12" />
-                    <div className="px-5 py-2.5 ">Pay in APT</div>
+                    <img src={imageSrc} className="w-12" />
+                    <div className="px-5 py-2.5 ">{displayText2}</div>
                   </button>
                 )}
               </div>
