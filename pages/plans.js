@@ -5,6 +5,31 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const Plans = () => {
   const [trialbuytrue, settrialbuytrue] = useState(false);
+  const [chainSymbol, setChainSymbol] = useState('');
+  const [erebrusWallet, setErebrusWallet] = useState(null);
+  const [displayText, setDisplayText] = useState('1.11 APT/ 3 month');
+  const [displayText2, setDisplayText2] = useState(' Pay by APT, crytocurrency or Fiat');
+
+  useEffect(() => {
+    const chainSym = Cookies.get('Chain_symbol');
+    const wallet = Cookies.get('erebrus_wallet');
+    setChainSymbol(chainSym);
+    setErebrusWallet(wallet);
+
+    if (wallet) {
+      if (chainSym === 'sui') {
+        setDisplayText('1.11 SUI/ 3 month');
+        setDisplayText2(' Pay by SUI, crytocurrency or Fiat')
+      
+      } else if (chainSym === 'evm') {
+        setDisplayText('1.11 ETH/ 3 month');
+        setDisplayText2(' Pay by ETH, crytocurrency or Fiat')
+      } else if (chainSym === 'sol') {
+        setDisplayText('1.11 SOL/ 3 month');
+        setDisplayText2(' Pay by SOL, crytocurrency or Fiat')
+      }
+    }
+  }, []);
 
   const trialbuy = async () => {
     const auth = Cookies.get("erebrus_token");
@@ -62,7 +87,7 @@ const Plans = () => {
                       </span>
                     </h1>
                     <h1 className="w-3/4 mx-auto text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-                      <span className="text-white">1.11 APT/ 3 month</span>
+                      <span className="text-white">{displayText}</span>
                     </h1>
 
                     <h1
@@ -130,7 +155,7 @@ const Plans = () => {
                       className="mt-4 w-2/5 ml-10 font-bold leading-none tracking-normal rounded-full py-2 px-4 text-sm text-black"
                       style={{ backgroundColor: "#E3EEFF" }}
                     >
-                      Free trial for 7 days
+                      Free trial for 2 week
                     </h1>
 
                     <h1
@@ -141,8 +166,8 @@ const Plans = () => {
                     </h1>
 
                     <div className="text-left text-white mt-10 w-2/3 mx-auto">
-                      &#x2022; Free trial for 7 days<br></br>
-                      &#x2022; Pay by APT, crytocurrency or Fiat<br></br>
+                      &#x2022; Free trial for 2 weeks<br></br>
+                      &#x2022; {displayText2}<br></br>
                       &#x2022; Up to 5 options, more to come.<br></br>
                       &#x2022; Multiple tiers
                     </div>
