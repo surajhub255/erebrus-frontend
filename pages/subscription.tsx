@@ -684,11 +684,11 @@ const generateSerialNumber = (region, index) => {
 };
 
 const sliceNodeId = (nodeId) => {
-  return `${nodeId.slice(0, 4)}...${nodeId.slice(-4)}`;
+  return `${nodeId.slice(0, 3)}...${nodeId.slice(-3)}`;
 };
 
 const sliceWalletAddress = (walletAddress) => {
-  return `${walletAddress.slice(0, 4)}...${walletAddress.slice(-4)}`;
+  return `${walletAddress.slice(0, 3)}...${walletAddress.slice(-3)}`;
 };
 
 
@@ -953,95 +953,98 @@ const sliceWalletAddress = (walletAddress) => {
                                   </h1>
 
                                   <form
-      id="myForm"
-      className="rounded pt-10"
-      onSubmit={handleSubmit}
-    >
-      <div className="mb-10">
-        <div className="">
-          <div className="mb-4 w-full">
-            <input
-              type="text"
-              id="name"
-              className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleInputChange}
-              required
-            />
-          </div>
+  id="myForm"
+  className="rounded pt-10"
+  onSubmit={handleSubmit}
+>
+  <div className="mb-10">
+    <div className="">
+      <div className="mb-4 w-full">
+        <input
+          type="text"
+          id="name"
+          className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+          placeholder="Name"
+          value={formData.name}
+          onChange={handleInputChange}
+          required
+        />
+      </div>
 
-          <div className="mb-4 w-full">
-            <select
-              id="regionname"
-              className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
-              value={regionname}
-              onChange={handleRegionChange}
-              required
-            >
-              <option className="bg-white text-black" value="">
-                Select Region
-              </option>
+      <div className="mb-4 w-full">
+        <select
+          id="regionname"
+          className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+          value={regionname}
+          onChange={handleRegionChange}
+          required
+        >
+          <option className="bg-white text-black" value="">
+            Select Region
+          </option>
 
-              {regiondata.map((node) => (
-                <option key={node.id} className="bg-white text-black" value={node.id}>
-                  {node.region}
-                </option>
-              ))}
-            </select>
-          </div>
+          {regiondata.map((node) => (
+            <option key={node.id} className="bg-white text-black" value={node.id}>
+              {node.region}
+            </option>
+          ))}
+        </select>
+      </div>
 
-          <div className="mb-4 w-full relative">
-            <div
-              className="p-4 bg-white border border-gray-300 rounded-full cursor-pointer"
-              onClick={handleDropdownToggle}
-            >
-              {selectedOption ? sliceNodeId(selectedOption.id) : 'Select Node ID'}
-            </div>
-            {isOpen && (
-              <div className="absolute w-full mt-1 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                <div className="grid grid-cols-3 p-2 font-bold bg-gray-200">
-                  <div>S.No</div>
-                  <div>Node ID</div>
-                  <div>Wallet Address</div>
-                </div>
-                {activeNodesData
-                  .filter((node) => node.region === regionname)
-                  .map((option, index) => (
-                    <div
-                      key={option.id}
-                      className="grid grid-cols-3 p-2 cursor-pointer hover:bg-gray-100"
-                      onClick={() => handleOptionClick(option)}
-                    >
-                      <div>{generateSerialNumber(regionname, index)}</div>
-                      <div>{sliceNodeId(option.id)}</div>
-                      <div>{sliceWalletAddress(option.walletAddress)}</div>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </div>
+      <div className="mb-4 w-full relative">
+        <div
+          className="p-4 bg-white border border-gray-300 rounded-full cursor-pointer"
+          onClick={handleDropdownToggle}
+        >
+          {selectedOption ? sliceNodeId(selectedOption.id) : 'Select Node ID'}
         </div>
-
-        <div className="flex-col gap-4 mr-4">
-          <div className="text-center w-1/2 mt-10 mx-auto">
-            <div className="mb-4 md:mb-8">
-              <button
-                  style={{
-                    backgroundColor: "#0162FF",
-                  }}
-                  type="submit"
-                  value="submit"
-                  className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+        {isOpen && (
+          <div className="absolute w-full mt-1 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+            <div className="grid grid-cols-4 p-2 font-bold bg-gray-200">
+              <div>S.No</div>
+              <div>Node ID</div>
+              <div>Wallet Address</div>
+              <div>Chain</div>
+            </div>
+            {activeNodesData
+              .filter((node) => node.region === regionname)
+              .map((option, index) => (
+                <div
+                  key={option.id}
+                  className="grid grid-cols-4 p-2 cursor-pointer hover:bg-gray-100"
+                  onClick={() => handleOptionClick(option)}
                 >
-                  Create Client
-                </button>
-              </div>
-            </div>
-            <p className="text-red-500">{msg}</p>
+                  <div>{generateSerialNumber(regionname, index)}</div>
+                  <div>{sliceNodeId(option.id)}</div>
+                  <div>{sliceWalletAddress(option.walletAddress)}</div>
+                  <div>{option.chainName}</div>
+                </div>
+              ))}
           </div>
+        )}
+      </div>
+    </div>
+
+    <div className="flex-col gap-4 mr-4">
+      <div className="text-center w-1/2 mt-10 mx-auto">
+        <div className="mb-4 md:mb-8">
+          <button
+            style={{
+              backgroundColor: "#0162FF",
+            }}
+            type="submit"
+            value="submit"
+            className="py-3 mb-2 text-md text-white font-semibold rounded-full w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+          >
+            Create Client
+          </button>
         </div>
-      </form>
+      </div>
+      <p className="text-red-500">{msg}</p>
+    </div>
+  </div>
+</form>
+
 
                                 </div>
                               </div>
