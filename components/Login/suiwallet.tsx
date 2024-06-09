@@ -11,6 +11,7 @@ export const useSuiWallet = (setshowsignbutton) => {
     account,
   } = useWallet();
   const mynetwork = process.env.NEXT_PUBLIC_NETWORK_SUI;
+  console.log("sui network",mynetwork)
 
   const isSendableNetwork = (connected, network) => {
     return connected && network === mynetwork;
