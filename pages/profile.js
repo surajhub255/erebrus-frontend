@@ -24,6 +24,9 @@ const Profile = () => {
   const [magicloginmessage, setmagicloginmessage] = useState(false);
   const [idtoken, setidtoken] = useState("");
 
+  const chainsym = Cookies.get("Chain_symbol");
+  const walletaddr = Cookies.get("erebrus_wallet");
+
   const navigate = (path) => {
     window.location.href = path;
   };
@@ -330,6 +333,30 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
         // Use the slice method to remove the first 7 characters
         return url.slice(7);
       }
+
+
+      // Define a mapping of chain symbols to names and icons
+const chainInfo = {
+  apt: {
+    name: 'Aptos',
+    icon: '/aptosicon.png' // Replace with the actual path or URL
+  },
+  sui: {
+    name: 'Sui',
+    icon: '/suiicon.png' // Replace with the actual path or URL
+  },
+  evm: {
+    name: 'Ethereum',
+    icon: '/ethicon.png' // Replace with the actual path or URL
+  },
+  sol: {
+    name: 'Solana',
+    icon: '/solanaicon.png' // Replace with the actual path or URL
+  }
+};
+
+
+const chainDetails = chainInfo[chainsym?.toLowerCase()] || { name: 'Unknown Chain', icon: '' };
   
 
   return (
@@ -525,8 +552,18 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
             {profileset && (
               <>
                 <section className="pb-0 rounded-xl">
-                  <h1 className="pt-20 px-24 text-start text-4xl font-semibold leading-none tracking-normal text-gray-100 md:tracking-tight">
-                    <span className="text-white">Profile information</span>
+                  <h1 className="pt-20 px-24 flex justify-between text-start text-4xl font-semibold leading-none tracking-normal text-gray-100 md:tracking-tight">
+                    <div className="text-white">Profile information</div>
+                    <div className="flex gap-4 text-black text-sm">
+                    <div 
+                        className="px-2 rounded flex items-center space-x-1"
+                        style={{ backgroundColor: '#8EB9FF' }}
+                      >
+                        {chainDetails.icon && <img src={chainDetails.icon} alt={`${chainDetails.name} icon`} style={{ width: '28px', height: '28px' }} />}
+                        <span className="pr-2">{chainDetails.name}</span>
+                      </div>
+                      <div className="px-4 pt-2 rounded" style={{backgroundColor:'#8EB9FF'}}>{walletaddr?.slice(0, 4)}...{walletaddr?.slice(-4)}</div>
+                    </div>
                   </h1>
                   <div className="px-24 mx-auto rounded-xl">
                     <div className="w-full mx-auto text-left">
