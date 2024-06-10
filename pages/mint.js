@@ -94,7 +94,7 @@ const Mint = () => {
         } else if (chainSym === 'evm') {
           setDisplayText('Only at 1.11 ETH');
           setDisplayText2('Pay in ETH')
-          setImageSrc('/mintSui.png');
+          setImageSrc('/mintEth.jpg');
           setImageSrc2('/nft_ape2.png')
         } else if (chainSym === 'sol') {
           setDisplayText('Only at 1.11 SOL');
@@ -238,13 +238,15 @@ const Mint = () => {
         )
 
         
-        const tx = await contract.mintNFT();
-      //  const tx = await  contract.registerNode(
-      //     354353453453,
-      //     34543535345,
-      //     "active",
-      //     "SG"
-      // )
+        const tx = await contract.mintNFT(
+          1311312
+        );
+        //  const tx = await  contract.registerNode(
+        //     354353453453,
+        //     34543535345,
+        //     "active",
+        //     "SG"
+        // )
         const result = await tx.wait();
         const integerValue = parseInt(result.logs[1].data, 16);
         console.log("Result:", result, integerValue);
@@ -253,7 +255,7 @@ const Mint = () => {
       }
 
     } catch (error) {
-      console.error("Error handling draw card and fetching reading:", error);
+      console.error("Error fetching reading:", error);
       // setLoading(false); // Set loading state to false in case of error
     }
   };
