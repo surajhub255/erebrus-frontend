@@ -1,12 +1,38 @@
 // pages/nodeinfo/[nodeId].js
-import React from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import { ReactWorldCountriesMap } from "react-world-countries-map";
 
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
-const NodeDetail = ({ node, id }) => {
-  console.log("node data", node, id);
+const NodeDetail = () => {
+  const [node, setNode] = useState(null);
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`, {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then(response => {
+        const payload = response.data.payload;
+        const filteredNode = payload.find((node) => node.id === id);
+        setNode(filteredNode);
+      })
+      .catch(error => {
+        console.error("Error fetching node data:", error);
+      });
+    }
+  }, [id]);
+
+  if (!node) {
+    return <div>Loading...</div>;
+  }
 
   const data = [{ country: `${node.region}`, value: `${node.ipinfocity}` }];
 
@@ -110,14 +136,11 @@ const NodeDetail = ({ node, id }) => {
           />
         </div>
         <div className="w-1/2">
-
-        <div
+          <div
             className="rounded-xl px-10 py-40"
             style={{
-              backgroundImage:`url(/dns_bg.png)`,
-              backgroundPosition:'center',
-              // paddingTop: "80px",
-              // paddingBottom: "90px",
+              backgroundImage: `url(/dns_bg.png)`,
+              backgroundPosition: 'center',
             }}
           >
             <div className="text-xl" style={{ color: "#FFFFFF99" }}>
@@ -138,46 +161,10 @@ const NodeDetail = ({ node, id }) => {
             </div>
             <div className="text-3xl">{node.ipinfoip}</div>
           </div>
-          
-
-          {/* <div
-            className="rounded-xl px-10 mt-4 py-8"
-            style={{
-              backgroundColor: "#1B213A",
-              backgroundImage: "radial-gradient(#5F9AF933, #5F9AF900)",
-            }}
-          >
-            <div className="text-xl" style={{ color: "#FFFFFF99" }}>
-              IP Org
-            </div>
-            <div className="text-3xl">{node.ipinfoorg}</div>
-          </div> */}
         </div>
       </div>
     </div>
   );
 };
-
-export async function getServerSideProps(context) {
-  const { id } = context.query;
-
-  const response = await axios.get(`${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`, {
-    headers: {
-      Accept: "application/json, text/plain, */*",
-      "Content-Type": "application/json",
-    },
-  });
-
-  const payload = response.data.payload;
-
-  const filteredNode = payload.find((node) => node.id === id);
-
-  return {
-    props: {
-      node: filteredNode,
-      id,
-    },
-  };
-}
 
 export default NodeDetail;
