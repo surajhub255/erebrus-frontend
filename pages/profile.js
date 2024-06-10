@@ -28,17 +28,13 @@ const Profile = () => {
     window.location.href = path;
   };
 
-  const bg = {
-    backgroundColor: "#30385F",
-  };
-
   const border = {
-    backgroundColor: "#30385F",
+    // backgroundColor: "#30385F",
     border: "1px solid #788AA3",
   };
 
   const button = {
-    backgroundColor: "#11D9C5",
+    backgroundColor: "#0162FF",
   };
 
   const bgverify = {
@@ -340,20 +336,18 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
     <div
       
     >
-      <section className="">
+      <section className="h-screen">
         <div className="px-10 mx-auto">
           <div className="w-full mx-auto text-left w-full md:text-center">
         
         <div className="flex">
-        <h1 className="mb-8 text-start text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-              <span className="text-white">Profile</span>
-            </h1>
+
         {msg == "success" && (
                       <div className="text-center mx-auto">
                       <div className="">
                         <div
                           style={button}
-                          className="flex gap-1 px-4 py-3 text-xs text-black font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                          className="flex gap-1 px-4 py-3 text-xs text-white font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
                         >
                           {/* <Image src={tick} alt="" className="w-4 h-4"/> */}
                           Changes Saved
@@ -365,11 +359,11 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
             
 
             {!profileset && (
-              <section className="pb-10 rounded-xl" style={bg}>
-                <div className="px-20 mx-auto rounded-xl">
+              <section className="pb-10 rounded-xl">
+                <div className="px-24 mx-auto rounded-xl">
                   <div className="w-full mx-auto text-left py-10">
-                    <h1 className="text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
-                      <span className="text-white">Set Your Profile</span>
+                    <h1 className="mt-10 text-4xl font-semibold leading-none tracking-normal text-gray-100 md:tracking-tight">
+                      <span className="text-white">Change profile Info</span>
                     </h1>
 
                     <form
@@ -427,7 +421,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                                 type="text"
                                 id="name"
                                 style={border}
-                                className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow border bg-black appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Your Name"
                                 value={formData.name}
                                 onChange={handleInputChange}
@@ -440,7 +434,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                                 type="text"
                                 id="country"
                                 style={border}
-                                className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow border bg-black appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Country"
                                 value={formData.country}
                                 onChange={handleInputChange}
@@ -455,7 +449,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                                 type="text"
                                 id="discord"
                                 style={border}
-                                className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow border bg-black appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Discord"
                                 value={formData.discord}
                                 onChange={handleInputChange}
@@ -468,7 +462,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                                 type="text"
                                 id="twitter"
                                 style={border}
-                                className="shadow border appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow border bg-black appearance-none rounded w-full py-4 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
                                 placeholder="Twitter"
                                 value={formData.twitter}
                                 onChange={handleInputChange}
@@ -483,9 +477,9 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                             style={button}
                             type="submit"
                             value="submit"
-                            className="px-14 py-3 mb-2 text-lg text-black font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                            className="px-14 py-3 mb-2 text-lg text-white font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
                           >
-                            Set Your Profile
+                            Change details
                           </button>
                         </div>
                       </div>
@@ -495,21 +489,27 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                       
                     </form>
 
-                    {
-                loading && (
-<div style={{backgroundColor:"#222944E5"}} className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full" id="popupmodal">
-    <div className="relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full">
-        <div className="relative rounded-lg shadow">
-        <div className="flex justify-center gap-4">
-        <img className="w-12 h-12" src="/Loading.svg" alt="Loading icon"/>
-
-    <span className="text-white mt-2">Loading...</span>
-</div>
-        </div>          
-    </div>
-</div>
-)
-}
+                    {loading && (
+        <div
+        style={{ backgroundColor: "#040819D9" }}
+        className='flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full'
+        id='popupmodal'
+      >
+        <div className='relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full'>
+          <div className='relative rounded-lg shadow'>
+            <div className='flex justify-center gap-4'>
+              <img
+                className='w-12 animate-spin duration-[3000] h-12'
+                src='/Loadingerebrus.png'
+                alt='Loading icon'
+              />
+  
+              <span className='text-white mt-2'>Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      )}
 
                     {msg == "error" && (
                       <p className="text-red-500">
@@ -524,9 +524,9 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
 
             {profileset && (
               <>
-                <section className="pb-0 rounded-xl" style={bg}>
-                  <h1 className="pt-8 pl-8 text-start text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-2xl md:tracking-tight">
-                    <span className="text-white">Basic information</span>
+                <section className="pb-0 rounded-xl">
+                  <h1 className="pt-20 px-24 text-start text-4xl font-semibold leading-none tracking-normal text-gray-100 md:tracking-tight">
+                    <span className="text-white">Profile information</span>
                   </h1>
                   <div className="px-24 mx-auto rounded-xl">
                     <div className="w-full mx-auto text-left">
@@ -609,7 +609,7 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                             <button
                               style={button}
                               onClick={() => setprofileset(false)}
-                              className="px-14 py-3 mb-2 text-lg text-black font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
+                              className="px-14 py-3 mb-2 text-lg text-white font-semibold rounded-lg w-full sm:mb-0 hover:bg-green-200 focus:ring focus:ring-green-300 focus:ring-opacity-80"
                             >
                               Edit Profile
                             </button>
@@ -617,21 +617,27 @@ const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET;
                         </div>
                       </form>
 
-                      {
-                loading && (
-<div style={{backgroundColor:"#222944E5"}} className="flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full" id="popupmodal">
-    <div className="relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full">
-        <div className="relative rounded-lg shadow">
-        <div className="flex justify-center gap-4">
-        <img className="w-12 h-12" src="/Loading.svg" alt="Loading icon"/>
-
-    <span className="text-white mt-2">Loading...</span>
-</div>
-        </div>          
-    </div>
-</div>
-)
-}
+                      {loading && (
+        <div
+        style={{ backgroundColor: "#040819D9" }}
+        className='flex overflow-y-auto overflow-x-hidden fixed inset-0 z-50 justify-center items-center w-full max-h-full'
+        id='popupmodal'
+      >
+        <div className='relative p-4 lg:w-1/5 w-full max-w-2xl max-h-full'>
+          <div className='relative rounded-lg shadow'>
+            <div className='flex justify-center gap-4'>
+              <img
+                className='w-12 animate-spin duration-[3000] h-12'
+                src='/Loadingerebrus.png'
+                alt='Loading icon'
+              />
+  
+              <span className='text-white mt-2'>Loading...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      )}
 
                     </div>
                   </div>
