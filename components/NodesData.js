@@ -83,7 +83,6 @@ const NodesData = () => {
     window.location.href = `/nodeinfo/${id}`; // Navigate to the node info page
   };
 
-
   return (
     <div
       id="howto"
@@ -91,9 +90,6 @@ const NodesData = () => {
       style={{ backgroundColor: "#010001" }}
     >
       <div className="font-figtree text-left text-gray-200 w-full p-3">
-        {/* <h1 className="font-bold text-4xl lg:mb-16 mb-12 lg:mt-36 text-left">
-          Erebrus Nodes Data
-        </h1> */}
         <div className="text-white">
           <div className="flex uppercase">
             <div
@@ -144,6 +140,12 @@ const NodesData = () => {
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
                   <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
+                    <img src="/nodetable5.png" className="w-10 h-10" />
+                    <div>WALLET ADDRESS</div>
+                  </div>
+                </th>
+                <th style={{ border: "solid 1px #FFFFFF66" }}>
+                  <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable6.png" className="w-10 h-10" />
                     <div>REGION</div>
                   </div>
@@ -179,9 +181,11 @@ const NodesData = () => {
                 <tr
                   key={node.id}
                   className={`table-row cursor-pointer ${
-                    node.status === "inactive" ? "text-red-300" : "text-blue-100"
+                    node.status === "inactive"
+                      ? "text-red-300"
+                      : "text-blue-100"
                   }`}
-                  style={{ height: "60px"}} // Adjust the height as needed
+                  style={{ height: "60px" }} // Adjust the height as needed
                   onClick={() => handleRowClick(node.id)}
                 >
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
@@ -192,6 +196,12 @@ const NodesData = () => {
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
                     <div className="flex gap-4 justify-center items-center py-2 px-4">
                       {node.name}
+                    </div>
+                  </td>
+                  <td style={{ border: "solid 1px #FFFFFF66" }}>
+                    <div className="flex gap-4 justify-center items-center py-2 px-4">
+                      {node.walletAddress.slice(0, 3)}...
+                      {node.walletAddress.slice(-3)}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
