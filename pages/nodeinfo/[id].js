@@ -135,7 +135,7 @@ const NodeDetail = () => {
             <div>
               <div className="relative text-center">
                 <img src="/ellipse1.png" className="w-40 h-40" />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
                   {node.uploadSpeed}
                   <div>Kbps Speed</div>
                 </div>
@@ -145,7 +145,7 @@ const NodeDetail = () => {
             <div>
               <div className="relative text-center">
                 <img src="/ellipse1.png" className="w-40 h-40" />
-                <div className="absolute inset-0 flex items-center justify-center">
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
                   {node.downloadSpeed}
                   <div>Kbps Speed</div>
                 </div>
