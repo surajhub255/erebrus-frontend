@@ -22,11 +22,17 @@ const NodeDetail = () => {
         },
       })
       .then(response => {
-        const payload = response.data.payload;
-        const filteredNode = payload.find((node) => node.id === id);
-        filteredNode.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-        setClients(filteredNode);
-        console.log("nodes client", filteredNode);
+        if(response.payload)
+        {
+          const payload = response.payload;
+          const filteredNode = payload.find((node) => node.nodeId === id);
+          filteredNode?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+          setClients(filteredNode);
+          console.log("nodes client", filteredNode);
+        }
+        else{
+          setClients([]);
+        }
       })
       .catch(error => {
         console.error("Error fetching node data:", error);
@@ -131,6 +137,7 @@ const NodeDetail = () => {
                 <img src="/ellipse1.png" className="w-40 h-40" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   {node.uploadSpeed}
+                  <div>Kbps Speed</div>
                 </div>
               </div>
               <div className="text-center">Upload</div>
@@ -140,6 +147,7 @@ const NodeDetail = () => {
                 <img src="/ellipse1.png" className="w-40 h-40" />
                 <div className="absolute inset-0 flex items-center justify-center">
                   {node.downloadSpeed}
+                  <div>Kbps Speed</div>
                 </div>
               </div>
               <div className="text-center">Download</div>

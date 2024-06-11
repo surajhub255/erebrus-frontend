@@ -663,6 +663,7 @@ const Subscription = () => {
     { id: 'SG', region: 'SG'},
     { id: 'IN',region: 'IN' },
     { id: 'US',region: 'US'},
+    { id: 'JP', region: 'JP'}
     // Add more nodes as needed
   ];
 //form 
