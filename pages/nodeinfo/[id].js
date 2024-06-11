@@ -8,8 +8,31 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const NodeDetail = () => {
   const [node, setNode] = useState(null);
+  const [clients, setClients] = useState(null);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/clients/node/${id}`, {
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+      })
+      .then(response => {
+        const payload = response.data.payload;
+        const filteredNode = payload.find((node) => node.id === id);
+        filteredNode.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        setClients(filteredNode);
+        console.log("nodes client", filteredNode);
+      })
+      .catch(error => {
+        console.error("Error fetching node data:", error);
+      });
+    }
+  }, [id]);
 
   useEffect(() => {
     if (id) {
