@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState , useEffect} from "react";
 import { saveAs } from "file-saver";
 import { FaDownload, FaQrcode } from "react-icons/fa";
 import axios from "axios";
@@ -13,6 +13,7 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 interface ReviewCardProps {
   metaData: {
+    created_at: string;
     UUID: string;
     name: string;
     region: string;
@@ -141,6 +142,13 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
     }
   };
 
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+    const date = new Date(metaData.created_at);
+    setFormattedDate(date.toLocaleString());
+  }, [metaData.created_at]);
+
   return (
     <div className="w-full">
       <div
@@ -151,7 +159,8 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
           <div className="text-l leading-12 font-bold mb-2 text-white w-1/4">
             <div className="flex">
               <div>
-                {metaData.UUID.slice(0, 4)}...{metaData.UUID.slice(-4)}
+                {/* {metaData.UUID.slice(0, 4)}...{metaData.UUID.slice(-4)} */}
+                {formattedDate}
               </div>
             </div>
           </div>
@@ -309,10 +318,10 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
               </div>
               <div className="flex items-center p-4 md:p-5 rounded-b gap-4">
                 <button
-                  style={{ border: "1px solid #5696FF", color: "#5696FF" }}
+                  style={{ border: "1px solid #5696FF"}}
                   onClick={() => setdelvpn(false)}
                   type="button"
-                  className="w-full text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                  className="w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Cancel
                 </button>

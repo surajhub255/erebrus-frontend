@@ -258,6 +258,7 @@ const Subscription = () => {
           const filteredData = payload.filter(
             (item) => item?.walletAddress === wallet
           );
+          filteredData.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
           setprojectsData(filteredData);
           console.log("decentralized", filteredData);
         }
@@ -1213,7 +1214,7 @@ const sliceWalletAddress = (walletAddress) => {
 
                                 <div className="w-full flex justify-between px-14 p-4">
                                   <h3 className="text-lg leading-12 w-1/4 text-left">
-                                    <div style={text}>Id</div>
+                                    <div style={text}>Created At</div>
                                   </h3>
 
                                   <div className="text-start w-1/4">
