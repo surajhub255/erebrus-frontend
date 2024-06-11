@@ -881,11 +881,17 @@ const sliceWalletAddress = (walletAddress) => {
 
                   <h1 className="flex justify-between gap-4 mb-8 ml-6 mt-0 text-start text-lg font-semibold leading-none tracking-normal text-gray-100 md:text-xl md:tracking-tight">
                     <div className="text-left text-white mt-4 flex gap-4">
-                      <img
+                      { imageSrc ? (<img
                         src={`${"https://nftstorage.link/ipfs"}/${imageSrc}`}
                         className="w-14 rounded-full"
+                      />):
+                      (
+                        <img
+                        src="https://img.freepik.com/premium-vector/virtual-private-network-secure-vpn-connection-concept-vector-sign-symbol_660702-458.jpg"
+                        className="w-14 rounded-full"
                       />
-                      <div className="mt-2">Name - {collectionName}</div>
+                      )}
+                      <div className="mt-2">Name - {collectionName? collectionName : "Trial Subscription"}</div>
                     </div>
 
                     <div className="text-white mr-40 mt-6">

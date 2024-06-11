@@ -129,13 +129,13 @@ const NodesData = () => {
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
                   <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable4.png" className="w-12 h-12" />
-                    <div>NODE ID</div>
+                    <div>NODE NAME</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
                   <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable5.png" className="w-10 h-10" />
-                    <div>NODE NAME</div>
+                    <div>CHAIN</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
@@ -190,12 +190,13 @@ const NodesData = () => {
                 >
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
                     <div className="flex gap-4 justify-center items-center py-2 px-4">
-                      {node.id.slice(0, 4)}...{node.id.slice(-4)}
+                      {/* {node.id.slice(0, 4)}...{node.id.slice(-4)} */}
+                      {node.name}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
                     <div className="flex gap-4 justify-center items-center py-2 px-4">
-                      {node.name}
+                      {node.chainName}
                     </div>
                   </td>
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
