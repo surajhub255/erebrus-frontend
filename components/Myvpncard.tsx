@@ -81,7 +81,16 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
   const [loading, setLoading] = useState<boolean>(false);
   const [delvpn, setdelvpn] = useState(false);
   const [qr, setqr] = useState(false);
+  const [formattedDate, setFormattedDate] = useState('');
 
+  useEffect(() => {
+    if (metaData) {
+      const date = new Date(metaData.created_at);
+      setFormattedDate(date.toLocaleString());
+    }
+  }, [metaData]);
+
+  
   if (!metaData) {
     return (
       <div className="flex flex-col items-center justify-center w-full max-w-sm mx-auto">
@@ -142,12 +151,8 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
     }
   };
 
-  const [formattedDate, setFormattedDate] = useState('');
+  
 
-  useEffect(() => {
-    const date = new Date(metaData.created_at);
-    setFormattedDate(date.toLocaleString());
-  }, [metaData.created_at]);
 
   return (
     <div className="w-full">
