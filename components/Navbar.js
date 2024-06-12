@@ -255,6 +255,7 @@ const Navbar = ({ isHome }) => {
   const handleDeleteCookie = () => {
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
+    Cookies.remove("erebrus_userId");
     Cookies.remove("Chain_symbol");
     if (status == "connected") {
       disconnect();
@@ -265,9 +266,9 @@ const Navbar = ({ isHome }) => {
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
-  const options = ["Aptos", "Ethereum", "Sui", "Solana"];
-  const optionssym = ["apt", "evm", "sui", "sol"];
-  const chainimg = ["aptosicon", "ethicon", "suiicon", "solanaicon"];
+  const options = ["Aptos", "Ethereum", "Sui", "Solana","Google"];
+  const optionssym = ["apt", "evm", "sui", "sol", "google"];
+  const chainimg = ["aptosicon", "ethicon", "suiicon", "solanaicon", "googleicon"];
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -287,6 +288,9 @@ const Navbar = ({ isHome }) => {
       }
       if (getchainsym == "evm") {
         setSelectedOption("Ethereum");
+      }
+      if (getchainsym == "google") {
+        setSelectedOption("Google");
       }
     } else {
       setSelectedOption("Aptos");
@@ -425,6 +429,14 @@ const Navbar = ({ isHome }) => {
                     <WalletMultiButton />
                   </button>
                 )}
+                 {chainsym === "google" && (
+                  <button className="text-black bg-white p-2 rounded-lg w-1/2" onClick={handleLoginClick}>
+                  <div className="flex gap-2 justify-center">
+                  {/* <div> <Image src={google} alt=""/></div>   */}
+                  <div>Sign in with Google</div>
+                  </div>
+              </button>
+                )}
                 {/* {solconnected && showsignbuttonsol && (
                 <Button
                   color={"blue"}
@@ -483,14 +495,7 @@ const Navbar = ({ isHome }) => {
             )}
           </>
 
-          <div className="pb-4">
-            <button className="text-black bg-white p-2 rounded-lg w-1/2" onClick={handleLoginClick}>
-                <div className="flex gap-2 justify-center">
-                {/* <div> <Image src={google} alt=""/></div>   */}
-                <div>Sign in with Google</div>
-                </div>
-            </button>
-          </div>
+          
 
           <div>
             {/* dropdown */}
