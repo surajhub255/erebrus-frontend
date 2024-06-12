@@ -291,6 +291,18 @@ const Navbar = ({ isHome }) => {
       setSelectedOption("Aptos");
     }
   }, []);
+
+  const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID_GOOGLE_WEB2;
+  const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI_GOOGLE_WEB2;
+  const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET_GOOGLE_WEB2;
+
+  const handleLoginClick = () => {
+    const state = Math.random().toString(36).substring(7);
+    const authUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code&scope=openid%20profile%20email&state=${state}`;
+    window.location.href = authUrl;
+  };
+
+
   return (
     <nav className="bg-transparent py-4">
       <div
@@ -480,6 +492,15 @@ const Navbar = ({ isHome }) => {
               </div>
             )}
           </>
+
+          <div className="pb-4">
+            <button className="text-black bg-white p-2 rounded-lg w-1/2" onClick={handleLoginClick}>
+                <div className="flex gap-2 justify-center">
+                {/* <div> <Image src={google} alt=""/></div>   */}
+                <div>Sign in with Google</div>
+                </div>
+            </button>
+          </div>
 
           <div>
             {/* dropdown */}

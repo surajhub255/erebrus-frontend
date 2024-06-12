@@ -1,3 +1,4 @@
+"use client"
 import Head from "next/head";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
@@ -8,9 +9,67 @@ import Pricing from "../components/Pricing";
 import { motion } from "framer-motion";
 import { useAddress } from "@thirdweb-dev/react";
 import Link from 'next/link';
+import react, { useEffect } from "react"
 
 export default function Home() {
   const address = useAddress();
+
+  useEffect(() => {
+    parseAuthorizationCode();
+  }, []);
+
+  const parseAuthorizationCode = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get('code');
+  
+    if (code) {
+      localStorage.setItem("code",code)
+      exchangeCodeForToken(code);
+      console.log("code", code)
+    }
+  };
+
+  const CLIENT_ID = process.env.NEXT_PUBLIC_CLIENT_ID_GOOGLE_WEB2;
+  const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI_GOOGLE_WEB2;
+  const CLIENT_SECRET= process.env.NEXT_PUBLIC_CLIENT_SECRET_GOOGLE_WEB2;
+  
+  const exchangeCodeForToken = async (code) => {
+    const tokenEndpoint = 'https://www.googleapis.com/oauth2/v4/token';
+  
+    const tokenRequestBody = {
+      code,
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      redirect_uri: REDIRECT_URI,
+      grant_type: 'authorization_code',
+    };
+  
+    try {
+      const response = await fetch(tokenEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(tokenRequestBody).toString(),
+      });
+  
+      const tokenData = await response.json();
+  
+      // Assuming id_token is present in tokenData
+      const idToken = tokenData.id_token;
+      const accessToken = tokenData.access_token;
+  
+      // setpage("googlewalletboth");
+
+      // Use idToken in another API call
+      // await getgoogledata(idToken,accessToken);
+  
+      // handleTokenData(tokenData);
+      console.log("token", tokenData);
+    } catch (error) {
+      console.error('Token exchange error:', error);
+    }
+  };
 
   return (
     <div>
