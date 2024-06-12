@@ -21,6 +21,7 @@ export default function Home() {
   const parseAuthorizationCode = () => {
     const urlParams = new URLSearchParams(window.location.search);
     const code = urlParams.get('code');
+    window.history.replaceState({}, document.title, window.location.pathname);
   
     if (code) {
       localStorage.setItem("code",code)
