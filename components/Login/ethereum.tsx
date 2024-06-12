@@ -10,14 +10,18 @@
     const getchainsym = () => {
       return Cookies.get("Chain_symbol");
     };
-    console.log('asjdhahsd', chain, ethAddress)
+    
+    const getwallet = () => {
+      return Cookies.get("erebrus_wallet");
+    };
+   
 
     const onSignMessageEth = async (setshowsignbutton) => {
       const chainsym = getchainsym();
-    
+      const erebrusWallet =getwallet();
   
       if (isConnected) {
-        if (chainsym == "evm" && chain?.name == "Manta Pacific") {
+        if (chainsym == "evm" && chain?.name == "Manta Pacific" && erebrusWallet==null  ) {
           try {
             const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
@@ -63,17 +67,27 @@
                   });
                   Cookies.set("erebrus_userid", userId, { expires: 7 });
                   Cookies.set("Chain_symbol", chainsym, { expires: 7 });
+                  window.location.reload();
                 },
-              }
+                
+                
+              },
+               
+       
+              
             );
+  
           } catch (error) {
             console.error(error);
             setshowsignbutton(true);
           }
-        } else {
-          alert(`Switch to ${chain?.name} in your wallet`);
-        }
+        } 
+        
+      }
+      else {
+        alert(`Switch to ${chain?.name} in your wallet`);
       }
     };
+   
     return { ethAddress, isConnected, onSignMessageEth };
   };
