@@ -5,28 +5,31 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const Plans = () => {
   const [trialbuytrue, settrialbuytrue] = useState(false);
-  const [chainSymbol, setChainSymbol] = useState('');
+  const [chainSym, setChainSymbol] = useState('');
   const [erebrusWallet, setErebrusWallet] = useState(null);
-  const [displayText, setDisplayText] = useState('1.11 APT/ 3 month');
+  const [displayText, setDisplayText] = useState('1.76 APT/ 3 month');
   const [displayText2, setDisplayText2] = useState(' Pay by APT, crytocurrency or Fiat');
 
   useEffect(() => {
     const chainSym = Cookies.get('Chain_symbol');
-    const wallet = Cookies.get('erebrus_wallet');
+    const wallet = Cookies.get('erebrus_token');
+    
     setChainSymbol(chainSym);
     setErebrusWallet(wallet);
 
     if (wallet) {
       if (chainSym === 'sui') {
-        setDisplayText('1.11 SUI/ 3 month');
+        setDisplayText('4.91 SUI/ 3 month');
         setDisplayText2(' Pay by SUI, crytocurrency or Fiat')
-      
       } else if (chainSym === 'evm') {
-        setDisplayText('1.11 ETH/ 3 month');
+        setDisplayText('0.00028 ETH/ 3 month');
         setDisplayText2(' Pay by ETH, crytocurrency or Fiat')
       } else if (chainSym === 'sol') {
-        setDisplayText('1.11 SOL/ 3 month');
+        setDisplayText('18.94 Sol/ 3 month');
         setDisplayText2(' Pay by SOL, crytocurrency or Fiat')
+      }else if (chainSym === 'google') {
+        setDisplayText('$ 15/ 3 month');
+        setDisplayText2(' Pay by dollars, crytocurrency or Fiat')
       }
     }
   }, []);
