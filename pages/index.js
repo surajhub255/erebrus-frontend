@@ -9,7 +9,8 @@ import Pricing from "../components/Pricing";
 import { motion } from "framer-motion";
 import { useAddress } from "@thirdweb-dev/react";
 import Link from 'next/link';
-import react, { useEffect } from "react"
+import react, { useEffect } from "react";
+import Cookies from "js-cookie";
 
 export default function Home() {
   const address = useAddress();
@@ -59,16 +60,34 @@ export default function Home() {
       // Assuming id_token is present in tokenData
       const idToken = tokenData.id_token;
       const accessToken = tokenData.access_token;
-  
-      // setpage("googlewalletboth");
+      sendIdToken(idToken);
 
-      // Use idToken in another API call
-      // await getgoogledata(idToken,accessToken);
-  
-      // handleTokenData(tokenData);
       console.log("token", tokenData);
     } catch (error) {
       console.error('Token exchange error:', error);
+    }
+  };
+  const sendIdToken = async (idToken) => {
+    try {
+      const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
+      const response = await fetch(`${REACT_APP_GATEWAY_URL}api/v1.0/account/auth-google`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idToken }),
+      });
+
+      const data = await response.json();
+      console.log("Response from server:", data);
+      const token = data?.payload.token
+      const userId =data?.payload.userId
+      console.log("token",token)
+      Cookies.set("erebrus_token", token, { expires: 7 });
+      Cookies.set("erebrus_userid", userId, { expires: 7 });
+      window.location.reload()
+    } catch (error) {
+      console.error('Error sending idToken:', error);
     }
   };
 
