@@ -74,32 +74,38 @@ const Mint = () => {
     useWallet();
     const [chainSymbol, setChainSymbol] = useState('');
     const [erebrusWallet, setErebrusWallet] = useState(null);
-    const [displayText, setDisplayText] = useState('Only at 1.11 APT');
+    const [displayText, setDisplayText] = useState('Only at 1.76 APT');
     const [displayText2, setDisplayText2] = useState('Pay in APT');
     const [imageSrc, setImageSrc] = useState('/mintApt.png');
     const [imageSrc2, setImageSrc2] = useState('/nft_ape2.png');
   
     useEffect(() => {
       const chainSym = Cookies.get('Chain_symbol');
-      const wallet = Cookies.get('erebrus_wallet');
+      const wallet = Cookies.get('erebrus_token');
       setChainSymbol(chainSym);
       setErebrusWallet(wallet);
   
       if (wallet) {
         if (chainSym === 'sui') {
-          setDisplayText('Only at 1.11 SUI');
+          setDisplayText('Only at 4.91 SUI');
           setDisplayText2('Pay in SUI');
           setImageSrc('/mintSui.png');
           setImageSrc2('/nft_ape1.png')
         } else if (chainSym === 'evm') {
-          setDisplayText('Only at 1.11 ETH');
+          setDisplayText('Only at 0.00028 ETH');
           setDisplayText2('Pay in ETH')
           setImageSrc('/mintEth.jpg');
           setImageSrc2('/nft_ape2.png')
         } else if (chainSym === 'sol') {
-          setDisplayText('Only at 1.11 SOL');
+          setDisplayText('Only at 18.94 Sol');
           setDisplayText2('Pay in SOL')
-          setImageSrc('/mintSui.png');
+          setImageSrc('/mintSui.png');  // change needed
+          setImageSrc2('/nft_ape1.png')
+        }
+        else if (chainSym === 'google') {
+          setDisplayText('Only at 18.94 Sol');
+          setDisplayText2('Pay in Dollars')
+          setImageSrc('/mintSui.png');  // change needed
           setImageSrc2('/nft_ape1.png')
         }
       }
