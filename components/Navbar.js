@@ -25,7 +25,7 @@ import { useAptosWallet } from "./Login/aptos";
 import { useSuiWallet } from "./Login/suiwallet";
 import { useEthWallet } from "./Login/ethereum";
 import { useSolWallet } from "./Login/solana";
-import { handleLoginClick } from "./Login/googeLogin";
+import { handleLoginClick } from "./Login/googleLogin";
 
 const networkSol = WalletAdapterNetwork.Devnet;
 
