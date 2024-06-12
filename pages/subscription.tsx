@@ -701,7 +701,7 @@ const sliceWalletAddress = (walletAddress) => {
   const filteredNodes = activeNodesData.filter((node) => node.region === regionname);
   console.log('Filtered nodes based on region:', filteredNodes, regionname);
 
-  if (!wallet || !loggedin) {
+  if (!loggedin) {
     return (
       <>
         <div className="min-h-screen">
