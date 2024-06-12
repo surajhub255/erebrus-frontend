@@ -67,7 +67,7 @@ const LoginComponent = () => {
   const { account: aptosAccount, connected: aptosConnected, onSignMessage: onSignMessage } = useAptosWallet();
   const {  handleSignMsg } = useSuiWallet();
   const { status, connected, connecting,disconnect, account, network, name } = useWallet();
-  const { ethAddress, isConnected: ethConnected, onSignMessageEth } = useEthWallet();
+  const { ethAddress, isConnected: ethConnected, onSignMessageEth, disconnect: ethdisconnect } = useEthWallet();
   const { solconnected, solPublicKey, OnSignMessageSol } = useSolWallet();
 
   const [showsignbuttoneth, setshowsignbuttoneth] = useState(false);
@@ -218,6 +218,9 @@ const LoginComponent = () => {
     Cookies.remove("erebrus_token");
     if(status=="connected"){
       disconnect();
+    }
+    if(ethConnected){
+      ethdisconnect();
     }
     window.location.href = "/";
 

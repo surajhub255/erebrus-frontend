@@ -73,6 +73,7 @@ const Navbar = ({ isHome }) => {
     ethAddress,
     isConnected: ethConnected,
     onSignMessageEth,
+    disconnect: ethdisconnect
   } = useEthWallet();
   const { solconnected, solPublicKey, OnSignMessageSol } = useSolWallet();
 
@@ -259,6 +260,13 @@ const Navbar = ({ isHome }) => {
     Cookies.remove("Chain_symbol");
     if (status == "connected") {
       disconnect();
+    }
+    if (status == "connected") {
+      const timer = setTimeout(() => {
+        ethdisconnect();
+    }, 100);
+
+    return () => clearTimeout(timer);
     }
     window.location.href = "/";
   };

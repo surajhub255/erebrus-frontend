@@ -1,10 +1,11 @@
   import { useAccount, useSignMessage } from "wagmi";
+  import { disconnect } from '@wagmi/core'
   import Cookies from "js-cookie";
   import axios from "axios";
   import { AxiosResponse } from "axios";
 
   export const useEthWallet = () => {
-    const { address:ethAddress, isConnected, chain,  } = useAccount();
+    const { address:ethAddress, isConnected, chain } = useAccount();
     const { signMessage: ethSignMessage } = useSignMessage();
 
     const getchainsym = () => {
@@ -89,5 +90,5 @@
       }
     };
    
-    return { ethAddress, isConnected, onSignMessageEth };
+    return { ethAddress, isConnected, onSignMessageEth , disconnect};
   };

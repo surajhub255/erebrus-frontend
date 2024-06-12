@@ -18,10 +18,15 @@ export const useSuiWallet = (setshowsignbutton) => {
   };
   const sendable = isSendableNetwork(status === "connected", wallet.chain.id);
 
+  const getwallet = () => {
+    return Cookies.get("erebrus_wallet");
+  };
+const erebrusWallet =getwallet();
+
 
 
   async function handleSignMsg() {
-    if(sendable && wallet.account?.publicKey.length !=0){
+    if(sendable && wallet.account?.publicKey.length !=0 && erebrusWallet==null){
     try {
       const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
       const { data } = await axios.get(
