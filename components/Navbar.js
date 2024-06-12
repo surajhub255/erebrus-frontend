@@ -430,10 +430,10 @@ const Navbar = ({ isHome }) => {
                   </button>
                 )}
                  {chainsym === "google" && (
-                  <button className="text-black bg-white p-2 rounded-lg w-1/2" onClick={handleLoginClick}>
+                  <button className="text-black bg-white rounded-lg w-full px-2" onClick={handleLoginClick}>
                   <div className="flex gap-2 justify-center">
-                  {/* <div> <Image src={google} alt=""/></div>   */}
-                  <div>Sign in with Google</div>
+                  <div> <img src="/googleicon.png" alt="" className="w-10 h-10 rounded-l-lg"/></div>  
+                  <div className="mt-2">Sign in with Google</div>
                   </div>
               </button>
                 )}

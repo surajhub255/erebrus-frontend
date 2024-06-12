@@ -193,7 +193,55 @@ const NodeDetail = () => {
             <div className="text-3xl">{node.ipinfoip}</div>
           </div>
         </div>
+
+       
+
       </div>
+
+      <div
+          className="w-2/3 rounded-xl px-10 py-4 mt-4"
+          style={{
+            backgroundColor: "#040819",
+            backgroundImage: "linear-gradient(180deg, #5696FF33, #1B213A66)",
+            border: "1px solid #5696FF",
+          }}
+        >
+          <div className="flex">
+            <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
+              Node Name
+            </div>
+            <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
+              Status
+            </div>
+            <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
+              Start Time
+            </div>
+            <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
+              Last Pinged
+            </div>
+          </div>
+
+          <div className="text-lg flex mt-10">
+            <div className="w-1/4">{node.nodename}</div>
+            <div className="w-1/4 capitalize">
+              <span
+                className={
+                  node.status === "active" ? "text-green-500" : "text-red-300"
+                }
+              >
+                {node.status}
+              </span>
+            </div>
+            <div className="w-1/4">
+              {new Date(node.startTimeStamp * 1000).toLocaleString()}
+            </div>
+            <div className="w-1/4">
+              {new Date(node.lastPingedTimeStamp * 1000).toLocaleString()}
+            </div>
+          </div>
+
+         </div>
+
     </div>
   );
 };
