@@ -665,7 +665,7 @@ const Subscription = () => {
     { id: 'US',region: 'US'},
     { id: 'JP', region: 'JP'},
     {id: 'CA', region: 'CA'},
-    {id: 'FL', region: 'Fl'},
+    {id: 'FL', region: 'FL'},
     {id: 'GB', region: 'GB'},
     // Add more nodes as needed
   ];
