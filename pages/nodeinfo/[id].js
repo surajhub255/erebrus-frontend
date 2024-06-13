@@ -22,13 +22,13 @@ const NodeDetail = () => {
         },
       })
       .then(response => {
-        if(response.payload)
+        if(response.data.payload)
         {
-          const payload = response.payload;
-          const filteredNode = payload.find((node) => node.nodeId === id);
-          filteredNode?.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-          setClients(filteredNode);
-          console.log("nodes client", filteredNode);
+          const payload = response.data.payload;
+          const filteredNodes = payload.filter((node) => node.nodeId === id);
+          filteredNodes.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+          setClients(filteredNodes);
+          console.log("nodes client", filteredNodes);
         }
         else{
           setClients([]);
@@ -198,6 +198,7 @@ const NodeDetail = () => {
 
       </div>
 
+<div className="flex gap-4">
       <div
           className="w-2/3 rounded-xl px-10 py-4 mt-4"
           style={{
@@ -208,39 +209,52 @@ const NodeDetail = () => {
         >
           <div className="flex">
             <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
-              Node Name
+              Client Name
             </div>
             <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
-              Status
+              User ID
             </div>
-            <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
-              Start Time
+            <div className="text-xl w-1/4 text-center" style={{ color: "#FFFFFF99" }}>
+              Region
             </div>
-            <div className="text-xl w-1/4" style={{ color: "#FFFFFF99" }}>
-              Last Pinged
+            <div className="text-xl w-1/4 text-center" style={{ color: "#FFFFFF99" }}>
+              Created At
             </div>
           </div>
 
-          <div className="text-lg flex mt-10">
-            <div className="w-1/4">{node.nodename}</div>
-            <div className="w-1/4 capitalize">
-              <span
-                className={
-                  node.status === "active" ? "text-green-500" : "text-red-300"
-                }
-              >
-                {node.status}
-              </span>
-            </div>
-            <div className="w-1/4">
-              {new Date(node.startTimeStamp * 1000).toLocaleString()}
-            </div>
-            <div className="w-1/4">
-              {new Date(node.lastPingedTimeStamp * 1000).toLocaleString()}
-            </div>
+          {clients.map((node) => (
+          <div className="text-lg flex mt-10" key={node.UUID}>
+          <div className="w-1/4">{node.name}</div>
+          <div className="w-1/4">
+          {node.userId}
           </div>
+          <div className="w-1/4 text-center">
+            {node.region}
+          </div>
+          <div className="w-1/4 text-center">
+            {new Date(node.created_at).toLocaleString()}
+          </div>
+          </div>
+                ))}
+                
 
          </div>
+         
+
+         <div
+            className="rounded-xl px-10 pt-10 w-1/3 mt-4 max-h-80"
+            style={{
+              backgroundImage: `url(/dns_bg.png)`,
+              backgroundPosition: 'center',
+            }}
+          >
+            <div className="text-xl" style={{ color: "#FFFFFF99" }}>
+              Total Clients
+            </div>
+            <div className="text-6xl">{clients?.length ? clients?.length : 0}</div>
+          </div>
+
+          </div>
 
     </div>
   );
