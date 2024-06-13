@@ -663,7 +663,10 @@ const Subscription = () => {
     { id: 'SG', region: 'SG'},
     { id: 'IN',region: 'IN' },
     { id: 'US',region: 'US'},
-    { id: 'JP', region: 'JP'}
+    { id: 'JP', region: 'JP'},
+    {id: 'CA', region: 'CA'},
+    {id: 'FL', region: 'Fl'},
+    {id: 'GB', region: 'GB'},
     // Add more nodes as needed
   ];
 //form 
@@ -720,7 +723,7 @@ const sliceWalletAddress = (walletAddress) => {
             {!connected && (
               <button className="">
                 {/* <WalletSelectorAntDesign /> */}
-                <Login />
+                <h1 className="text-[#9999] text-2xl">PLEASE LOGIN FIRST</h1>
               </button>
             )}
             {connected && (
