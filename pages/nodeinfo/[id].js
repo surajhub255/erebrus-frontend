@@ -168,7 +168,7 @@ const NodeDetail = () => {
         </div>
         <div className="w-1/2">
           <div
-            className="rounded-xl px-10 py-40"
+            className="rounded-xl px-10 py-24"
             style={{
               backgroundImage: `url(/dns_bg.png)`,
               backgroundPosition: 'center',
@@ -181,7 +181,7 @@ const NodeDetail = () => {
           </div>
 
           <div
-            className="rounded-xl px-10 py-12 mt-4"
+            className="rounded-xl px-10 py-8 mt-4"
             style={{
               backgroundColor: "#1B213A",
               backgroundImage: "radial-gradient(#5F9AF933, #5F9AF900)",
@@ -192,6 +192,20 @@ const NodeDetail = () => {
             </div>
             <div className="text-3xl">{node.ipinfoip}</div>
           </div>
+
+          <div
+            className="rounded-xl px-10 py-10 mt-4"
+            style={{
+              backgroundColor: "#1B213A",
+              backgroundImage: "radial-gradient(#5F9AF933, #5F9AF900)",
+            }}
+          >
+            <div className="text-xl" style={{ color: "#FFFFFF99" }}>
+            Chain
+            </div>
+            <div className="text-3xl">{node.chainName}</div>
+          </div>
+
         </div>
 
        
