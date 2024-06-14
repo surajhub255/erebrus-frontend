@@ -274,9 +274,9 @@ const Navbar = ({ isHome }) => {
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
-  const options = ["Aptos", "Ethereum", "Sui", "Solana","Google"];
-  const optionssym = ["apt", "evm", "sui", "sol", "google"];
-  const chainimg = ["aptosicon", "ethicon", "suiicon", "solanaicon", "googleicon"];
+  const options = ["Aptos", "Sui", "Solana", "Ethereum", "Google"];
+  const optionssym = ["apt", "sui", "sol",  "evm", "google"];
+  const chainimg = ["aptosicon", "suiicon", "solanaicon", "ethicon", "googleicon"];
 
   const handleOptionSelect = (option) => {
     setSelectedOption(option);
@@ -515,7 +515,7 @@ const Navbar = ({ isHome }) => {
                 className="block w-full px-10 py-2 text-left rounded-full text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 style={{ backgroundColor: "#253776" }}
                 onClick={() => {
-                  setSelectedDropwdown(true);
+                  setSelectedDropwdown(!selectedDropwdown);
                   setSelectedOption(selectedOption ? selectedOption : "Chains");
                 }} // Toggle dropdown on button click
               >
