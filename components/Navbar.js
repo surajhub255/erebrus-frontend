@@ -315,6 +315,18 @@ const Navbar = ({ isHome }) => {
     setSelectedDropwdown(false);
   };
 
+  // Delay function
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+  const handlePasetoClick = async() => {
+    await delay(500);
+    setSelectedDropwdown(false);
+    setCopied(false);
+  };
+
+  const [copied, setCopied] = useState(false);
+  const paseto = Cookies.get("erebrus_token");
+
   return (
     <nav className="bg-transparent py-4">
       <div
@@ -523,15 +535,26 @@ const Navbar = ({ isHome }) => {
                   </div>
                 </Link>
 
+                {paseto && (
+                  <>
+                {copied && (
+                      <p className="text-green-500 pt-2 pl-8">Paseto Copied!</p>
+                    )}
                       <button
                         className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+                        onClick={() => {
+                          navigator.clipboard.writeText(paseto ? paseto : "");
+                          setCopied(true);
+                        }}
                       >
-                        <div className="flex gap-4">
+                        <div className="flex gap-4" onClick={handlePasetoClick}>
                           <span>
                           </span>
                           <span>Copy Paseto</span>
                         </div>
                       </button>
+                      </>
+)}
 
                       <div
                         className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
