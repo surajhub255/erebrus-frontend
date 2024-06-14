@@ -275,14 +275,17 @@ const Navbar = ({ isHome }) => {
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
+  const [selectedLogo, setSelectedLogo] = useState("");
   const options = ["Aptos", "Sui", "Solana", "Ethereum", "Google"];
   const optionssym = ["apt", "sui", "sol",  "evm", "google"];
   const chainimg = ["aptosicon", "suiicon", "solanaicon", "ethicon", "googleicon"];
 
-  const handleOptionSelect = (option) => {
+  const handleOptionSelect = (option, index) => {
     setSelectedOption(option);
+    setSelectedLogo(chainimg[index]);
     setSelectedDropwdown(false); // Close the dropdown after selecting an option
   };
+
   useEffect(() => {
     const getchainsym = Cookies.get("Chain_symbol");
     if (getchainsym != null) {
@@ -521,6 +524,7 @@ const Navbar = ({ isHome }) => {
                 }} // Toggle dropdown on button click
               >
                 <div className="flex gap-2">
+                <img src={`/${selectedLogo}.png`} className="w-6 h-6"/>
                   {selectedOption || "Select Chain"}{" "}
                   <img src="/chainarrow.png" />
                 </div>
@@ -536,7 +540,7 @@ const Navbar = ({ isHome }) => {
                         key={index}
                         className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
                         onClick={() => {
-                          handleOptionSelect(option);
+                          handleOptionSelect(option, index);
                           setchainsym(optionssym[index]);
                           Cookies.set("Chain_symbol", optionssym[index]);
                         }}
