@@ -309,6 +309,12 @@ const Navbar = ({ isHome }) => {
     }
   }, []);
 
+
+
+  const handleProfileClick = () => {
+    setSelectedDropwdown(false);
+  };
+
   return (
     <nav className="bg-transparent py-4">
       <div
@@ -487,21 +493,71 @@ const Navbar = ({ isHome }) => {
                 className="lg:mt-0 mt-4 z-50 rounded-xl flex gap-4"
                 style={{ color: "#0162FF" }}
               >
-                <button
+                
+                {avatarUrl && (
+                  // <Link href="/profile">
+                  <div className="relative">
+                  <button onClick={() => {
+                    setSelectedDropwdown(!selectedDropwdown);
+                    setSelectedOption(selectedOption ? selectedOption : "Chains");
+                  }}
+                  >
+                  <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto" />
+                  </button>
+
+                  {selectedDropwdown && (
+                <div
+                  className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                  style={{ backgroundColor: "#20253A" }}
+                >
+                  <div className="py-1">
+                  <Link href="/profile">
+                  <div
+                    className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+                    onClick={handleProfileClick}
+                  >
+                    <div className="flex gap-4">
+                      <span></span>
+                      <span>Profile</span>
+                    </div>
+                  </div>
+                </Link>
+
+                      <button
+                        className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+                      >
+                        <div className="flex gap-4">
+                          <span>
+                          </span>
+                          <span>Copy Paseto</span>
+                        </div>
+                      </button>
+
+                      <div
+                        className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+                      >
+                        <div className="flex gap-4">
+                          <span>
+                          </span>
+                          <button
                   onClick={handleDeleteCookie}
-                  onMouseOver={(e) =>
-                    (e.currentTarget.style.borderBottom = "1px solid #0162FF")
-                  }
-                  onMouseOut={(e) =>
-                    (e.currentTarget.style.borderBottom = "none")
-                  }
+                  // onMouseOver={(e) =>
+                  //   (e.currentTarget.style.borderBottom = "1px solid #0162FF")
+                  // }
+                  // onMouseOut={(e) =>
+                  //   (e.currentTarget.style.borderBottom = "none")
+                  // }
                 >
                   Log out
                 </button>
-                {avatarUrl && (
-                  <Link href="/profile">
-                  <img src={avatarUrl} alt="Avatar" className="w-10 ml-auto" />
-                  </Link>
+                        </div>
+                      </div>
+                
+                  </div>
+                </div>
+              )}
+                  </div>
+                  // </Link>
                 )}
               </div>
             )}
