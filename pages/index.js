@@ -140,6 +140,38 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       </div>
       </div>
 
+
+      <div className="container mx-auto py-20 w-4/5 mb-20 rounded-3xl mt-20" style={{backgroundColor:'#202333'}}>
+        <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
+          <motion.h1
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+            className="lg:text-5xl text-3xl font-semibold text-gray-300 mb-10 lg:text-center md:text-center md:w-[80%]"
+          >
+            Access VPN on mobile now<br></br> for ultimate internet security
+          </motion.h1>
+          <motion.p
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+            className="text-lg text-gray-300 mb-8 text-center w-[30%]"
+          >
+            Join us by running an erebrus node and start 
+contributing to enable safe internet
+          </motion.p>
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+            className="text-black font-semibold py-4 px-10 rounded-full bg-white text-lg" 
+            // style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
+          >
+            <Link href="https://drive.google.com/file/d/19NdGQ1gI5iA7KUdu8Q5HQO9qURzDfhUJ/view?usp=sharing" target="_blank"
+              rel="noopener noreferrer">
+              Download APK
+            </Link>
+          </motion.div>
+        </div>
+      </div>
+
       <div style={{backgroundImage: 'radial-gradient(ellipse at top left, #040819 20%, #0162FF 40% , #1D73FF, #5696FF, #8EB9FF, #AACBFF)'}} className="py-10">
 
       <Features />
