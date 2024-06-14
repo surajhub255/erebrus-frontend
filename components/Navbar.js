@@ -275,7 +275,7 @@ const Navbar = ({ isHome }) => {
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
-  const [selectedLogo, setSelectedLogo] = useState("");
+  const [selectedLogo, setSelectedLogo] = useState("aptosicon");
   const options = ["Aptos", "Sui", "Solana", "Ethereum", "Google"];
   const optionssym = ["apt", "sui", "sol",  "evm", "google"];
   const chainimg = ["aptosicon", "suiicon", "solanaicon", "ethicon", "googleicon"];
