@@ -1217,11 +1217,11 @@ const sliceWalletAddress = (walletAddress) => {
                                 </div>
 
                                 <div className="w-full flex justify-between px-14 p-4">
-                                  <h3 className="text-lg leading-12 w-1/5 text-left">
+                                  <h3 className="text-lg leading-12 w-1/4 text-left">
                                     <div style={text}>Created At</div>
                                   </h3>
 
-                                  <div className="text-start w-1/5">
+                                  <div className="text-start w-1/4">
                                     <div>
                                       <div className="text-lg " style={text}>
                                         Name
@@ -1230,21 +1230,21 @@ const sliceWalletAddress = (walletAddress) => {
                                   </div>
 
                                   <div
-                                    className="text-lg text-center w-1/5"
+                                    className="text-lg text-center w-1/4"
                                     style={text}
                                   >
                                     Region
                                   </div>
 
-                                  <div
+                                  {/* <div
                                     className="text-lg text-center w-1/5"
                                     style={text}
                                   >
                                     Logo
-                                  </div>
+                                  </div> */}
 
                                   <div
-                                    className="text-lg flex justify-end w-1/5"
+                                    className="text-lg flex justify-end w-1/4"
                                     style={text}
                                   >
                                     <p>Actions</p>

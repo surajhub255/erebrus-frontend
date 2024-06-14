@@ -161,7 +161,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
         style={{ backgroundColor: "#202333" }}
       >
         <div className="w-full px-4 flex justify-between">
-          <div className="text-l leading-12 font-bold mb-2 text-white w-1/5">
+          <div className="text-l leading-12 font-bold mb-2 text-white w-1/4">
             <div className="flex">
               <div>
                 {/* {metaData.UUID.slice(0, 4)}...{metaData.UUID.slice(-4)} */}
@@ -170,7 +170,7 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
             </div>
           </div>
 
-          <div className="lg:flex md:flex justify-between w-1/5">
+          <div className="lg:flex md:flex justify-between w-1/4">
             <div>
               <div className="text-lg rounded-lg pr-1 text-white">
                 <div>{metaData.name}</div>
@@ -178,22 +178,21 @@ const MyVpnCard: React.FC<ReviewCardProps> = ({
             </div>
           </div>
 
-          <div className="text-white text-lg w-1/5 btn bg-blue-gray-700 text-center">
-            <div className="">
-              <div>
+          <div className="text-white text-lg w-1/4 btn bg-blue-gray-700 text-center">
+            <div className="flex gap-4 justify-center">
                 <div>
-                  {metaData.region}
+                  {metaData.region} 
                 </div>
-              </div>
+                <img src={`https://flagsapi.com/${metaData.region}/shiny/64.png`} className="w-10"/>
             </div>
           </div>
 
-          <div className="text-white text-lg w-1/5 btn bg-blue-gray-700 text-center justify-center flex -mt-4">
+          {/* <div className="text-white text-lg w-1/5 btn bg-blue-gray-700 text-center justify-center flex -mt-4">
                 <img src={`https://flagsapi.com/${metaData.region}/shiny/64.png`}/>
-          </div>
+          </div> */}
 
 
-          <div className="flex gap-4 w-1/5 justify-end">
+          <div className="flex gap-4 w-1/4 justify-end">
             {/* <button
               className="text-lg rounded-lg text-white flex btn bg-blue-gray-700"
               onClick={() =>

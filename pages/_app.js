@@ -56,7 +56,7 @@ export default function App({ Component, pageProps }) {
               <div className="bg-black">
                 <Navbar />
                 <Component {...pageProps} />
-                {paseto && (
+                {/* {paseto && (
                   <div className="flex gap-2 justify-end">
                     {copied && (
                       <p className="text-white pt-6">Paseto Copied!</p>
@@ -72,7 +72,7 @@ export default function App({ Component, pageProps }) {
                       Copy Paseto
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
               {/* <Footer /> */}
             </QueryClientProvider>
