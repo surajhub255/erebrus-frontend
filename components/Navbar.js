@@ -142,7 +142,8 @@ const Navbar = ({ isHome }) => {
   }, [solAccount]);
 
   useEffect(() => {
-    if (aptosConnected) {
+    const erebrus_wallet = Cookies.get("erebrus_wallet");
+    if (aptosConnected&& !erebrus_wallet) {
       onSignMessage();
     }
   }, [aptosConnected]);

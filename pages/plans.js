@@ -9,7 +9,8 @@ const Plans = () => {
   const [erebrusWallet, setErebrusWallet] = useState(null);
   const [displayText, setDisplayText] = useState('1.76 APT/ 3 month');
   const [displayText2, setDisplayText2] = useState(' Pay by APT, crytocurrency or Fiat');
-
+ 
+  const chainSymbol = Cookies.get('Chain_symbol');
   useEffect(() => {
     const chainSym = Cookies.get('Chain_symbol');
     const wallet = Cookies.get('erebrus_token');
@@ -73,7 +74,7 @@ const Plans = () => {
         </div>
 
         <div className="lg:flex mt-10 mx-auto justify-center">
-          <div className="relative p-2 lg:w-2/5">
+         {chainSymbol=="apt"&&( <div className="relative p-2 lg:w-2/5">
             <div
               className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
               style={{
@@ -132,7 +133,7 @@ const Plans = () => {
                 </div>
               </section>
             </div>
-          </div>
+          </div>)}
 
           <div className="relative p-2 lg:w-2/5">
             <div
