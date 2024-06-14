@@ -546,7 +546,7 @@ const Mint = () => {
                       type="button"
                       className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      <img src="/mint2.png" className="w-12" />
+                      <img src={imageSrc} className="w-12" />
                       <div className="px-5 py-2.5 ">{displayText2}</div>
                     </button>
                     {showconnectbutton && (
@@ -562,7 +562,7 @@ const Mint = () => {
                     type="button"
                     className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    <img src="/mint2.png" className="w-12" />
+                    <img src={imageSrc} className="w-12" />
                     <div className="px-5 py-2.5 ">{displayText2}</div>
                   </button>
                 )}
