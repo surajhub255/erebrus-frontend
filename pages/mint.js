@@ -227,44 +227,44 @@ const Mint = () => {
   };
 
   //---------------------------------------------------------------------------------------------------------------------------------
-  const mintreading = async () => {
-    // setLoading(true);
+  // const mintreading = async () => {
+  //   // setLoading(true);
 
-    try {
+  //   try {
 
-      if (typeof window !== "undefined" && window.ethereum) {
-        const provider = new ethers.providers.Web3Provider(window.ethereum)
+  //     if (typeof window !== "undefined" && window.ethereum) {
+  //       const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-        // Create a JavaScript object from the Contract ABI, to interact
-        // with the HelloWorld contract.
-        const contract = new ethers.Contract(
-          '0x3414457C53D076D395B05dA6a9FD1b856c30E5F9',
-          abi ,
-          provider.getSigner()
-        )
+  //       // Create a JavaScript object from the Contract ABI, to interact
+  //       // with the HelloWorld contract.
+  //       const contract = new ethers.Contract(
+  //         '0x3414457C53D076D395B05dA6a9FD1b856c30E5F9',
+  //         abi ,
+  //         provider.getSigner()
+  //       )
 
         
-        const tx = await contract.mintNFT(
-          1311312
-        );
-        //  const tx = await  contract.registerNode(
-        //     354353453453,
-        //     34543535345,
-        //     "active",
-        //     "SG"
-        // )
-        const result = await tx.wait();
-        const integerValue = parseInt(result.logs[1].data, 16);
-        console.log("Result:", result, integerValue);
-        setLoading(false);
-        setmintdone(true);
-      }
+  //       const tx = await contract.mintNFT(
+  //         1311312
+  //       );
+  //       //  const tx = await  contract.registerNode(
+  //       //     354353453453,
+  //       //     34543535345,
+  //       //     "active",
+  //       //     "SG"
+  //       // )
+  //       const result = await tx.wait();
+  //       const integerValue = parseInt(result.logs[1].data, 16);
+  //       console.log("Result:", result, integerValue);
+  //       setLoading(false);
+  //       setmintdone(true);
+  //     }
 
-    } catch (error) {
-      console.error("Error fetching reading:", error);
-      // setLoading(false); // Set loading state to false in case of error
-    }
-  };
+  //   } catch (error) {
+  //     console.error("Error fetching reading:", error);
+  //     // setLoading(false); // Set loading state to false in case of error
+  //   }
+  // };
 
   const onSignMessage = async () => {
     if (sendable) {
@@ -536,17 +536,17 @@ const Mint = () => {
               </div>
 
               <div className="items-center pt-20 rounded-b w-1/2 mx-auto">
-                {!connected ? (
+              {!connected ? (
                   <>
                     <button
                       onClick={() => {
-                        mintreading()
+                        setshowconnectbutton(true);
                       }}
                       style={{ border: "1px solid #0162FF" }}
                       type="button"
                       className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                     >
-                      <img src={imageSrc} className="w-12" />
+                      <img src="/mint2.png" className="w-12" />
                       <div className="px-5 py-2.5 ">{displayText2}</div>
                     </button>
                     {showconnectbutton && (
@@ -562,7 +562,7 @@ const Mint = () => {
                     type="button"
                     className="flex w-full text-white font-bold focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-full text-md text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                   >
-                    <img src={imageSrc} className="w-12" />
+                    <img src="/mint2.png" className="w-12" />
                     <div className="px-5 py-2.5 ">{displayText2}</div>
                   </button>
                 )}
