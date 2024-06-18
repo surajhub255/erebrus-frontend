@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 
 const Terms = () => {
@@ -55,7 +56,8 @@ By using Erebrus, you acknowledge that you have read, understood, and
 agree to be bound by this EULA.` },
       ];
 
-      const [selectedTopic, setSelectedTopic] = useState("Introduction");
+      const [selectedTopic, setSelectedTopic] = useState(topics[0]);
+      
 
   return (
     <div className="min-h-screen">
@@ -87,13 +89,13 @@ agree to be bound by this EULA.` },
         </ul>
 </div>
 <div className="w-2/3" style={{backgroundColor:'#5696FF'}}>
-{selectedTopic ? (
+{/* {selectedTopic ? ( */}
           <div>
-            <p className='text-white text-lg p-20'>{selectedTopic.description}</p>
+            <p className='text-white text-lg p-20'>{selectedTopic?.description}</p>
           </div>
-        ) : (
+        {/* ) : (
           <p>Select a topic to see the description</p>
-        )}
+        )} */}
 </div>
         </div>
     </div>
