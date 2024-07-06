@@ -6,6 +6,7 @@ import { ReactWorldCountriesMap } from "react-world-countries-map";
 
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
+
 interface Node {
   id: string;
   name: string;
@@ -90,7 +91,7 @@ const NodeDetail: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  const data = [{ country: `${node.region}`, value: `${node.ipinfocity}` }];
+  const data = [{ country: `${node.region}`, value: 0 }];
   // const data = [{ country: node.region, value: 0 }];
 
   return (
@@ -179,7 +180,7 @@ const NodeDetail: React.FC = () => {
           <ReactWorldCountriesMap
             color="blue"
             title="Node Region"
-            value-prefix="IP info city:   "
+            // value-prefix="IP info city:   "
             size="xl"
             data={data}
           />
