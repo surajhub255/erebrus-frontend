@@ -179,7 +179,7 @@ const NodeDetail: React.FC = () => {
           <ReactWorldCountriesMap
             color="blue"
             title="Node Region"
-            // value-prefix="IP info city:   "
+            value-prefix="IP info city:   "
             size="xl"
             data={data}
           />
