@@ -1,4 +1,4 @@
-// pages/nodeinfo/[nodeId].js
+// pages/nodeinfo/[nodeId].tsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
@@ -6,56 +6,84 @@ import { ReactWorldCountriesMap } from "react-world-countries-map";
 
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
-const NodeDetail = () => {
-  const [node, setNode] = useState(null);
-  const [clients, setClients] = useState(null);
+
+interface Node {
+  id: string;
+  name: string;
+  region: string;
+  ipinfocity: string;
+  ipinfocountry: string;
+  ipinfotimezone: string;
+  ipinfoorg: string;
+  nodename: string;
+  status: string;
+  startTimeStamp: number;
+  lastPingedTimeStamp: number;
+  uploadSpeed: number;
+  downloadSpeed: number;
+  domain: string;
+  ipinfoip: string;
+  chainName: string;
+}
+
+interface Client {
+  nodeId: string;
+  UUID: string;
+  name: string;
+  userId: string;
+  region: string;
+  created_at: string;
+}
+
+const NodeDetail: React.FC = () => {
+  const [node, setNode] = useState<Node | null>(null);
+  const [clients, setClients] = useState<Client[]>([]);
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
-  
 
   useEffect(() => {
     if (id) {
-      axios.get(`${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/clients/node/${id}`, {
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-      })
-      .then(response => {
-        if(response.data.payload)
-        {
-          const payload = response.data.payload;
-          const filteredNodes = payload.filter((node) => node.nodeId === id);
-          filteredNodes.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
-          setClients(filteredNodes);
-          console.log("nodes client", filteredNodes);
-        }
-        else{
-          setClients([]);
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching node data:", error);
-      });
+      axios
+        .get(`${EREBRUS_GATEWAY_URL}api/v1.0/erebrus/clients/node/${id}`, {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          if (response.data.payload) {
+            const payload: Client[] = response.data.payload;
+            const filteredNodes = payload.filter((node) => node.nodeId === id);
+            filteredNodes.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+            setClients(filteredNodes);
+            console.log("nodes client", filteredNodes);
+          } else {
+            setClients([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching node data:", error);
+        });
     }
   }, [id]);
 
   useEffect(() => {
     if (id) {
-      axios.get(`${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`, {
-        headers: {
-          Accept: "application/json, text/plain, */*",
-          "Content-Type": "application/json",
-        },
-      })
-      .then(response => {
-        const payload = response.data.payload;
-        const filteredNode = payload.find((node) => node.id === id);
-        setNode(filteredNode);
-      })
-      .catch(error => {
-        console.error("Error fetching node data:", error);
-      });
+      axios
+        .get(`${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`, {
+          headers: {
+            Accept: "application/json, text/plain, */*",
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          const payload: Node[] = response.data.payload;
+          const filteredNode = payload.find((node) => node.id === id);
+          setNode(filteredNode || null);
+        })
+        .catch((error) => {
+          console.error("Error fetching node data:", error);
+        });
     }
   }, [id]);
 
@@ -63,7 +91,8 @@ const NodeDetail = () => {
     return <div>Loading...</div>;
   }
 
-  const data = [{ country: `${node.region}`, value: `${node.ipinfocity}` }];
+  const data = [{ country: `${node.region}`, value: 0 }];
+  // const data = [{ country: node.region, value: 0 }];
 
   return (
     <div className="bg-black text-white p-20">
@@ -104,20 +133,10 @@ const NodeDetail = () => {
           <div className="text-lg flex mt-10">
             <div className="w-1/4">{node.nodename}</div>
             <div className="w-1/4 capitalize">
-              <span
-                className={
-                  node.status === "active" ? "text-green-500" : "text-red-300"
-                }
-              >
-                {node.status}
-              </span>
+              <span className={node.status === "active" ? "text-green-500" : "text-red-300"}>{node.status}</span>
             </div>
-            <div className="w-1/4">
-              {new Date(node.startTimeStamp * 1000).toLocaleString()}
-            </div>
-            <div className="w-1/4">
-              {new Date(node.lastPingedTimeStamp * 1000).toLocaleString()}
-            </div>
+            <div className="w-1/4">{new Date(node.startTimeStamp * 1000).toLocaleString()}</div>
+            <div className="w-1/4">{new Date(node.lastPingedTimeStamp * 1000).toLocaleString()}</div>
           </div>
         </div>
         <div
@@ -161,7 +180,7 @@ const NodeDetail = () => {
           <ReactWorldCountriesMap
             color="blue"
             title="Node Region"
-            value-prefix="IP info city:   "
+            // value-prefix="IP info city:   "
             size="xl"
             data={data}
           />
@@ -171,7 +190,7 @@ const NodeDetail = () => {
             className="rounded-xl px-10 py-24"
             style={{
               backgroundImage: `url(/dns_bg.png)`,
-              backgroundPosition: 'center',
+              backgroundPosition: "center",
             }}
           >
             <div className="text-xl" style={{ color: "#FFFFFF99" }}>
@@ -201,19 +220,15 @@ const NodeDetail = () => {
             }}
           >
             <div className="text-xl" style={{ color: "#FFFFFF99" }}>
-            Chain
+              Chain
             </div>
             <div className="text-3xl">{node.chainName}</div>
           </div>
-
         </div>
-
-       
-
       </div>
 
-<div className="flex gap-4">
-      <div
+      <div className="flex gap-4">
+        <div
           className="w-2/3 rounded-xl px-10 py-4 mt-4"
           style={{
             backgroundColor: "#040819",
@@ -236,40 +251,29 @@ const NodeDetail = () => {
             </div>
           </div>
 
-          {clients.map((node) => (
-          <div className="text-lg flex mt-10" key={node.UUID}>
-          <div className="w-1/4">{node.name}</div>
-          <div className="w-1/4">
-          {node.userId}
-          </div>
-          <div className="w-1/4 text-center">
-            {node.region}
-          </div>
-          <div className="w-1/4 text-center">
-            {new Date(node.created_at).toLocaleString()}
-          </div>
-          </div>
-                ))}
-                
-
-         </div>
-         
-
-         <div
-            className="rounded-xl px-10 pt-10 w-1/3 mt-4 max-h-80"
-            style={{
-              backgroundImage: `url(/dns_bg.png)`,
-              backgroundPosition: 'center',
-            }}
-          >
-            <div className="text-xl" style={{ color: "#FFFFFF99" }}>
-              Total Clients
+          {clients.map((client) => (
+            <div className="text-lg flex mt-10" key={client.UUID}>
+              <div className="w-1/4">{client.name}</div>
+              <div className="w-1/4">{client.userId}</div>
+              <div className="w-1/4 text-center">{client.region}</div>
+              <div className="w-1/4 text-center">{new Date(client.created_at).toLocaleString()}</div>
             </div>
-            <div className="text-6xl">{clients?.length ? clients?.length : 0}</div>
-          </div>
+          ))}
+        </div>
 
+        <div
+          className="rounded-xl px-10 pt-10 w-1/3 mt-4 max-h-80"
+          style={{
+            backgroundImage: `url(/dns_bg.png)`,
+            backgroundPosition: "center",
+          }}
+        >
+          <div className="text-xl" style={{ color: "#FFFFFF99" }}>
+            Total Clients
           </div>
-
+          <div className="text-6xl">{clients?.length ? clients?.length : 0}</div>
+        </div>
+      </div>
     </div>
   );
 };
