@@ -815,7 +815,7 @@ const sliceWalletAddress = (walletAddress) => {
                             <div className="w-full">
                               <h3 className="leading-12 mb-2 text-white">
                                 <div className="text-lg font-semibold mt-4 uppercase">
-                                  {trialsubscriptiondata.subscription.type}{" "}
+                                  {/* {trialsubscriptiondata.subscription.type}{" "} */}
                                   Subscription
                                 </div>
                                 <div className="lg:flex md:flex justify-between">

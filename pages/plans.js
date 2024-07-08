@@ -74,7 +74,7 @@ const Plans = () => {
         </div>
 
         <div className="lg:flex mt-10 mx-auto justify-center">
-         {chainSymbol=="apt"&&( <div className="relative p-2 lg:w-2/5">
+         {chainSymbol=="apt"||chainSymbol=="evm"&&( <div className="relative p-2 lg:w-2/5">
             <div
               className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
               style={{

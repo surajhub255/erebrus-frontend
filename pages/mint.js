@@ -94,7 +94,7 @@ const Mint = () => {
         } else if (chainSym === 'evm') {
           setDisplayText('Only at 0.00028 ETH');
           setDisplayText2('Pay in ETH')
-          setImageSrc('/mintEth.jpg');
+          setImageSrc('/mintmanta.png');
           setImageSrc2('/nft_ape2.png')
         } else if (chainSym === 'sol') {
           setDisplayText('Only at 18.94 Sol');
@@ -228,8 +228,8 @@ const Mint = () => {
 
   //---------------------------------------------------------------------------------------------------------------------------------
   const mintreading = async () => {
-    // setLoading(true);
-
+    setLoadingTx(true);
+    const wallet_Address = Cookies.get('erebrus_wallet');
     try {
 
       if (typeof window !== "undefined" && window.ethereum) {
@@ -238,14 +238,15 @@ const Mint = () => {
         // Create a JavaScript object from the Contract ABI, to interact
         // with the HelloWorld contract.
         const contract = new ethers.Contract(
-          '0x3414457C53D076D395B05dA6a9FD1b856c30E5F9',
+          '0x25fCdcd43a66A4E609cc32c91D0a926388D4902C',
           abi ,
           provider.getSigner()
         )
 
         
-        const tx = await contract.mintNFT(
-          1311312
+        const tx = await contract.safeMint(
+          wallet_Address
+          
         );
         //  const tx = await  contract.registerNode(
         //     354353453453,
@@ -254,81 +255,24 @@ const Mint = () => {
         //     "SG"
         // )
         const result = await tx.wait();
-        const integerValue = parseInt(result.logs[1].data, 16);
+        console.log("result", result)
+        const integerValue = parseInt(result.logs[0].data, 16);
         console.log("Result:", result, integerValue);
-        setLoading(false);
-        setmintdone(true);
+       
+        // setmintdone(true);
       }
+      setLoadingTx(false);
+      window.location.href="/subscription"
 
     } catch (error) {
       console.error("Error fetching reading:", error);
-      // setLoading(false); // Set loading state to false in case of error
+     
+      // Set loading state to false in case of error
     }
+
   };
 
-  // const onSignMessage = async () => {
-  //   if (sendable) {
-  //     try {
-  //       const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
-  //       const { data } = await axios.get(
-  //         `${REACT_APP_GATEWAY_URL}api/v1.0/flowid?walletAddress=${account?.address}`
-  //       );
-  //       console.log(data);
-
-  //       const message = data.payload.eula;
-  //       const nonce = data.payload.flowId;
-  //       const publicKey = account?.publicKey;
-
-  //       const payload = {
-  //         message: message,
-  //         nonce: nonce,
-  //       };
-  //       const response = await signMessage(payload);
-  //       console.log(response);
-
-  //       let signaturewallet = response.signature;
-
-  //       if (signaturewallet.length === 128) {
-  //         signaturewallet = `0x${signaturewallet}`;
-  //       }
-
-  //       const authenticationData = {
-  //         flowId: nonce,
-  //         signature: `${signaturewallet}`,
-  //         pubKey: publicKey,
-  //       };
-
-  //       const authenticateApiUrl = `${REACT_APP_GATEWAY_URL}api/v1.0/authenticate`;
-
-  //       const config = {
-  //         url: authenticateApiUrl,
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         data: authenticationData,
-  //       };
-
-  //       const authResponse = await axios(config);
-  //       console.log("auth data", authResponse.data);
-
-  //       const token = await authResponse?.data?.payload?.token;
-  //       const userId = await authResponse?.data?.payload?.userId;
-
-  //       Cookies.set("erebrus_token", token, { expires: 7 });
-  //       Cookies.set("erebrus_wallet", account?.address ?? "", { expires: 7 });
-  //       Cookies.set("erebrus_userid", userId, { expires: 7 });
-
-  //       window.location.reload();
-  //     } catch (error) {
-  //       console.error(error);
-  //       setshowsignbutton(true);
-  //     }
-  //   } else {
-  //     alert(`Switch to ${mynetwork} in your wallet`);
-  //   }
-  // };
 
   const appearance = {
     theme: "stripe",
@@ -540,7 +484,11 @@ const Mint = () => {
                   <>
                     <button
                       onClick={() => {
-                        setshowconnectbutton(true);
+                        if (chainSymbol === 'evm') {
+                          mintreading();
+                        } else {
+                          setshowconnectbutton(true);
+                        }
                       }}
                       style={{ border: "1px solid #0162FF" }}
                       type="button"

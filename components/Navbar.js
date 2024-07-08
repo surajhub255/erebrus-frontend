@@ -58,7 +58,7 @@ const Navbar = ({ isHome }) => {
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [chainsym, setchainsym] = useState("apt");
+  const [chainsym, setchainsym] = useState("evm");
   const [hidefilter, setHideFilter] = useState(false);
   const [connectedAddress, setConnectedAddress] = useState("");
   const [sendable, setSendable] = useState(false);
@@ -278,10 +278,10 @@ const Navbar = ({ isHome }) => {
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
   const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
-  const [selectedLogo, setSelectedLogo] = useState("aptosicon");
-  const options = ["Aptos", "Sui", "Solana", "Ethereum", "Google"];
-  const optionssym = ["apt", "sui", "sol",  "evm", "google"];
-  const chainimg = ["aptosicon", "suiicon", "solanaicon", "ethicon", "googleicon"];
+  const [selectedLogo, setSelectedLogo] = useState("mantaicon");
+  const options = ["Manta","Aptos", "Sui", "Solana",  "Google"];
+  const optionssym = [ "evm","apt", "sui", "sol",  "google"];
+  const chainimg = ["mantaicon","aptosicon", "suiicon", "solanaicon","googleicon"];
 
   const handleOptionSelect = (option, index) => {
     setSelectedOption(option);
@@ -292,6 +292,9 @@ const Navbar = ({ isHome }) => {
   useEffect(() => {
     const getchainsym = Cookies.get("Chain_symbol");
     if (getchainsym != null) {
+      if (getchainsym == "evm") {
+        setSelectedOption("Manta");
+      }
       if (getchainsym == "apt") {
         setSelectedOption("Aptos");
       }
@@ -301,14 +304,12 @@ const Navbar = ({ isHome }) => {
       if (getchainsym == "sol") {
         setSelectedOption("Solona");
       }
-      if (getchainsym == "evm") {
-        setSelectedOption("Ethereum");
-      }
+      
       if (getchainsym == "google") {
         setSelectedOption("Google");
       }
     } else {
-      setSelectedOption("Aptos");
+      setSelectedOption("Manta");
     }
   }, []);
 
@@ -700,7 +701,7 @@ const Navbar = ({ isHome }) => {
                         // className="mx-auto"
                       >
                         <div className="flex gap-2" style={{ marginLeft: 100 }}>
-                          <img src="/ethicon.png" className="w-6 h-6" />
+                          <img src="/manta.png" className="w-6 h-6" />
                           <div>Ethereum</div>
                         </div>
                       </button>
