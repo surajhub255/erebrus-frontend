@@ -94,7 +94,7 @@ const Mint = () => {
         } else if (chainSym === 'evm') {
           setDisplayText('Only at 0.00028 ETH');
           setDisplayText2('Pay in ETH')
-          setImageSrc('/mintmanta.png');
+          setImageSrc('/mintManta.png');
           setImageSrc2('/nft_ape2.png')
         } else if (chainSym === 'sol') {
           setDisplayText('Only at 18.94 Sol');
