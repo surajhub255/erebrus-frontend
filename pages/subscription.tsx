@@ -823,7 +823,7 @@ const sliceWalletAddress = (walletAddress) => {
                                     Status: {trialsubscriptiondata.status}
                                   </div>
                                   <div className="text-md font-semibold mt-4">
-                                    Valid for 7 days
+                                    Valid for 30 days
                                   </div>
                                 </div>
                               </h3>
@@ -834,24 +834,25 @@ const sliceWalletAddress = (walletAddress) => {
                                     <span className="text-green-500 ">
                                       Start time :
                                     </span>{" "}
-                                    {trialsubscriptiondata.subscription
+                                    {/* {trialsubscriptiondata.subscription
                                       .startTime
                                       ? formatDateTime(
                                           trialsubscriptiondata.subscription
                                             .startTime
                                         )
-                                      : "Loading..."}
+                                      : "Loading..."} */}8 July 2024, 16:25:54
                                   </div>
                                   <div className="">
                                     <span className="text-red-500 ">
                                       End time :
                                     </span>{" "}
-                                    {trialsubscriptiondata.subscription.endTime
+                                    {/* {trialsubscriptiondata.subscription.endTime
                                       ? formatDateTime(
                                           trialsubscriptiondata.subscription
                                             .endTime
                                         )
-                                      : "Loading..."}
+                                      : "Loading..."} */}
+                                      7 August 2024, 16:25:54
                                   </div>
                                 </div>
                               </div>
