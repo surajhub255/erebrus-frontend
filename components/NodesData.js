@@ -26,10 +26,13 @@ const NodesData = () => {
 
         if (response.status === 200  && response.data) {
   
-                const payload = response.data.payload;
+                const payload = response.data.payload.filter(
+                  (node)=>(node.region=="CA"|| node.region=="JP")
+                );
                 setNodesData(payload);
                 const filteredNodes = payload.filter(
-                  (node) => node.status === "active"
+                  (node) => node.status === "active" && (node.region=="CA"|| node.region=="JP"||node.region=="SG")
+                 
                 );
                 setActiveNodesData(filteredNodes);
                 const uniqueRegions = new Set(payload.map((node) => node.region));
