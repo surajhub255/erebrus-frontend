@@ -63,6 +63,7 @@ const Navbar = ({ isHome }) => {
   const [connectedAddress, setConnectedAddress] = useState("");
   const [sendable, setSendable] = useState(false);
   const [requiredNetwork, setRequiredNetwork] = useState(false);
+  const [showExplorerDropdown, setShowExplorerDropdown] = useState(false);
   //--------------------------------gpt --------------------------------------------------------------------
   const {
     account: aptosAccount,
@@ -169,7 +170,7 @@ const Navbar = ({ isHome }) => {
 
     // Update the cookie with the new symbol
     if (getchainsym == null) {
-      Cookies.set("Chain_symbol", "apt");
+      Cookies.set("Chain_symbol", "evm");
     }
   }, []);
 
@@ -277,7 +278,7 @@ const Navbar = ({ isHome }) => {
   //dropdown
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState(""); // Set default to 'Chain 1'
+  const [selectedOption, setSelectedOption] = useState("Manta"); // Set default to 'Chain 1'
   const [selectedLogo, setSelectedLogo] = useState("mantaicon");
   const options = ["Manta","Aptos", "Sui", "Solana",  "Google"];
   const optionssym = [ "evm","apt", "sui", "sol",  "google"];
@@ -355,42 +356,64 @@ const Navbar = ({ isHome }) => {
         </div>
 
         <div className="hidden lg:flex items-center">
-          {link !== "explorer" ? (
-            <Link
-              href="/explorer"
-              className="text-gray-300 mr-8"
-              scroll={false}
-              onClick={() => {
-                setlink("explorer");
-              }}
-              style={{
-                textDecoration: "none",
-                position: "relative",
-                borderBottom: router.pathname.includes("explorer")
-                  ? "2px solid white"
-                  : "",
-              }}
-              onMouseOver={(e) =>
-                (e.currentTarget.style.borderBottom = "1px solid #fff")
-              }
-              onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
-            >
-              Explorer
-            </Link>
-          ) : (
-            <Link
-              href="/explorer"
-              className="text-gray-300 mr-8"
-              scroll={false}
-              style={{
-                textDecoration: "none",
-                position: "relative",
-                borderBottom: "2px solid white",
-              }}
-            >
-              Explorer
-            </Link>
-          )}
+        <div
+        className="relative"
+        onMouseEnter={() => setShowExplorerDropdown(true)}
+        onMouseLeave={() => setShowExplorerDropdown(false)}
+      >
+        {link !== 'explorer' ? (
+          <Link
+            href="/explorer"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            onClick={() => setLink('explorer')}
+            style={{
+              textDecoration: 'none',
+              position: 'relative',
+              borderBottom: router.pathname.includes('explorer')
+                ? '2px solid white'
+                : '',
+            }}
+          >
+            Explorer
+          </Link>
+        ) : (
+          <Link
+            href="/explorer"
+            className="text-gray-300 mr-8"
+            scroll={false}
+            style={{
+              textDecoration: 'none',
+              position: 'relative',
+              borderBottom: '2px solid white',
+            }}
+          >
+            Explorer
+          </Link>
+        )}
+
+        {showExplorerDropdown && (
+          <div
+            className="absolute  w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            style={{ backgroundColor: '#20253A' }}
+          >
+            <div className="py-1">
+              <Link
+                href="/explorer"
+                className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+              >
+                Node Explorer
+              </Link>
+              <Link
+                href="/dwifi"
+                className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+              >
+                Dwifi
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
 
           {link !== "subscription" ? (
             <Link
