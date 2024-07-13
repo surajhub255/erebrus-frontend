@@ -280,7 +280,7 @@ const Navbar = ({ isHome }) => {
 
   const [selectedOption, setSelectedOption] = useState("Manta"); // Set default to 'Chain 1'
   const [selectedLogo, setSelectedLogo] = useState("mantaicon");
-  const options = ["Manta","Aptos", "Sui", "Solana",  "Google"];
+  const options = ["Manta","peaq","Aptos", "Sui", "Solana",  "Google"];
   const optionssym = [ "evm","apt", "sui", "sol",  "google"];
   const chainimg = ["mantaicon","aptosicon", "suiicon", "solanaicon","googleicon"];
 

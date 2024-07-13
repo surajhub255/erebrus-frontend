@@ -15,6 +15,7 @@ import { WagmiProvider } from "wagmi";
 import { polygonAmoy } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {MantaPacific} from "../components/manta.ts"
+import '../styles/globals.css';
 
 const activeChainId = ChainId.Mumbai;
 
@@ -48,6 +49,7 @@ export default function App({ Component, pageProps }) {
   const paseto = Cookies.get("erebrus_token");
 
   return (
+   
     <AppContext>
       <ThirdwebProvider desiredChainId={activeChainId}>
         <AuthProvider>

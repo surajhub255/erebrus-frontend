@@ -64,6 +64,7 @@
     "react-dom": "18.2.0",
     "react-google-recaptcha": "^2.1.0",
     "react-icons": "^4.7.1",
+    "react-intersection-observer": "^9.13.0",
     "react-responsive-carousel": "^3.2.23",
     "react-toastify": "^9.1.1",
     "react-world-countries-map": "^1.1.0",
