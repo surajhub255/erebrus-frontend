@@ -12,6 +12,11 @@ import { useAddress } from "@thirdweb-dev/react";
 import Link from 'next/link';
 import react, { useEffect } from "react";
 import Cookies from "js-cookie";
+import Carousel from "./Carousel"
+import Mission from "../components/Mission";
+import Dvpn from "../components/Dvpn.jsx"
+import Future from "../components/futureawait.tsx"
+import WinnersPage from "../components/winners.tsx"
 
 export default function Home() {
   const address = useAddress();
@@ -104,70 +109,109 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-<div className="min-h-screen" style={{ backgroundImage: `url('/landingtop.png')`, 
+      <div className="min-h-screen " style={{ backgroundImage: `url('/background.jpeg')`, 
                         backgroundColor:"black", 
                         backgroundSize: "cover",
                         backgroundPosition: "center",
                         backgroundRepeat: "no-repeat"}}>
-      <div className="container mx-auto pt-20 w-[80%]">
-        <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
-          <motion.h1
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="lg:text-6xl text-3xl font-smeibold text-white mb-6 mr-auto w-3/5"
-          >
-            Building a Resilient Decentralized Network 
-          </motion.h1>
-          <motion.h1
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="lg:text-xl text-md text-white mb-8 w-3/5 mr-auto"
-          >
-            <p>
-            Try the dVPN and secure your internet activities now
-            </p>
-          </motion.h1>
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-black font-bold py-3 px-14 rounded-full mr-auto" style={{backgroundColor:'#E3EEFF'}}
-            // style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
-          >
-            <Link href="/subscription">
-              Get Started
-            </Link>
-          </motion.div>
-        </div>
+  <div className="container mx-auto pt-20 w-[80%] ">
+    <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
+      <motion.h1
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+        className="lg:text-6xl text-3xl font-semibold text-white mb-6 mr-auto w-3/5"
+      >
+        Building a Resilient Decentralized Network 
+      </motion.h1>
+      <motion.h1
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+        className="lg:text-xl text-md text-white mb-8 w-3/5 mr-auto"
+      >
+        <p>
+          Try the dVPN and secure your internet activities now
+        </p>
+      </motion.h1>
+      <div className="flex space-x-4 w-3/5 mr-auto">
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+          className="text-black font-bold py-3 px-14 rounded-full" style={{backgroundColor:'#E3EEFF'}}
+        >
+          <Link href="/subscription">
+            Explore VPN
+          </Link>
+        </motion.div>
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+          className="text-black font-bold py-3 px-14 rounded-full" style={{backgroundColor:'#E3EEFF'}}
+        >
+          <Link href="/subscription">
+            Explore WiFi
+          </Link>
+        </motion.div>
       </div>
-      </div>
+    </div>
+  </div> 
 
-      <div style={{backgroundImage: 'radial-gradient(ellipse at top left, #040819 20%, #0162FF 40% , #1D73FF, #5696FF, #8EB9FF, #AACBFF)'}} className="py-10">
+</div>
+{/* loop */}
+<Carousel/>
+<Mission/>
+<Dvpn/>
 
-      <Features />
-      <DepinCarousel />
-      </div>
+<div className="relative overflow-hidden">
+  <div 
+    className="absolute inset-0" 
+    style={{
+      background: 'radial-gradient(circle at center, #0262FF 0%,  #040819 30%, #080d1f 100%)',
+      transform: 'scale(1.5)'
+    }}
+  ></div>
+  <div className="relative min-h-[300px] flex flex-col items-center justify-center py-10">
+    <div className="text-center text-4xl text-white mb-10">
+      Join the Movement. Get Started Now.
+    </div>
+    <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+      className="bg-[#E3EEFF] text-black font-bold py-3 px-6 text-center rounded-[8px] z-10"
+    >
+      <Link href="/subscription">
+        Join Now
+      </Link>
+    </motion.div>
+  </div>
+</div>
+<div  className="py-10 gradient-background2">
+
+
+<DepinCarousel />
+</div>
+<Future/>
 
       <MobileAPK />
+      <WinnersPage/>
 
-      <Pricing />
-      <Howto />
+      
 
-      <div className="container mx-auto py-20 w-4/5 mb-20 rounded-3xl" style={{backgroundColor:'#202333'}}>
+      <div className="container mx-auto py-20 w-full h-screen mb-20 flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]" >
+      <div className="  w-2/3 background-gradient py-10 rounded-3xl">
         <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
             className="lg:text-5xl text-3xl font-semibold text-gray-300 mb-10 lg:text-center md:text-center md:w-[80%]"
           >
-            Where Decentralization meets <br></br> VPN for ultimate internet security
+            Revolutionizing Internet Access  <br></br>Through the Power of DePIN
           </motion.h1>
           <motion.p
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
             className="text-lg text-gray-300 mb-8 text-center w-[30%]"
           >
-            Join us by running an erebrus node and start 
-contributing to enable safe internet
+           Subscribe for insights from our DePIN experts.
           </motion.p>
           <motion.div
             initial={{ y: 100, opacity: 0 }}
@@ -177,9 +221,10 @@ contributing to enable safe internet
           >
             <Link href="https://discord.com/invite/5uaFhNpRF6" target="_blank"
               rel="noopener noreferrer">
-              Deploy your node
+             Subscribe
             </Link>
           </motion.div>
+        </div>
         </div>
       </div>
 
