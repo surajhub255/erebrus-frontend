@@ -15,6 +15,7 @@ import { WagmiProvider } from "wagmi";
 import { polygonAmoy } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {MantaPacific} from "../components/manta.ts"
+import {Peaq} from "../components/peaq.ts"
 import '../styles/globals.css';
 
 const activeChainId = ChainId.Mumbai;
@@ -30,7 +31,7 @@ const metadata = {
 };
 
 // const chains = [polygonAmoy];
-const chains = [MantaPacific];
+const chains = [MantaPacific,Peaq];
 const config = defaultWagmiConfig({
   chains,
   projectId,
@@ -80,7 +81,9 @@ export default function App({ Component, pageProps }) {
             </QueryClientProvider>
           </WagmiProvider>
         </AuthProvider>
-      </ThirdwebProvider>
+        </ThirdwebProvider>
     </AppContext>
   );
 }
+
+

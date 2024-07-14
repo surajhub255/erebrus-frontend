@@ -19,7 +19,7 @@ import Future from "../components/futureawait.tsx"
 import WinnersPage from "../components/winners.tsx"
 
 export default function Home() {
-  const address = useAddress();
+  
 
   useEffect(() => {
     parseAuthorizationCode();
