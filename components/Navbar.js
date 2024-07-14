@@ -25,9 +25,15 @@ import { useAptosWallet } from "./Login/aptos";
 import { useSuiWallet } from "./Login/suiwallet";
 import { useEthWallet } from "./Login/ethereum";
 import { useSolWallet } from "./Login/solana";
+import {usePeaqWallet} from "./Login/peaq";
 import { handleLoginClick } from "./Login/googleLogin";
 
+
+
+
 import QRCodeSVG from "qrcode.react";
+
+
 
 const networkSol = WalletAdapterNetwork.Devnet;
 
@@ -58,12 +64,13 @@ const Navbar = ({ isHome }) => {
   const [link, setlink] = useState("");
   const { isSignedIn, setIsSignedIn } = useContext(AuthContext);
   const [avatarUrl, setAvatarUrl] = useState("");
-  const [chainsym, setchainsym] = useState("evm");
+  const [chainsym, setchainsym] = useState("apt");
   const [hidefilter, setHideFilter] = useState(false);
   const [connectedAddress, setConnectedAddress] = useState("");
   const [sendable, setSendable] = useState(false);
   const [requiredNetwork, setRequiredNetwork] = useState(false);
   const [showExplorerDropdown, setShowExplorerDropdown] = useState(false);
+
   //--------------------------------gpt --------------------------------------------------------------------
   const {
     account: aptosAccount,
@@ -77,14 +84,22 @@ const Navbar = ({ isHome }) => {
     ethAddress,
     isConnected: ethConnected,
     onSignMessageEth,
-    disconnect: ethdisconnect
+
   } = useEthWallet();
+
+  const {
+    peaqAddress,
+    isConnected: peaqConnected,
+    onSignMessagepeaq,
+    disconnect: peaqdisconnect
+  } = usePeaqWallet();
   const { solconnected, solPublicKey, OnSignMessageSol } = useSolWallet();
 
   const [showsignbuttoneth, setshowsignbuttoneth] = useState(false);
   const [showsignbuttonaptos, setshowsignbuttonaptos] = useState(false);
   const [showsignbuttonsui, setshowsignbuttonsui] = useState(false);
   const [showsignbuttonsol, setshowsignbuttonsol] = useState(false);
+  const [showsignbuttonpeaq, setshowsignbuttonpeaq] = useState(false);
 
   const [showchainbutton, setshowchainbutton] = useState(false);
 
@@ -101,13 +116,17 @@ const Navbar = ({ isHome }) => {
       setshowsignbuttonsol(true);
     } else if (ethConnected) {
       setshowsignbuttoneth(true);
-    } else {
+    } 
+    else if (peaqConnected) {
+      setshowsignbuttonpeaq(true);
+    }else {
       setshowsignbuttoneth(false);
       setshowsignbuttonsol(false);
       setshowsignbuttonsui(false);
       setshowsignbuttonaptos(false);
+      setshowsignbuttonpeaq(false);
     }
-  }, [aptosConnected, status == "connected", ethConnected, solconnected]);
+  }, [aptosConnected, status == "connected", ethConnected,peaqConnected, solconnected]);
   console.log("sui connected", status == "connected");
 
   // const handleSignMessage = (chainsym) => {
@@ -164,13 +183,19 @@ const Navbar = ({ isHome }) => {
       onSignMessageEth();
     }
   }, [ethConnected]);
+  useEffect(() => {
+    // const erebrus_wallet =Cookies.get("erebrus_wallet") ;
+    if (peaqConnected && getchainsym == "peaq") {
+      onSignMessagepeaq();
+    }
+  }, [peaqConnected]);
 
   useEffect(() => {
     const getchainsym = Cookies.get("Chain_symbol");
 
     // Update the cookie with the new symbol
     if (getchainsym == null) {
-      Cookies.set("Chain_symbol", "evm");
+      Cookies.set("Chain_symbol", "apt");
     }
   }, []);
 
@@ -259,10 +284,12 @@ const Navbar = ({ isHome }) => {
   };
 
   const handleDeleteCookie = () => {
+    localStorage.setItem("wagmi.io.metamask.disconnected",true)
     Cookies.remove("erebrus_wallet");
     Cookies.remove("erebrus_token");
     Cookies.remove("erebrus_userId");
     Cookies.remove("Chain_symbol");
+    signOut();
     if (status == "connected") {
       disconnect();
     }
@@ -278,11 +305,11 @@ const Navbar = ({ isHome }) => {
   //dropdown
   const [selectedDropwdown, setSelectedDropwdown] = useState(false);
 
-  const [selectedOption, setSelectedOption] = useState("Manta"); // Set default to 'Chain 1'
-  const [selectedLogo, setSelectedLogo] = useState("mantaicon");
-  const options = ["Manta","peaq","Aptos", "Sui", "Solana",  "Google"];
-  const optionssym = [ "evm","apt", "sui", "sol",  "google"];
-  const chainimg = ["mantaicon","aptosicon", "suiicon", "solanaicon","googleicon"];
+  const [selectedOption, setSelectedOption] = useState("Aptos"); // Set default to 'Chain 1'
+  const [selectedLogo, setSelectedLogo] = useState("aptosicon");
+  const options = ["Aptos","Manta","peaq","Solana", "Sui","Google"];
+  const optionssym = ["apt", "evm","peaq", "sol", "sui","google"];
+  const chainimg = ["aptosicon","mantaicon","peaqicon", "solanaicon", "suiicon","googleicon"];
 
   const handleOptionSelect = (option, index) => {
     setSelectedOption(option);
@@ -293,11 +320,15 @@ const Navbar = ({ isHome }) => {
   useEffect(() => {
     const getchainsym = Cookies.get("Chain_symbol");
     if (getchainsym != null) {
+     
+      if (getchainsym == "apt") {
+        setSelectedOption("Aptos");
+      }
       if (getchainsym == "evm") {
         setSelectedOption("Manta");
       }
-      if (getchainsym == "apt") {
-        setSelectedOption("Aptos");
+      if (getchainsym == "peaq") {
+        setSelectedOption("peaq");
       }
       if (getchainsym == "sui") {
         setSelectedOption("Sui");
@@ -310,7 +341,7 @@ const Navbar = ({ isHome }) => {
         setSelectedOption("Google");
       }
     } else {
-      setSelectedOption("Manta");
+      setSelectedOption("Aptos");
     }
   }, []);
 
@@ -473,6 +504,11 @@ const Navbar = ({ isHome }) => {
                   </button>
                 )}
                 {chainsym === "evm" && (
+                  <button>
+                    <w3m-button />
+                  </button>
+                )}
+                {chainsym === "peaq" && (
                   <button>
                     <w3m-button />
                   </button>
@@ -716,6 +752,7 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "evm");
                           setchainsym("evm");
+                          setshowsignbuttonpeaq(false);
                           setshowsignbuttoneth(false);
                           setshowsignbuttonsol(false);
                           setshowsignbuttonsui(false);
@@ -724,8 +761,31 @@ const Navbar = ({ isHome }) => {
                         // className="mx-auto"
                       >
                         <div className="flex gap-2" style={{ marginLeft: 100 }}>
-                          <img src="/manta.png" className="w-6 h-6" />
+                          <img src="/mantaicon.png" className="w-6 h-6" />
                           <div>Ethereum</div>
+                        </div>
+                      </button>
+                    </li>
+                    <li
+                      className="flex items-center justify-between gap-64 p-2 rounded-full"
+                      style={{ backgroundColor: "#202333" }}
+                    >
+                      <button
+                        onClick={() => {
+                          setHideFilter(false);
+                          Cookies.set("Chain_symbol", "peaq");
+                          setchainsym("peaq");
+                          setshowsignbuttonpeaq(false);
+                          setshowsignbuttoneth(false);
+                          setshowsignbuttonsol(false);
+                          setshowsignbuttonsui(false);
+                          setshowsignbuttonaptos(false);
+                        }}
+                        // className="mx-auto"
+                      >
+                        <div className="flex gap-2" style={{ marginLeft: 100 }}>
+                          <img src="/peaqicon.png" className="w-6 h-6" />
+                          <div>Peaq</div>
                         </div>
                       </button>
                     </li>
@@ -737,6 +797,7 @@ const Navbar = ({ isHome }) => {
                         onClick={() => {
                           Cookies.set("Chain_symbol", "apt");
                           setchainsym("apt");
+                          setshowsignbuttonpeaq(false);
                           setshowsignbuttoneth(false);
                           setshowsignbuttonsol(false);
                           setshowsignbuttonsui(false);
@@ -760,6 +821,7 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sui");
                           setchainsym("sui");
+                          setshowsignbuttonpeaq(false);
                           setshowsignbuttoneth(false);
                           setshowsignbuttonsol(false);
                           setshowsignbuttonsui(false);
@@ -782,6 +844,7 @@ const Navbar = ({ isHome }) => {
                           setHideFilter(false);
                           Cookies.set("Chain_symbol", "sol");
                           setchainsym("sol");
+                          setshowsignbuttonpeaq(false);
                           setshowsignbuttoneth(false);
                           setshowsignbuttonsol(false);
                           setshowsignbuttonsui(false);
@@ -933,7 +996,7 @@ const Navbar = ({ isHome }) => {
                 {address.slice(0, 4)}...{address.slice(-4)}
               </div> */}
                     <button
-                      onClick={handleDeleteCookie}
+                     onClick={() => { disconnect(); }}
                       onMouseOver={(e) =>
                         (e.currentTarget.style.borderBottom =
                           "1px solid #0162FF")
