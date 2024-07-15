@@ -21,6 +21,7 @@ import Banner from "../components/Banner.tsx"
 import Link from 'next/link';
 
 
+
 const activeChainId = ChainId.Mumbai;
 const erebrus_wallet = Cookies.get("erebrus_wallet");
 const queryClient = new QueryClient();
@@ -55,12 +56,12 @@ export default function App({ Component, pageProps }) {
   return (
    
     <AppContext>
-      <ThirdwebProvider desiredChainId={activeChainId}>
+      <ThirdwebProvider desiredChainId={chains}>
         <AuthProvider>
           <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
               
-              <div className=" z-10">
+              <div className=" bg-black">
                 
               {!erebrus_wallet && (
         <div className="w-full ">

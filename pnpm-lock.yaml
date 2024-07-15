@@ -104,6 +104,9 @@ importers:
       '@web3-react/core':
         specifier: ^8.2.3
         version: 8.2.3(@types/react@18.2.47)(bufferutil@4.0.8)(react@18.2.0)(utf-8-validate@5.0.10)
+      '@web3-react/injected-connector':
+        specifier: ^6.0.7
+        version: 6.0.7
       '@web3modal/wagmi':
         specifier: ^4.1.11
         version: 4.1.11(@types/react@18.2.47)(@wagmi/connectors@4.3.3(@react-native-async-storage/async-storage@1.23.1(react-native@0.74.1(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.2.47)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.2.0)(utf-8-validate@5.0.10)))(@types/react@18.2.47)(@wagmi/core@2.10.5(@tanstack/query-core@5.34.1)(@types/react@18.2.47)(bufferutil@4.0.8)(react@18.2.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.9.31(bufferutil@4.0.8)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@3.22.4))(zod@3.22.4))(bufferutil@4.0.8)(encoding@0.1.13)(react-dom@18.2.0(react@18.2.0))(react-i18next@13.5.0(i18next@22.5.1)(react-dom@18.2.0(react@18.2.0))(react-native@0.74.1(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.2.47)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.2.0)(utf-8-validate@5.0.10))(react@18.2.0))(react-native@0.74.1(@babel/core@7.24.5)(@babel/preset-env@7.24.5(@babel/core@7.24.5))(@types/react@18.2.47)(bufferutil@4.0.8)(encoding@0.1.13)(react@18.2.0)(utf-8-validate@5.0.10))(react@18.2.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.9.31(bufferutil@4.0.8)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@3.22.4))(zod@3.22.4))(@wagmi/core@2.10.5(@tanstack/query-core@5.34.1)(@types/react@18.2.47)(bufferutil@4.0.8)(react@18.2.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.9.31(bufferutil@4.0.8)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@3.22.4))(zod@3.22.4))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(viem@2.9.31(bufferutil@4.0.8)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@3.22.4))
@@ -4227,13 +4230,22 @@ packages:
   '@web-std/stream@1.0.3':
     resolution: {integrity: sha512-5MIngxWyq4rQiGoDAC2WhjLuDraW8+ff2LD2et4NRY933K3gL8CHlUXrh8ZZ3dC9A9Xaub8c9sl5exOJE58D9Q==}
 
+  '@web3-react/abstract-connector@6.0.7':
+    resolution: {integrity: sha512-RhQasA4Ox8CxUC0OENc1AJJm8UTybu/oOCM61Zjg6y0iF7Z0sqv1Ai1VdhC33hrQpA8qSBgoXN9PaP8jKmtdqg==}
+
   '@web3-react/core@8.2.3':
     resolution: {integrity: sha512-0ezmRKhqQpoa9ct2/3erg60zBXfC/f/liYR1mfSGKtIroRkLnPARigZSV6pI+fi8bhfGJ0RKtFWyTCCWZzdq1w==}
     peerDependencies:
       react: '>=16.8'
 
+  '@web3-react/injected-connector@6.0.7':
+    resolution: {integrity: sha512-Y7aJSz6pg+MWKtvdyuqyy6LWuH+4Tqtph1LWfiyVms9II9ar/9B/de4R8wh4wjg91wmHkU+D75yP09E/Soh2RA==}
+
   '@web3-react/store@8.2.3':
     resolution: {integrity: sha512-qUJQ5pDsYYDra+/+glq2BmIS43HYAiEZ22sLLVh6E75WiZKRNOOqUxBDPe33KTIn718DLt51j+wd2FT+oT/kJQ==}
+
+  '@web3-react/types@6.0.7':
+    resolution: {integrity: sha512-ofGmfDhxmNT1/P/MgVa8IKSkCStFiyvXe+U5tyZurKdrtTDFU+wJ/LxClPDtFerWpczNFPUSrKcuhfPX1sI6+A==}
 
   '@web3-react/types@8.2.3':
     resolution: {integrity: sha512-kSG90QkN+n7IOtp10nQ44oS8J7jzfH9EmqnruwBpCGybh1FM/ohyRvUKWYZNfNE4wsjTSpKsINR0/VdDsZMHyg==}
@@ -9994,6 +10006,9 @@ packages:
   tiny-secp256k1@1.1.6:
     resolution: {integrity: sha512-FmqJZGduTyvsr2cF3375fqGHUovSwDi/QytexX1Se4BPuPZpTE5Ftp5fg+EFSuEf3lhZqgCRjEG3ydUQ/aNiwA==}
     engines: {node: '>=6.0.0'}
+
+  tiny-warning@1.0.3:
+    resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
 
   tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}
@@ -17906,6 +17921,10 @@ snapshots:
     dependencies:
       web-streams-polyfill: 3.3.3
 
+  '@web3-react/abstract-connector@6.0.7':
+    dependencies:
+      '@web3-react/types': 6.0.7
+
   '@web3-react/core@8.2.3(@types/react@18.2.47)(bufferutil@4.0.8)(react@18.2.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@web3-react/store': 8.2.3(@types/react@18.2.47)(react@18.2.0)
@@ -17920,6 +17939,12 @@ snapshots:
       - immer
       - utf-8-validate
 
+  '@web3-react/injected-connector@6.0.7':
+    dependencies:
+      '@web3-react/abstract-connector': 6.0.7
+      '@web3-react/types': 6.0.7
+      tiny-warning: 1.0.3
+
   '@web3-react/store@8.2.3(@types/react@18.2.47)(react@18.2.0)':
     dependencies:
       '@ethersproject/address': 5.7.0
@@ -17929,6 +17954,8 @@ snapshots:
       - '@types/react'
       - immer
       - react
+
+  '@web3-react/types@6.0.7': {}
 
   '@web3-react/types@8.2.3(@types/react@18.2.47)(react@18.2.0)':
     dependencies:
@@ -25158,6 +25185,8 @@ snapshots:
       create-hmac: 1.1.7
       elliptic: 6.5.5
       nan: 2.19.0
+
+  tiny-warning@1.0.3: {}
 
   tmp@0.0.33:
     dependencies:

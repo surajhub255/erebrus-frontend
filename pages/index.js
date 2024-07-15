@@ -113,9 +113,9 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-screen relative overflow-hidden -z-10">
+      <div className="min-h-screen relative overflow-hidden ">
   <video
-    className="absolute top-0 left-0 w-full h-full object-cover  "
+    className=" absolute top-0 left-0 w-full h-full object-cover  "
     autoPlay
     loop
     muted
