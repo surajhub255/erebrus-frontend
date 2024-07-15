@@ -11,8 +11,8 @@ const WinnersPage = () => {
 
   const positions = [
     { top: '5%', left: '45%', width: '170px', height: '80px' },
-    { top: '30%', left: '10%', width: '150px', height: '80px' },
-    { top: '45%', left: '50%', width: '150px', height: '55px' },
+    { top: '30%', left: '10%', width: '170px', height: '80px' },
+    { top: '45%', left: '50%', width: '180px', height: '55px' },
     { top: '70%', left: '20%', width: '130px', height: '40px' },
     { top: '70%', left: '53%', width: '160px', height: '80px' },
   ];

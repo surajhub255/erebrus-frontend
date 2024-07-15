@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-
+import { motion } from "framer-motion";
+import Link from 'next/link';
 const DepinCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -65,13 +66,22 @@ const DepinCarousel = () => {
 
   return (
     <div id="howto" className="min-h-screen flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mb-20">
-      <div className="mb-2 font-figtree w-[80%] text-white lg:text-2xl text-sm text-left">
-        <h1 className="font-bold lg:text-4xl text-2xl lg:mb-10 mb-12 lg:mt-40 text-left text-white">
+      <div className="mb-2  font-normal w-[80%] text-white lg:text-2xl text-sm text-left">
+        <h1 className=" lg:text-4xl text-2xl lg:mb-8 mb-8 lg:mt-10 text-left text-white">
           Companies and Enterprises: Content Delivery, Uninterrupted
         </h1>
-        <h1 className="font-bold lg:text-xl text-xl lg:mb-16 mb-12 text-left text-white">
+        <h1 className=" lg:text-xl text-xl lg:mb-8 mb-10 text-left text-white">
           Subsidize Safe and Uncensored Internet & Cybersecurity for Your Teams and Users
         </h1>
+        <motion.div
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+      className="bg-[#E3EEFF] text-black  py-3 px-6 text-center text-lg  rounded-[10vh] z-10 w-[30vh] mb-10 h-[7vh]"
+    >
+      <Link href="/subscription">
+        Deploy Your Node
+      </Link>
+    </motion.div>
         <div className="lg:flex gap-2">
           <div className="rounded-3xl lg:w-2/5 w-full relative">
             <img src="/depin.png" alt="Static Image" className="rounded-3xl h-[500px] w-full" />
@@ -89,11 +99,11 @@ const DepinCarousel = () => {
             >
               {slides.map((slide, index) => (
                 <div key={index} className="text-left">
-                  <h2 className="text-3xl font-bold mb-4">{slide.heading}</h2>
+                  <h2 className="text-3xl  font-normal mb-4">{slide.heading}</h2>
                   {slide.subheadings.map((sub, subIndex) => (
                     <div key={subIndex} className="mb-4">
                       <h3 className="text-xl font-semibold">{sub.subheading}</h3>
-                      <p className="text-base">{sub.description}</p>
+                      <p className="text-base text-[#BEBEBE]">{sub.description}</p>
                     </div>
                   ))}
                 </div>

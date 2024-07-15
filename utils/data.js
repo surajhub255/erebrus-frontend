@@ -8,7 +8,7 @@ export const cardDetails2 = [
   },
   {
     image: "win2",
-    title: "Improved User Experience",
+    title: " ÐWi-Fi for Seamless Connection",
     desc1: "No more  unreliable public Wi-Fi with our decentralized hotspots.",
 
     desc2:
@@ -16,11 +16,13 @@ export const cardDetails2 = [
   },
   {
     image: "win3",
-    title: "No Lock-in",
+    title: "DePIN for Empowered Infrastructure",
     desc1:
       "Anyone can contribute physical or virtual resources to become a node.",
 
+
+
     desc2:
-      "DePIN rewards node operators like you for building the future, creating a win-win for everyone  ",
+      "DePIN rewards node operators like you for building the future, creating a win-win for everyone ",
   },
 ];

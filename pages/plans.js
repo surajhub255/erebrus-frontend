@@ -25,6 +25,10 @@ const Plans = () => {
       } else if (chainSym === 'evm') {
         setDisplayText('0.00028 ETH/ 3 month');
         setDisplayText2(' Pay by ETH, crytocurrency or Fiat')
+      }
+      else if (chainSym === 'peaq') {
+        setDisplayText('0.00028 KRST/ 3 month');
+        setDisplayText2(' Pay by KRST, crytocurrency or Fiat')
       } else if (chainSym === 'sol') {
         setDisplayText('18.94 Sol/ 3 month');
         setDisplayText2(' Pay by SOL, crytocurrency or Fiat')

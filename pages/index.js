@@ -17,6 +17,7 @@ import Mission from "../components/Mission";
 import Dvpn from "../components/Dvpn.jsx"
 import Future from "../components/futureawait.tsx"
 import WinnersPage from "../components/winners.tsx"
+import Banner from "../components/Banner.tsx";
 
 export default function Home() {
   
@@ -98,7 +99,10 @@ export default function Home() {
   };
 
   return (
+    
     <div>
+     
+      
       <Head>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
@@ -109,19 +113,26 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-screen " style={{ backgroundImage: `url('/background.jpeg')`, 
-                        backgroundColor:"black", 
-                        backgroundSize: "cover",
-                        backgroundPosition: "center",
-                        backgroundRepeat: "no-repeat"}}>
-  <div className="container mx-auto pt-20 w-[80%] ">
+      <div className="min-h-screen relative overflow-hidden -z-10">
+  <video
+    className="absolute top-0 left-0 w-full h-full object-cover  "
+    autoPlay
+    loop
+    muted
+    playsInline
+  >
+    <source src="/background.mp4" type="video/mp4" />
+    Your browser does not support the video tag.
+  </video>
+  
+  <div className="container mx-auto pt-20 w-[80%] relative ">
     <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
       <motion.h1
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
         className="lg:text-6xl text-3xl font-semibold text-white mb-6 mr-auto w-3/5"
       >
-        Building a Resilient Decentralized Network 
+        Building a Resilient Decentralized Network
       </motion.h1>
       <motion.h1
         initial={{ y: 100, opacity: 0 }}
@@ -136,7 +147,8 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 px-14 rounded-full" style={{backgroundColor:'#E3EEFF'}}
+          className="text-black font-bold py-3 px-14 rounded-full"
+          style={{backgroundColor:'#E3EEFF'}}
         >
           <Link href="/subscription">
             Explore VPN
@@ -145,7 +157,8 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 px-14 rounded-full" style={{backgroundColor:'#E3EEFF'}}
+          className="text-black font-bold py-3 px-14 rounded-full"
+          style={{backgroundColor:'#E3EEFF'}}
         >
           <Link href="/subscription">
             Explore WiFi
@@ -153,8 +166,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         </motion.div>
       </div>
     </div>
-  </div> 
-
+  </div>
 </div>
 {/* loop */}
 <Carousel/>
@@ -209,7 +221,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
           <motion.p
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-lg text-gray-300 mb-8 text-center w-[30%]"
+            className="text-lg text-gray-300 mb-8 text-center w-[40%]"
           >
            Subscribe for insights from our DePIN experts.
           </motion.p>
