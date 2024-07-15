@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const Explorer = () => {
 
     return(
-        <div className="">
+        <div className="bg-black">
             <div className="container mx-auto py-20 w-4/5" 
             style={{backgroundImage: 'radial-gradient(circle at center, #0162FF80 20%, black)'}}>
         <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">

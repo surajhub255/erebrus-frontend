@@ -197,6 +197,8 @@ const NodesData = () => {
             <option value="SG">SG</option>
             <option value="IN">IN</option>
             <option value="GB">GB</option>
+            <option value="AU">AU</option>
+            <option value="US">US</option>
           </select>
           <select
             value={chainFilter}
@@ -208,6 +210,7 @@ const NodesData = () => {
             <option value="EVM">EVM</option>
             <option value="SUI">SUI</option>
             <option value="SOL">SOL</option>
+            <option value="PEAQ">PEAQ</option>
           </select>
         </div>
       </div>
