@@ -60,10 +60,10 @@ export default function App({ Component, pageProps }) {
           <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
               
-              <div className="bg-black">
+              <div className=" z-10">
                 
               {!erebrus_wallet && (
-        <div className="w-full">
+        <div className="w-full ">
           <Link className='w-full' href='/login'>
             <Banner />
           </Link>

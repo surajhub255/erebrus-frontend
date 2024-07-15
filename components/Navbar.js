@@ -365,7 +365,7 @@ const Navbar = ({ isHome }) => {
   const paseto = Cookies.get("erebrus_token");
 
   return (
-    <nav className="bg-transparent py-4">
+    <nav className=" py-4 z-10 bg-black">
       <div
         className={`container mx-auto px-10 flex items-center justify-between lg:mb-0 ${
           isHome && !isOpen ? "mb-24" : ""
@@ -425,10 +425,10 @@ const Navbar = ({ isHome }) => {
 
         {showExplorerDropdown && (
           <div
-            className="absolute  w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+            className="absolute  w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10"
             style={{ backgroundColor: '#20253A' }}
           >
-            <div className="py-1">
+            <div className="py-1 z-10">
               <Link
                 href="/explorer"
                 className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
@@ -586,7 +586,7 @@ const Navbar = ({ isHome }) => {
                   className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   style={{ backgroundColor: "#20253A" }}
                 >
-                  <div className="py-1">
+                  <div className="py-1 z-10">
                   <Link href="/profile">
                   <div
                     className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
@@ -677,7 +677,7 @@ const Navbar = ({ isHome }) => {
                   className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                   style={{ backgroundColor: "#20253A" }}
                 >
-                  <div className="py-1">
+                  <div className="py-1 z-10">
                     {options.map((option, index) => (
                       <button
                         key={index}

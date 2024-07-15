@@ -113,9 +113,9 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="min-h-screen relative overflow-hidden">
+      <div className="min-h-screen relative overflow-hidden -z-10">
   <video
-    className="absolute top-0 left-0 w-full h-full object-cover"
+    className="absolute top-0 left-0 w-full h-full object-cover  "
     autoPlay
     loop
     muted
@@ -125,7 +125,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
     Your browser does not support the video tag.
   </video>
   
-  <div className="container mx-auto pt-20 w-[80%] relative z-10">
+  <div className="container mx-auto pt-20 w-[80%] relative ">
     <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
       <motion.h1
         initial={{ y: 100, opacity: 0 }}
@@ -208,7 +208,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
 
       
 
-      <div className="container mx-auto py-20 w-full h-screen  flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]" >
+      <div className="container mx-auto py-20 w-full h-screen mb-20 flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]" >
       <div className="  w-2/3 background-gradient py-10 rounded-3xl">
         <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
           <motion.h1
