@@ -17,9 +17,12 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {MantaPacific} from "../components/manta.ts"
 import {Peaq} from "../components/peaq.ts"
 import '../styles/globals.css';
+import Banner from "../components/Banner.tsx" 
+import Link from 'next/link';
+
 
 const activeChainId = ChainId.Mumbai;
-
+const erebrus_wallet = Cookies.get("erebrus_wallet");
 const queryClient = new QueryClient();
 const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
 
@@ -30,7 +33,7 @@ const metadata = {
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
 };
 
-// const chains = [polygonAmoy];
+
 const chains = [MantaPacific,Peaq];
 const config = defaultWagmiConfig({
   chains,
@@ -56,26 +59,19 @@ export default function App({ Component, pageProps }) {
         <AuthProvider>
           <WagmiProvider config={config}>
             <QueryClientProvider client={queryClient}>
+              
               <div className="bg-black">
+                
+              {!erebrus_wallet && (
+        <div className="w-full">
+          <Link className='w-full' href='/login'>
+            <Banner />
+          </Link>
+        </div>
+      )}
                 <Navbar />
                 <Component {...pageProps} />
-                {/* {paseto && (
-                  <div className="flex gap-2 justify-end">
-                    {copied && (
-                      <p className="text-white pt-6">Paseto Copied!</p>
-                    )}
-                    <button
-                      className="rounded-full px-10 py-2 mb-4 mr-4 mt-4 text-white"
-                      style={{ backgroundColor: "#0162FF" }}
-                      onClick={() => {
-                        navigator.clipboard.writeText(paseto ? paseto : "");
-                        setCopied(true);
-                      }}
-                    >
-                      Copy Paseto
-                    </button>
-                  </div>
-                )} */}
+              
               </div>
               {/* <Footer /> */}
             </QueryClientProvider>

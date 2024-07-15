@@ -17,7 +17,7 @@ const Future = () => {
 const Header = () => {
   return (
     <header className="flex  items-center ">
-    <h1 className="text-3xl font-bold mt-20 flex-1  justify-end  text-center">The Future Awaits</h1>
+    <h1 className="text-5xl  font-thin mt-20 flex-1  justify-end  text-center">The Future Awaits</h1>
     <div className="flex ">
      
       <div>
@@ -81,22 +81,22 @@ const SubscriptionCard = () => {
 const BenefitsCard = () => {
   return (
     <div className="bg-[#202333E5] rounded-3xl p-8 mt-[10vh] w-full md:w-6/12 border-white border-[1px] lg:w-5/12">
-      <h2 className="text-3xl font-semibold mb-10">Benefits</h2>
+      <h2 className="text-3xl font-normal mb-10">Benefits</h2>
       <ul className="space-y-4">
         <li>
-          <h3 className="font-bold">Secure Wi-Fi Everywhere</h3>
+          <h3 className="font-normal text-lg">Secure Wi-Fi Everywhere</h3>
           <p className="text-sm text-gray-400">Surf securely with encrypted WiFi at your fingertips, anywhere in the world!</p>
         </li>
         <li>
-          <h3 className="font-bold">Unrestricted Uncensored Web Access</h3>
+          <h3 className="font-normal text-lg">Unrestricted Uncensored Web Access</h3>
           <p className="text-sm text-gray-400">Break free from barriers with unlimited, uncensored internet access!</p>
         </li>
         <li>
-          <h3 className="font-bold">Mobile App for Everyone</h3>
+          <h3 className="font-normal text-lg">Mobile App for Everyone</h3>
           <p className="text-sm text-gray-400">Experience ultimate privacy with our intuitive, all-access mobile app!</p>
         </li>
         <li>
-          <h3 className="font-bold">DNS Based Roaming Firewall</h3>
+          <h3 className="font-normal text-lg">DNS Based Roaming Firewall</h3>
           <p className="text-sm text-gray-400">Roam with confidence, protected by our advanced DNS-based firewall!</p>
         </li>
       </ul>

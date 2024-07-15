@@ -59,7 +59,7 @@ const Mission = () => {
             >
               <h3
            
-                className='text-white max-w-[600px] leading-none font-medium text-3xl lg:text-[60px]'
+                className='text-white max-w-[600px] leading-none   text-3xl lg:text-[60px]'
               >
                 Pioneering the DePIN Revolution
               </h3>
@@ -73,7 +73,7 @@ const Mission = () => {
               <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 text-center rounded-[8px] w-[25%] z-10" style={{backgroundColor:'#E3EEFF'}}
+          className="text-black font-bold py-3 text-center rounded-[8px] w-[25%] z-10 bg-[#8EB9FF]" 
         >
           <Link href="/subscription">
           Our mission
