@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 const Page = () => {
   const [name, setname] = useState("");
+  const [ssid, setssid] = useState("");
   const [location, setlocation] = useState("");
   const [password, setpassword] = useState("");
   const [wallet, setwallet] = useState("");
@@ -22,6 +23,7 @@ const Page = () => {
       wifi_password: password,
       wallet_address: wallet,
       node_type: type,
+      ssid: ssid
     };
 
     try {
@@ -52,6 +54,7 @@ const Page = () => {
       setpassword("")
       setwallet("");
       settype("");
+      setssid("");
 
       // Show success popup
       setShowPopup(true);
@@ -90,6 +93,16 @@ const Page = () => {
               required
               value={name}
               onChange={(e) => setname(e.target.value)}
+              className="mt-2 shadow border appearance-none rounded-xl w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+              style={{ color: "black", borderColor: "#0162FF" }}
+            />
+
+<div className="mt-10 text-xl">SSID</div>
+            <input
+              type="text"
+              required
+              value={ssid}
+              onChange={(e) => setssid(e.target.value)}
               className="mt-2 shadow border appearance-none rounded-xl w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
               style={{ color: "black", borderColor: "#0162FF" }}
             />
