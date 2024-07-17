@@ -114,7 +114,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       </Head>
 
       <div className="min-h-screen relative overflow-hidden ">
-  <video
+  {/* <video
     className=" absolute top-0 left-0 w-full h-full object-cover  "
     autoPlay
     loop
@@ -123,7 +123,9 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
   >
     <source src="/background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
-  </video>
+  </video> */}
+
+  <iframe className=" absolute top-0 left-0 w-full h-full object-cover" src="https://www.youtube.com/embed/y6X1RbZ9ssE?autoplay=1&loop=1&playlist=y6X1RbZ9ssE" frameborder="0" allowfullscreen></iframe>
   
   <div className="container mx-auto pt-20 w-[80%] relative ">
     <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
@@ -160,7 +162,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
           className="text-black font-bold py-3 px-14 rounded-full"
           style={{backgroundColor:'#E3EEFF'}}
         >
-          <Link href="/subscription">
+          <Link href="/dwifiFlow">
             Explore WiFi
           </Link>
         </motion.div>
