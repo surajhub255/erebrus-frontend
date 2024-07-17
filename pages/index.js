@@ -143,7 +143,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
           Try the dVPN and secure your internet activities now
         </p>
       </motion.h1>
-      <div className="flex space-x-4 w-3/5 mr-auto">
+      <div className="flex space-x-4 w-3/5 mr-auto gap-10">
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
@@ -208,7 +208,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
 
       
 
-      <div className="container mx-auto py-20 w-full h-screen mb-20 flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]" >
+      <div className="container mx-auto py-20 w-full h-screen  flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]" >
       <div className="  w-2/3 background-gradient py-10 rounded-3xl">
         <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
           <motion.h1

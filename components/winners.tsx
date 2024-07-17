@@ -18,23 +18,29 @@ const WinnersPage = () => {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-blue-900 min-h-screen text-white pt-20">
-      <h1 className="text-5xl  text-center ml-20 m-20">Join the Winners!</h1>
+    <div className="bg-primary min-h-screen text-white pt-20">
+      <h1 className="text-5xl text-center ml-20 m-20">Join the Winners!</h1>
       <div className="max-w-4xl mx-auto flex">
         <div className="w-1/2 relative h-80">
           {achievements.map((item, index) => (
-            <img 
+            <div 
               key={index} 
-              src={item.logo} 
-              alt={item.name} 
-              className="absolute"
+              className="absolute glow-effect"
               style={{
                 top: positions[index % positions.length].top,
                 left: positions[index % positions.length].left,
                 width: positions[index % positions.length].width,
                 height: positions[index % positions.length].height,
+                filter: 'drop-shadow(0 0 40px rgba(255, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.8))',
+                animation: 'glow 3s infinite alternate',
               }}
-            />
+            >
+              <img 
+                src={item.logo} 
+                alt={item.name} 
+                className="w-full h-full object-contain"
+              />
+            </div>
           ))}
         </div>
         <div className="w-1/2 space-y-4">
@@ -42,13 +48,29 @@ const WinnersPage = () => {
             <a 
               key={index} 
               href="#" 
-              className="block text-blue-300 hover:text-blue-200 transition-colors duration-300 mt-10 ml-20  text-xl w-[90vh]"
+              className="block text-blue-300 hover:text-blue-200 transition-colors duration-300 mt-10 ml-20 text-xl w-[90vh]"
             >
               {item.prize} ↗
             </a>
           ))}
         </div>
       </div>
+      <style jsx>{`
+        @keyframes glow {
+          0% {
+            filter: drop-shadow(0 0 40px rgba(255, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.8));
+          }
+          100% {
+            filter: drop-shadow(0 0 60px rgba(255, 255, 255, 1)) drop-shadow(0 0 100px rgba(255, 255, 255, 0.8));
+          }
+        }
+        .glow-effect {
+          transition: filter 0.3s ease-in-out;
+        }
+        .glow-effect:hover {
+          filter: drop-shadow(0 0 70px rgba(255, 255, 255, 1)) drop-shadow(0 0 120px rgba(255, 255, 255, 0.9)) !important;
+        }
+      `}</style>
     </div>
   );
 };

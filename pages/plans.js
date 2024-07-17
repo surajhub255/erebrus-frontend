@@ -78,9 +78,9 @@ const Plans = () => {
         </div>
 
         <div className="lg:flex mt-10 mx-auto justify-center">
-         {chainSymbol=="apt"||chainSymbol=="evm"&&( <div className="relative p-2 lg:w-2/5">
+         {chainSymbol=="apt"&&( <div className="relative p-2 lg:w-2/5">
             <div
-              className="relative rounded-3xl shadow dark:bg-gray-700 rounded-3xl mx-auto"
+              className="relative rounded-3xl shadow dark:bg-gray-700  mx-auto"
               style={{
                 backgroundColor: "#202333",
                 border: "1px solid #0162FF",
@@ -156,7 +156,7 @@ const Plans = () => {
                       </span>
                     </h1>
                     <h1 className="w-3/4 mx-auto text-4xl font-semibold leading-none tracking-normal text-gray-100 md:text-3xl md:tracking-tight">
-                      <span className="text-white">$9.99/month</span>
+                      <span className="text-white">$5.99/month</span>
                     </h1>
 
                     <h1

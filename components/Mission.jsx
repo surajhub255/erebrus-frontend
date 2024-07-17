@@ -50,20 +50,20 @@ const Mission = () => {
   }, [inView, animation, animation2, animation3]);
   return (
     <div ref={ref} className='h-screen  w-full flex    items-center bg-[#080d1f]'>
-      <div className='w-[95%] rounded-[50px] relative h-[85%] gradient-background mx-auto'>
+      <div className='w-[85%] rounded-[50px] relative h-[85%] gradient-background mx-auto'>
         <div className='w-full h-full z-20 rounded-[50px] bg-primary'>
           <div className='w-full h-full z-20 rounded-[50px] flex items-center justify-between  bg-gradient-to-tl from-primary2/20 to-primary2/20'>
             <motion.div
               transition={{ duration: 1.5 }}
-              className='flex-col lg:w-[45%]  ml-[89px]  h-[80%] justify-between flex'
+              className='flex-col lg:w-[45%]  ml-[89px]  h-[80%]  flex'
             >
               <h3
            
-                className='text-white max-w-[600px] leading-none   text-3xl lg:text-[60px]'
+                className='text-white max-w-[600px] leading-none mb-16 mt-16 text-3xl lg:text-[60px]'
               >
                 Pioneering the DePIN Revolution
               </h3>
-              <p className='text-base sm:text-[18px]  text-white font-thin'>
+              <p className='text-base sm:text-[18px] mb-16 text-white font-thin'>
               Prepare to witness a groundbreaking leap in internet technology with the Erebrus Protocol,
                the vanguard in democratizing safe, private, and accessible internet through DePIN. 
                By seamlessly integrating decentralized VPN (ÐVPN) and decentralized WiFi (ÐWiFi) within a 
