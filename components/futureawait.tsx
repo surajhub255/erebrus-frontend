@@ -2,7 +2,7 @@ import React from 'react';
 
 const Future = () => {
     return (
-        <div className="bg-blue-900 min-h-screen text-white p-4 md:p-6">
+        <div className="bg-primary min-h-screen text-white p-4 md:p-6">
           <div className="max-w-7xl mx-auto">
             <Header />
             <main className="flex flex-col md:flex-row justify-center items-start gap-[10vh] mt-20">

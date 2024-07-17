@@ -120,7 +120,7 @@ body {
   background: linear-gradient(180deg, rgba(1, 98, 255, 0.404) 0%, rgba(1, 79, 204, 0.322) 50%, rgba(6, 17, 55, 0.25) 100%);
 }
 .gradient-background2 {
-  background: linear-gradient(90deg, #01235a 0%, #424F7F 49.7%, #101529 100%);
+  background: linear-gradient(90deg, #011C47  100%, #424F7F 100%, #0B0E1A 100%);
   /* Other styles */
 }
 

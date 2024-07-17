@@ -440,18 +440,32 @@ const Navbar = ({ isHome }) => {
                     href="/explorer"
                     className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
                   >
-                    Node Explorer
+                    ÐVPN
                   </Link>
                   <Link
                     href="/dwifi"
                     className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
                   >
-                    Dwifi
+                   ÐWi-Fi
                   </Link>
                 </div>
               </div>
             )}
           </div>
+
+          
+
+          <Link
+            href="https://docs.netsepio.com/erebrus/"
+            target="_blank"
+            className="text-gray-300 mr-8"
+            onMouseOver={(e) =>
+              (e.currentTarget.style.borderBottom = "1px solid #fff")
+            }
+            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
+          >
+            Docs
+          </Link>
 
           {link !== "subscription" ? (
             <Link
@@ -473,7 +487,7 @@ const Navbar = ({ isHome }) => {
               }
               onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
             >
-              Subscription
+              Dashboard
             </Link>
           ) : (
             <Link
@@ -486,21 +500,9 @@ const Navbar = ({ isHome }) => {
                 borderBottom: "2px solid white",
               }}
             >
-              Subscription
+              Dashboard
             </Link>
           )}
-
-          <Link
-            href="https://docs.netsepio.com/erebrus/"
-            target="_blank"
-            className="text-gray-300 mr-8"
-            onMouseOver={(e) =>
-              (e.currentTarget.style.borderBottom = "1px solid #fff")
-            }
-            onMouseOut={(e) => (e.currentTarget.style.borderBottom = "none")}
-          >
-            Docs
-          </Link>
           <div className="px-4">
             {/* dropdown */}
 
@@ -884,7 +886,7 @@ const Navbar = ({ isHome }) => {
                   href="/subscription"
                   className="text-white font-bold block lg:inline-block mb-4 lg:mr-0 lg:mb-0"
                 >
-                  Subscription
+                  Dashboard
                 </Link>
 
                 <Link

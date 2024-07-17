@@ -5,7 +5,7 @@ const Pricing = () => {
   return (
     <div
       id="pricing"
-      className="lg:flex items-center justify-center gap-20 mx-auto py-40"
+      className="lg:flex items-center justify-center gap-20 mx-auto py-40 bg-primary"
     >
 
 <div className="w-1/2">

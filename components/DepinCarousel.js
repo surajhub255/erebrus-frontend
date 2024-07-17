@@ -82,7 +82,7 @@ const DepinCarousel = () => {
         Deploy Your Node
       </Link>
     </motion.div>
-        <div className="lg:flex gap-2">
+        <div className="lg:flex gap-14">
           <div className="rounded-3xl lg:w-2/5 w-full relative">
             <img src="/depin.png" alt="Static Image" className="rounded-3xl h-[500px] w-full" />
           </div>
@@ -99,11 +99,11 @@ const DepinCarousel = () => {
             >
               {slides.map((slide, index) => (
                 <div key={index} className="text-left">
-                  <h2 className="text-3xl  font-normal mb-4">{slide.heading}</h2>
+                  <h2 className="text-3xl  font-normal mb-6">{slide.heading}</h2>
                   {slide.subheadings.map((sub, subIndex) => (
                     <div key={subIndex} className="mb-4">
                       <h3 className="text-xl font-semibold">{sub.subheading}</h3>
-                      <p className="text-base text-[#BEBEBE]">{sub.description}</p>
+                      <p className="text-base text-[#BEBEBE] mb-8">{sub.description}</p>
                     </div>
                   ))}
                 </div>

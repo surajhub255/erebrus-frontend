@@ -23,11 +23,11 @@ const Dvpn = () => {
             <Image
               src={`/${item.image}.png`}
               alt='pic'
-              className='mb-4 sm:mb-[54px] object-cover overflow-clip'
+              className='mb-4 sm:mb-[54px] object-cover overflow-clip px-14 pt-14'
               width={430}
               height={320}
             />
-            <div className="px-4 pb-2">
+            <div className="px-10 pb-8">
             <h4 className='mb-[10px] text-white text-[22px] '>{item.title}</h4>
             <ul className='list-disc pl-4 '>
               <li className='text-lg font-thin text-[#F3F4F6] '>{item.desc1}</li>
