@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Page = () => {
   const [name, setname] = useState("");
@@ -10,6 +11,7 @@ const Page = () => {
   const [wallet, setwallet] = useState("");
   const [type, settype] = useState("");
 
+  const [showPassword, setShowPassword] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
 
   // Handler function for form submission
@@ -119,14 +121,23 @@ const Page = () => {
               />
 
               <div className="mt-10 text-xl">Wi-Fi Password</div>
+              <div className="flex justify-between gap-4 rounded-xl mt-2" style={{ border: "1px solid #0162FF" }}>
               <input
-                type="text"
+                type={showPassword ? "text" : "password"}
                 // placeholder="Game name"
                 value={password}
                 onChange={(e) => setpassword(e.target.value)}
-                className="mt-2 shadow border appearance-none rounded-xl w-full py-4 px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
-                style={{ color: "black", borderColor: "#0162FF" }}
+                className="appearance-none rounded-xl w-full px-6 text-gray-200 leading-tight focus:outline-none focus:shadow-outline"
+                style={{ color: "black"}}
               />
+              <button
+                  type="button"
+                  className="px-3 py-3"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <img src="/nopass.png" className="w-8"/> : <img src="/pass.png" className="w-8"/> }
+                </button>
+                </div>
             </div>
 
               <div className="w-full">
