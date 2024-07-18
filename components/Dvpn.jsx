@@ -5,15 +5,14 @@ import Image from "next/image";
 const Dvpn = () => {
 
   return (
-    <div className='p-2 lg:p-20 flex w-full   flex-col items-start bg-[#080d1f]'
+    <div className='p-4 lg:p-20 md:p-20 flex w-full flex-col items-start bg-[#080d1f]'
     >
       <h3
-        className=' text-3xl lg:text-[42px] mb-[90px] w-full text-start
-        text-white'
+        className='text-xl lg:text-[42px] md:text-[42px] mb-[90px] w-full lg:text-start md:text-start text-center text-white'
       >
        Decentralized VPN & Wi-Fi for Everyone, Anywhere
       </h3>
-      <div className='w-full flex flex-col gap-1 sm:gap-0 lg:flex-row h-max justify-between'>
+      <div className='w-full flex flex-col lg:gap-1 md:gap-1 gap-10 lg:flex-row h-max justify-between'>
         {cardDetails2.map((item, index) => {
           return (
             <div

@@ -179,12 +179,12 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
   <div 
     className="absolute inset-0" 
     style={{
-      background: 'radial-gradient(circle at center, #0262FF 0%,  #040819 30%, #080d1f 100%)',
-      transform: 'scale(1.5)'
+      background: 'radial-gradient(circle at top, #0262FF 0%,  #040819 30%, #080d1f 100%)',
+      transform: 'scale(2.5)'
     }}
   ></div>
-  <div className="relative min-h-[300px] flex flex-col items-center justify-center py-10">
-    <div className="text-center text-4xl text-white mb-10">
+  <div className="relative min-h-[300px] flex flex-col items-center justify-center py-40">
+    <div className="text-center lg:text-4xl md:text-4xl text-3xl text-white mb-10 lg:w-full md:w-full w-3/4">
       Join the Movement. Get Started Now.
     </div>
     <motion.div
