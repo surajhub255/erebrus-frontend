@@ -13,21 +13,25 @@ const Pricing = () => {
       </div>
 
       <div className="lg:w-1/2 md:w-1/2 w-full lg:p-0 md:p-0 p-4">
-      <h1 className="lg:text-5xl md:text-5xl text-xl font-semibold mb-4 lg:font-thin md:font-thin text-white lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
-      Unleash the Power of Future Internet
-      </h1>
-              <div className="flex mb-10 text-white lg:text-xl md:text-xl text-sm font-thin lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
-          <div>Empower your online activity with our mobile app for secure, private <br/> and accessible network. We utilize NFTs for robust 
-          privacy and decentralization. </div>
-        </div>
-        <Link
-          href="https://drive.google.com/file/d/1brFAlHZ0P0o39ELXhA1tvmI0o5CGUVuc/view?usp=sharing" target="_blank"
-          className=" text-black bg-white font-bold py-3 px-6 rounded-full w-full mr-10 button-bg"
-        
-        >
-          Download APK
-        </Link>
-        </div>
+  <h1 className="lg:text-5xl md:text-5xl text-xl font-semibold mb-4 lg:font-thin md:font-thin text-white lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
+    Unleash the Power of Future Internet
+  </h1>
+  <div className="flex mb-10 text-white lg:text-xl md:text-xl text-sm font-thin lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
+    <div>
+      Empower your online activity with our mobile app for secure, private <br/> and accessible network. We utilize NFTs for robust 
+      privacy and decentralization.
+    </div>
+  </div>
+  <div className="text-center lg:text-left md:text-left">
+    <Link
+      href="https://drive.google.com/file/d/1brFAlHZ0P0o39ELXhA1tvmI0o5CGUVuc/view?usp=sharing" target="_blank"
+      className="text-black bg-white font-bold py-3 px-6 rounded-full w-full lg:w-auto md:w-auto button-bg"
+    >
+      Download APK
+    </Link>
+  </div>
+</div>
+
       
     </div>
   );
