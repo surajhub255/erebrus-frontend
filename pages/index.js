@@ -177,11 +177,11 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
 
 <div className="relative overflow-hidden">
   <div 
-    className="absolute inset-0" 
-    style={{
-      background: 'radial-gradient(circle at top, #0262FF 0%,  #040819 30%, #080d1f 100%)',
-      transform: 'scale(2.5)'
-    }}
+    className="absolute inset-0 lg:bg-[radial-gradient(circle_at_top,#0262FF,#040819_30%,#080d1f_100%)] md:bg-[radial-gradient(circle_at_top,#0262FF,#040819_30%,#080d1f_100%)] bg-[radial-gradient(circle_at_center,#0262FF,#040819_30%,#080d1f_100%)] transform scale-[2.5]" 
+    // style={{
+    //   background: 'radial-gradient(circle at top, #0262FF 0%,  #040819 30%, #080d1f 100%)',
+    //   transform: 'scale(2.5)'
+    // }}
   ></div>
   <div className="relative min-h-[300px] flex flex-col items-center justify-center py-40">
     <div className="text-center lg:text-4xl md:text-4xl text-3xl text-white mb-10 lg:w-full md:w-full w-3/4">
