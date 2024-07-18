@@ -29,30 +29,30 @@ interface Chain {
   
   export const Peaq: Chain = {
 
-    id:2241,
-    name: "krest",
+    id:9990,
+    name: "agung",
 
     nativeCurrency: {
       decimals: 18,
-      name: "krest",
-      symbol: "KRST",
+      name: "agung",
+      symbol: "AGNG",
     },
     rpcUrls: {
       public: {
-        http: ["https://erpc-krest.peaq.network"],
+        http: ["https://rpcpc1-qa.agung.peaq.network/ "],
       },
       default: {
-        http: ["https://erpc-krest.peaq.network"],
+        http: ["https://rpcpc1-qa.agung.peaq.network/ "],
       },
     },
     blockExplorers: {
       etherscan: {
-        name: "krest",
-        url: "	https://krest.subscan.io/",
+        name: "agung",
+        url: "https://agung-testnet.subscan.io/",
       },
       default: {
-        name: "krest",
-        url: "	https://krest.subscan.io/",
+        name: "agung",
+        url: "https://agung-testnet.subscan.io/",
       },
     },
   } as const;

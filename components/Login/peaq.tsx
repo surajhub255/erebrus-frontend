@@ -22,7 +22,7 @@ export const usePeaqWallet = () => {
     const erebrusWallet =getwallet();
 
     if (isConnected) {
-      if (chainsym == "peaq" && chain?.name == "krest" && erebrusWallet==null  ) {
+      if (chainsym == "peaq" && chain?.name == "agung" && erebrusWallet==null  ) {
         try {
           const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 
