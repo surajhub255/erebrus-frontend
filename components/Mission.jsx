@@ -51,7 +51,7 @@ const Mission = () => {
   return (
     <div ref={ref} className='h-screen  w-full flex    items-center bg-[#080d1f]'>
       <div className='w-[85%] rounded-[50px] relative h-[85%] gradient-background mx-auto'>
-        <div className='w-full h-full z-20 rounded-[50px] bg-primary'>
+        <div className='w-full h-full z-20 rounded-[50px] mission-bg'>
           <div className='w-full h-full z-20 rounded-[50px] flex items-center justify-between  bg-gradient-to-tl from-primary2/20 to-primary2/20'>
             <motion.div
               transition={{ duration: 1.5 }}

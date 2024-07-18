@@ -140,3 +140,8 @@ body {
 .banner-gradient {
   background: linear-gradient(90deg, #0162FF 0%, #FFFFFF 49.7%, #0162FF 100%);
 }
+
+.mission-bg {
+  background: radial-gradient(45.89% 156.4% at 2.36% 97.72%, rgba(21, 11, 160, 0.5) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(44, 15, 174, 0.5) 100%), 
+              linear-gradient(105.93deg, rgba(20, 30, 67, 0.2) 0.61%, rgba(20, 30, 67, 0.2) 99.6%);
+}
