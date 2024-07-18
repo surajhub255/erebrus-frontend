@@ -114,7 +114,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       </Head>
 
       <div className="min-h-screen relative overflow-hidden ">
-  {/* <video
+    <video
     className=" absolute top-0 left-0 w-full h-full object-cover  "
     autoPlay
     loop
@@ -123,9 +123,9 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
   >
     <source src="/background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
-  </video> */}
+  </video>
 
-  <iframe className=" absolute top-0 left-0 w-full h-full object-cover" src="https://www.youtube.com/embed/y6X1RbZ9ssE?autoplay=1&loop=1&playlist=y6X1RbZ9ssE" frameborder="0" allowfullscreen></iframe>
+  {/* <iframe className=" absolute top-0 left-0 w-full h-full object-cover" src="https://www.youtube.com/embed/y6X1RbZ9ssE?autoplay=1&loop=1&playlist=y6X1RbZ9ssE" frameborder="0" allowfullscreen></iframe> */}
   
   <div className="container mx-auto pt-20 w-[80%] relative ">
     <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
@@ -145,11 +145,11 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
           Try the dVPN and secure your internet activities now
         </p>
       </motion.h1>
-      <div className="flex space-x-4 w-3/5 mr-auto gap-10">
+      <div className="lg:flex md:flex lg:space-x-4 md:space-x-4 w-3/5 mr-auto lg:gap-10 md:gap-10 gap-0">
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 px-14 rounded-full"
+          className="text-black font-bold lg:py-3 lg:px-14 md:py-3 md:px-14 py-3 px-8 rounded-full lg:text-md text-sm"
           style={{backgroundColor:'#E3EEFF'}}
         >
           <Link href="/subscription">
@@ -159,7 +159,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 px-14 rounded-full"
+          className="text-black font-bold lg:py-3 lg:px-14 md:py-3 md:px-14 py-3 px-8 rounded-full lg:text-md text-sm mt-4 lg:mt-0 md:mt-0"
           style={{backgroundColor:'#E3EEFF'}}
         >
           <Link href="/dwifiFlow">
@@ -206,7 +206,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
 <Future/>
 
       <MobileAPK />
-      <WinnersPage/>
+      {/* <WinnersPage/> */}
 
       
 

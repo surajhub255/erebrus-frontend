@@ -18,7 +18,7 @@ const Dvpn = () => {
           return (
             <div
             key={index.toString()}
-            className='flex w-[430px] hover:-translate-y-4 duration-300 flex-col justify-start win-gradient-background rounded-xl  '
+            className='flex  hover:-translate-y-4 duration-300 flex-col justify-start win-gradient-background rounded-xl  '
           >
             <Image
               src={`/${item.image}.png`}

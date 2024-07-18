@@ -49,17 +49,17 @@ const Mission = () => {
     }
   }, [inView, animation, animation2, animation3]);
   return (
-    <div ref={ref} className='h-screen  w-full flex    items-center bg-[#080d1f]'>
+    <div ref={ref} className='h-screen  w-full flex items-center bg-[#080d1f]'>
       <div className='w-[85%] rounded-[50px] relative h-[85%] gradient-background mx-auto'>
         <div className='w-full h-full z-20 rounded-[50px] mission-bg'>
-          <div className='w-full h-full z-20 rounded-[50px] flex items-center justify-between  bg-gradient-to-tl from-primary2/20 to-primary2/20'>
+          <div className='w-full h-full z-20 rounded-[50px] lg:flex md:flex items-center justify-between  bg-gradient-to-tl from-primary2/20 to-primary2/20'>
             <motion.div
               transition={{ duration: 1.5 }}
-              className='flex-col lg:w-[45%]  ml-[89px]  h-[80%]  flex'
+              className='flex-col lg:w-2/3  lg:py-10 md:py-10 py-0 lg:px-20 md:px-20 px-10  h-[80%]  flex'
             >
               <h3
            
-                className='text-white max-w-[600px] leading-none mb-16 mt-16 text-3xl lg:text-[60px]'
+                className='text-white max-w-[600px] leading-none mb-16 lg:mt-0 md:mt-0 mt-16 text-3xl lg:text-[60px]'
               >
                 Pioneering the DePIN Revolution
               </h3>
@@ -73,14 +73,14 @@ const Mission = () => {
               <motion.div
           initial={{ y: 100, opacity: 0 }}
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 text-center rounded-[8px] w-[25%] z-10 bg-[#8EB9FF]" 
+          className="text-black font-bold py-3 text-center rounded-[8px] lg:w-[25%] md:w-[25%] w-1/2 z-10 bg-[#8EB9FF]" 
         >
           <Link href="/subscription">
           Our mission
           </Link>
         </motion.div>
             </motion.div>
-            <div className='w-[45%] lg:flex overflow-hidden hidden justify-between h-[80%]'>
+            <div className='lg:w-1/3 md:w-1/3 w-full lg:flex justify-between h-[80%] lg:mt-0 md:mt-0 mt-10'>
               {/* <motion.div
                 animate={animation}
                 transition={{ type: "tween", duration: 1 }}
@@ -103,7 +103,7 @@ const Mission = () => {
               <motion.div
                 animate={animation2}
                 transition={{ type: "tween", duration: 2 }}
-                className='w-[70%] self-end  h-[90%] flex flex-col relative  ml-32'
+                className='w-[90%] self-end  h-[90%] flex flex-col relative overflow-hidden hidden'
               >
                 <Image
                   className='object-cover rounded-[10px]'

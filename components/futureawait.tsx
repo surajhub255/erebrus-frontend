@@ -16,7 +16,7 @@ const Future = () => {
 
 const Header = () => {
   return (
-    <header className="flex  items-center ">
+    <header className="lg:flex md:flex items-center ">
     <h1 className="text-5xl  font-thin mt-20 flex-1  justify-end  text-center">The Future Awaits</h1>
     <div className="flex ">
      

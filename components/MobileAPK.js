@@ -5,18 +5,18 @@ const Pricing = () => {
   return (
     <div
       id="pricing"
-      className="lg:flex items-center justify-center gap-20 mx-auto py-40 bg-primary"
+      className="lg:flex md:flex items-center justify-center lg:gap-20 md:gap-20 mx-auto py-40 bg-primary"
     >
 
-<div className="w-1/2">
+<div className="lg:w-1/2 md:w-1/2 w-full">
         <img src="/apk1.png" />
       </div>
 
-      <div className=" w-1/2">
-      <h1 className="text-5xl mb-4 font-thin text-white pr-20">
+      <div className="lg:w-1/2 md:w-1/2 w-full">
+      <h1 className="text-5xl mb-4 font-thin text-white lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
       Unleash the Power of Future Internet
       </h1>
-              <div className="flex mb-10 text-white text-xl font-thin pr-20">
+              <div className="flex mb-10 text-white text-xl font-thin lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
           <div>Empower your online activity with our mobile app for secure, private <br/> and accessible network. We utilize NFTs for robust 
           privacy and decentralization. </div>
         </div>
