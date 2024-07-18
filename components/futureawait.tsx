@@ -17,9 +17,9 @@ const Future = () => {
 const Header = () => {
   return (
     <header className="lg:flex md:flex items-center ">
-    <h1 className="lg:text-5xl md:text-5xl text-xl lg:font-thin md:text-whin text-semibold mt-20 flex-1  justify-end  text-center">The Future Awaits</h1>
-    <div className="flex lg:justufy-start md:justufy-start justify-center">
-      <img src="/Erebrus_logo_wordmark.png" alt="Erebrus logo" className="lg:w-2/3 md:w-2/3 w-32  lg:mt-20 md:mt-20 mt-4" />
+    <h1 className="lg:text-5xl md:text-5xl text-2xl lg:font-thin md:text-whin text-semibold mt-20 lg:w-1/2 md:w-1/2 text-center">The Future Awaits</h1>
+    <div className="flex justify-center lg:mr-auto md:mr-auto lg:justify-start md:justify-start">
+      <img src="/Erebrus_logo_wordmark.png" alt="Erebrus logo" className="lg:w-1/2 md:w-1/2 w-32 lg:mt-20 md:mt-20 mt-4" />
     </div>
   </header>
   );

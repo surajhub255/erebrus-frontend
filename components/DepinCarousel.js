@@ -76,7 +76,7 @@ const DepinCarousel = () => {
         <motion.div
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-      className="bg-[#E3EEFF] text-black  py-3 px-6 text-center text-lg  rounded-[10vh] z-10 w-[30vh] mb-10 h-[7vh]"
+      className="bg-[#E3EEFF] text-black py-3 px-6 text-center lg:text-lg md:text-sm text-sm rounded-[10vh] z-10 w-[30vh] mb-10 h-[7vh]"
     >
       <Link href="/subscription">
         Deploy Your Node
