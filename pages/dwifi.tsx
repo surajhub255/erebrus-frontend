@@ -1,6 +1,6 @@
 import React, { useEffect, useState} from "react";
 import Link from "next/link";
-import NodesData from "../components/NodesData";
+import  NodeDwifiStream from "../components/nodedataDwifi";
 import { motion } from "framer-motion";
 
 const Dwifi = () => {
@@ -39,7 +39,7 @@ const Dwifi = () => {
           </motion.div>
         </div>
       </div>
-            <NodesData />
+      <NodeDwifiStream />
             <img src="/mapRegions.png"/>
         </div>
     )
