@@ -211,26 +211,26 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       
 
       <div className="container mx-auto py-20 w-full h-screen  flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]" >
-      <div className="  w-2/3 background-gradient py-10 rounded-3xl">
+      <div className="lg:w-2/3 md:w-2/3 background-gradient lg:py-10 md:py-10 rounded-3xl mx-4 lg:mx-0 md:mx-0">
         <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="lg:text-5xl text-3xl font-semibold text-gray-300 mb-10 lg:text-center md:text-center md:w-[80%]"
+            className="lg:text-5xl md:text-3xl text-lg font-semibold text-gray-300 mb-10 lg:text-center md:text-center md:w-[80%]"
           >
             Revolutionizing Internet Access  <br></br>Through the Power of DePIN
           </motion.h1>
           <motion.p
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-lg text-gray-300 mb-8 text-center w-[40%]"
+            className="lg:text-lg md:text-lg text-sm text-gray-300 mb-8 text-center lg:w-[40%] md:w-[40%]"
           >
            Subscribe for insights from our DePIN experts.
           </motion.p>
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-black font-semibold py-4 px-10 rounded-full bg-white text-lg" 
+            className="text-black font-semibold lg:py-4 md:py-4 py-2 px-10 rounded-full bg-white text-lg" 
             // style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
           >
             <Link href="https://discord.com/invite/5uaFhNpRF6" target="_blank"
