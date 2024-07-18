@@ -12,7 +12,7 @@ const Dvpn = () => {
       >
        Decentralized VPN & Wi-Fi for Everyone, Anywhere
       </h3>
-      <div className='w-full flex flex-col lg:gap-1 md:gap-1 gap-10 lg:flex-row h-max justify-between'>
+      <div className='w-full flex flex-col lg:gap-4 md:gap-4 gap-10 lg:flex-row h-max justify-between'>
         {cardDetails2.map((item, index) => {
           return (
             <div
