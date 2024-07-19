@@ -1,49 +1,64 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 const NodeDwifiStream = () => {
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const socket = new WebSocket('ws://localhost:3001/api/v1.0/nodedwifi/stream');
-
-    socket.onopen = function (event) {
-      console.log('WebSocket is open now.');
-    };
-
-    socket.onmessage = function (event) {
-      const newData = JSON.parse(event.data);
-
-      setData((prevData) => {
-        // Update existing data if the ID already exists
-        const updatedData = prevData.map((item) => {
-          if (item.id === newData.id) {
-            return newData;
-          }
-          return item;
-        });
-
-        // If the ID doesn't exist, append the new data
-        const existingIndex = prevData.findIndex((item) => item.id === newData.id);
-        if (existingIndex === -1) {
-          updatedData.push(newData);
+  const [data, setData] = useState([
+    {
+      id: 1,
+      gateway: "192.168.146.901",
+      created_at: "2024-07-18T05:39:08+05:30",
+      updated_at: "2024-07-18T05:39:08+05:30",
+      status: [
+        {
+          macAddress: "02:42:ac:11:00:02",
+          ipAddress: "172.17.0.2",
+          connectedAt: "2024-07-18T00:09:08.096117593+05:30",
+          totalConnectedTime: 157816739609,
+          connected: true,
+          lastChecked: "2024-07-18T00:09:08.096117783+05:30",
+          defaultGateway: "192.168.146.198",
+          manufacturer: "Unknown Manufacturer",
+          interfaceName: "docker0",
+          hostSSID: "docker0"
+        },
+        {
+          macAddress: "02:42:ac:11:00:03",
+          ipAddress: "172.17.0.3",
+          connectedAt: "2024-07-18T00:09:08.096245773+05:30",
+          totalConnectedTime: 155652484334,
+          connected: true,
+          lastChecked: "2024-07-18T00:09:08.096246063+05:30",
+          defaultGateway: "192.168.146.198",
+          manufacturer: "Unknown Manufacturer",
+          interfaceName: "docker0",
+          hostSSID: "docker0"
+        },
+        {
+          macAddress: "9e:ce:0b:56:a2:fc",
+          ipAddress: "192.168.146.198",
+          connectedAt: "2024-07-18T00:09:00.719585384+05:30",
+          totalConnectedTime: 172140026407,
+          connected: true,
+          lastChecked: "2024-07-18T00:09:00.719585926+05:30",
+          defaultGateway: "192.168.146.198",
+          manufacturer: "(Unknown: locally administered)",
+          interfaceName: "wlp1s0",
+          hostSSID: "AndroidAP"
+        },
+        {
+          macAddress: "e0:1f:88:2f:74:2f",
+          ipAddress: "192.168.146.89",
+          connectedAt: "2024-07-18T00:08:51.552908326+05:30",
+          totalConnectedTime: 45642751993,
+          connected: false,
+          lastChecked: "2024-07-18T00:08:51.5529087+05:30",
+          defaultGateway: "192.168.146.198",
+          manufacturer: "Xiaomi Communications Co Ltd",
+          interfaceName: "wlp1s0",
+          hostSSID: "AndroidAP"
         }
-
-        return updatedData;
-      });
-    };
-
-    socket.onerror = function (event) {
-      console.error('WebSocket error:', event);
-    };
-
-    socket.onclose = function (event) {
-      console.log('WebSocket is closed now.');
-    };
-
-    return () => {
-      socket.close();
-    };
-  }, []);
+      ]
+    }
+  ]);
 
   return (
     <div className='text-white'>

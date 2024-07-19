@@ -105,7 +105,7 @@ const Mission = () => {
               <motion.div
                 initial={{ y: 100, opacity: 0 }}
                 animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-                className="text-black font-bold py-3 text-center rounded-[8px] lg:w-[25%] md:w-[25%] w-1/2 z-10 bg-[#8EB9FF] " 
+                className="text-black font-bold py-3 text-center rounded-[50px] lg:w-[25%] md:w-[25%] w-1/2 z-10 bg-button " 
               >
                 <Link href="/subscription">
                   Our mission

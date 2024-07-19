@@ -142,7 +142,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
         className="lg:text-xl text-md text-white mb-8 w-3/5 mr-auto"
       >
         <p>
-          Try the dVPN and secure your internet activities now
+        Unleash the power of future internet with our ÐVPN and ÐWi-Fi 
         </p>
       </motion.h1>
       <div className="lg:flex md:flex lg:space-x-4 md:space-x-4 w-3/5 mr-auto lg:gap-10 md:gap-10 gap-0">
@@ -175,29 +175,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
 <Mission/>
 <Dvpn/>
 
-<div className="relative overflow-hidden">
-  <div 
-    className="absolute inset-0 lg:bg-[radial-gradient(circle_at_top,#0262FF,#040819_30%,#080d1f_100%)] md:bg-[radial-gradient(circle_at_top,#0262FF,#040819_30%,#080d1f_100%)] bg-[radial-gradient(circle_at_center,#0262FF,#040819_30%,#080d1f_100%)] transform scale-[2.5]" 
-    // style={{
-    //   background: 'radial-gradient(circle at top, #0262FF 0%,  #040819 30%, #080d1f 100%)',
-    //   transform: 'scale(2.5)'
-    // }}
-  ></div>
-  <div className="relative min-h-[300px] flex flex-col items-center justify-center py-40">
-    <div className="text-center lg:text-4xl md:text-4xl text-3xl text-white mb-10 lg:w-full md:w-full w-3/4">
-      Join the Movement. Get Started Now.
-    </div>
-    <motion.div
-      initial={{ y: 100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-      className="bg-[#E3EEFF] text-black font-bold py-3 px-6 text-center rounded-[8px] z-10"
-    >
-      <Link href="/subscription">
-        Join Now
-      </Link>
-    </motion.div>
-  </div>
-</div>
+
 <div  className="py-10 gradient-background2">
 
 
@@ -206,7 +184,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
 <Future/>
 
       <MobileAPK />
-      {/* <WinnersPage/> */}
+      <WinnersPage/>
 
       
 
