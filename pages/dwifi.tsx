@@ -20,8 +20,8 @@ const Dwifi = () => {
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
           className="text-6xl font-semibold text-gray-300 mb-8 w-3/5"
         >
-          Decentralized Access with 
-          Erebrus ÐVPN
+          Decentralized Connectivity 
+          with Erebrus ÐWi-Fi
         </motion.h1>
         <motion.h1
           initial={{ y: 100, opacity: 0 }}
@@ -29,7 +29,7 @@ const Dwifi = () => {
           className="text-2xl text-white mb-8"
         >
           <p>
-          Unrestricted Uncensored Web Access
+          Secure and fast Wi-Fi Everywhere
           </p>
         </motion.h1>
         <motion.div
