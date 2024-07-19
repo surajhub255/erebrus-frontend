@@ -48,9 +48,9 @@ const WinnersPage = () => {
             <a 
               key={index} 
               href="#" 
-              className="block text-blue-300 hover:text-blue-200 transition-colors duration-300 mt-10 ml-20 text-xl w-[90vh]"
+              className="block hover:text-blue-300 text-white hover:text-blue-200 transition-colors duration-300 mt-10 ml-20 text-xl w-[90vh]"
             >
-              {item.prize} ↗
+              {item.prize} <span className="text-blue-300">↗</span>
             </a>
           ))}
         </div>

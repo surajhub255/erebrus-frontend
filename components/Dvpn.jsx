@@ -21,6 +21,7 @@ const Dvpn = () => {
             <div
             key={index.toString()}
             className='flex w-1/3 hover:-translate-y-4 duration-300 flex-col justify-start win-background  rounded-[50px]  '
+            style={{border:'1px solid rgba(17, 217, 197, 0.3)'}}
           >
             <Image
               src={`/${item.image}.png`}
@@ -52,7 +53,7 @@ className="absolute inset-0 opacity-30 lg:bg-[radial-gradient(ellipse_at_center,
     <motion.div
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-      className="bg-[#E3EEFF] text-black font-bold py-3 px-6 text-center rounded-[8px] z-10"
+      className="bg-white text-black font-bold py-3 px-16 text-center rounded-[50px] z-10"
     >
       <Link href="/subscription">
         Join Now

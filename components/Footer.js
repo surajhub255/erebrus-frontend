@@ -42,7 +42,7 @@ const Footer = () => {
     />
     Discord
   </a>
-  <a
+  {/* <a
     href="/terms"
     target="_blank"
     rel="noopener noreferrer"
@@ -54,7 +54,7 @@ const Footer = () => {
       className="mr-2 w-5 h-5"
     />
     Telegram
-  </a>
+  </a> */}
   <a
     href="/privacy"
     target="_blank"

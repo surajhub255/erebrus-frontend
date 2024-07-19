@@ -2,7 +2,13 @@ import React from 'react';
 
 const Future = () => {
     return (
-        <div className="bg-primary min-h-screen text-white p-4 md:p-6">
+        <div className="min-h-screen text-white p-4 md:p-6"
+        style={{
+          backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%, black 50%)',  
+            backgroundSize: 'cover',
+            backgroundBlendMode: 'overlay',
+          }}
+          >
           <div className="max-w-7xl mx-auto">
             <Header />
             <main className="flex flex-col md:flex-row justify-center items-start gap-[10vh] mt-20">
@@ -27,7 +33,8 @@ const Header = () => {
 
 const SubscriptionCard = () => {
   return (
-    <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12">
+    <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12"
+      >
       <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">Tier 1 Subcription</h2>
       <p className="text-2xl  mb-4">$5.99/month</p>
       <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/3">
@@ -76,7 +83,8 @@ const SubscriptionCard = () => {
 
 const BenefitsCard = () => {
   return (
-    <div className="bg-[#202333E5] rounded-3xl p-8 mt-[10vh] w-full md:w-6/12 border-white border-[1px] lg:w-5/12">
+    <div className="rounded-3xl p-8 mt-[10vh] w-full md:w-6/12 border-white border-[1px] lg:w-5/12"
+    style={{backgroundColor:'rgba(32, 35, 51, 0.6)'}}>
       <h2 className="text-3xl font-normal mb-10">Benefits</h2>
       <ul className="space-y-4">
         <li>
