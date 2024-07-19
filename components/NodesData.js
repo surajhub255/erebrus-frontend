@@ -131,7 +131,7 @@ const NodesData = () => {
       className="flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 min-h-screen"
       style={{ backgroundColor: "#010001" }}
     >
-      <div className="font-figtree text-left text-gray-200 w-full p-3">
+      <div className="font-figtree text-left text-gray-200 w-full px-3">
         <div className="text-white">
           <div className="flex uppercase">
             <div

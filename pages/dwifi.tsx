@@ -6,39 +6,45 @@ import { motion } from "framer-motion";
 const Dwifi = () => {
 
     return(
-        <div className="bg-black">
-            <div className="container mx-auto py-20 w-4/5" 
-            style={{backgroundImage: 'radial-gradient(circle at center, #0162FF80 20%, black)'}}>
-        <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 ">
-          <motion.h1
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-5xl font-semibold text-gray-300 mb-4 lg:text-center md:text-center md:w-[80%]"
+      <div className="bg-black">
+      <div className="container mx-auto py-20"
+        style={{
+          backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer2.png")',  
+            backgroundSize: 'cover',
+            backgroundBlendMode: 'overlay',
+          }}
           >
-            Access Safe Internet over DeWi Networks
-          </motion.h1>
-          <motion.h1
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-lg text-white mb-8 lg:text-center md:text-center md:w-[80%]"
-          >
-            <p>
-            Become part of our strong network
-            </p>
-          </motion.h1>
-          <motion.div
-            initial={{ y: 100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-            className="text-black font-bold py-3 px-10 rounded-full bg-white text-lg" 
-            // style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
-          >
-            <Link href="https://discord.com/invite/5uaFhNpRF6" target="_blank"
-              rel="noopener noreferrer">
-              Run Your Node
-            </Link>
-          </motion.div>
-        </div>
+      <div className="flex flex-col items-start justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 px-20 py-40">
+        <motion.h1
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+          className="text-6xl font-semibold text-gray-300 mb-8 w-3/5"
+        >
+          Decentralized Access with 
+          Erebrus ÐVPN
+        </motion.h1>
+        <motion.h1
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+          className="text-2xl text-white mb-8"
+        >
+          <p>
+          Unrestricted Uncensored Web Access
+          </p>
+        </motion.h1>
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+          className="text-black font-bold py-3 px-10 rounded-full bg-white text-lg" 
+          // style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
+        >
+          <Link href="https://discord.com/invite/5uaFhNpRF6" target="_blank"
+            rel="noopener noreferrer">
+            Run Your Node
+          </Link>
+        </motion.div>
       </div>
+    </div>
       <NodeDwifiStream />
             <img src="/mapRegions.png"/>
         </div>
