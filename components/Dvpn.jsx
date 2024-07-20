@@ -7,8 +7,9 @@ import { motion } from "framer-motion";
 const Dvpn = () => {
 
   return (
-    <div className='p-4 lg:p-20 md:p-20 flex w-full flex-col items-center bg-[#080d1f]'
+    <div className='flex flex-col items-center bg-[#080d1f] mx-auto'
     >
+      <div className=' w-[80%]'>
       <h3
         className='text-xl lg:text-[42px] md:text-[42px] mb-[90px] w-full lg:text-start md:text-start text-center text-white'
       >
@@ -30,9 +31,9 @@ const Dvpn = () => {
               width={430}
               height={320}
             />
-            <div className="px-10 pb-8">
-            <h4 className='mb-[10px] text-white text-[22px] '>{item.title}</h4>
-            <ul className='list-disc pl-4 '>
+            <div className="pb-8">
+            <h4 className='mb-[10px] text-white text-[22px] text-center'>{item.title}</h4>
+            <ul className='list-disc px-10'>
               <li className='text-lg font-thin text-[#F3F4F6] '>{item.desc1}</li>
               <li className='text-lg font-thin text-[#F3F4F6] '>{item.desc2}</li>
             </ul>
@@ -41,6 +42,7 @@ const Dvpn = () => {
           
           );
         })}
+      </div>
       </div>
       <div className=" relative overflow-hidden w-full  ">
   <div 

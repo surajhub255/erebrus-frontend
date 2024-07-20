@@ -49,7 +49,7 @@ const Mission = () => {
 
   return (
     <div ref={ref} className='h-screen w-full flex items-center bg-[#080d1f]'>
-      <div className='w-[85%] rounded-[50px] relative h-auto lg:h-[85%] md:h-[85%] gradient-background mx-auto'>
+      <div className='w-[80%] rounded-[50px] relative h-auto lg:h-[80%] md:h-[80%] gradient-background mx-auto'>
         <div className='w-full h-full z-20 rounded-[50px] mission-bg'>
           <div className='w-full h-full z-20 rounded-[50px] lg:flex md:flex items-center justify-between bg-gradient-to-tl from-primary2/20 to-primary2/20'>
             {/* Mobile view */}

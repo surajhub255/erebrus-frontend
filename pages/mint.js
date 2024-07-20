@@ -23,7 +23,8 @@ import { aptosClient } from "../module";
 export const APTOS_COIN = "0x1::aptos_coin::AptosCoin";
 import { useAddress } from "@thirdweb-dev/react";
 import { ethers } from 'ethers';
-import { abi } from "../components/mantaabi";
+// import { abi } from "../components/mantaabi";
+import { abi } from "../components/peaqabi";
 
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
@@ -91,7 +92,7 @@ const Mint = () => {
           setDisplayText2('Pay in SUI');
           setImageSrc('/mintSui.png');
           setImageSrc2('/nft_ape1.png')
-        } else if (chainSym === 'evm') {
+        } else if (chainSym === 'evm' || chainSym === 'peaq') {
           setDisplayText('Only at 0.00028 ETH');
           setDisplayText2('Pay in ETH')
           setImageSrc('/mintManta.png');
@@ -232,28 +233,19 @@ const Mint = () => {
     const wallet_Address = Cookies.get('erebrus_wallet');
     try {
 
-      if (typeof window !== "undefined" && window.ethereum) {
+      if (typeof window !== "undefined" && window.ethereum && chainSymbol === 'evm') {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
 
-        // Create a JavaScript object from the Contract ABI, to interact
-        // with the HelloWorld contract.
         const contract = new ethers.Contract(
           '0x25fCdcd43a66A4E609cc32c91D0a926388D4902C',
-          abi ,
+          abi,
           provider.getSigner()
         )
-
         
         const tx = await contract.safeMint(
           wallet_Address
-          
         );
-        //  const tx = await  contract.registerNode(
-        //     354353453453,
-        //     34543535345,
-        //     "active",
-        //     "SG"
-        // )
+
         const result = await tx.wait();
         console.log("result", result)
         const integerValue = parseInt(result.logs[0].data, 16);
@@ -261,13 +253,33 @@ const Mint = () => {
        
         // setmintdone(true);
       }
+
+      if (typeof window !== "undefined" && window.ethereum && chainSymbol === 'peaq') {
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+        const contract = new ethers.Contract(
+          '0x8772540540639241C59Cc22e838FD8a0F2553EFf',
+          abi,
+          provider.getSigner()
+        )
+        
+        const tx = await contract.mint(
+          wallet_Address
+        );
+
+        const result = await tx.wait();
+        console.log("result", result)
+        const integerValue = parseInt(result.logs[0].data, 16);
+        console.log("Result:", result, integerValue);
+       
+        // setmintdone(true);
+      }
+
       setLoadingTx(false);
       window.location.href="/subscription"
 
     } catch (error) {
       console.error("Error fetching reading:", error);
-     
-      // Set loading state to false in case of error
     }
 
   };
@@ -484,7 +496,7 @@ const Mint = () => {
                   <>
                     <button
                       onClick={() => {
-                        if (chainSymbol === 'evm') {
+                        if (chainSymbol === 'evm' || chainSymbol === 'peaq') {
                           mintreading();
                         } else {
                           setshowconnectbutton(true);

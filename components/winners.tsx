@@ -5,7 +5,7 @@ const WinnersPage = () => {
     { logo: '/ivs.png', name: 'IVS CRYPTO', prize: 'Grand Prize at IVS Crypto Demoday, Japan' },
     { logo: 'aptos.png', name: 'APTOS', prize: 'Grand Prize at Aptos Hackathon, Singapore' },
     { logo: 'soonami.png', name: 'soonami.io', prize: 'On the Fast Track Prize at Soonami Venthuron' },
-    { logo: 'akindo.png', name: 'AKINDO', prize: 'Several Prizes at Akindo WaveChack' },
+    { logo: 'akindo.png', name: 'AKINDO', prize: 'Several Prizes at Akindo WaveHack' },
     { logo: 'filecoin.png', name: 'Filecoin', prize: 'Grand Prize at Filecoin Browsers 3000 Hackathon' },
   ];
 

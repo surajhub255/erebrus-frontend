@@ -114,7 +114,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       </Head>
 
       <div className="min-h-screen relative overflow-hidden ">
-    <video
+    {/* <video
     className=" absolute top-0 left-0 w-full h-full object-cover  "
     autoPlay
     loop
@@ -123,18 +123,21 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
   >
     <source src="/background.mp4" type="video/mp4" />
     Your browser does not support the video tag.
-  </video>
+  </video> */}
 
   {/* <iframe className=" absolute top-0 left-0 w-full h-full object-cover" src="https://www.youtube.com/embed/y6X1RbZ9ssE?autoplay=1&loop=1&playlist=y6X1RbZ9ssE" frameborder="0" allowfullscreen></iframe> */}
   
-  <div className="container mx-auto pt-20 w-[80%] relative ">
+  <img src="/erebrus_hero.png" className="absolute top-0 left-0 w-full h-full object-cover"/>
+
+  <div className="container mx-auto pt-20 w-[80%] relative">
     <div className="flex flex-col items-center justify-start lg:h-full md:mt-16 mt-8 mb-36">
       <motion.h1
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
         className="lg:text-6xl text-3xl font-semibold text-white mb-6 mr-auto w-3/5"
       >
-        Building a Resilient Decentralized Network
+        Building the Global
+        Decentralized Network
       </motion.h1>
       <motion.h1
         initial={{ y: 100, opacity: 0 }}
@@ -187,8 +190,10 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       <WinnersPage/>
 
       
+      {/* <div style={{ height: '20vh', background: 'linear-gradient(to top, rgba(9, 12, 21, 1), rgba(4, 8, 25, 1))', transform: 'rotate(180deg)' }}>
+    </div> */}
 
-      <div className="container min-h-screen mx-auto py-20 w-full flex items-center justify-center rounded-3xl bg-cover bg-[url('/revolution.png')]">
+      <div className="container min-h-screen mx-auto py-20 w-full flex items-center justify-center bg-cover bg-[url('/revolution.png')]">
   <div className="lg:w-1/2 md:w-1/2 background-gradient lg:py-10 md:py-10 py-5 rounded-3xl mx-4 lg:mx-0 md:mx-0">
     <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 lg:mb-0 mb-2">
       <motion.h1

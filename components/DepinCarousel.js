@@ -67,7 +67,7 @@ const DepinCarousel = () => {
   return (
     <div id="howto" className="min-h-screen flex flex-col items-center justify-start scroll-mt-16 lg:scroll-mt-0 mb-20">
       <div className="mb-2  font-normal w-[80%] text-white lg:text-2xl text-sm text-left">
-        <h1 className=" lg:text-4xl text-2xl lg:mb-8 mb-8 lg:mt-10 text-left text-white">
+        <h1 className=" lg:text-5xl md:text-4xl text-3xl lg:mb-8 mb-8 lg:mt-10 text-left text-white">
           Companies and Enterprises: Content Delivery, Uninterrupted
         </h1>
         <h1 className=" lg:text-xl text-xl lg:mb-8 mb-10 text-left text-white">

@@ -27,7 +27,7 @@ const Pricing = () => {
       href="https://drive.google.com/file/d/1brFAlHZ0P0o39ELXhA1tvmI0o5CGUVuc/view?usp=sharing" target="_blank"
       className="text-black bg-white font-bold py-3 px-6 rounded-full w-full lg:w-auto md:w-auto button-bg"
     >
-      Download APK
+      Download Now
     </Link>
   </div>
 </div>
