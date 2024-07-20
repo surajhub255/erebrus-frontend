@@ -1,7 +1,8 @@
 "use client"
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
-const NodeDwifiStream = () => {
+const NodeDwifiStreamUser = () => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -13,6 +14,10 @@ const NodeDwifiStream = () => {
 
     socket.onmessage = function (event) {
       const newData = JSON.parse(event.data);
+
+      // Check if the walletAddress is "123"
+      const wallet = Cookies.get("erebrus_wallet");
+      if (newData.wallet_address === wallet) {
 
       setData((prevData) => {
         // Update existing data if the ID already exists
@@ -31,6 +36,7 @@ const NodeDwifiStream = () => {
 
         return updatedData;
       });
+    }
     };
 
     socket.onerror = function (event) {
@@ -180,4 +186,4 @@ const NodeDwifiStream = () => {
   );
 };
 
-export default NodeDwifiStream;
+export default NodeDwifiStreamUser;
