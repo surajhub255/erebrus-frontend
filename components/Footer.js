@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="max-w-[90%] mx-auto py-12 px-4 overflow-hidden">
         <div className=" flex flex-wrap gap-10 justify-between">
           
-          <div className="lg:w-1/3 md:w-1/3">
+          <div className="lg:w-1/4 md:w-1/4">
           <div className="text-white">
             <img src="/Erebrus_logo_wordmark.png" alt="Logo" className="w-48" />
             <div className="mt-4 text-sm text-gray-400">Redefining digital connectivity and unleashing the future of internet with globally accessible, secure and private network through the power of DePIN.</div>

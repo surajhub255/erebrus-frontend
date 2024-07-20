@@ -2,14 +2,14 @@ import React from 'react';
 
 const Future = () => {
     return (
-        <div className="min-h-screen text-white p-4 md:p-6"
+        <div className="min-h-screen text-white"
         style={{
           backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%, black 50%)',  
             backgroundSize: 'cover',
             backgroundBlendMode: 'overlay',
           }}
           >
-          <div className="max-w-7xl mx-auto">
+          <div className="mx-auto">
             <Header />
             <main className="flex flex-col md:flex-row justify-center items-start gap-[10vh] mt-20">
               <SubscriptionCard />
@@ -83,7 +83,7 @@ const SubscriptionCard = () => {
 
 const BenefitsCard = () => {
   return (
-    <div className="rounded-3xl p-8 mt-[10vh] w-full md:w-6/12 border-white border-[1px] lg:w-5/12"
+    <div className="rounded-3xl p-14 mt-[8vh] w-full md:w-6/12 border-white border-[1px] lg:w-5/12"
     style={{backgroundColor:'rgba(32, 35, 51, 0.6)'}}>
       <h2 className="text-3xl font-normal mb-10">Benefits</h2>
       <ul className="space-y-4">

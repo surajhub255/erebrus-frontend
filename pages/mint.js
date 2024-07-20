@@ -258,7 +258,7 @@ const Mint = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
 
         const contract = new ethers.Contract(
-          '0x8772540540639241C59Cc22e838FD8a0F2553EFf',
+          '0x16c3A26f93ccaa96b2F7aA4C01504ED7F2E3aeC0',
           abi,
           provider.getSigner()
         )

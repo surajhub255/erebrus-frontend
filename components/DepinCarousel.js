@@ -86,7 +86,7 @@ const DepinCarousel = () => {
           <div className="rounded-3xl lg:w-2/5 w-full relative">
             <img src="/depin.png" alt="Static Image" className="rounded-3xl h-[500px] w-full" />
           </div>
-          <div className="rounded-3xl p-10 lg:w-3/5 w-full text-left custom-gradient-bg " >
+          <div className="rounded-3xl px-10 pt-10 lg:w-3/5 w-full text-left custom-gradient-bg " >
             <Carousel
               selectedItem={currentSlide}
               onChange={setCurrentSlide}
@@ -99,11 +99,11 @@ const DepinCarousel = () => {
             >
               {slides.map((slide, index) => (
                 <div key={index} className="text-left">
-                  <h2 className="text-3xl  font-normal mb-6">{slide.heading}</h2>
+                  <h2 className="text-3xl  font-normal mb-16">{slide.heading}</h2>
                   {slide.subheadings.map((sub, subIndex) => (
                     <div key={subIndex} className="mb-4">
                       <h3 className="text-xl font-semibold">{sub.subheading}</h3>
-                      <p className="text-base text-[#BEBEBE] mb-8">{sub.description}</p>
+                      <p className="text-base text-[#BEBEBE] mb-10">{sub.description}</p>
                     </div>
                   ))}
                 </div>
