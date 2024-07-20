@@ -13,7 +13,7 @@ const Pricing = () => {
       </div>
 
       <div className="lg:w-1/2 md:w-1/2 w-full lg:p-0 md:p-0 p-4">
-  <h1 className="lg:text-5xl md:text-5xl text-xl font-semibold mb-4 lg:font-thin md:font-thin text-white lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
+  <h1 className="lg:text-5xl md:text-5xl text-3xl font-semibold mb-4 lg:font-thin md:font-thin text-white lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">
     Unleash the Power of Future Internet
   </h1>
   <div className="flex mb-10 text-white lg:text-xl md:text-xl text-sm font-thin lg:pr-20 md:pr-20 text-center lg:text-left md:text-left">

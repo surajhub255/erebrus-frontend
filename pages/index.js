@@ -199,7 +199,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       <motion.h1
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-        className="lg:text-4xl md:text-3xl text-lg text-gray-300 mb-10 text-center w-2/3"
+        className="lg:text-4xl md:text-3xl text-2xl text-gray-300 mb-10 text-center lg:w-2/3 md:w-2/3"
         style={{ lineHeight: '1.2'}}
       >
         Revolutionizing Internet Access Through the Power of DePIN
@@ -207,7 +207,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       <motion.p
         initial={{ y: 100, opacity: 0 }}
         animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-        className="lg:text-lg md:text-lg text-sm text-gray-300 mb-8 text-center"
+        className="lg:text-lg md:text-lg text-lg text-gray-300 mb-8 text-center"
       >
         Subscribe for insights from our DePIN experts.
       </motion.p>

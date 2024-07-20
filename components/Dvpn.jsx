@@ -9,9 +9,9 @@ const Dvpn = () => {
   return (
     <div className='flex flex-col items-center bg-[#080d1f] mx-auto'
     >
-      <div className=' w-[80%]'>
+      <div className='w-[80%]'>
       <h3
-        className='text-xl lg:text-[42px] md:text-[42px] mb-[90px] w-full lg:text-start md:text-start text-center text-white'
+        className='text-3xl lg:text-[42px] md:text-[42px] mb-[90px] w-full lg:text-start md:text-start text-center text-white mt-20 lg:mt-0 md:mt-0'
       >
        Decentralized VPN & Wi-Fi for Everyone, Anywhere
       </h3>

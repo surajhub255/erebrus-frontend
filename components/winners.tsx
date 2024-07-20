@@ -19,7 +19,7 @@ const WinnersPage = () => {
 
   return (
     <div className="bg-primary min-h-screen text-white pt-20">
-      <h1 className="lg:text-5xl md:text-5xl text-xl text-center mx-20 mb-20">Join the Winners!</h1>
+      <h1 className="lg:text-5xl md:text-5xl text-3xl text-center mb-20">Join the Winners!</h1>
       <div className="max-w-6xl mx-auto lg:flex md:flex">
         <div className="lg:w-1/2 md:w-1/2 w-full relative h-80">
           {achievements.map((item, index) => (
