@@ -2,7 +2,7 @@ import React from 'react';
 
 const Future = () => {
     return (
-        <div className="min-h-screen text-white"
+        <div className="min-h-screen text-white pb-20"
         style={{
           backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%, black 50%)',  
             backgroundSize: 'cover',
