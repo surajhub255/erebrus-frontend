@@ -10,29 +10,30 @@ const WinnersPage = () => {
   ];
 
   const positions = [
-    { top: '5%', left: '45%', width: '170px', height: '80px' },
-    { top: '30%', left: '10%', width: '170px', height: '80px' },
-    { top: '45%', left: '50%', width: '180px', height: '55px' },
-    { top: '70%', left: '20%', width: '130px', height: '40px' },
-    { top: '70%', left: '53%', width: '160px', height: '80px' },
+    { top: '5%', left: '10%', width: '120px', height: '80px' },
+    { top: '20%', left: '45%', width: '170px', height: '80px' },
+    { top: '45%', left: '12%', width: '180px', height: '55px' },
+    { top: '65%', left: '50%', width: '130px', height: '40px' },
+    { top: '75%', left: '14%', width: '160px', height: '80px' },
   ];
 
   return (
     <div className="bg-[#040819] min-h-screen text-white pt-20">
       <h1 className="lg:text-5xl md:text-5xl text-3xl text-center mb-20">Join the Winners!</h1>
-      <div className="max-w-6xl mx-auto lg:flex md:flex">
-        <div className="lg:w-1/2 md:w-1/2 w-full relative h-80">
+      <div className="max-w-6xl mx-auto flex lg:flex-row md:flex-row flex-col justify-center items-center">
+        <div className="w-80 relative h-80 rounded-2xl"
+        style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(86, 150, 255, 1))' }}>
           {achievements.map((item, index) => (
             <div 
               key={index} 
-              className="absolute glow-effect"
+              className="absolute"
               style={{
                 top: positions[index % positions.length].top,
                 left: positions[index % positions.length].left,
                 width: positions[index % positions.length].width,
                 height: positions[index % positions.length].height,
-                filter: 'drop-shadow(0 0 40px rgba(255, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.8))',
-                animation: 'glow 3s infinite alternate',
+                // filter: 'drop-shadow(0 0 40px rgba(255, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.8))',
+                // animation: 'glow 3s infinite alternate',
               }}
             >
               <img 
@@ -43,7 +44,7 @@ const WinnersPage = () => {
             </div>
           ))}
         </div>
-        <div className="lg:w-1/2 md:w-1/2 w-full space-y-4 px-4">
+        <div className="lg:w-1/2 md:w-1/2 w-full space-y-6 px-4 lg:text-start md:text-start text-center lg:-mt-10 md:-mt-10">
           {achievements.map((item, index) => (
             <a 
               key={index} 
