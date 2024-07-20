@@ -71,13 +71,13 @@ const NodeDwifiStream = () => {
                     <img src="/nodetable5.png" className="w-10 h-10" />
                     <div>MAC Address</div>
                   </div>
-                </th> */}
+                </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
                   <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable6.png" className="w-10 h-10" />
                     <div>IP Address</div>
                   </div>
-                </th>
+                </th> */}
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
                   <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/nodetable7.png" className="w-10 h-10" />
@@ -159,12 +159,12 @@ const NodeDwifiStream = () => {
                 <div className="flex gap-4 justify-center items-center py-2 px-4">
                 {device.macAddress}
                 </div>
-                </td> */}
+                </td>
                 <td style={{ border: "solid 1px #FFFFFF66" }}>
                 <div className="flex gap-4 justify-center items-center py-2 px-4">
                   {device.ipAddress}
                   </div>
-                  </td>
+                  </td> */}
                 <td style={{ border: "solid 1px #FFFFFF66" }}>
                 <div className="flex gap-4 justify-center items-center py-2 px-4">
                   {new Date(device.connectedAt).toLocaleString()}
