@@ -84,9 +84,9 @@ const DepinCarousel = () => {
     </motion.div>
         <div className="lg:flex gap-14">
           <div className="rounded-3xl lg:w-2/5 w-full relative">
-            <img src="/depin.png" alt="Static Image" className="rounded-3xl h-[500px] w-full" />
+            <img src="/depin.png" alt="Static Image" className="rounded-3xl w-full" />
           </div>
-          <div className="rounded-3xl px-10 pt-10 lg:w-3/5 w-full text-left custom-gradient-bg " >
+          <div className="rounded-3xl px-10 pt-10 lg:w-3/5 w-full text-left custom-gradient-bg mt-10 lg:mt-0 md:mt-0" >
             <Carousel
               selectedItem={currentSlide}
               onChange={setCurrentSlide}
@@ -99,7 +99,7 @@ const DepinCarousel = () => {
             >
               {slides.map((slide, index) => (
                 <div key={index} className="text-left">
-                  <h2 className="text-3xl  font-normal mb-16">{slide.heading}</h2>
+                  <h2 className="text-3xl  font-normal mb-10">{slide.heading}</h2>
                   {slide.subheadings.map((sub, subIndex) => (
                     <div key={subIndex} className="mb-4">
                       <h3 className="text-xl font-semibold">{sub.subheading}</h3>

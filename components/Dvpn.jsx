@@ -21,7 +21,7 @@ const Dvpn = () => {
           return (
             <div
             key={index.toString()}
-            className='flex lg:w-1/3 md:w-1/3 w-full hover:-translate-y-4 duration-300 flex-col justify-start win-background  rounded-[50px]  '
+            className='flex lg:w-1/3 md:w-1/3 w-full hover:-translate-y-4 duration-300 flex-col justify-center items-center win-background  rounded-[50px]  '
             style={{border:'1px solid rgba(17, 217, 197, 0.3)'}}
           >
             <Image
