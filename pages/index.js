@@ -193,7 +193,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       {/* <div style={{ height: '20vh', background: 'linear-gradient(to top, rgba(9, 12, 21, 1), rgba(4, 8, 25, 1))', transform: 'rotate(180deg)' }}>
     </div> */}
 
-      <div className="container min-h-screen mx-auto py-20 w-full flex items-center justify-center bg-cover bg-[url('/revolution.png')]">
+      <div className="min-h-screen mx-auto py-20 w-full flex items-center justify-center bg-cover bg-[url('/revolution.png')]">
   <div className="lg:w-1/2 md:w-1/2 background-gradient lg:py-10 md:py-10 py-5 rounded-3xl mx-4 lg:mx-0 md:mx-0">
     <div className="flex flex-col items-center justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 lg:mb-0 mb-2">
       <motion.h1

@@ -10,7 +10,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-[#040819]">
-      <div className="max-w-[90%] mx-auto py-12 px-4 overflow-hidden">
+      <div className="max-w-[80%] mx-auto py-12 overflow-hidden">
         <div className=" flex flex-wrap gap-10 justify-between">
           
           <div className="lg:w-1/4 md:w-1/4">
