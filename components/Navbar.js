@@ -788,8 +788,8 @@ const Navbar = ({ isHome }) => {
 
                     {selectedDropwdown && (
                       <div
-                        className="absolute right-0 mt-2 w-44 origin-top-right rounded-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        style={{ backgroundColor: "#20253A" }}
+                        className="absolute right-0 mt-2 w-44 origin-top-right rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                        style={{ background: 'linear-gradient(to bottom, rgba(32, 37, 58, 1), rgba(66, 79, 127, 1))' }}
                       >
                         <div className="py-1 z-10">
                           <Link href="/profile">
