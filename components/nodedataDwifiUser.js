@@ -155,7 +155,7 @@ const NodeDwifiStreamUser = () => {
                   
                   <td style={{ border: "solid 1px #FFFFFF66" }}>
                 <div className="flex gap-4 justify-center items-center py-2 px-4">
-                  {item.connected == "true" ? "Online" : "Offline"}
+                  {item.connected == "true" ? "Offline" : "Online"}
                   </div>
                   </td>
 
