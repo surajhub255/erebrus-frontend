@@ -190,7 +190,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
       <WinnersPage/>
 
       
-      {/* <div style={{ height: '20vh', background: 'linear-gradient(to top, rgba(9, 12, 21, 1), rgba(4, 8, 25, 1))', transform: 'rotate(180deg)' }}>
+      {/* <div style={{ height: '22vh', background: 'linear-gradient(to top, rgba(9, 12, 21, 1), rgba(5, 8, 25, 1))', transform: 'rotate(0deg)' }}>
     </div> */}
 
       <div className="min-h-screen mx-auto py-20 w-full flex items-center justify-center bg-cover bg-[url('/revolution.png')]">
