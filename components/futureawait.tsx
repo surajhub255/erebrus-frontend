@@ -2,14 +2,20 @@ import React from 'react';
 
 const Future = () => {
     return (
-        <div className="min-h-screen text-white pb-20"
+   
+        <div className="min-h-screen text-white  "
         style={{
           backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%, black 50%)',  
             backgroundSize: 'cover',
             backgroundBlendMode: 'overlay',
           }}
           >
-          <div className="mx-auto">
+          <div className="mx-auto bg-[#040819] -z-10 pb-20"
+           style={{
+            backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%,#040819 50% )',  
+              backgroundSize: 'cover',
+              backgroundBlendMode: '',
+            }}>
             <Header />
             <main className="flex flex-col md:flex-row justify-center items-start gap-[10vh] mt-20">
               <SubscriptionCard />
@@ -17,6 +23,7 @@ const Future = () => {
             </main>
           </div>
         </div>
+
       );
     }
 
