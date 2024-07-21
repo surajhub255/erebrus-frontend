@@ -804,6 +804,18 @@ const Navbar = ({ isHome }) => {
                             </div>
                           </Link>
 
+                          <Link href="/usernodes">
+                            <div
+                              className="block w-full text-left px-4 py-2 text-lg text-white hover:bg-gray-900"
+                              onClick={handleProfileClick}
+                            >
+                              <div className="flex gap-4">
+                                <span></span>
+                                <span>My Nodes</span>
+                              </div>
+                            </div>
+                          </Link>
+
                           {paseto && (
                             <>
                           
