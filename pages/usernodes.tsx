@@ -9,7 +9,7 @@ const Dwifi = () => {
       <div className="bg-black">
       <div className="container mx-auto py-20"
         style={{
-          backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer2.png")',  
+          backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/globe_image.png")',  
             backgroundSize: 'cover',
             backgroundBlendMode: 'overlay',
           }}
@@ -20,8 +20,7 @@ const Dwifi = () => {
           animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
           className="text-6xl font-semibold text-gray-300 mb-8 w-3/5"
         >
-          Decentralized Connectivity 
-          with Erebrus ÐWi-Fi
+          Manage Your ÐWi-Fi Nodes
         </motion.h1>
         <motion.h1
           initial={{ y: 100, opacity: 0 }}
@@ -29,20 +28,10 @@ const Dwifi = () => {
           className="text-2xl text-white mb-8"
         >
           <p>
-          Secure and fast Wi-Fi Everywhere
+          Discover data across your ÐWi-Fi network
           </p>
         </motion.h1>
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
-          className="text-black font-bold py-3 px-10 rounded-full bg-white text-lg" 
-          // style={{backgroundImage: 'linear-gradient(#FFFFFF00, #0099FF)'}}
-        >
-          <Link href="https://discord.com/invite/5uaFhNpRF6" target="_blank"
-            rel="noopener noreferrer">
-            Run Your Node
-          </Link>
-        </motion.div>
+
       </div>
     </div>
       <NodeDwifiStreamUser />
