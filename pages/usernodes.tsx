@@ -36,7 +36,9 @@ const Dwifi = () => {
     </div>
       <NodeDwifiStreamUser />
             {/* <img src="/mapRegions.png"/> */}
+            <div className="h-[30vh]"></div>
         </div>
+        
     )
 }
 
