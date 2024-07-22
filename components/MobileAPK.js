@@ -5,7 +5,7 @@ const Pricing = () => {
   return (
     <div
       id="pricing"
-      className="lg:flex md:flex items-center justify-center lg:gap-20 md:gap-20 mx-auto py-40 bg-[#040819]"
+      className="lg:flex md:flex items-center justify-center lg:gap-20 md:gap-20 mx-auto pt-20 pb-32 bg-[#040819]"
     >
 
 <div className="lg:w-1/2 md:w-1/2 w-full">

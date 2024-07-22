@@ -11,7 +11,7 @@ const Dvpn = () => {
     >
       <div className='w-[80%]'>
       <h3
-        className='text-3xl lg:text-[42px] md:text-[42px] mb-[90px] w-full lg:text-start md:text-start text-center text-white mt-20 lg:mt-0 md:mt-0'
+        className='text-3xl lg:text-[42px] md:text-[42px] mb-[90px] w-full lg:text-start md:text-start text-center text-white mt-20 lg:mt-40 md:mt-40'
       >
        Decentralized VPN & Wi-Fi for Everyone, Anywhere
       </h3>
@@ -48,7 +48,7 @@ const Dvpn = () => {
   <div 
 className="absolute inset-0 opacity-30 lg:bg-[radial-gradient(ellipse_at_center,#0262FF,#040819_30%,#080d1f_100%)] md:bg-[radial-gradient(circle_at_top,#0262FF,#040819_30%,#080d1f_100%)] bg-[radial-gradient(circle_at_center,#0262FF,#040819_30%,#080d1f_100%)] transform scale-[2.0]"
   ></div>
-  <div className="relative min-h-[300px] flex flex-col items-center justify-center py-40">
+  <div className="relative min-h-[300px] flex flex-col items-center justify-center pt-40 pb-60">
     <div className="text-center lg:text-4xl md:text-4xl text-3xl text-white mb-10 lg:w-full md:w-full w-3/4">
       Join the Movement. Get Started Now.
     </div>

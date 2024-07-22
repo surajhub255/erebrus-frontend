@@ -18,10 +18,10 @@ const WinnersPage = () => {
   ];
 
   return (
-    <div className="bg-[#040819] min-h-screen text-white pt-20">
+    <div className="bg-[#040819] text-white pb-20">
       <h1 className="lg:text-5xl md:text-5xl text-3xl text-center mb-20">Join the Winners!</h1>
       <div className="max-w-6xl mx-auto flex lg:flex-row md:flex-row flex-col justify-center items-center">
-        <div className="w-80 relative h-80 rounded-2xl"
+        <div className="w-80 relative h-80 rounded-2xl lg:block md:block hidden"
         style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(86, 150, 255, 1))' }}>
           {achievements.map((item, index) => (
             <div 
@@ -44,7 +44,7 @@ const WinnersPage = () => {
             </div>
           ))}
         </div>
-        <div className="lg:w-1/2 md:w-1/2 w-full space-y-6 px-4 lg:text-start md:text-start text-center lg:-mt-10 md:-mt-10">
+        <div className="lg:w-1/2 md:w-1/2 w-full space-y-6 px-4 lg:text-start md:text-start text-center lg:-mt-10 md:-mt-10 -mt-20">
           {achievements.map((item, index) => (
             <a 
               key={index} 
@@ -53,6 +53,29 @@ const WinnersPage = () => {
             >
               {item.prize} <span className="text-blue-300">↗</span>
             </a>
+          ))}
+        </div>
+        <div className="w-80 relative h-80 rounded-2xl lg:hidden md:hidden block mt-10 lg:mt-0 md:mt-0"
+        style={{ background: 'linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(86, 150, 255, 1))' }}>
+          {achievements.map((item, index) => (
+            <div 
+              key={index} 
+              className="absolute"
+              style={{
+                top: positions[index % positions.length].top,
+                left: positions[index % positions.length].left,
+                width: positions[index % positions.length].width,
+                height: positions[index % positions.length].height,
+                // filter: 'drop-shadow(0 0 40px rgba(255, 255, 255, 1)) drop-shadow(0 0 80px rgba(255, 255, 255, 0.8))',
+                // animation: 'glow 3s infinite alternate',
+              }}
+            >
+              <img 
+                src={item.logo} 
+                alt={item.name} 
+                className="w-full h-full object-contain"
+              />
+            </div>
           ))}
         </div>
       </div>

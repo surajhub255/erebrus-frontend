@@ -49,7 +49,7 @@ const Mission = () => {
 
   return (
     <div ref={ref} className='h-screen w-full flex items-center bg-[#080d1f]'>
-      <div className='w-[80%] rounded-[50px] relative h-auto lg:h-[80%] md:h-[80%] gradient-background mx-auto'>
+      <div className='w-[80%] rounded-[50px] relative h-auto lg:h-[80%] md:h-[80%] gradient-background mx-auto mt-20'>
         <div className='w-full h-full z-20 rounded-[50px] mission-bg'>
           <div className='w-full h-full z-20 rounded-[50px] lg:flex md:flex items-center justify-between bg-gradient-to-tl from-primary2/20 to-primary2/20'>
             {/* Mobile view */}
@@ -90,7 +90,7 @@ const Mission = () => {
             {/* Desktop view */}
             <motion.div
               transition={{ duration: 1.5 }}
-              className='hidden lg:flex md:flex flex-col lg:w-2/3 lg:py-10 md:py-10 py-0 lg:px-20 md:px-20 px-10 h-[80%]'
+              className='hidden lg:flex md:flex flex-col lg:w-2/3 my-auto justify-center items-start lg:px-20 md:px-20 px-10 h-[80%]'
             >
               <h3 className='text-white max-w-[600px] leading-none mb-16 lg:mt-0 md:mt-0 mt-16 text-3xl lg:text-[60px]'>
                 Pioneering the DePIN Revolution
@@ -113,11 +113,11 @@ const Mission = () => {
               </motion.div>
             </motion.div>
 
-            <div className='lg:w-1/3 md:w-1/3 w-full lg:flex md:flex hidden justify-between h-[80%] lg:mt-0 md:mt-0 '>
+            <div className='lg:w-1/3 md:w-1/3 w-full lg:flex md:flex hidden justify-between h-[80%]'>
               <motion.div
                 animate={animation2}
                 transition={{ type: "tween", duration: 2 }}
-                className='w-[90%] self-end h-[90%] flex flex-col relative overflow-hidden'
+                className='w-[80%] h-[80%] flex flex-col relative overflow-hidden my-auto'
               >
                 <Image
                   className='object-cover rounded-[10px]'

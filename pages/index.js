@@ -166,7 +166,7 @@ Anonymous Virtual Private Network for accessing internet in stealth mode bypassi
           style={{backgroundColor:'#E3EEFF'}}
         >
           <Link href="/dwifiFlow">
-            Explore WiFi
+            Explore Wi-Fi
           </Link>
         </motion.div>
       </div>
