@@ -7,7 +7,7 @@ const Dwifi = () => {
 
     return(
       <div className="bg-black">
-      <div className="container mx-auto py-20"
+      <div className="mx-auto py-20"
         style={{
           backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer2.png")',  
             backgroundSize: 'cover',
