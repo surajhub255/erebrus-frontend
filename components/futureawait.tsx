@@ -3,16 +3,10 @@ import React from 'react';
 const Future = () => {
     return (
    
-        <div className="min-h-screen text-white  "
-        style={{
-          backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%, black 50%)',  
-            backgroundSize: 'cover',
-            backgroundBlendMode: 'overlay',
-          }}
-          >
+        <div className="text-white bg-[#040819]">
           <div className="mx-auto bg-[#040819] -z-10 pb-20"
            style={{
-            backgroundImage: 'radial-gradient(circle at center, rgba(86, 150, 255, 0.6) 10%, #0162FF80 28%,#040819 50% )',  
+            backgroundImage: 'radial-gradient(circle at 55% 50%, rgba(86, 150, 255, 0.6) 10%, #0162FF80 30%, #040819 40% )',  
               backgroundSize: 'cover',
               backgroundBlendMode: '',
             }}>
