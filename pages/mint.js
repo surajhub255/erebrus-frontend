@@ -344,7 +344,7 @@ const Mint = () => {
                     src="/icomoon-free_price-tags.png"
                     className="w-6 h-6 mt-1"
                   />
-                  <div>{displayText}<span className="text-[18px]">  ($5.04)</span></div>
+                  <div>{displayText}<span className="text-[18px]">  ($5.99)</span></div>
                 </div>
                 <div className="text-white text-xl mt-4 mx-auto flex gap-2">
                   <img
