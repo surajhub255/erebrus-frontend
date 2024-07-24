@@ -301,31 +301,36 @@ const Mint = () => {
       </Head>
 
       {mintpage === "page1" && (
-        <>
+        <div style={{backgroundColor: '#040819'}}>
           <div className="p-20">
             <div
               className="text-white text-5xl uppercase leading-normal"
               style={{
-                marginLeft: "25vh",
+                marginLeft: "10vh",
                 marginRight: "10vh",
                 fontFamily: "Times New Roman",
               }}
             >
-              Step into the Future of Internet Safety with{" "}
-              <span style={{ color: "#0162FF" }}>111 NFT VPN</span>
+              Mint Your VPN NFT, Secure, Private, 
+              {" "}<br></br>
+              <span >Exclusive</span>
             </div>
-            <div class="flex justify-center gap-20">
+
+            {/* <div
+          className="absolute w-50vw inset-0 h-full opacity-30 lg:bg-[radial-gradient(ellipse_at_center,#0262FF,#040819_30%,#080d1f_100%)] md:bg-[radial-gradient(circle_at_top,#0262FF,#040819_30%,#080d1f_100%)] bg-[radial-gradient(circle_at_center,#0262FF,#040819_30%,#080d1f_100%)]"
+          style={{ transform: "scale(2.0)" }}
+        ></div> */}
+
+            <div class="flex justify-center gap-20 m-10 z-20" 
+            style={{backgroundColor:'#202333', marginLeft: "10vh", marginRight: "10vh"}}>
               <div
-                className="text-white w-1/3 p-10"
-                style={{ marginLeft: "20vh" }}
+                className="text-white w-1/2"
               >
                 <img
                   src={imageSrc2}
-                  style={{ border: "1px solid #0162FF" }}
-                  className="rounded-lg"
                 />
               </div>
-              <div className="w-1/2 mt-10">
+              <div className="w-1/2 mt-10" >
                 <div className="text-white text-xl mt-10 mx-auto flex gap-2">
                   <img src="/uis_calender.png" className="w-6 h-6 mt-1" />
                   <div>3-Month Coverage</div>
@@ -433,7 +438,7 @@ const Mint = () => {
               </div>
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {mintpage === "page2" && (
