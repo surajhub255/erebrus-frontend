@@ -78,7 +78,7 @@ const Plans = () => {
         </div>
 
         <div className="lg:flex mt-10 mx-auto justify-center gap-10">
-         {chainSymbol=="apt"&&( 
+         {chainSymbol=="apt" || chainSymbol=="sol" &&( 
           
           <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
           >
@@ -121,7 +121,7 @@ const Plans = () => {
               Mobile app
             </li> */}
           </ul>
-          <button className="bg-[#0162FF] text-white  px-2 py-5 rounded-full mt-6 w-3/4 ml-10 ">
+          <button className="bg-[#0162FF] text-white  px-2 py-5 rounded-full mt-32 w-3/4 ml-10 ">
           <Link 
            href="/mint">
             Mint NFT

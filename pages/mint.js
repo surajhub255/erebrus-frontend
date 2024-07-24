@@ -88,23 +88,23 @@ const Mint = () => {
   
       if (wallet) {
         if (chainSym === 'sui') {
-          setDisplayText('Only at 4.91 SUI');
+          setDisplayText(' 4.91 SUI');
           setDisplayText2('Pay in SUI');
           setImageSrc('/mintSui.png');
           setImageSrc2('/nft_ape1.png')
         } else if (chainSym === 'evm' || chainSym === 'peaq') {
-          setDisplayText('Only at 0.00028 ETH');
+          setDisplayText(' 0.00028 ETH');
           setDisplayText2('Pay in ETH')
           setImageSrc('/mintManta.png');
           setImageSrc2('/nft_manta.png')
         } else if (chainSym === 'sol') {
-          setDisplayText('Only at 18.94 Sol');
+          setDisplayText(' 18.94 Sol');
           setDisplayText2('Pay in SOL')
-          setImageSrc('/mintSui.png');  // change needed
+          setImageSrc('/solanaicon.png');  // change needed
           setImageSrc2('/nft_sol.png')
         }
         else if (chainSym === 'google') {
-          setDisplayText('Only at 18.94 Sol');
+          setDisplayText(' 18.94 Sol');
           setDisplayText2('Pay in Dollars')
           setImageSrc('/mintSui.png');  // change needed
           setImageSrc2('/nft_ape1.png')
@@ -332,14 +332,14 @@ const Mint = () => {
                 </div>
                 <div className="text-white text-xl mt-4 mx-auto flex gap-2">
                   <img src="/mdi_users.png" className="w-6 h-6 mt-1" />
-                  <div>Unlimited Devices</div>
+                  <div>Unlimited Clients</div>
                 </div>
                 <div className="text-white text-xl mt-4 mx-auto flex gap-2">
                   <img
                     src="/icomoon-free_price-tags.png"
                     className="w-6 h-6 mt-1"
                   />
-                  <div>{displayText}</div>
+                  <div>{displayText}<span className="text-[18px]">  ($5.04)</span></div>
                 </div>
                 <div className="text-white text-xl mt-4 mx-auto flex gap-2">
                   <img
@@ -349,7 +349,7 @@ const Mint = () => {
                   <div>Exceptional Value for Unmatched Security</div>
                 </div>
 
-                <div className="flex gap-10 mt-10">
+                {/* <div className="flex gap-10 mt-10">
                   <div
                     className="text-white text-md rounded-full py-3 px-10"
                     style={{ border: "1px solid #0162FF" }}
@@ -368,7 +368,7 @@ const Mint = () => {
                     </span>{" "}
                     NFTs Left
                   </div>
-                </div>
+                </div> */}
 
                 <motion.div
                   initial={{ opacity: 0 }}
