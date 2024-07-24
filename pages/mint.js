@@ -304,11 +304,11 @@ const Mint = () => {
         <div style={{backgroundColor: '#040819'}}>
           <div className="p-20">
             <div
-              className="text-white text-5xl uppercase leading-normal"
+              className="text-white text-5xl leading-normal"
               style={{
                 marginLeft: "10vh",
                 marginRight: "10vh",
-                fontFamily: "Times New Roman",
+                fontFamily: 'sans-serif',
               }}
             >
               Mint Your VPN NFT, Secure, Private, 
