@@ -93,12 +93,12 @@ const Mint = () => {
           setImageSrc('/mintSui.png');
           setImageSrc2('/nft_ape1.png')
         } else if (chainSym === 'evm' || chainSym === 'peaq') {
-          setDisplayText(' 0.00028 ETH');
+          setDisplayText('0.00029 ETH');
           setDisplayText2('Pay in ETH')
           setImageSrc('/mintManta.png');
           setImageSrc2('/nft_manta.png')
         } else if (chainSym === 'sol') {
-          setDisplayText(' 18.94 Sol');
+          setDisplayText('22.51 Sol');
           setDisplayText2('Pay in SOL')
           setImageSrc('/solanaicon.png');  // change needed
           setImageSrc2('/nft_sol.png')

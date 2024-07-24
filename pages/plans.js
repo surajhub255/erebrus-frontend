@@ -74,7 +74,7 @@ const Plans = () => {
     <>
       <div className="mt-10 mx-auto min-h-screen max-w-7xl">
         <div className="text-center text-4xl text-white">
-          Pay for what you use
+          Subscription
         </div>
 
         <div className="lg:flex mt-10 mx-auto justify-center gap-10">
