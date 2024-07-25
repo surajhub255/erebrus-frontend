@@ -75,10 +75,10 @@ const Mint = () => {
     useWallet();
     const [chainSymbol, setChainSymbol] = useState('');
     const [erebrusWallet, setErebrusWallet] = useState(null);
-    const [displayText, setDisplayText] = useState('Only at 1.76 APT');
+    const [displayText, setDisplayText] = useState('Only at 0.90 APT');
     const [displayText2, setDisplayText2] = useState('Pay in APT');
     const [imageSrc, setImageSrc] = useState('/mintApt.png');
-    const [imageSrc2, setImageSrc2] = useState('/nft_ape2.png');
+    const [imageSrc2, setImageSrc2] = useState('/nft_aptos.png');
   
     useEffect(() => {
       const chainSym = Cookies.get('Chain_symbol');
