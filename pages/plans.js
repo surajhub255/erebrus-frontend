@@ -7,7 +7,7 @@ const Plans = () => {
   const [trialbuytrue, settrialbuytrue] = useState(false);
   const [chainSym, setChainSymbol] = useState('');
   const [erebrusWallet, setErebrusWallet] = useState(null);
-  const [displayText, setDisplayText] = useState('1.11 APT/ 3 month');
+  const [displayText, setDisplayText] = useState('1.11 APT / 3 months');
   const [displayText2, setDisplayText2] = useState(' Pay by APT, crytocurrency or Fiat');
  
   const chainSymbol = Cookies.get('Chain_symbol');
