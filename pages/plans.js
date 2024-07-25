@@ -82,7 +82,7 @@ const Plans = () => {
           
           <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
           >
-          <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">Tier 1 Subcription</h2>
+          <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">NFT</h2>
           <p className="text-2xl  mb-4">{displayText}</p>
           <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/3">
           Early Node Operator Access
@@ -132,7 +132,7 @@ const Plans = () => {
 
           <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
       >
-      <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">Tier 2 Subcription</h2>
+      <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">Standard</h2>
       <p className="text-2xl  mb-4">$5.99/month</p>
       <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/3">
         Start Free Trial for 7 Days
