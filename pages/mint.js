@@ -79,6 +79,8 @@ const Mint = () => {
     const [displayText2, setDisplayText2] = useState('Pay in APT');
     const [imageSrc, setImageSrc] = useState('/mintApt.png');
     const [imageSrc2, setImageSrc2] = useState('/nft_aptos.png');
+
+    const chain = Cookies.get('Chain_symbol');
   
     useEffect(() => {
       const chainSym = Cookies.get('Chain_symbol');
@@ -344,7 +346,7 @@ const Mint = () => {
                     src="/icomoon-free_price-tags.png"
                     className="w-6 h-6 mt-1"
                   />
-                  <div>{displayText}<span className="text-[18px]">  ($5.99)</span></div>
+                  <div>{displayText}<span className="text-[18px]">{ chain === 'apt' ? "" : "($5.99)"}</span></div>
                 </div>
                 <div className="text-white text-xl mt-4 mx-auto flex gap-2">
                   <img
