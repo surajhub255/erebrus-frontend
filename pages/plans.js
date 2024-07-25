@@ -30,7 +30,7 @@ const Plans = () => {
         setDisplayText('0.0019 KRST/ 3 month');
         setDisplayText2(' Pay by KRST, crytocurrency or Fiat')
       } else if (chainSym === 'sol') {
-        setDisplayText('22.52 Sol/ 3 month');
+        setDisplayText('0.035 SOL/ 3 month');
         setDisplayText2(' Pay by SOL, crytocurrency or Fiat')
       }else if (chainSym === 'google') {
         setDisplayText('$ 15/ 3 month');
