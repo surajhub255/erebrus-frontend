@@ -7,7 +7,7 @@ const Plans = () => {
   const [trialbuytrue, settrialbuytrue] = useState(false);
   const [chainSym, setChainSymbol] = useState('');
   const [erebrusWallet, setErebrusWallet] = useState(null);
-  const [displayText, setDisplayText] = useState('0.90 APT/ 3 month');
+  const [displayText, setDisplayText] = useState('1.11 APT/ 3 month');
   const [displayText2, setDisplayText2] = useState(' Pay by APT, crytocurrency or Fiat');
  
   const chainSymbol = Cookies.get('Chain_symbol');
@@ -85,7 +85,7 @@ const Plans = () => {
           <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">NFT</h2>
           <p className="text-2xl  mb-4">{displayText}</p>
           <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/3">
-          Early Node Operator Access
+          Start Your Plan Now
           </button>
           <div className="flex gap-10 mb-4 w-1/2">
             <button className="bg-white text-black rounded  py-1 text-sm flex-1">
