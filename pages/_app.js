@@ -29,9 +29,37 @@ const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID;
 
 const metadata = {
   name: "Erebrus",
-  description: "Erebrus",
-  url: "http://localhost",
+  description: "Redefining digital connectivity and unleashing the future of internet with globally accessible, secure and private network through the power of DePIN.",
+  url: "https://netsepio.com",
   icons: ["https://avatars.githubusercontent.com/u/37784886"],
+  openGraph: {
+		type: 'website',
+		url: 'https://netsepio.com',
+		title: 'Erebrus',
+		description: 'Redefining digital connectivity and unleashing the future of internet with globally accessible, secure and private network through the power of DePIN.',
+		images: [
+			{
+				url: '/metaimg.png',
+				width: 1200,
+				height: 630,
+				alt: 'Erebrus',
+			},
+		],
+	},
+	twitter: {
+		card: 'summary_large_image',
+		site: '@Erebrus',
+		title: 'Erebrus',
+		description: 'Redefining digital connectivity and unleashing the future of internet with globally accessible, secure and private network through the power of DePIN.',
+		images: [
+			{
+				url: '/metaimg.png',
+				width: 1200,
+				height: 630,
+				alt: 'Erebrus',
+			},
+		],
+	},
 };
 
 
