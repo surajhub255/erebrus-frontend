@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { NetSepioSDK } from 'netsepio-sdk';
 
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
@@ -24,19 +25,22 @@ const NodesData = () => {
   }, [nodesdata, statusFilter, regionFilter, chainFilter, sortConfig, showFilters]);
 
   const fetchNodesData = async () => {
+    const sdk = new NetSepioSDK();
     try {
-      const response = await axios.get(
-        `${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`,
-        {
-          headers: {
-            Accept: "application/json, text/plain, */*",
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      // const response = await axios.get(
+      //   `${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`,
+      //   {
+      //     headers: {
+      //       Accept: "application/json, text/plain, */*",
+      //       "Content-Type": "application/json",
+      //     },
+      //   }
+      // );
 
-      if (response.status === 200 && response.data) {
-        const payload = response.data.payload;
+      const response = await sdk.getAllVPNs();
+
+      if (response.status === 200 && response.payload) {
+        const payload = response.payload;
         setNodesData(payload);
         const filteredNodes = payload.filter((node) => node.status === "active");
         setActiveNodesData(filteredNodes);
