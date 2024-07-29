@@ -93,7 +93,7 @@ export default function App({ Component, pageProps }) {
                 
               {!erebrus_wallet && (
         <div className="w-full ">
-          <Link className='w-full' href='https://drive.google.com/file/d/1jdkqwIXY825iG3shRRoFyg5SMGy6LN8J/view?usp=drive_link' target="_blank">
+          <Link className='w-full' href='/login'>
             <Banner />
           </Link>
         </div>
