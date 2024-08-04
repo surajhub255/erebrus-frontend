@@ -257,10 +257,10 @@ const NodesData = () => {
         <div className="relative inline-block ml-4">
   <select
     onChange={(e) => handleSortChange(e.target.value)}
-    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded appearance-none"
+    className="bg-blue-500 hover:bg-blue-700 text-white  font-bold py-2 px-4 rounded appearance-none"
     value=""
   >
-    <option value="" disabled>Sort By</option>
+    <option value="" disabled className="text-center">Sort By</option>
     <option value="name">Name</option>
     <option value="status">Status</option>
     <option value="region">Region</option>
