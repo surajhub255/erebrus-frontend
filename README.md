@@ -71,6 +71,6 @@ This project was built using [Next](https://nextjs.org/). Special thanks to the 
     <a href="https://github.com/thisisommore">Om More</a>
 </div>
 <div>
-    <img src="https://avatars.githubusercontent.com/u/51229945" width="50px" style="border-radius:50%" />
+    <img src="https://avatars.githubusercontent.com/u/76100105?v=4" width="50px" style="border-radius:50%" />
     <a href="https://github.com/Rushikeshnimkar">Rushikesh Nimkar</a>
 </div>
