@@ -15,7 +15,7 @@ jobs:
 
       - name: Check DEV_EREBRUS_FRONTEND
         run: |
-          if [ -z "${{ DEV_EREBRUS_FRONTEND }}" ]; then
+          if [ -z "$DEV_EREBRUS_FRONTEND" ]; then
             echo "DEV_EREBRUS_FRONTEND is not set. Stopping the workflow."
             exit 1
           fi
