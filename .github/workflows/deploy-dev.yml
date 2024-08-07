@@ -25,6 +25,7 @@ jobs:
           DEV_ENV_FILE: ${{ env.DEV_EREBRUS_FRONTEND }}
         run: |
           echo "$DEV_EREBRUS_FRONTEND" > .env
+          cat .env
           export CURRENT_BRANCH=${GITHUB_REF#refs/heads/}
           export TAG=$([[ $CURRENT_BRANCH == $(basename ${{ github.ref }}) ]] && echo $CURRENT_BRANCH || echo "latest")
           echo $TAG
