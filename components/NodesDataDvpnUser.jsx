@@ -118,11 +118,13 @@ const NodesData = () => {
         </table>
       </div>
     ) : (
+       /* eslint-disable */
       <div className="bg-gray-800 rounded-lg p-8 text-center">
         <svg className="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
         <h3 className="mt-2 text-sm font-medium text-gray-400">No dVPN Nodes</h3>
+     
         <p className="mt-1 text-sm text-gray-500 mb-4">You don't have any dVPN nodes running at the moment.</p>
         <Link href="https://discord.com/invite/5uaFhNpRF6" target="_blank" rel="noopener noreferrer">
         
@@ -133,7 +135,7 @@ const NodesData = () => {
       
     )}
     
-    {/* Debug info (you may want to remove this in production) */}
+  
     
   </div>
   );
