@@ -46,7 +46,7 @@ const Dwifi = () => {
       </div>
     </div>
       <NodeDwifiStream />
-            <img src="/mapRegions.png"/>
+            {/* <img src="/mapRegions.png"/> */}
         </div>
     )
 }

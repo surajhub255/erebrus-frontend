@@ -72,6 +72,7 @@
     "react-toastify": "^9.1.1",
     "react-world-countries-map": "^1.1.0",
     "stripe": "^14.14.0",
+    "styled-components": "^6.1.12",
     "thirdweb": "^5.15.0",
     "viem": "^2.9.31",
     "wagmi": "^2.8.1"
