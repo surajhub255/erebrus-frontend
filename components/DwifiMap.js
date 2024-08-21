@@ -92,10 +92,10 @@ export default function DwifiMap() {
   return (
     <div className="relative h-full w-full p-20 pl-20 pr-20">
       <MapContainer
-        center={[20, 0]}
-        zoom={2}
+        center={[20.5937, 78.9629]} 
+        zoom={5} 
         style={{ height: '100%', width: '100%', padding: '20px',  }}
-        maxBounds={[[-90, -180], [90, 180]]}
+        maxBounds={[[6, 68], [37, 97]]} 
         maxBoundsViscosity={1.0}
       >
         <TileLayer
