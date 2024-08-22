@@ -52,18 +52,29 @@ const BaliDVPNNFTPage = () => {
 
   const renderPopup = () => {
     if (!showPopup) return null;
-
+  
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-        <div className="bg-white p-8 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold mb-4">Success!</h2>
-          <p>Your transaction was successful. Transaction hash: {response.transaction_hash}</p>
-          <button 
-            onClick={() => setShowPopup(false)}
-            className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-          >
-            Close
-          </button>
+        <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
+          <div className="text-center">
+            <div className="mb-4">
+              <svg className="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">Success!</h2>
+            <p className="text-gray-600 mb-6">Your transaction was successful.</p>
+            <div className="bg-gray-100 p-3 rounded-lg mb-6">
+              <p className="text-sm font-medium text-gray-500">Transaction Hash:</p>
+              <p className="text-xs text-gray-700 break-all">{response.transaction_hash}</p>
+            </div>
+            <button 
+              onClick={() => setShowPopup(false)}
+              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
+            >
+              Close
+            </button>
+          </div>
         </div>
       </div>
     );
