@@ -26,7 +26,7 @@ const Explorer = () => {
       <div className="bg-[#040819]">
         <div className="mx-auto py-20"
           style={{
-            backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer1.png") ',  
+            backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer4.png") ',  
               backgroundSize: 'cover',
               backgroundBlendMode: 'overlay',
             }}
