@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from "../components/Footer";
 import { BrowserView, MobileView } from 'react-device-detect';
 import axios from 'axios';
@@ -10,35 +10,54 @@ const BaliDVPNNFTPage = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleWalletAddressChange = (event) => {
     setWalletAddress(event.target.value);
   };
 
   const handleGoClick = async () => {
-    try {
-      const result = await axios.post(`${REACT_APP_GATEWAY_URL}api/v1.0/dvpnnft`, {
-        wallet_address: walletAddress
-      });
-      setResponse(result.data);
-      setError(null);
-      
-      // Check if the response contains a transaction hash or if status is 302
-      if (result.data && result.data.transaction_hash) {
-        setShowPopup(true);
-      } else if (result.status === 302) {
-        setShowPopup(true);
-        setResponse({ alreadyMinted: true });
+    setIsLoading(true);
+    
+    setTimeout(async () => {
+      try {
+        const result = await axios.post(`${REACT_APP_GATEWAY_URL}api/v1.0/dvpnnft`, {
+          wallet_address: walletAddress
+        });
+        setResponse(result.data);
+        setError(null);
+        
+        if (result.data && result.data.transaction_hash) {
+          setShowPopup(true);
+        } else if (result.status === 302) {
+          setShowPopup(true);
+          setResponse({ alreadyMinted: true });
+        }
+      } catch (err) {
+        if (err.response && err.response.status === 302) {
+          setShowPopup(true);
+          setResponse({ alreadyMinted: true });
+        } else {
+          setError('An error occurred while processing your request.');
+          setResponse(null);
+        }
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      if (err.response && err.response.status === 302) {
-        setShowPopup(true);
-        setResponse({ alreadyMinted: true });
-      } else {
-        setError('An error occurred while processing your request.');
-        setResponse(null);
-      }
-    }
+    }, 3000); // 3 second delay
+  };
+
+  const renderLoadingAnimation = () => {
+    if (!isLoading) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
+        <div className=" bg-transparent p-8 rounded-lg shadow-lg">
+          <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-blue-500"></div>
+          <p className="mt-4 text-lg font-semibold text-gray-700">Processing...</p>
+        </div>
+      </div>
+    );
   };
   const renderResponse = () => {
     if (error) {
@@ -120,11 +139,12 @@ const BaliDVPNNFTPage = () => {
       />
       
       <button
-        onClick={handleGoClick}
-        className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full text-xl mb-6 "
-      >
-        GO
-      </button>
+            onClick={handleGoClick}
+            className="bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full text-xl mb-6"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Processing...' : 'GO'}
+          </button>
 
       <div className="w-full max-w-xs my-10">
         <img src="/bali-dvpn-nft.jpeg" alt="Erebrus DVPN" className="rounded-lg" />
@@ -166,12 +186,14 @@ const BaliDVPNNFTPage = () => {
                   />
                 </div>
                 <div className='text-center'>
-                  <button
-                    type="submit"
-                    className="bg-[#1C126C] text-3xl text-white px-6 py-3 rounded-[40px] font-semibold hover:bg-indigo-600 transition duration-300"
-                  >
-                    GO
-                  </button>
+                <button
+              type="submit"
+              className="bg-[#1C126C] text-3xl text-white px-6 py-3 rounded-[40px] font-semibold hover:bg-indigo-600 transition duration-300"
+              onClick={handleGoClick}
+              disabled={isLoading}
+            >
+              {isLoading ? 'Processing...' : 'GO'}
+            </button>
                 </div>
               </form>
               {renderPopup()}
@@ -180,6 +202,8 @@ const BaliDVPNNFTPage = () => {
         </div>
 
    </BrowserView>
+   {renderLoadingAnimation()}
+   
    <Footer/>
    </>
   );
