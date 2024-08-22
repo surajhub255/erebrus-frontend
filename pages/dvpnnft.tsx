@@ -23,16 +23,23 @@ const BaliDVPNNFTPage = () => {
       setResponse(result.data);
       setError(null);
       
-      // Check if the response contains a transaction hash
+      // Check if the response contains a transaction hash or if status is 302
       if (result.data && result.data.transaction_hash) {
         setShowPopup(true);
+      } else if (result.status === 302) {
+        setShowPopup(true);
+        setResponse({ alreadyMinted: true });
       }
     } catch (err) {
-      setError('An error occurred while processing your request.');
-      setResponse(null);
+      if (err.response && err.response.status === 302) {
+        setShowPopup(true);
+        setResponse({ alreadyMinted: true });
+      } else {
+        setError('An error occurred while processing your request.');
+        setResponse(null);
+      }
     }
   };
-
   const renderResponse = () => {
     if (error) {
       return <p className="text-red-500 mt-4">{error}</p>;
@@ -53,21 +60,37 @@ const BaliDVPNNFTPage = () => {
   const renderPopup = () => {
     if (!showPopup) return null;
   
+    const isAlreadyMinted = response && response.alreadyMinted;
+  
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
           <div className="text-center">
             <div className="mb-4">
-              <svg className="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
+              {isAlreadyMinted ? (
+                <svg className="mx-auto h-12 w-12 text-yellow-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              ) : (
+                <svg className="mx-auto h-12 w-12 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
+              )}
             </div>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">Success!</h2>
-            <p className="text-gray-600 mb-6">Your transaction was successful.</p>
-            <div className="bg-gray-100 p-3 rounded-lg mb-6">
-              <p className="text-sm font-medium text-gray-500">Transaction Hash:</p>
-              <p className="text-xs text-gray-700 break-all">{response.transaction_hash}</p>
-            </div>
+            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+              {isAlreadyMinted ? "Already Minted" : "Success!"}
+            </h2>
+            <p className="text-gray-600 mb-6">
+              {isAlreadyMinted 
+                ? "You have already minted an NFT with this wallet address."
+                : "Your transaction was successful."}
+            </p>
+            {!isAlreadyMinted && (
+              <div className="bg-gray-100 p-3 rounded-lg mb-6">
+                <p className="text-sm font-medium text-gray-500">Transaction Hash:</p>
+                <p className="text-xs text-gray-700 break-all">{response.transaction_hash}</p>
+              </div>
+            )}
             <button 
               onClick={() => setShowPopup(false)}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300"
