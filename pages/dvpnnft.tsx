@@ -106,7 +106,7 @@ const BaliDVPNNFTPage = () => {
       <div className="w-full max-w-xs my-10">
         <img src="/bali-dvpn-nft.jpeg" alt="Erebrus DVPN" className="rounded-lg" />
       </div>
-      {renderResponse()}
+      {renderPopup()}
       </div>
     </MobileView>
     <BrowserView>
