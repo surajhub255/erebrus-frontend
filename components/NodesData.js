@@ -199,7 +199,7 @@ const NodesData = () => {
   };
 
   const handleRowClick = (id) => {
-    `window.location.href = /nodeinfo/${id}`;
+    window.location.href = `/nodeinfo/${id}`;
   };
 
   return (
