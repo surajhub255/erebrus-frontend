@@ -68,7 +68,7 @@ const Subscription = () => {
   const [valueFromChild2, setValueFromChild2] = useState<string>("");
   const [note, setnote] = useState<boolean>(true);
   const [trialsubscriptiondata, settrialsubscriptiondata] = useState<any>(null);
-
+  const [selectedIndex, setSelectedIndex] = useState(null);
   const { account, connected, network, signMessage } = useWallet();
 
   let sendable = isSendableNetwork(connected, network?.name);
@@ -712,8 +712,8 @@ const Subscription = () => {
   if (!loggedin) {
     return (
       <>
-      <div className="min-h-screen bg-[url('/subscriptionbg.png')] bg-cover flex flex-col justify-center items-center">
-      <div className="text-white bg-transparent  font-medium text-4xl text-center">
+        <div className="min-h-screen bg-[url('/subscriptionbg.png')] bg-cover flex flex-col justify-center items-center">
+          <div className="text-white bg-transparent  font-medium text-4xl text-center">
             Subscribe and Unlock Full Access <br></br>
             Log in to Get Started
           </div>
@@ -728,7 +728,7 @@ const Subscription = () => {
               <button className="">
                 {/* <WalletSelectorAntDesign /> */}
                 {/* <h1 className="text-[#9999] text-2xl">PLEASE LOGIN FIRST</h1> */}
-                  <button
+                <button
                   className="bg-white text-black font-bold py-3 px-10 rounded-3xl mx-auto flex justify-center mt-10"
                   onClick={connectWallet}
                 >
@@ -822,15 +822,29 @@ const Subscription = () => {
                             <div className="w-full">
                               <h3 className="leading-12 mb-2 text-white">
                                 <div className="text-lg font-semibold mt-4 uppercase">
-                                  {/* {trialsubscriptiondata.subscription.type}{" "} */}
+                                  {trialsubscriptiondata.subscription.type}{" "}
                                   Subscription
                                 </div>
-                                <div className="lg:flex md:flex justify-between">
-                                  <div className="text-md font-semibold mt-4">
-                                    Status: {trialsubscriptiondata.status}
+                                <div className="lg:flex md:flex justify-between ">
+                                  <div className="text-md font-semibold mt-4 capitalize">
+                                    Status :{" "}
+                                    <span
+                                      className={
+                                        trialsubscriptiondata.status ===
+                                        "active"
+                                          ? "text-green-500"
+                                          : "text-red-500"
+                                      }
+                                    >
+                                      {trialsubscriptiondata.status
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                        trialsubscriptiondata.status.slice(1)}
+                                    </span>
                                   </div>
-                                  <div className="text-md font-semibold mt-4">
-                                    Valid for 30 days
+
+                                  <div className="text-md font-light mt-4 ml-1">
+                                    (Valid for 7 days)
                                   </div>
                                 </div>
                               </h3>
@@ -838,7 +852,7 @@ const Subscription = () => {
                               <div className="rounded-xl">
                                 <div className="text-sm text-white text-start mt-2">
                                   <div className="mb-3">
-                                    <span className="text-green-500 ">
+                                    <span className="text-white ">
                                       Start time :
                                     </span>{" "}
                                     {trialsubscriptiondata.subscription
@@ -850,17 +864,15 @@ const Subscription = () => {
                                       : "Loading..."}
                                   </div>
                                   <div className="">
-                                    <span className="text-red-500 ">
+                                    <span className="text-white">
                                       End time :
                                     </span>{" "}
-                                    {/* {trialsubscriptiondata.subscription.endTime
+                                    {trialsubscriptiondata.subscription.endTime
                                       ? formatDateTime(
                                           trialsubscriptiondata.subscription
                                             .endTime
                                         )
-                                      : "Loading..."} */}
-                                      23 August 2024 23:43:34
-
+                                      : "Loading..."}
                                   </div>
                                 </div>
                               </div>
@@ -988,17 +1000,18 @@ const Subscription = () => {
                                             type="text"
                                             id="name"
                                             className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
-                                            placeholder="Name"
+                                            placeholder="Enter Client Name (Max 8 characters)"
                                             value={formData.name}
                                             onChange={handleInputChange}
+                                            maxLength={8} // Limits input to 8 characters
                                             required
                                           />
                                         </div>
 
-                                        <div className="mb-4 w-full">
+                                        <div className="mb-4 w-full relative">
                                           <select
                                             id="regionname"
-                                            className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:shadow-outline"
+                                            className="shadow border border-gray-300 rounded-full w-full py-4 px-6 text-gray-900 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out appearance-none"
                                             value={regionname}
                                             onChange={handleRegionChange}
                                             required
@@ -1009,7 +1022,6 @@ const Subscription = () => {
                                             >
                                               Select Region
                                             </option>
-
                                             {regiondata.map((node) => (
                                               <option
                                                 key={node.id}
@@ -1020,20 +1032,67 @@ const Subscription = () => {
                                               </option>
                                             ))}
                                           </select>
+                                          <svg
+                                            className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500 pointer-events-none"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            viewBox="0 0 24 24"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                          >
+                                            <path
+                                              strokeLinecap="round"
+                                              strokeLinejoin="round"
+                                              strokeWidth="2"
+                                              d="M19 9l-7 7-7-7"
+                                            />
+                                          </svg>
                                         </div>
 
                                         <div className="mb-4 w-full relative">
                                           <div
-                                            className="p-4 bg-white border border-gray-300 rounded-full cursor-pointer"
+                                            className="p-4 bg-white border border-gray-300 rounded-full cursor-pointer flex items-center justify-between shadow hover:shadow-lg transition duration-150 ease-in-out"
                                             onClick={handleDropdownToggle}
                                           >
-                                            {selectedOption
-                                              ? sliceNodeId(selectedOption.id)
-                                              : "Select Node ID"}
+                                            {selectedOption ? (
+                                              <div className="flex items-center">
+                                                <span className="mr-2">
+                                                  {generateSerialNumber(
+                                                    regionname,
+                                                    selectedIndex
+                                                  )}
+                                                  -
+                                                </span>
+                                                <span>
+                                                  {sliceNodeId(
+                                                    selectedOption.id
+                                                  )}
+                                                </span>
+                                              </div>
+                                            ) : (
+                                              "Select Node ID"
+                                            )}
+                                            <svg
+                                              className={`w-5 h-5 transform transition-transform ${
+                                                isOpen
+                                                  ? "rotate-180"
+                                                  : "rotate-0"
+                                              }`}
+                                              fill="none"
+                                              stroke="currentColor"
+                                              viewBox="0 0 24 24"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                                strokeWidth="2"
+                                                d="M19 9l-7 7-7-7"
+                                              />
+                                            </svg>
                                           </div>
                                           {isOpen && (
-                                            <div className="absolute w-full mt-1 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-10">
-                                              <div className="grid grid-cols-4 p-2 font-bold bg-gray-200">
+                                            <div className="absolute w-full mt-2 max-h-60 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-lg z-10">
+                                              <div className="grid grid-cols-4 p-2 font-bold bg-gray-200 text-gray-700">
                                                 <div>S.No</div>
                                                 <div>Node ID</div>
                                                 <div>Wallet Address</div>
@@ -1047,10 +1106,11 @@ const Subscription = () => {
                                                 .map((option, index) => (
                                                   <div
                                                     key={option.id}
-                                                    className="grid grid-cols-4 p-2 cursor-pointer hover:bg-gray-100"
-                                                    onClick={() =>
-                                                      handleOptionClick(option)
-                                                    }
+                                                    className="grid grid-cols-4 p-2 cursor-pointer hover:bg-gray-100 transition duration-150 ease-in-out"
+                                                    onClick={() => {
+                                                      handleOptionClick(option);
+                                                      setSelectedIndex(index); // Store the selected index
+                                                    }}
                                                   >
                                                     <div>
                                                       {generateSerialNumber(
