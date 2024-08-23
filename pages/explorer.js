@@ -23,15 +23,15 @@ const Explorer = () => {
   }, []);
 
     return (
-      <div className="bg-[#040819]">
-        <div className="mx-auto py-20"
+      <div className="bg-[#040819] ">
+        <div className="mx-auto py-20 "
           style={{
             backgroundImage: 'radial-gradient(circle at left, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer4.png") ',  
               backgroundSize: 'cover',
               backgroundBlendMode: 'overlay',
             }}
             >
-        <div className="flex flex-col items-start justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 px-20 py-40">
+        <div className="flex flex-col items-start justify-start lg:h-full mt-10 lg:ml-0 lg:mr-0 md:ml-0 md:mr-0 ml-4 mr-4 mb-36 lg:mb-0 px-20 ">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
