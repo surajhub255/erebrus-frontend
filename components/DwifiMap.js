@@ -90,11 +90,11 @@ export default function DwifiMap() {
   }, []); // Empty dependency array ensures this runs once
 
   return (
-    <div className="relative h-full w-full p-20 pl-20 pr-20">
+    <div className="relative h-full w-full p-20 px-15 bg-[#20253A]">
       <MapContainer
         center={[20.5937, 78.9629]} 
         zoom={5} 
-        style={{ height: '100%', width: '100%', padding: '20px',  }}
+        style={{ height: '100%', width: '100%', padding: '20px', borderRadius: '20px', border: '2px solid gray',   boxShadow: '0 0px 25px black'  }}
         maxBounds={[[6, 68], [37, 97]]} 
         maxBoundsViscosity={1.0}
       >

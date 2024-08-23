@@ -49,6 +49,15 @@ const Dwifi = () => {
         </motion.div>
       </div>
     </div>
+    <div className="bg-[#20253A] pt-16 px-20">
+          <div className="text-2xl font-semibold text-gray-300 mb-8 ">
+          Erebrus Decentralized Wi-Fi (ÐWi-Fi) Network Nodes Overview
+          </div>
+          <div className="text-white">
+            <p>
+            Discover the Erebrus decentralized Wi-Fi network with our interactive map. View real-time details about Wi-Fi hotspots, including their location, performance, and usage stats. This dashboard helps you find secure and fast Wi-Fi connections globally.            </p>
+          </div>
+        </div>
     <div className="map-page" style={{ height: '100vh', width: '100vw' }}>
       
       <div className="map-controls" style={{ position: 'absolute', top: 10, left: 10, zIndex: 1000 }}>

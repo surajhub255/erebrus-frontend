@@ -63,10 +63,19 @@ const Explorer = () => {
         </div>
       </div>
             {/* <img src="/mapRegions.png"/> */}
+        <div className="bg-[#20253A] pt-16 px-20">
+          <div className="text-2xl font-semibold text-gray-300 mb-8 "
+          >
+            Erebrus Decentralized VPN (ÐVPN) Network Nodes Overview
+          </div>
+          <div className="text-white"
+          >
+            <p>
+            Explore the Erebrus decentralized VPN network with our interactive map. View detailed information on active nodes, including their location, network performance, and status. This map provides real-time insights into the global distribution and operation of our secure and private VPN infrastructure.
+            </p>
+          </div>
+        </div>
         <div className="map-page" style={{ height: '100vh', width: '100vw' }}>
-  
-          <div className="map-controls" style={{ position: 'absolute', top: 10, left: 10, zIndex: 1000 }}>
-            </div>
           <div className="map-container" style={{ height: '100%', width: '100%' }}>
               <DvpnMap nodes={nodes} />
           </div>
