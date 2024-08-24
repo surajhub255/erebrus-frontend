@@ -413,7 +413,23 @@ const NodesData = () => {
               </tr>
             </thead>
               <tbody>
-              {filteredNodesData.map((node) => (
+              {nodesdata.length === 0 ? (
+                <tr className="table-row" style={{ height: "60px" }}>
+                  <td
+                    colSpan="8" 
+                    style={{ 
+                      textAlign: "center",
+                      border: "solid 1px #FFFFFF66",
+                      padding: "16px" 
+                    }}
+                  >
+                    <div className="flex justify-center items-center py-2 px-4">
+                      No Nodes Available
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+              filteredNodesData.map((node) => (
                 <tr
                   key={node.id}
                   className={`table-row cursor-pointer ${
@@ -473,7 +489,8 @@ const NodesData = () => {
                   </td>
                   {/* <td style={{paddingTop:'20px'}}>{node.lastPinged}</td> */}
                 </tr>
-              ))}
+              ))
+              )}
             </tbody>
             </table>
           </div>

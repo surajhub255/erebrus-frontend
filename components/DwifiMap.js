@@ -26,7 +26,7 @@ export default function DwifiMap() {
     };
 
     socket.onmessage = function (event) {
-      console.log('Received:', event.data);
+      console.log('Received:');
     };
 
     socket.onerror = function (event) {
