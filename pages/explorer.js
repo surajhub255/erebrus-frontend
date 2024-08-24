@@ -2,20 +2,18 @@ import React, { useEffect, useState} from "react";
 import Link from "next/link";
 import NodesData from "../components/NodesData";
 import dynamic from 'next/dynamic';
-// import Dvpn Map from "../components/DvpnMap"
 import { motion } from "framer-motion";
 
 const DvpnMap = dynamic(() => import('../components/DvpnMap'), { ssr: false });
-
+const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const Explorer = () => {
-
   const [nodes, setNodes] = useState([]);
   const [activeMap, setActiveMap] = useState('pin');
 
   useEffect(() => {
     async function fetchNodes() {
-      const response = await fetch('https://gateway.erebrus.io/api/v1.0/nodes/all');
+      const response = await fetch(`${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`);
       const data = await response.json();
       setNodes(data.payload);
     }
