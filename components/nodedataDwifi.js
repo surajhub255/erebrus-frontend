@@ -181,7 +181,7 @@ const NodeDwifiStream = () => {
         onClick={() => setShowSortOptions(!showSortOptions)}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded"
       >
-        Sort By: {sortBy || 'Select'}
+        {sortBy || 'Sort By'}
       </button>
       {showSortOptions && (
         <div className="absolute right-0 mt-2 w-48 bg-blue-500 rounded-md shadow-lg z-10">
@@ -240,7 +240,7 @@ const NodeDwifiStream = () => {
                 <th style={{ border: "solid 1px #FFFFFF66" }}>
                   <div className="flex gap-4 justify-center items-center pt-4 pb-4 px-4">
                     <img src="/dwifi4.png" className="w-10 h-10" />
-                    <div>Price_per_min</div>
+                    <div>Price/min</div>
                   </div>
                 </th>
                 <th style={{ border: "solid 1px #FFFFFF66" }}>

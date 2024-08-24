@@ -50,7 +50,6 @@ const DvpnMap = ({ nodes }) => {
       offsetMap[key].push(node);
     });
 
-    // Apply circular offsets
     const finalOffsets = {};
     for (const key in offsetMap) {
       const nodesAtLocation = offsetMap[key];
@@ -66,17 +65,16 @@ const DvpnMap = ({ nodes }) => {
     return null;
   }
 
-  // Function to style each country based on the node count
   const getCountryStyle = (feature) => {
     const country = feature.properties.ISO_A2;
     const count = nodes.filter(node => node.ipinfocountry === country).length;
 
     return {
       fillColor: count > 3 ? '#0e038c' :
-                count > 2 ? '#1500ff' :
-                count > 1 ? '#007bff' :
-                count > 0  ? '#7fd0f5' :
-                             '#f7f7f7', // Default color for zero nodes
+        count > 2 ? '#1500ff' :
+          count > 1 ? '#007bff' :
+            count > 0 ? '#7fd0f5' :
+              '#f7f7f7',
       weight: 2,
       opacity: 1,
       color: 'white',
@@ -85,7 +83,6 @@ const DvpnMap = ({ nodes }) => {
     };
   };
 
-  // Function to create a tooltip with the node count only for countries with nodes
   const onEachCountry = (feature, layer) => {
     const country = feature.properties.ISO_A2;
     const count = nodes.filter(node => node.ipinfocountry === country).length;
@@ -107,16 +104,13 @@ const DvpnMap = ({ nodes }) => {
         zoom={2}
         minZoom={2}
         maxZoom={10}
-        style={{ height: '100%', width: '100%', padding: '20px', borderRadius: '20px', border: '2px solid gray',   boxShadow: '0 0px 25px black'}}
-        // className="leaflet-container"
-        // maxBounds={[[-90, -180], [90, 180]]}
-        // maxBoundsViscosity={1.0}
+        style={{ height: '100%', width: '100%', padding: '20px', borderRadius: '20px', border: '2px solid gray', boxShadow: '0 0px 25px black' }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         />
-        {/* <TileLayer
+{/* <TileLayer
           url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png" // CartoDB Dark theme URL
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | Map tiles by <a href="https://carto.com/attributions">CartoDB</a>'
           noWrap={true}
@@ -127,7 +121,6 @@ const DvpnMap = ({ nodes }) => {
           noWrap={true}
         /> */}
 
-        {/* Add GeoJSON layer for the choropleth */}
         <GeoJSON
           data={geojsonData}
           style={getCountryStyle}
@@ -153,6 +146,7 @@ const DvpnMap = ({ nodes }) => {
           );
         })}
       </MapContainer>
+
       <style jsx>{`
         @keyframes pulse {
           0% {
@@ -205,4 +199,3 @@ const DvpnMap = ({ nodes }) => {
 };
 
 export default DvpnMap;
-
