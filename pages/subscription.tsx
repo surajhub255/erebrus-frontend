@@ -11,7 +11,8 @@ import { lib, enc } from "crypto-js";
 import { generateKeyPair } from "curve25519-js";
 import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
-import { useRouter } from 'next/router';                  
+import { useRouter } from 'next/router';  
+import Image from 'next/image';                
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
@@ -938,7 +939,7 @@ const Subscription = () => {
                         />
                       ) : (
                         <img
-                          src="https://img.freepik.com/premium-vector/virtual-private-network-secure-vpn-connection-concept-vector-sign-symbol_660702-458.jpg"
+                          src="subscriptionprofile.png"
                           className="w-14 rounded-full"
                         />
                       )}
@@ -1435,10 +1436,13 @@ const Subscription = () => {
                             </div>
                           ) : (
                             <>
-                              <img
-                                src="/create.png"
-                                className="mx-auto -mt-10"
-                              />
+                          <Image
+  src="/create.png"
+  alt="Create"
+  className="mx-auto -mt-10 h-[300px] w-[300px]"
+  width={500} // Set an appropriate width
+  height={500} // Set an appropriate height
+/>
 
                               <div className="p-2 md:p-5 space-y-4">
                                 <p className="text-2xl text-center font-semibold text-white">
