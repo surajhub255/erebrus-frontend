@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Cookies from "js-cookie";
+import CryptoPrice from "../components/price conversion/price";
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 
 const Plans = () => {
@@ -78,77 +79,33 @@ const Plans = () => {
         </div>
 
         <div className="lg:flex mt-10 mx-auto justify-center gap-10">
-         {(chainSymbol=="apt" || chainSymbol=='sol' )  &&( 
-          
-          <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
-          >
-          <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">NFT</h2>
-          <p className="text-2xl  mb-4">{displayText}</p>
-          <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/3">
-          Start Your Plan Now
-          </button>
-          <div className="flex gap-10 mb-4 w-1/2">
-            <button className="bg-white text-black rounded  py-1 text-sm flex-1">
-              Pay with Crypto
-            </button>
-            {/* <button className="bg-white text-black rounded  text-sm py-1 flex-1">
-              Pay with Credit Card
-            </button> */}
-          </div>
-          <ul className="space-y-2">
-            <li className="flex items-center">
-              <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-              Limited collection of only 111
-            </li>
-            <li className="flex items-center">
-              <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-              Tradable with VPN access benefits
-            </li>
-            <li className="flex items-center">
-              <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-              Unlimited Clients
-            </li>
-            {/* <li className="flex items-center">
-              <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-              Access and submit reviews
-            </li>
-            <li className="flex items-center">
-              <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-              AI insights, web summary & critical alerts
-            </li>
-            <li className="flex items-center">
-              <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-              Mobile app
-            </li> */}
-          </ul>
-          <button className="bg-[#0162FF] text-white  px-2 py-5 rounded-full mt-32 w-3/4 ml-10 ">
-          <Link 
-           href="/mint">
-            Mint NFT
-          </Link>
-          </button>
-        </div>
-                )}
-
-          <div className="bg-[#202333E5] rounded-3xl p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
+       
+    
+        <div className="bg-[#202333E5] rounded-[40px] p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
       >
-      <h2 className="text-2xl font-semibold text-[#5696FF] mb-4">Standard</h2>
-      <p className="text-2xl  mb-4">$5.99/month</p>
-      <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/3">
-        Start Free Trial for 7 Days
+      <h2 className="text-2xl  text-[#5696FF] mb-4">Standard</h2>
+      <CryptoPrice/>
+      <p className="text-xl  font-light  mb-4">$5.99/month</p>
+      <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/8">
+      7 days Free trial
       </button>
-      <div className="flex gap-10 mb-4">
-        <button className="bg-white text-black rounded  py-1 text-sm flex-1">
-          Pay with Crypto
-        </button>
-        <button className="bg-white text-black rounded  text-sm py-1 flex-1">
-          Pay with Credit Card
-        </button>
-      </div>
+      <div className="flex gap-5 w-5/6 mb-4">
+  <button className="bg-white text-black rounded py-1 text-sm flex-1 md:w-2/5 lg:w-2/3">
+    Pay with Crypto
+  </button>
+  <button
+  className="bg-white text-black rounded text-sm py-1 flex-1 md:w-3/5 lg:w-4/5 opacity-50 cursor-not-allowed"
+  disabled
+>
+  Pay with Credit Card
+</button>
+
+</div>
+
       <ul className="space-y-2">
         <li className="flex items-center">
           <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          Decentralized Wi-Fi
+          Decentralized Wi-Fi (Pay for what you use)
         </li>
         <li className="flex items-center">
           <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
@@ -171,11 +128,26 @@ const Plans = () => {
           Mobile app
         </li>
       </ul>
-      <button className="bg-[#0162FF] text-white  px-2 py-5 rounded-full mt-6 w-3/4 ml-10 "
-      onClick={trialbuy}>
-        Start Free Trial
-      </button>
+      <div className="flex gap-5">
+  <button
+    className="border-2 border-[#0162FF] text-white text-lg bg-transparent px-auto py-2 rounded-[10px] mt-10 w-1/2  focus:outline-none focus:ring-2 focus:ring-[#0162FF] focus:ring-offset-2"
+    onClick={trialbuy}
+  >
+    Start Free Trial
+  </button>
+  <button
+    className="bg-white text-black text-lg  border-2 border-white px-auto  py-2 rounded-[10px] mt-10 w-1/2  focus:outline-none"
+  >
+    <Link href="/mint">
+      Mint NFT Now
+    </Link>
+  </button>
+</div>
+
     </div>
+                
+
+          
 
         </div>
       </div>
