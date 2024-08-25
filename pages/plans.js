@@ -73,23 +73,20 @@ const Plans = () => {
 
   return (
     <>
-      <div className="mt-10 mx-auto min-h-screen max-w-7xl">
-        <div className="text-center text-4xl text-white">
-          Subscription
-        </div>
-
-        <div className="lg:flex mt-10 mx-auto justify-center gap-10">
-       
-    
-        <div className="bg-[#202333E5] rounded-[40px] p-10 w-full border-[2px] border-[#0162FF] md:w-5/12 lg:w-4/12 text-white"
-      >
-      <h2 className="text-2xl  text-[#5696FF] mb-4">Standard</h2>
-      <CryptoPrice/>
-      <p className="text-xl  font-light  mb-4">$5.99/month</p>
-      <button className="bg-[#0162FF] text-white rounded-lg px-4 py-2 mb-4 w-2/8">
+    <div className="mt-10 mx-auto min-h-screen max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="text-center text-3xl sm:text-4xl text-white">
+        Subscription
+      </div>
+  
+      <div className="mt-10 mx-auto flex justify-center">
+        <div className="bg-[#202333E5] rounded-[40px] p-6 sm:p-8 md:p-10 w-full max-w-md border-[2px] border-[#0162FF] text-white">
+          <h2 className="text-xl sm:text-2xl text-[#5696FF] mb-4">Standard</h2>
+          <CryptoPrice />
+          <p className="text-lg sm:text-xl font-light mb-4">$5.99/month</p>
+          <button className="bg-[#0162FF] text-white rounded-lg px-6 py-2 mb-4 w-2/8">
       7 days Free trial
       </button>
-      <div className="flex gap-5 w-5/6 mb-4">
+          <div className="flex gap-3 w-5/6 mb-4">
   <button className="bg-white text-black rounded py-1 text-sm flex-1 md:w-2/5 lg:w-2/3">
     Pay with Crypto
   </button>
@@ -101,68 +98,63 @@ const Plans = () => {
 </button>
 
 </div>
-
-      <ul className="space-y-2">
-        <li className="flex items-center">
-          <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          Decentralized Wi-Fi (Pay for what you use)
-        </li>
-        <li className="flex items-center">
-          <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          Decentralized VPN
-        </li>
-        <li className="flex items-center">
-          <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          Cyber threat analysis in browser extension
-        </li>
-        <li className="flex items-center">
-          <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          Access and submit reviews
-        </li>
-        <li className="flex items-center">
-          <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          AI insights, web summary & critical alerts
-        </li>
-        <li className="flex items-center">
-          <span className="w-4 h-4 bg-blue-500 rounded-full mr-2"></span>
-          Mobile app
-        </li>
-      </ul>
-      <div className="flex gap-5">
-  <button
-    className="border-2 border-[#0162FF] text-white text-lg bg-transparent px-auto py-2 rounded-[10px] mt-10 w-1/2  focus:outline-none focus:ring-2 focus:ring-[#0162FF] focus:ring-offset-2"
-    onClick={trialbuy}
-  >
-    Start Free Trial
-  </button>
-  <button
-    className="bg-white text-black text-lg  border-2 border-white px-auto  py-2 rounded-[10px] mt-10 w-1/2  focus:outline-none"
-  >
-    <Link href="/mint">
-      Mint NFT Now
-    </Link>
-  </button>
-</div>
-
-    </div>
-                
-
-          
-
-        </div>
-      </div>
-      {trialbuytrue && (
-        <div className="fixed z-50 top-0 w-full">
-          <div className="bg-blue-100 text-blue-700 px-4 py-3" role="alert">
-            <p className="font-bold">Successfully Trial Subscription Taken!</p>
-            <p className="text-sm">
-              You are redirected to subscription page to view your current
-              subscription plan and to create clients.
-            </p>
+  
+          <ul className="space-y-2 text-sm sm:text-base">
+            <li className="flex items-center">
+              <span className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full mr-2"></span>
+              Decentralized Wi-Fi (Pay for what you use)
+            </li>
+            <li className="flex items-center">
+              <span className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full mr-2"></span>
+              Decentralized VPN
+            </li>
+            <li className="flex items-center">
+              <span className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full mr-2"></span>
+              Cyber threat analysis in browser extension
+            </li>
+            <li className="flex items-center">
+              <span className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full mr-2"></span>
+              Access and submit reviews
+            </li>
+            <li className="flex items-center">
+              <span className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full mr-2"></span>
+              AI insights, web summary & critical alerts
+            </li>
+            <li className="flex items-center">
+              <span className="w-3 h-3 sm:w-4 sm:h-4 bg-blue-500 rounded-full mr-2"></span>
+              Mobile app
+            </li>
+          </ul>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 mt-6">
+            <button
+              className="border-2 border-[#0162FF] text-white text-base sm:text-lg bg-transparent px-4 py-2 rounded-[10px] w-full sm:w-1/2 focus:outline-none focus:ring-2 focus:ring-[#0162FF] focus:ring-offset-2"
+              onClick={trialbuy}
+            >
+              Start Free Trial
+            </button>
+            <button
+              className="bg-white text-black text-base sm:text-lg border-2 border-white px-4 py-2 rounded-[10px] w-full sm:w-1/2 focus:outline-none"
+            >
+              <Link href="/mint">
+                Mint NFT Now
+              </Link>
+            </button>
           </div>
         </div>
-      )}
-    </>
+      </div>
+    </div>
+    {trialbuytrue && (
+      <div className="fixed z-50 top-0 w-full">
+        <div className="bg-blue-100 text-blue-700 px-4 py-3" role="alert">
+          <p className="font-bold">Successfully Trial Subscription Taken!</p>
+          <p className="text-sm">
+            You are redirected to subscription page to view your current
+            subscription plan and to create clients.
+          </p>
+        </div>
+      </div>
+    )}
+  </>
   );
 };
 
