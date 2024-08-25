@@ -11,6 +11,7 @@ import { lib, enc } from "crypto-js";
 import { generateKeyPair } from "curve25519-js";
 import { Network } from "@aptos-labs/ts-sdk";
 import Button from "../components/Button";
+import { useRouter } from 'next/router';                  
 import SingleSignerTransaction from "../components/transactionFlow/SingleSigner";
 const REACT_APP_GATEWAY_URL = process.env.NEXT_PUBLIC_GATEWAY_URL;
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
@@ -70,7 +71,7 @@ const Subscription = () => {
   const [trialsubscriptiondata, settrialsubscriptiondata] = useState<any>(null);
   const [selectedIndex, setSelectedIndex] = useState(null);
   const { account, connected, network, signMessage } = useWallet();
-
+  const router = useRouter();
   let sendable = isSendableNetwork(connected, network?.name);
 
   const bg = {
@@ -228,6 +229,26 @@ const Subscription = () => {
       setLoading(false);
     }
   };
+
+  const [isDataChecked, setIsDataChecked] = useState(false);
+
+  useEffect(() => {
+    if (!loading && isDataChecked && !nftdata && !trialsubscriptiondata) {
+      const redirectTimer = setTimeout(() => {
+        router.push('/plans');
+      }, 1000); // 1 second delay
+
+      // Cleanup the timer if the component unmounts
+      return () => clearTimeout(redirectTimer);
+    }
+  }, [nftdata, trialsubscriptiondata, loading, isDataChecked]);
+
+  useEffect(() => {
+    if (!loading && nftdata !== undefined && trialsubscriptiondata !== undefined) {
+      setIsDataChecked(true);
+    }
+  }, [loading, nftdata, trialsubscriptiondata]);
+
 
   useEffect(() => {
     const fetchProjectsData = async () => {
@@ -708,6 +729,7 @@ const Subscription = () => {
     (node) => node.region === regionname
   );
   console.log("Filtered nodes based on region:", filteredNodes, regionname);
+  
 
   if (!loggedin) {
     return (
@@ -752,6 +774,8 @@ const Subscription = () => {
     );
   }
 
+ 
+
   return (
     <div className="py-0 min-h-screen">
       <section className="">
@@ -762,7 +786,7 @@ const Subscription = () => {
                 <div className="text-2xl text-white font-semibold text-left ml-4 my-6 border-b border-gray-700 pb-4">
                   Subscription
                 </div>
-                {!nftdata && !trialsubscriptiondata && !loading && (
+                {/* {!nftdata && !trialsubscriptiondata && !loading && (
                   <div className="mx-auto px-4 min-h-screen">
                     <div className="w-full text-center py-20">
                       <h2 className="text-4xl font-bold text-white">
@@ -773,7 +797,7 @@ const Subscription = () => {
                       </div>
                     </div>
                   </div>
-                )}
+                )} */}
 
                 {loading && (
                   <div
