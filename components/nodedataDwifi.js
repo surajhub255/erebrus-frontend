@@ -1,5 +1,6 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
+import { FilterOutlined, SortAscendingOutlined } from '@ant-design/icons';
 
 const NodeDwifiStream = () => {
   const [data, setData] = useState([]);
@@ -12,6 +13,15 @@ const NodeDwifiStream = () => {
   const [showSortOptions, setShowSortOptions] = useState(false);
   const [sortBy, setSortBy] = useState('');
   const sortRef = useRef(null);
+  const [sortByDisplay, setSortByDisplay] = useState('');
+
+
+  const sortOptions = {
+    hostSSID: 'SSID',
+    gateway: 'IP Address',
+    chain_name: 'Chain',
+    location: 'Location'
+  };
   
 
   useEffect(() => {
@@ -132,9 +142,9 @@ const NodeDwifiStream = () => {
       direction = "descending";
     }
     setSortConfig({ key, direction });
-    // setShowSortOptions(false);
     console.log(`Sorting by: ${key}`);
     setSortBy(key);
+    setSortByDisplay(sortOptions[key]);
     setShowSortOptions(false);
   };
 
@@ -146,7 +156,7 @@ const NodeDwifiStream = () => {
     onClick={() => setShowFilters(!showFilters)}
     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded"
   >
-    {statusFilter !== 'all' || chainFilter !== 'all' ? 'Filters Applied' : 'Filters'}
+    <FilterOutlined /> {statusFilter !== 'all' || chainFilter !== 'all' ? 'Filters Applied' : 'Filter'}
   </button>
           {showFilters && (
             <div className="absolute right-0 mt-2 w-48 bg-blue-500 rounded-md shadow-lg z-10">
@@ -181,7 +191,7 @@ const NodeDwifiStream = () => {
         onClick={() => setShowSortOptions(!showSortOptions)}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded"
       >
-        {sortBy || 'Sort By'}
+       <SortAscendingOutlined /> {sortByDisplay || 'Sort'}
       </button>
       {showSortOptions && (
         <div className="absolute right-0 mt-2 w-48 bg-blue-500 rounded-md shadow-lg z-10">
