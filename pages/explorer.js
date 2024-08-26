@@ -69,16 +69,17 @@ const Explorer = () => {
           </motion.div>
         </div>
 
-        <div className="hidden lg:block lg:w-1/3 relative">
-          <img 
-            src="/gradient-vpn-illustration.png" 
-            alt="Decorative GIF" 
-            className="w-full h-auto opacity-90 shadow-lg"
-            style={{
-              animation: 'scaleUpDown 2s infinite'
-            }}
-          />
-        </div>
+        <div className="hidden lg:block relative lg:self-start lg:mr-auto">
+            <img 
+              src="/explorerdvpn3.png" 
+              alt="vpn sheield image" 
+              className="w-full h-auto max-h-80 lg:pl-14 shadow-lg"
+              style={{
+                animation: 'scaleUpDown 2s infinite'
+              }}
+            />
+          </div>
+
       </div>
 
       <div className="pt-16 px-4 lg:px-20 bg-gradient-to-b from-black to-[#20253A]">

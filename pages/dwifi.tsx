@@ -48,7 +48,7 @@ const Dwifi = () => {
       {/* Animated Image */}
       <div className="hidden lg:block lg:w-1/3">
         <img 
-          src="/gradient-vpn-illustration.png" 
+          src="/explorerdwifi4.png" 
           alt="Decorative GIF" 
           className="w-full h-auto opacity-90 shadow-lg"
           style={{
