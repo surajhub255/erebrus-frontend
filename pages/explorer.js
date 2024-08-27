@@ -74,9 +74,6 @@ const Explorer = () => {
               src="/explorerdvpn3.png" 
               alt="vpn sheield image" 
               className="w-full h-auto max-h-80 lg:pl-14 shadow-lg"
-              style={{
-                animation: 'scaleUpDown 2s infinite'
-              }}
             />
           </div>
 
@@ -100,20 +97,7 @@ const Explorer = () => {
       </div>
 
       <NodesData />
-      
-      <style jsx>{`
-        @keyframes scaleUpDown {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.1);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-      `}</style>
+     
     </div>
   );
 }

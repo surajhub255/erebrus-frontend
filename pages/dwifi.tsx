@@ -51,26 +51,8 @@ const Dwifi = () => {
           src="/explorerdwifi4.png" 
           alt="Decorative GIF" 
           className="w-full h-auto opacity-90 shadow-lg"
-          style={{
-            animation: 'scaleUpDown 2s infinite'
-          }}
         />
-      </div>
-
-      <style jsx>{`
-        @keyframes scaleUpDown {
-          0% {
-            transform: scale(1);
-          }
-          50% {
-            transform: scale(1.1);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-      `}</style>
-      
+      </div>   
     </div>
     </div>
     <div className=" bg-gradient-to-b from-black to-[#20253A] lg:px-20 pt-16 px-20">
