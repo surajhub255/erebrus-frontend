@@ -3,6 +3,7 @@ import Link from "next/link";
 import NodesData from "../components/NodesData";
 import dynamic from 'next/dynamic';
 import { motion } from "framer-motion";
+import { EnvironmentOutlined } from '@ant-design/icons';
 
 const DvpnMap = dynamic(() => import('../components/DvpnMap'), { ssr: false });
 const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
@@ -15,7 +16,7 @@ const Explorer = () => {
   useEffect(() => {
     async function fetchNodes() {
       try {
-        const response = await fetch(`$https://gateway.erebrus.io/api/v1.0/nodes/all`);
+        const response = await fetch(`https://gateway.erebrus.io/api/v1.0/nodes/all`);
         const data = await response.json();
         if (data && Array.isArray(data.payload)) {
           setNodes(data.payload);
@@ -79,7 +80,7 @@ const Explorer = () => {
             className="text-white font-bold py-3 px-10 rounded-full bg-[#5696FF] text-lg inline-block cursor-pointer"
             onClick={scrollToMap}
           >
-            Active Node Map
+           < EnvironmentOutlined   className="inline-block mr-2 animate-bounce duration-1000 ease-in-out" /> Active Node Map
           </motion.div>
           </div>
         </div>
