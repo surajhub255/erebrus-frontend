@@ -15,7 +15,7 @@ const Explorer = () => {
   useEffect(() => {
     async function fetchNodes() {
       try {
-        const response = await fetch(`${EREBRUS_GATEWAY_URL}api/v1.0/nodes/all`);
+        const response = await fetch(`$https://gateway.erebrus.io/api/v1.0/nodes/all`);
         const data = await response.json();
         if (data && Array.isArray(data.payload)) {
           setNodes(data.payload);
