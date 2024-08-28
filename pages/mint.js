@@ -555,7 +555,9 @@ const Mint = () => {
                 <p className="text-2xl text-center font-semibold text-white">
                   Congratulations
                 </p>
+                
                 <p className="text-md text-center w-full mx-auto text-white">
+                  {/* eslint-disable-next-line */}
                 You've minted your Erebrus NFT, Want to create VPN clients? Click View Subscription
                 </p>
               </div>
