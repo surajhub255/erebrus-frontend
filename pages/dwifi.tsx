@@ -3,6 +3,8 @@ import Link from "next/link";
 import NodeDwifiStream from "../components/nodedataDwifi";
 import { motion } from "framer-motion";
 import dynamic from 'next/dynamic';
+import { EnvironmentOutlined } from '@ant-design/icons';
+
 
 const DwifiMap = dynamic(() => import('../components/DwifiMap'), { ssr: false });
 
@@ -54,7 +56,7 @@ const Dwifi = () => {
                 className="text-white font-bold py-3 px-10 rounded-full bg-[#5696FF] text-lg cursor-pointer" 
                 onClick={scrollToMap}
               >
-                Active Node Map
+               <EnvironmentOutlined  className="inline-block mr-2 animate-bounce duration-700 ease-in-out" /> Active Node Map
               </motion.div>
             </div>
           </div>

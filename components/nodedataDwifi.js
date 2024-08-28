@@ -186,12 +186,12 @@ const NodeDwifiStream = () => {
             </div>
           )}
         </div>
-        <div className="relative inline-block ml-4" ref={sortRef}>
+        <div className="relative inline-block ml-4 min-w-[30vh]" ref={sortRef}>
       <button
         onClick={() => setShowSortOptions(!showSortOptions)}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-12 rounded"
       >
-       <SortAscendingOutlined /> {sortByDisplay || 'Sort'}
+       <SortAscendingOutlined /> {sortByDisplay || ' Sort'}
       </button>
       {showSortOptions && (
         <div className="absolute right-0 mt-2 w-48 bg-blue-500 rounded-md shadow-lg z-10">
