@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import NodesData from "../components/NodesData";
 import dynamic from 'next/dynamic';
@@ -10,6 +10,7 @@ const EREBRUS_GATEWAY_URL = process.env.NEXT_PUBLIC_EREBRUS_BASE_URL;
 const Explorer = () => {
   const [nodes, setNodes] = useState([]);
   const [activeMap, setActiveMap] = useState('pin');
+  const mapRef = useRef(null);
 
   useEffect(() => {
     async function fetchNodes() {
@@ -30,16 +31,20 @@ const Explorer = () => {
     fetchNodes();
   }, []);
 
+  const scrollToMap = () => {
+    mapRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <div className="bg-[#040819]">
-      <div className="mx-auto relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-between p-4 lg:p-10"
+    <div className="explorer-page">
+      <div className="mx-auto relative flex flex-col lg:flex-row items-center lg:items-start lg:justify-between p-4 lg:p-10 lg:h-[40vw]"
         style={{
-          backgroundImage: 'radial-gradient(circle at 0% 7%, rgba(86, 150, 255, 0.6) 4%, #0162FF80 10%, black 30%), url("/explorer4.png")',
+          backgroundImage: 'url("/explorerhero.png")',
           backgroundSize: 'cover',
-          backgroundBlendMode: 'overlay',
+          backgroundBlendMode: 'lighten',
         }}
       >
-        <div className="flex flex-col items-center lg:items-start lg:w-2/3 lg:pr-10 text-left">
+        <div className="flex flex-col items-center lg:items-start lg:w-2/3 lg:pr-10 text-left py-40">
           <motion.h1
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
@@ -58,6 +63,7 @@ const Explorer = () => {
               Unrestricted Uncensored Web Access
             </p>
           </motion.h1>
+          <div className="flex gap-5">
           <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
@@ -67,19 +73,19 @@ const Explorer = () => {
               Run Your Node
             </Link>
           </motion.div>
-        </div>
-
-        <div className="hidden lg:block relative lg:self-start lg:mr-auto">
-            <img 
-              src="/explorerdvpn3.png" 
-              alt="vpn sheield image" 
-              className="w-full h-auto max-h-80 lg:pl-14 shadow-lg"
-            />
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1, transition: { duration: 1 } }}
+            className="text-white font-bold py-3 px-10 rounded-full bg-[#5696FF] text-lg inline-block cursor-pointer"
+            onClick={scrollToMap}
+          >
+            Active Node Map
+          </motion.div>
           </div>
-
+        </div>
       </div>
 
-      <div className="pt-16 px-4 lg:px-20 bg-gradient-to-b from-black to-[#20253A]">
+      <div className="pt-16 px-4 lg:px-20 bg-gradient-to-b from-[#20253A] to-[#20253A]">
         <div className="text-2xl font-semibold text-gray-300 mb-8">
           Erebrus Decentralized VPN (ÐVPN) Network Nodes Overview
         </div>
@@ -90,14 +96,13 @@ const Explorer = () => {
         </div>
       </div>
 
-      <div className="map-page" style={{ height: '100vh' }}>
+      <div ref={mapRef} className="map-page" style={{ height: '100vh' }}>
         <div className="map-container" style={{ height: '100%', width: '100%' }}>
           <DvpnMap nodes={nodes} />
         </div>
       </div>
 
       <NodesData />
-     
     </div>
   );
 }
