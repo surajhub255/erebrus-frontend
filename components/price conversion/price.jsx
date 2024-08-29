@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import Cookies from "js-cookie";
 
 const CHAIN_CONFIG = {
-  apt: { id: "aptos", currency: "APT" },
+  apt: { id: "aptos", currency: "APT", fixedAmount: 1.11 },
   sui: { id: "sui", currency: "SUI" },
   evm: { id: "ethereum", currency: "ETH" },
   sol: { id: "solana", currency: "SOL" },
@@ -33,17 +33,22 @@ const CryptoPrice = () => {
   useEffect(() => {
     const chainSymbol = Cookies.get("Chain_symbol") || DEFAULT_CHAIN;
     const wallet = Cookies.get("erebrus_token");
-    const { id: cryptoId, currency } = CHAIN_CONFIG[chainSymbol] || CHAIN_CONFIG[DEFAULT_CHAIN];
+    const { id: cryptoId, currency, fixedAmount } = CHAIN_CONFIG[chainSymbol] || CHAIN_CONFIG[DEFAULT_CHAIN];
 
     const updatePrice = async () => {
       setIsLoading(true);
       const currentPrice = await fetchPrice(cryptoId);
       if (currentPrice) {
         setPrice(currentPrice.toFixed(2));
-        const cryptoAmount = (SUBSCRIPTION_PRICE_USD / currentPrice).toFixed(4);
         
         if (wallet) {
-          setDisplayText(`${cryptoAmount} ${currency}/month`);
+          if (chainSymbol === 'apt') {
+            const usdPrice = (fixedAmount * currentPrice).toFixed(2);
+            setDisplayText(`${fixedAmount} ${currency}/month `);
+          } else {
+            const cryptoAmount = (SUBSCRIPTION_PRICE_USD / currentPrice).toFixed(4);
+            setDisplayText(`${cryptoAmount} ${currency}/month`);
+          }
         } else {
           setDisplayText("");
         }

@@ -5,10 +5,10 @@ import { motion } from "framer-motion";
 
 const Dwifi = () => {
   return (
-    <div className="bg-gradient-to-b from-[#040819] via-[#092187] to-[#20253A] min-h-screen">
-      <div className="container mx-auto ">
+    
+      <div className="  bg-gradient-to-b from-[#040819] via-[#092187] to-[#20253A]">
         <div
-          className="flex flex-col items-center justify-center lg:h-[40vw] mb-36 lg:mb-0 px-4  "
+          className="flex flex-col items-center justify-center lg:h-[40vw] mb-36 lg:mb-0   w-full h-full "
           style={{
             backgroundImage: 'url("/explorerhero.png")',
             backgroundSize: 'cover',
@@ -29,11 +29,12 @@ const Dwifi = () => {
           >
             <p>Discover data across your ÐWi-Fi network</p>
           </motion.h1>
-        </div>
+        
       </div>
       <NodeDwifiStreamUser />
       <NodesDataStreamDvpn />
     </div>
+
   );
 };
 

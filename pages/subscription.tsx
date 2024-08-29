@@ -232,9 +232,11 @@ const Subscription = () => {
   };
 
   const [isDataChecked, setIsDataChecked] = useState(false);
+  const loggedin = Cookies.get("erebrus_token");
+  const wallet = Cookies.get("erebrus_wallet");
 
   useEffect(() => {
-    if (!loading && isDataChecked && !nftdata && !trialsubscriptiondata) {
+    if (loggedin &&!loading && isDataChecked && !nftdata && !trialsubscriptiondata) {
       const redirectTimer = setTimeout(() => {
         router.push("/plans");
       }, 1000); // 1 second delay
@@ -404,8 +406,7 @@ const Subscription = () => {
   //   setregion(e.target.value);
   // };
 
-  const loggedin = Cookies.get("erebrus_token");
-  const wallet = Cookies.get("erebrus_wallet");
+
 
   const getAptosWallet = () => {
     if ("aptos" in window) {

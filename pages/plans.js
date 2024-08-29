@@ -10,6 +10,7 @@ const Plans = () => {
   const [erebrusWallet, setErebrusWallet] = useState(null);
   const [displayText, setDisplayText] = useState('1.11 APT/3 months');
   const [displayText2, setDisplayText2] = useState(' Pay by APT, crytocurrency or Fiat');
+  const [usdPrice, setUsdPrice] = useState('');
  
   const chainSymbol = Cookies.get('Chain_symbol');
   useEffect(() => {
@@ -22,23 +23,40 @@ const Plans = () => {
     if (wallet) {
       if (chainSym === 'sui') {
         setDisplayText('4.91 SUI/ 3 month');
-        setDisplayText2(' Pay by SUI, crytocurrency or Fiat')
+        setDisplayText2(' Pay by SUI, cryptocurrency or Fiat')
       } else if (chainSym === 'evm') {
         setDisplayText('0.0019 ETH/ 3 month');
-        setDisplayText2(' Pay by ETH, crytocurrency or Fiat')
-      }
-      else if (chainSym === 'peaq') {
+        setDisplayText2(' Pay by ETH, cryptocurrency or Fiat')
+      } else if (chainSym === 'peaq') {
         setDisplayText('0.0019 KRST/ 3 month');
-        setDisplayText2(' Pay by KRST, crytocurrency or Fiat')
+        setDisplayText2(' Pay by KRST, cryptocurrency or Fiat')
       } else if (chainSym === 'sol') {
         setDisplayText('0.035 SOL/ 3 month');
-        setDisplayText2(' Pay by SOL, crytocurrency or Fiat')
-      }else if (chainSym === 'google') {
+        setDisplayText2(' Pay by SOL, cryptocurrency or Fiat')
+      } else if (chainSym === 'google') {
         setDisplayText('$ 15/ 3 month');
-        setDisplayText2(' Pay by dollars, crytocurrency or Fiat')
+        setDisplayText2(' Pay by dollars, cryptocurrency or Fiat')
+      } else if (chainSym === 'apt') {
+        setDisplayText('1.11 APT/ 3 month');
+        setDisplayText2(' Pay by APT, cryptocurrency or Fiat')
+        // Fetch the current APT price and calculate USD equivalent
+        fetchAptPrice();
       }
     }
   }, []);
+  
+  const fetchAptPrice = async () => {
+    try {
+      const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=aptos&vs_currencies=usd');
+      const data = await response.json();
+      const aptPrice = data.aptos.usd;
+      const usdEquivalent = (1.11 * aptPrice).toFixed(2);
+      setUsdPrice(usdEquivalent);
+    } catch (error) {
+      console.error('Error fetching APT price:', error);
+      setUsdPrice('N/A');
+    }
+  };
 
   const trialbuy = async () => {
     const auth = Cookies.get("erebrus_token");
@@ -82,7 +100,11 @@ const Plans = () => {
         <div className="bg-[#202333E5] rounded-[40px] p-6 sm:p-8 md:p-10 w-full max-w-md border-[2px] border-[#0162FF] text-white">
           <h2 className="text-xl sm:text-2xl text-[#5696FF] mb-4">Standard</h2>
           <CryptoPrice />
-          <p className="text-lg sm:text-xl font-light mb-4">$5.99/month</p>
+          {chainSym !== 'apt' ? (
+              <p className="text-lg sm:text-xl font-light mb-4">$5.99/month</p>
+            ) : (
+              <p className="text-lg sm:text-xl font-light mb-4">${usdPrice}/month</p>
+            )}
           <button className="bg-[#0162FF] text-white rounded-lg px-6 py-2 mb-4 w-2/8">
       7 days Free trial
       </button>
