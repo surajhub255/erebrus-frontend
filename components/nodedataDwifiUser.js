@@ -95,7 +95,6 @@ const NodeDwifiStreamUser = () => {
       </div>
     );
   }
-
   return (
     <div className="bg-gray-900 text-white p-6 rounded-lg shadow-lg">
       <h1 className="text-3xl font-bold mb-6">DWifi Nodes Dashboard</h1>
@@ -103,9 +102,9 @@ const NodeDwifiStreamUser = () => {
       <div className="overflow-x-auto">
         <table className="min-w-full bg-gray-800 rounded-lg overflow-hidden">
           <thead className="bg-gray-700">
-            <tr>
+            <tr className="flex justify-between space-x-2">
               {["Host SSID", "Gateway", "Chain", "Interface", "Connected Devices", "Status", "Location", "Connected At", "Last Pinged"].map((header) => (
-                <th key={header} className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                <th key={header} className="flex-1 px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                   {header}
                 </th>
               ))}
@@ -115,25 +114,25 @@ const NodeDwifiStreamUser = () => {
             {Object.values(uniqueNodesData).map((item) => (
               <tr
                 key={item.id}
-                className={`hover:bg-gray-700 transition-colors duration-200 ${
+                className={`flex justify-between space-x-2 transition-colors duration-200 ${
                   item.connected === "true" ? "text-red-300" : "text-blue-300"
                 }`}
               >
-                <td className="px-6 py-4 whitespace-nowrap">{item.status[0].hostSSID}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.gateway}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.chain_name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.status[0].interfaceName}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.status.length}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{item.status[0].hostSSID}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{item.gateway}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{item.chain_name}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{item.status[0].interfaceName}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{item.status.length}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">
                   <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
                     item.connected === "true" ? "bg-red-100 text-red-800" : "bg-green-100 text-green-800"
                   }`}>
                     {item.connected === "true" ? "Offline" : "Online"}
                   </span>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap">{item.location}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{new Date(item.status[0].connectedAt).toLocaleString()}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{new Date(item.status[0].lastChecked).toLocaleString()}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{item.location}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{new Date(item.status[0].connectedAt).toLocaleString()}</td>
+                <td className="flex-1 px-6 py-4 whitespace-nowrap">{new Date(item.status[0].lastChecked).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
@@ -142,5 +141,4 @@ const NodeDwifiStreamUser = () => {
     </div>
   );
 };
-
 export default NodeDwifiStreamUser;
